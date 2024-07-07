@@ -131,3 +131,5 @@ dmypy.json
 
 literature
 */cysignals_crash_logs
+
+.DS_Store
