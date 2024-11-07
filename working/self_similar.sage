@@ -1,33 +1,10 @@
 
 from itertools import product
+from normalizer import to_L_basis
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 # ruff: noqa: F821
-def to_L_basis(n, dim=3):
-    """ Change basis of the crystallographic group to transform the lattice
-    L to the Z^dim
-
-    Parameters
-    ----------
-    n : int
-        number of the crystallographic group
-    dim : int
-        dimension
-
-    Returns
-    -------
-    MatrixGroup with new generators
-    """
-    G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
-    gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
-
-    v = matrix(QQ, G.TranslationBasis()).T
-    trans = matrix(QQ, [0 for _ in range(dim)]).T
-    conj = block_matrix(QQ, [[v, trans], [0, 1]])
-    new_gens = [conj.inverse() * el * conj for el in gens]
-    return gap.AffineCrystGroupOnLeft(new_gens)
-
 
 def extend_names(names, gens, deep=4, include_inverse=True, skip_trans=True):
     n = len(list(gens[0])) - 1

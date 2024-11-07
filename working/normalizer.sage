@@ -2,9 +2,35 @@
 
 from itertools import permutations
 from collections import defaultdict
+from warnings import warn
 import os
 
 a = b = c = d = ...
+
+
+def to_L_basis(n, dim=3):
+    """ Change basis of the crystallographic group to transform the lattice
+    L to the Z^dim
+
+    Parameters
+    ----------
+    n : int
+        number of the crystallographic group
+    dim : int
+        dimension
+
+    Returns
+    -------
+    MatrixGroup with new generators
+    """
+    G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
+    gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
+
+    v = matrix(QQ, G.TranslationBasis()).T
+    trans = matrix(QQ, [0 for _ in range(dim)]).T
+    conj = block_matrix(QQ, [[v, trans], [0, 1]])
+    new_gens = [conj.inverse() * el * conj for el in gens]
+    return gap.AffineCrystGroupOnLeft(new_gens)
 
 
 # noinspection PyShadowingNames
@@ -186,7 +212,7 @@ def normalizers_old(n, dim=2, use_alphabet=False, verbose=False, normalize_exp=T
          what elements of matrix should be
     """
 
-    G = gap(f'SpaceGroupIT({dim}, {n})')
+    G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
     S = G.PointGroup()
     s_elements = [matrix(QQ, el) for el in S.AsList()]
 
@@ -281,8 +307,11 @@ def _carthesian_wo_duplicates(*spaces):
             used.remove(str(el))
 
 
-def get_point_group_gens(cryst_num, dim=3):
-    group = gap(f"SpaceGroupIT({dim}, {cryst_num})")
+def get_point_group_gens(cryst_num, dim=3, to_l_basis=False):
+    if to_l_basis:
+        group = to_L_basis(cryst_num, dim=dim)
+    else:
+        group = gap(f"SpaceGroupOnLeftIT({dim}, {cryst_num})")
     gens = group.PointGroup().MinimalGeneratingSet()
     return [matrix(QQ, el) for el in gens]
 
@@ -292,7 +321,8 @@ def get_point_group_gens(cryst_num, dim=3):
 #   refactor maybe
 # noinspection PyShadowingNames
 def normalizers(n, dim=2, verbose=False, use_alphabet=False,
-                   normalize_exp=True, to_matrix=True, ignore_trivial=True):
+                   normalize_exp=True, to_matrix=True, ignore_trivial=True,
+                   to_l_basis=False):
     """Find normalizer of the PointGroup in GL(n, QQ).
 
     Tries to find normalizer as a solution of
@@ -336,7 +366,7 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
     Else, list of tuples of expressions like "a_00 == x1" which denotes
          what elements of matrix should be
     """
-    S = MatrixGroup(get_point_group_gens(n, dim=dim))
+    S = MatrixGroup(get_point_group_gens(n, dim=dim, to_l_basis=to_l_basis))
     gens = S.gens()
     s_elements = list(S)
     possible_mappings = gens_mappings(gens, s_elements)
@@ -361,10 +391,8 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
         try:
             homm = S.hom(maps_to)
         except ValueError:
+            warn(f'Something went wrong: couldnt create homomorphism for {maps_to}')
             continue
-        S_cur = MatrixGroup(maps_to)
-#         if not S.is_isomorphic(S_cur):
-#             continue
 
         for X in s_elements:
             Y = homm(X)
@@ -377,23 +405,26 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
         eq = [cond == 0 for cond in cond_perm]
         for res in solve(eq, *args):
             if not res:
-                if verbose: print(res)
+                if verbose:
+                    print(res)
                 continue
 
             res = tuple(res)
             if normalize_exp:
                 res = normalize_expressions(res, allowed=args)
 
+            mtx = sol2matrix(res, dim=dim, use_alphabet=use_alphabet)
+
             if res not in found_solutions and verbose:
                 if to_matrix:
-                    mtx = sol2matrix(res, dim=dim, use_alphabet=use_alphabet)
                     if ignore_trivial and mtx.det() == 0:
                         continue
                     print(mtx, end='\n\n')
                 else:
                     print(res)
 
-            found_solutions.add(res)
+            if mtx.det() != 0 or not ignore_trivial:
+                found_solutions.add(res)
 
     if to_matrix:
         return [sol2matrix(solution, dim=dim, use_alphabet=use_alphabet) for solution in found_solutions]
@@ -434,4 +465,3 @@ def check_div(A):
         if list(row).count(0) >= n - 1:
             return True
     return False
-
