@@ -1,10 +1,101 @@
 
 from itertools import product
+from collections import deque
 from normalizer import to_L_basis
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 # ruff: noqa: F821
+
+def linear_part(el): 
+    n = el.dimensions()[0]
+    return el[:n-1, :n-1]
+
+
+def translation(el): 
+    n = el.dimensions()[0]
+    return el[:n-1, -1]
+
+
+def construct_element(linear, trans): 
+    n = linear.dimensions()[0] + 1
+    res = matrix.identity(QQ, n)
+    res[:n-1, :n-1] = linear 
+    res[:n-1, -1] = trans
+    return res 
+
+
+def from_linear(linear): 
+    n = linear.dimensions()[0] + 1
+    res = matrix.identity(QQ, n)
+    res[:n-1, :n-1] = linear 
+    return res
+
+
+def from_translation(trans): 
+    n = trans.numpy().flatten().shape[0] + 1
+    res = matrix.identity(QQ, n)
+    res[:n-1, -1] = trans 
+    return res
+
+
+def construct_snot(G): 
+    P = [matrix(QQ, el) for el in G.PointGroup().AsList()]
+
+    if G.IsSymmorphicSpaceGroup(): 
+        return [from_linear(el) for el in P]
+
+    gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
+    L = [el for el in gens if linear_part(el).is_one()]
+    pg = [el for el in gens if not linear_part(el).is_one()]
+
+    snot = []
+    alpha = {}
+    dictionary = {}
+    
+    queue = pg.copy()
+    while queue: 
+        cur = queue.pop()
+        l_cur = linear_part(cur)
+        if str(l_cur) in alpha:
+            continue
+
+        alpha[str(l_cur)] = translation(cur) 
+
+
+
+
+
+def build_group(group_index, dim=2, deep=3):
+    G = to_L_basis(group_index, dim=dim)
+    gens = G.GeneratorsOfGroup()
+    gens = [matrix(QQ, el) for el in gens]
+    gens = [el for el in gens if not linear_part(el).is_one()]
+
+    e = matrix(QQ, dim+1)
+
+    alpha = {}
+    snot = []
+    for seq in all_words(gens, max_len=deep): 
+        
+        el = e 
+        for el2 in seq: 
+            el *= el2 
+        
+        g = el[:2, :2]
+        t = el[:2, 2]
+        if str(g) not in alpha:
+            alpha[str(g)] = t
+            snot.append(block_matrix([[g, t], [0, 1]]))
+
+    P = G.PointGroup()
+    P = [matrix(QQ, el) for el in P.AsList()]
+
+    for mtx in P:
+        assert str(mtx) in alpha, 'couldnt build every element of point group'
+
+    return G, P, alpha, snot
+
 
 def extend_names(names, gens, deep=4, include_inverse=True, skip_trans=True):
     n = len(list(gens[0])) - 1
@@ -128,10 +219,17 @@ def self_similar(n, T, dim=2, verbose=False,
     dict { (a, i): [j, b] }
         a self-similar action
     """
+
     if change_basis:
         G = to_L_basis(n, dim)
     else:
         G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
+
+    def phi(_g): 
+        return T * _g * T.inverse() 
+    
+    def phi_inv(_g): 
+        return T.inverse() * _g * T 
 
     gens_G = G.GeneratorsOfGroup()
     gens_G = [matrix(QQ, el) for el in gens_G]
@@ -139,12 +237,9 @@ def self_similar(n, T, dim=2, verbose=False,
         print("=====================================================================")
 
     # check whether there exists virtual endomorphism
-    conj_els = []
+    gens_H = []
     for el in gens_G:
-
-        # conjugate in the opposite direction in order to get subgroup of
-        # finite index, i.e. apply \phi^{-1} (el)
-        conj = T.inverse() * el * T
+        conj = phi_inv(el)
         if verbose:
             print("\nconjugate el:")
             print(conj)
@@ -155,16 +250,16 @@ def self_similar(n, T, dim=2, verbose=False,
             print("Bad matrix T, there is no virtual endomorphism")
             return -1
 
-        conj_els.append(conj)
+        gens_H.append(conj)
 
     # create subgroup as image of virtual endomorphism
-    H = G.Subgroup(conj_els)
+    H = G.Subgroup(gens_H)
 
     if verbose:
         print("----------------------------------------------------")
         print("Index of subgroup H:", G.Index(H))
 
-    trans = G.RightTransversal(H)
+    trans = G.RightTransversal(H)   # походу треба LeftTransversal
     trans_els = [matrix(QQ, el) for el in trans.AsList()]
     if verbose:
         print("Transversal:")
@@ -174,6 +269,9 @@ def self_similar(n, T, dim=2, verbose=False,
         names_G = {str(el): letter for el, letter in zip(gens_G, alphabet)}
     else:
         names_G = {str(el): f"a_{i}" for i, el in enumerate(gens_G, 1)}
+
+    if verbose: 
+        print("Names:", names_G)
 
     extended_names = extend_names(names_G, gens_G, deep=deep)
 
@@ -193,6 +291,8 @@ def self_similar(n, T, dim=2, verbose=False,
             # ==> d_j^{-1} = (a * d_i)^{-1}
             #
             # firstly, find coset for (a * d_i)^{-1}
+
+            # замість цього треба самому написати
             d_j_index = trans.PositionCanonical(adi.inverse())
 
             # then get d_j^{-1}^{-1}
@@ -202,7 +302,10 @@ def self_similar(n, T, dim=2, verbose=False,
                 raise ValueError(f"This shouln't happen--wrong coset: {(a, d_i, d_j)}")
 
             # conjugation in the right direction, i.e. apply \phi(d_j^{-1} a d_i)
-            tmp_res = T * (d_j.inverse() * a * d_i) * T.inverse()
-            res_map[(names_G[str(a)], i)] = (int(d_j_index),
-                                             get_name(tmp_res, extended_names))
+            tmp_res = phi(d_j.inverse() * a * d_i)
+            
+            if verbose: 
+                print('image:', tmp_res, sep='\n')
+            res_map[(names_G[str(a)], i)] = (int(d_j_index), tmp_res)
+                                            #  get_name(tmp_res, extended_names))
     return res_map, extended_names
