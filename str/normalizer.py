@@ -1,13 +1,11 @@
 #!/usr/bin/env sage
 
-from sage.all import gap, matrix, QQ, var, solve, MatrixGroup
+from sage.all import gap, matrix, QQ, var, solve, MatrixGroup, block_matrix
 
 from itertools import permutations
 from collections import defaultdict
 from warnings import warn
 import os
-
-# a = b = c = d = matrix = gap = QQ = block_matrix = var = solve = MatrixGroup = ...
 
 
 def to_L_basis(n, dim=3):
@@ -254,7 +252,8 @@ def normalizers_old(n, dim=2, use_alphabet=False, verbose=False, normalize_exp=T
         eq = [cond == 0 for cond in cond_perm]
         for res in solve(eq, *args):
             if not res:
-                if verbose: print(res)
+                if verbose: 
+                    print(res)
                 continue
             res = tuple(res)
             if normalize_exp:

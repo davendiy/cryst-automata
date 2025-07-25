@@ -1,5 +1,5 @@
 
-from sage.all import matrix, QQ, block_matrix, gap
+from sage.all import matrix, QQ, gap, copy
 
 from itertools import product
 from collections import deque
@@ -63,40 +63,6 @@ def construct_snot(G):
             continue
 
         alpha[str(l_cur)] = translation(cur) 
-
-
-
-
-
-def build_group(group_index, dim=2, deep=3):
-    G = to_L_basis(group_index, dim=dim)
-    gens = G.GeneratorsOfGroup()
-    gens = [matrix(QQ, el) for el in gens]
-    gens = [el for el in gens if not linear_part(el).is_one()]
-
-    e = matrix(QQ, dim+1)
-
-    alpha = {}
-    snot = []
-    for seq in all_words(gens, max_len=deep): 
-        
-        el = e 
-        for el2 in seq: 
-            el *= el2 
-        
-        g = el[:2, :2]
-        t = el[:2, 2]
-        if str(g) not in alpha:
-            alpha[str(g)] = t
-            snot.append(block_matrix([[g, t], [0, 1]]))
-
-    P = G.PointGroup()
-    P = [matrix(QQ, el) for el in P.AsList()]
-
-    for mtx in P:
-        assert str(mtx) in alpha, 'couldnt build every element of point group'
-
-    return G, P, alpha, snot
 
 
 def extend_names(names, gens, deep=4, include_inverse=True, skip_trans=True):

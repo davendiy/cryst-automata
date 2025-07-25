@@ -1,7 +1,10 @@
 from sage.all import latex, ascii_art, matrix, QQ, block_matrix, solve, var, SR, factor
 
-from self_similar import build_group
 from normalizer import normalizers, to_L_basis
+from collections import deque 
+
+
+MAX_ITERATIONS = 1_000_000
 
 
 def permute(space, repeat):
@@ -57,6 +60,46 @@ def all_words(space, max_len=-1):
 
         if max_len != -1 and i > max_len:
             break
+
+
+def build_finite_group(gens, trivial, max_iter=MAX_ITERATIONS): 
+
+    gens_extended = [trivial] + gens + [el.inverse() for el in gens]
+    names = [0] + [i for i in range(1, len(gens) + 1)] + [-i for i in range(1, len(gens) + 1)]
+
+    found = {str(gen): [name] for gen, name in zip(gens_extended, names)}
+    
+    q = deque()
+    q.extend(gens_extended)
+
+    _n = 0
+    while q:
+        if _n > max_iter: 
+            raise ValueError("seems infinite group")
+        
+        x = q.popleft() 
+        for y, y_name in zip(gens_extended, names): 
+            tmp1 = x * y 
+            tmp2 = y * x 
+            
+            if str(tmp1) not in found: 
+                found[str(tmp1)] = found[str(x)] + [y_name]
+                q.append(tmp1)
+            
+            if str(tmp2) not in found: 
+                found[str(tmp2)] = [y_name] + found[str(x)]
+                q.append(tmp2)
+
+    return found
+
+
+def build_group_v2(group_index, dim=2): 
+
+    G = to_L_basis(group_index, dim=dim)
+    P = G.PointGroup() 
+    P = [matrix(QQ, el) for el in P.AsList()]
+
+
 
 
 def build_group(group_index, deep=3):
