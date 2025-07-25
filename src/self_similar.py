@@ -3,42 +3,12 @@ from sage.all import matrix, QQ, gap, copy
 
 from itertools import product
 from collections import deque
-from normalizer import to_L_basis
+
+from .normalizer import to_L_basis
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 # ruff: noqa: F821
-
-def linear_part(el): 
-    n = el.dimensions()[0]
-    return el[:n-1, :n-1]
-
-
-def translation(el): 
-    n = el.dimensions()[0]
-    return el[:n-1, -1]
-
-
-def construct_element(linear, trans): 
-    n = linear.dimensions()[0] + 1
-    res = matrix.identity(QQ, n)
-    res[:n-1, :n-1] = linear 
-    res[:n-1, -1] = trans
-    return res 
-
-
-def from_linear(linear): 
-    n = linear.dimensions()[0] + 1
-    res = matrix.identity(QQ, n)
-    res[:n-1, :n-1] = linear 
-    return res
-
-
-def from_translation(trans): 
-    n = trans.numpy().flatten().shape[0] + 1
-    res = matrix.identity(QQ, n)
-    res[:n-1, -1] = trans 
-    return res
 
 
 def construct_snot(G): 

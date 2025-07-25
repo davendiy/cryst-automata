@@ -1,36 +1,12 @@
 #!/usr/bin/env sage
 
-from sage.all import gap, matrix, QQ, var, solve, MatrixGroup, block_matrix
+from sage.all import gap, matrix, QQ, var, solve, MatrixGroup
 
 from itertools import permutations
 from collections import defaultdict
 from warnings import warn
 import os
 
-
-def to_L_basis(n, dim=3):
-    """ Change basis of the crystallographic group to transform the lattice
-    L to the Z^dim
-
-    Parameters
-    ----------
-    n : int
-        number of the crystallographic group
-    dim : int
-        dimension
-
-    Returns
-    -------
-    MatrixGroup with new generators
-    """
-    G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
-    gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
-
-    v = matrix(QQ, G.TranslationBasis()).T
-    trans = matrix(QQ, [0 for _ in range(dim)]).T
-    conj = block_matrix(QQ, [[v, trans], [0, 1]])
-    new_gens = [conj.inverse() * el * conj for el in gens]
-    return gap.AffineCrystGroupOnLeft(new_gens)
 
 
 # noinspection PyShadowingNames
@@ -51,16 +27,6 @@ def normalize_expressions(exps, allowed=None):
             exp = exp.subs({var(el): var(f'x{i}')})
         res.append(exp)
     return tuple(res)
-
-
-def prepare_gap_env(use_3d_gap=True):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(dir_path, 'el2word.g')
-
-    # change gap version to installed separately. Also use maximum 4Gb memory
-    if use_3d_gap:
-        os.environ['SAGE_GAP_COMMAND'] = "~/gap/gap -s 4G"
-    gap(f'LoadPackage("Cryst");;Read("{file_path}")')
 
 
 # noinspection PyShadowingNames
