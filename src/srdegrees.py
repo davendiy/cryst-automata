@@ -4,6 +4,7 @@ from sage.all import (latex, matrix, ascii_art,
 
 
 from .normalizer import normalizers
+from .space_groups import SpaceGroup_gap
 
 
 class SR_Degrees:
@@ -21,7 +22,7 @@ class SR_Degrees:
             self.section = "\n----------------%s-------------------------\n"
             self.pref = "\n"
 
-        self.G, self.P, self.alpha, self.snot = build_group(self.group_index)
+        self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=2, change_basis=True)
 
     def display(self, *args, use_pref=True):
         if use_pref:
@@ -32,12 +33,14 @@ class SR_Degrees:
     def header(self):
         print(self.title)
         print("Generators of group:")
-        print(self.display([matrix(QQ, el) for el in self.G.GeneratorsOfGroup()]))
+        print(self.display([matrix(QQ, el) for el in self.G.G.GeneratorsOfGroup()]))
         print("SNoT")
-        print(self.display(self.snot))
+        print(self.display(self.G.snot))
 
     def construct_congruences(self, A, A_inv):
-        _, P, alpha, snot = self.G, self.P, self.alpha, self.snot
+        alpha = self.G.alpha
+        P = self.G.P
+        snot = self.G.snot
         a0, a1 = var("a0 a1")
         x = matrix([[a0], [a1]])
         E = matrix(QQ, [[1, 0], [0, 1]])
@@ -141,14 +144,12 @@ class SR_Degrees:
         self.header()
 
         G = self.G
-        norms = normalizers(
-            self.group_index, to_l_basis=True, dim=2, verbose=False, ignore_trivial=True
-        )
+        norms = self.G.point_group_normalizer(verbose=False, ignore_trivial=True)
 
         print(self.display(norms))
         print(self.section % "Dilation")
 
-        if G.IsSymmorphicSpaceGroup():
+        if G.is_symmorphic():
             print(
                 f"Group {self.group_index} is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. "
             )
@@ -164,7 +165,7 @@ class SR_Degrees:
             print(self.display(A_inv))
 
             A = A_inv.inverse()
-            if not G.IsSymmorphicSpaceGroup():
+            if not G.is_symmorphic():
                 conds, variables = self.construct_congruences(A, A_inv)
                 res = self.solve_congruences(conds, variables)
 

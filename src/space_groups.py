@@ -27,7 +27,51 @@ def prepare_gap_env(use_3d_gap=True):
     gap(f'LoadPackage("Cryst");;Read("{file_path}")')
 
 
-def to_L_basis(n, dim=3):
+def build_finite_group(gens, trivial, max_iter=MAX_ITERATIONS):
+    gens_extended = [trivial] + gens + [el.inverse() for el in gens]
+    names = (
+        [0]
+        + [i for i in range(1, len(gens) + 1)]
+        + [-i for i in range(1, len(gens) + 1)]
+    )
+
+    found = {str(gen): [name] for gen, name in zip(gens_extended, names)}
+
+    q = deque()
+    q.extend(gens_extended)
+
+    _n = 0
+    while q:
+        if _n > max_iter:
+            raise ValueError("seems infinite group")
+
+        x = q.popleft()
+        for y, y_name in zip(gens_extended, names):
+            tmp1 = x * y
+            tmp2 = y * x
+
+            if str(tmp1) not in found:
+                found[str(tmp1)] = found[str(x)] + [y_name]
+                q.append(tmp1)
+
+            if str(tmp2) not in found:
+                found[str(tmp2)] = [y_name] + found[str(x)]
+                q.append(tmp2)
+
+    return found
+
+
+def from_indices_list(gens, triv, seq):
+    res = copy(triv)
+    for mul in seq:
+        if mul:
+            gen = gens[abs(mul) - 1]
+            gen = gen if mul > 0 else gen.inverse()
+            res *= gen
+    return res
+
+
+def _to_L_basis(n, dim=3):
     """Change basis of the crystallographic group to transform the lattice
     L to the Z^dim
 
@@ -62,6 +106,9 @@ class SpaceGroup_Element:
 
     def inverse(self):
         return type(self)(self._body.inverse())
+
+    def __eq__(self, value):
+        return self._body == value._body
 
     def __mul__(self, other):
         other = SpaceGroup_Element(other)
@@ -140,9 +187,10 @@ class SpaceGroup_Element:
 class SpaceGroup_gap:
     max_iterations = MAX_ITERATIONS
 
-    def __init__(self, gap_G, dim):
+    def __init__(self, gap_G, dim, ita_num):
         self.G = gap_G
         self.dim = dim
+        self.ita_num = ita_num
 
         self.P = self.G.PointGroup()
 
@@ -156,13 +204,8 @@ class SpaceGroup_gap:
         self._P_names = [f'g_{i+1}' for i in range(len(self.G_nontriv))]
         self._L_names = [f'e_{i+1}' for i in range(dim)]
 
-        self.L_gens = []
-
-        # TODO: wrong assumption that L == ZZ^n
-        for i in range(dim):
-            tr = [0 for _ in range(dim)]
-            tr[i] = 1
-            self.L_gens.append(SpaceGroup_Element.from_translation(tr))
+        self.L_gens = [SpaceGroup_Element.from_translation(row) 
+                       for row in matrix(QQ, self.G.TranslationBasis())]
 
         self._gen2name = {}
         self._name2gen = {}
@@ -183,7 +226,9 @@ class SpaceGroup_gap:
 
             self._alpha[str(el)] = val.translation()
             self.snot.append(val)
-    
+
+        self._in_lattice_precalc = None
+
     def _rebuild_names(self): 
         self._gen2name = {}
         for name, el in zip(self._P_names + self._L_names, 
@@ -192,7 +237,7 @@ class SpaceGroup_gap:
             self._name2gen[f'{name}^(-1)'] = el.inverse()
             self._gen2name[str(el)] = name
             self._gen2name[str(el.inverse())] = f'{name}^(-1)'
-        
+    
     def in_alpha(self, sym):
         return str(sym) in self._alpha
 
@@ -200,9 +245,18 @@ class SpaceGroup_gap:
         P = MatrixGroup(self.P_gens)
         return normalizers(P, **kwargs)
 
-    def is_normalized(self):
+    def in_lattice_basis(self):
         """Returns whether L == ZZ^n.""" 
-        return True
+        if self._in_lattice_precalc is None: 
+            self._in_lattice_precalc = True
+            for i in range(self.dim):
+                tr = [0 for _ in range(self.dim)]
+                tr[i] = 1
+                if self.L_gens[i] != SpaceGroup_Element.from_translation(tr): 
+                    self._in_lattice_precalc = False
+                    break
+
+        return self._in_lattice_precalc
 
     def alpha(self, el: SpaceGroup_Element):
         p = el.linear_part() 
@@ -228,7 +282,7 @@ class SpaceGroup_gap:
         return True
 
     def contains(self, el: SpaceGroup_Element): 
-        if not self.is_normalized(): 
+        if not self.in_lattice_basis(): 
             raise NotImplementedError()
         
         p = el.linear_part() 
@@ -243,7 +297,7 @@ class SpaceGroup_gap:
         return self._is_integral(diff)
     
     def as_word(self, el: SpaceGroup_Element, readable=True): 
-        if not self.is_normalized(): 
+        if not self.in_lattice_basis(): 
             raise NotImplementedError()
 
         if el not in self: 
@@ -309,8 +363,7 @@ class SpaceGroup_gap:
     def is_symmorphic(self):
         return self.G.IsSymmorphicSpaceGroup()
 
-    def self_similar(self, T, verbose=False,
-        gen_alphabet=False, safe=True, change_basis=False):
+    def self_similar(self, T, verbose=False, safe=True):
         """Construct self-similar action for a crystallographic group
         given element of affine group that is conjugation for virtual
         endomorphism construction.
@@ -333,8 +386,6 @@ class SpaceGroup_gap:
             group
         verbose : bool
             True to show auxiliary messages
-        gen_alphabet : bool
-            True to use alphabet for generators instead of a_i
         safe : bool
             if True, then function raises error if `T` doesn't generate
             virtual endomorphism.
@@ -344,6 +395,9 @@ class SpaceGroup_gap:
         dict { (a, i): [j, b] }
             a self-similar action
         """
+
+        if not self.in_lattice_basis(): 
+            raise NotImplementedError()
 
         def phi(_g): 
             return T * _g * T.inverse() 
@@ -434,52 +488,22 @@ class SpaceGroup_gap:
             L equal to ZZ^dim
 
         """
+        G = gap(f"SpaceGroupOnLeftIT({dim}, {ita_num})")
 
         if change_basis:
-            return cls(to_L_basis(ita_num, dim=dim), dim)
-        else:
-            raise NotImplementedError()
+            gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
+            v = matrix(QQ, G.TranslationBasis()).T
+            trans = matrix(QQ, [0 for _ in range(dim)]).T
+            conj = block_matrix(QQ, [[v, trans], [0, 1]])
+            new_gens = [conj.inverse() * el * conj for el in gens]
+            return cls(gap.AffineCrystGroupOnLeft(new_gens), dim, ita_num)
+        else: 
+            return cls(G, dim, ita_num)
 
-
-def build_finite_group(gens, trivial, max_iter=MAX_ITERATIONS):
-    gens_extended = [trivial] + gens + [el.inverse() for el in gens]
-    names = (
-        [0]
-        + [i for i in range(1, len(gens) + 1)]
-        + [-i for i in range(1, len(gens) + 1)]
-    )
-
-    found = {str(gen): [name] for gen, name in zip(gens_extended, names)}
-
-    q = deque()
-    q.extend(gens_extended)
-
-    _n = 0
-    while q:
-        if _n > max_iter:
-            raise ValueError("seems infinite group")
-
-        x = q.popleft()
-        for y, y_name in zip(gens_extended, names):
-            tmp1 = x * y
-            tmp2 = y * x
-
-            if str(tmp1) not in found:
-                found[str(tmp1)] = found[str(x)] + [y_name]
-                q.append(tmp1)
-
-            if str(tmp2) not in found:
-                found[str(tmp2)] = [y_name] + found[str(x)]
-                q.append(tmp2)
-
-    return found
-
-
-def from_indices_list(gens, triv, seq):
-    res = copy(triv)
-    for mul in seq:
-        if mul:
-            gen = gens[abs(mul) - 1]
-            gen = gen if mul > 0 else gen.inverse()
-            res *= gen
-    return res
+    def to_lattice_basis(self): 
+        if self.in_lattice_basis(): 
+            return self
+        else: 
+            return self.__class__.from_gap_cryst(
+                self.ita_num, self.dim, change_basis=True
+            ) 

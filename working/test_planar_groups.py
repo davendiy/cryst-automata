@@ -4,16 +4,18 @@ from sage.all import matrix, QQ, ascii_art
 import random
 
 from src.space_groups import (
-    prepare_gap_env, to_L_basis,
+    prepare_gap_env, _to_L_basis,
     build_finite_group, from_indices_list, 
     SpaceGroup_Element, SpaceGroup_gap
     )
+
+from src.srdegrees import SR_Degrees
 
 
 def test_build_finite():
 
     for n in range(1, 17):
-        G = to_L_basis(n, dim=2)
+        G = _to_L_basis(n, dim=2)
         P = G.PointGroup()
         gens = [matrix(QQ, el) for el in P.GeneratorsOfGroup()]
 
@@ -63,32 +65,34 @@ def test_space_group():
 
 
 def test_word_space_group(): 
-    G = SpaceGroup_gap.from_gap_cryst(12, dim=2)
 
-    s_n = len(G.snot)
+    for n in [3, 4, 5, 9, 11, 13, 17]:
+        G = SpaceGroup_gap.from_gap_cryst(n, dim=2)
 
-    for _ in range(100): 
-        idx = random.randint(0, s_n-1)
-        x = SpaceGroup_Element(G.snot[idx])
+        s_n = len(G.snot)
 
-        k = random.randint(-100, 100)
-        j = random.randint(-100, 100)
+        for _ in range(100): 
+            idx = random.randint(0, s_n-1)
+            x = SpaceGroup_Element(G.snot[idx])
 
-        x._body[0, 2] += k
-        x._body[1, 2] += j
+            k = random.randint(-100, 100)
+            j = random.randint(-100, 100)
 
-        word = ''.join(G.as_word(x, readable=True))
-        if k:
-            assert (_t := f'e_1^({k})') in word, f"expected: {_t}, got: {word}"
-        if j: 
-            assert (_t := f'e_2^({j})') in word, f"expected: {_t}, got: {word}"
+            x._body[0, 2] += k
+            x._body[1, 2] += j
 
-    for _ in range(1000): 
-        x = G.random_element()
-        it_seq = G.as_word(x, readable=False)
-        res = from_indices_list(G.G_sorted_gens, SpaceGroup_Element(G.G_triv), it_seq)
+            word = ''.join(G.as_word(x, readable=True))
+            if k:
+                assert (_t := f'e_1^({k})') in word, f"expected: {_t}, got: {word}"
+            if j: 
+                assert (_t := f'e_2^({j})') in word, f"expected: {_t}, got: {word}"
 
-        assert str(res) == str(x), f"expected: \n{x}, got: \n{res}, {it_seq}"
+        for _ in range(100): 
+            x = G.random_element()
+            it_seq = G.as_word(x, readable=False)
+            res = from_indices_list(G.G_sorted_gens, SpaceGroup_Element(G.G_triv), it_seq)
+
+            assert str(res) == str(x), f"expected: \n{x}, got: \n{res}, {it_seq}"
 
 
 def test_normalizers():
@@ -107,13 +111,28 @@ def test_self_similar():
         [0, 0, 1]
     ])
 
-    G.self_similar(T, verbose=True)
+    G.self_similar(T, verbose=False)
+
+
+def test_srdegrees(): 
+    x = SR_Degrees(13)
+    x.algorithm()
+    
+
+def test_other_basis(): 
+    G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
+    assert not G.in_lattice_basis()
+
 
 if __name__ == "__main__": 
     prepare_gap_env()
-    # test_build_finite()
-    # test_space_group()
-    # test_word_space_group()
-    # test_normalizers()
+    test_build_finite()
+    test_space_group()
+    test_word_space_group()
+    test_normalizers()
     test_self_similar()
+    test_other_basis()
+
+    # test_srdegrees()
+
     print('all good.✅')
