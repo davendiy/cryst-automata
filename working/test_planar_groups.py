@@ -3,7 +3,7 @@ from sage.all import matrix, QQ
 
 import random
 
-from src.planar_groups import (
+from space_groups import (
     prepare_gap_env, to_L_basis,
     build_finite_group, from_indices_list, 
     SpaceGroup_Element, SpaceGroup_gap

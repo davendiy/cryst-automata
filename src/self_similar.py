@@ -4,7 +4,7 @@ from sage.all import matrix, QQ, gap, copy
 from itertools import product
 from collections import deque
 
-from .normalizer import to_L_basis
+from .space_groups import to_L_basis
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 

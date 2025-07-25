@@ -2,7 +2,8 @@
 from sage.all import (latex, matrix, ascii_art, 
                       block_matrix, QQ, var, solve, SR, factor)
 
-from normalizer import normalizers
+
+from .normalizer import normalizers
 
 
 class SR_Degrees:

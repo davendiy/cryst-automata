@@ -2,11 +2,10 @@
 
 from sage.all import gap, matrix, QQ, var, solve, MatrixGroup
 
-from itertools import permutations
+from .space_groups import to_L_basis
+
 from collections import defaultdict
 from warnings import warn
-import os
-
 
 
 # noinspection PyShadowingNames
@@ -34,7 +33,6 @@ def el2word(G, el, gens=None, verbose=False):
     """Represent, given an element of a finite group G,
     as the word over generators."""
 
-    prepare_gap_env()
     gap.set('G', G)
     gap.set('g', el)
 
@@ -136,112 +134,6 @@ def sol2matrix(solution, dim=2, use_alphabet=False):
     return A
 
 
-# noinspection PyShadowingNames
-def normalizers_old(n, dim=2, use_alphabet=False, verbose=False, normalize_exp=True,
-                to_matrix=True, ignore_trivial=True):
-    """Find normalizer of the PointGroup in GL(n, QQ).
-
-    Tries to find normalizer as a solution of
-    system of linear equations N*A_i = A_j*N, where A_i and A_j are
-    two elements of the PointGroup with respect to a permutation. Since
-    Normalizer is a group N, that satisfies condition NA = AN,
-    we can check all the permutations of A and solve the respective system
-    of linear equations.
-
-    Baseline version, slow.
-
-    Parameters
-    ----------
-    n : int
-        index of the Crystallographic group in the Gap CrystCat package
-    dim : int
-        dimension of crystallographic group
-    use_alphabet : bool
-        if True, then symbolic matrices are created like
-                                [a, b]
-                                [c, d]
-        if False, then
-                            [a_00, a_01]
-                            [a_10, a_11]
-    normalize_exp : bool
-        if True, then solution of the linear system will be
-        normalized, i.e. all the independed variables will be
-        renamed into x_0, x_1, x_2 ...
-    to_matrix : bool
-        if True, then the result solutions will be transformed
-        into symbolic matrices instead of tuple of Expressions
-    verbose : bool
-        True to see the results on the fly.
-    ignore_trivial : bool
-        if True then solutions with zero determinant will be ignored
-
-    Returns
-    -------
-    If `to_matrix` is True, then list of symbolic matrices is returned.
-    Else, list of tuples of expressions like "a_00 == x1" which denotes
-         what elements of matrix should be
-    """
-
-    G = gap(f'SpaceGroupOnLeftIT({dim}, {n})')
-    S = G.PointGroup()
-    s_elements = [matrix(QQ, el) for el in S.AsList()]
-
-    if verbose:
-        print('\n====================================================')
-        print(n, 'point group:', S)
-
-        print('group elements:')
-        print(*s_elements, sep='\n')
-        print('\n----------------normalizers-------------------------')
-
-    A, args = create_symbolic_matrix(dim=dim, use_alphabet=use_alphabet)
-
-    found_solutions = set()
-    for perm in permutations(range(len(s_elements))):
-
-        # check whether permutation maps elements with same order
-        check = True
-        for i in range(len(s_elements)):
-            if S.AsList()[i + 1].Order() != S.AsList()[perm[i] + 1].Order():
-                check = False
-                break
-        if not check:
-            continue
-
-        # build conditions AX = YA for every X -> Y due to chosen permutation
-        cond_perm = set()
-        for i in range(len(s_elements)):
-            cond_i = A * s_elements[i] - s_elements[perm[i]] * A
-            for el in cond_i:
-                cond_perm = cond_perm.union(set(el))
-
-        eq = [cond == 0 for cond in cond_perm]
-        for res in solve(eq, *args):
-            if not res:
-                if verbose: 
-                    print(res)
-                continue
-            res = tuple(res)
-            if normalize_exp:
-                res = normalize_expressions(res, allowed=args)
-
-            if res not in found_solutions and verbose:
-                if to_matrix:
-                    mtx = sol2matrix(res, dim=dim, use_alphabet=use_alphabet)
-                    if ignore_trivial and mtx.det() == 0:
-                        continue
-                    print(mtx, end='\n\n')
-                else:
-                    print(res)
-
-            found_solutions.add(res)
-
-    if to_matrix:
-        return [sol2matrix(solution, dim=dim, use_alphabet=use_alphabet) for solution in found_solutions]
-    else:
-        return found_solutions
-
-
 def els_by_order(group_elements):
     res = defaultdict(list)
 
@@ -287,10 +179,6 @@ def get_point_group_gens(cryst_num, dim=3, to_l_basis=False):
     return [matrix(QQ, el) for el in gens]
 
 
-# fixme: ensure all works the same way as normalizers_v1.
-#   Make tests for all the parameters
-#   refactor maybe
-# noinspection PyShadowingNames
 def normalizers(n, dim=2, verbose=False, use_alphabet=False,
                    normalize_exp=True, to_matrix=True, ignore_trivial=True,
                    to_l_basis=False):
