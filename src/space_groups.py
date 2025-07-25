@@ -18,6 +18,15 @@ from .normalizer import normalizers
 MAX_ITERATIONS = 1_000_000
 
 
+# TODO: 
+#   - [ ] possibility to create SpaceGroup from only generators 
+#   - [ ] function to get lattice basis 
+#   - [ ] use lattice basis to check whether g in G for arbitrary G: 
+#     g in G <=>  L(g) in L(G)
+#   - [ ] use previous in self-similar method instead of Gap's one 
+#   - [ ] LeftTransversal instead of Gap's RightTransvesal
+
+
 def prepare_gap_env(use_3d_gap=True):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(dir_path, "el2word.g")
@@ -232,6 +241,7 @@ class SpaceGroup_gap:
 
     def _rebuild_names(self): 
         self._gen2name = {}
+        self._name2gen = {}
         for name, el in zip(self._P_names + self._L_names, 
                             self.G_nontriv + self.L_gens): 
             self._name2gen[name] = el
