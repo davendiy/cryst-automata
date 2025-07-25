@@ -306,9 +306,118 @@ class SpaceGroup_gap:
         self._L_names = names
         self._rebuild_names()
 
-
     def is_symmorphic(self):
         return self.G.IsSymmorphicSpaceGroup()
+
+    def self_similar(self, T, verbose=False,
+        gen_alphabet=False, safe=True, change_basis=False):
+        """Construct self-similar action for a crystallographic group
+        given element of affine group that is conjugation for virtual
+        endomorphism construction.
+
+        Parameters
+        ----------
+        T : matrix of dimension `dim` + 1
+            an element of the affine group A(dim) that can be represented as
+            (M + t), where M is a `dim`x`dim` matrix and t is a vector that represents
+            translation. Should be given in a matrix form, i.e. (M + t) is a
+            block matrix:
+                            _           _
+                            ||     |     ||
+                            ||  M  |  t  ||
+                            ||_____|_____||
+                            ||  0  |  1  ||
+                            -           -
+            dim : int
+            dimension of euclidean space, where we consider a crystallographic
+            group
+        verbose : bool
+            True to show auxiliary messages
+        gen_alphabet : bool
+            True to use alphabet for generators instead of a_i
+        safe : bool
+            if True, then function raises error if `T` doesn't generate
+            virtual endomorphism.
+        
+        Returns
+        -------
+        dict { (a, i): [j, b] }
+            a self-similar action
+        """
+
+        def phi(_g): 
+            return T * _g * T.inverse() 
+        
+        def phi_inv(_g): 
+            return T.inverse() * _g * T 
+
+        if verbose:
+            print("=====================================================================")
+
+        # check whether there exists virtual endomorphism
+        gens_H = []
+        for el in self.G_gens:
+            conj = phi_inv(el)
+            if verbose:
+                print("\nconjugate el:")
+                print(conj)
+                print("conj in G:", conj in self)
+            if conj not in self and safe:
+                raise ValueError("Bad matrix T, there is no virtual endomorphism")
+            elif conj not in self:
+                print("Bad matrix T, there is no virtual endomorphism")
+                return -1
+
+            gens_H.append(conj._body)
+
+        # create subgroup as image of virtual endomorphism
+        H = self.G.Subgroup(gens_H)
+
+        if verbose:
+            print("----------------------------------------------------")
+            print("Index of subgroup H:", self.G.Index(H))
+
+        trans = self.G.RightTransversal(H)   # походу треба LeftTransversal
+        trans_els = [SpaceGroup_Element(matrix(QQ, el)) for el in trans.AsList()]
+        if verbose:
+            print("Transversal:")
+            print(*trans_els, sep='\n\n')
+
+        # create self-similar action
+        res_map = {}
+        for a in self.G_gens:
+
+            # NOTE: ENUMERATION STARTS FROM 1
+            for i, d_i in enumerate(trans_els, 1):
+                adi = a * d_i
+
+                if verbose:
+                    print(f"{self._gen2name[str(a)]}d_{i}:")
+                    print(adi, end='\n\n')
+
+                # (a * d_i)^{-1} * (a * d_i) = e \in H
+                # ==> d_j^{-1} = (a * d_i)^{-1}
+                #
+                # firstly, find coset for (a * d_i)^{-1}
+
+                # замість цього треба самому написати
+                d_j_index = trans.PositionCanonical(adi.inverse()._body)
+
+                # then get d_j^{-1}^{-1}
+                d_j = trans_els[int(d_j_index) - 1].inverse()
+
+                if (d_j.inverse() * a * d_i)._body not in H:
+                    raise ValueError(f"This shouln't happen--wrong coset: {(a, d_i, d_j)}")
+
+                # conjugation in the right direction, i.e. apply \phi(d_j^{-1} a d_i)
+                tmp_res = phi(d_j.inverse() * a * d_i)
+                
+                if verbose: 
+                    print('image:', tmp_res, sep='\n')
+
+                res_map[(self._gen2name[str(a)], i)] = (int(d_j_index), tmp_res)
+                                                
+        return res_map
 
     @classmethod
     def from_gap_cryst(cls, ita_num, dim=3, change_basis=True):

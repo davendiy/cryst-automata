@@ -96,10 +96,24 @@ def test_normalizers():
     print(ascii_art(G.point_group_normalizer(ignore_trivial=True))) 
 
 
+
+def test_self_similar(): 
+
+    G = SpaceGroup_gap.from_gap_cryst(13, dim=2)
+
+    T = matrix(QQ, [
+        [-1/3, 2/3, 0], 
+        [1/3, 1/3, 0], 
+        [0, 0, 1]
+    ])
+
+    G.self_similar(T, verbose=True)
+
 if __name__ == "__main__": 
     prepare_gap_env()
-    test_build_finite()
-    test_space_group()
-    test_word_space_group()
-    test_normalizers()
+    # test_build_finite()
+    # test_space_group()
+    # test_word_space_group()
+    # test_normalizers()
+    test_self_similar()
     print('all good.✅')
