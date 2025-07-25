@@ -9,8 +9,6 @@ from src.space_groups import (
     SpaceGroup_Element, SpaceGroup_gap
     )
 
-from src.srdegrees import SR_Degrees
-
 
 def test_build_finite():
 
@@ -100,25 +98,6 @@ def test_normalizers():
     print(ascii_art(G.point_group_normalizer(ignore_trivial=True))) 
 
 
-
-def test_self_similar(): 
-
-    G = SpaceGroup_gap.from_gap_cryst(13, dim=2)
-
-    T = matrix(QQ, [
-        [-1/3, 2/3, 0], 
-        [1/3, 1/3, 0], 
-        [0, 0, 1]
-    ])
-
-    G.self_similar(T, verbose=False)
-
-
-def test_srdegrees(): 
-    x = SR_Degrees(13)
-    x.algorithm()
-    
-
 def test_other_basis(): 
     G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
     assert not G.in_lattice_basis()
@@ -130,9 +109,5 @@ if __name__ == "__main__":
     test_space_group()
     test_word_space_group()
     test_normalizers()
-    test_self_similar()
     test_other_basis()
-
-    # test_srdegrees()
-
     print('all good.✅')

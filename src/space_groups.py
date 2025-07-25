@@ -10,6 +10,7 @@ from sage.all import (
     matrix,
     MatrixGroup,
     sign,
+    Permutation,
 )
 
 from .normalizer import normalizers
@@ -507,3 +508,36 @@ class SpaceGroup_gap:
             return self.__class__.from_gap_cryst(
                 self.ita_num, self.dim, change_basis=True
             ) 
+
+    def _wreath_recursion(self, action_dict):
+
+        n = max(k[1] for k in action_dict)
+        
+        w_el = {}
+        w_p = {}
+        for k, v in action_dict.items(): 
+            el, let = k 
+            if el not in w_el:
+                w_el[el] = [None for _ in range(n)]
+            if el not in w_p: 
+                w_p[el] = [None for _ in range(n)]
+
+            w_el[el][let-1] = ''.join(self.as_word(v[1], readable=True))
+            w_p[el][let-1] = v[0]
+
+        print('Вінцева рекурсія:')
+        for el in w_el.keys(): 
+            p = Permutation(w_p[el])
+            if p.to_permutation_group_element().order() == 1: 
+                p = '()'
+            else: 
+                p = str(p.cycle_tuples())
+            
+            print(f'$${el} = {p}{w_el[el]}$$'.replace("'", '')\
+                  .replace('[', '(').replace(']', ')')\
+                    .replace('(-1)', '{-1}')\
+                    .replace('^(1)', ''))
+
+        print('```')
+        print(self._name2gen)
+        print('```')    
