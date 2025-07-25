@@ -8,9 +8,11 @@ from sage.all import (
     copy,
     gap,
     matrix,
+    MatrixGroup,
     sign,
 )
 
+from .normalizer import normalizers
 
 MAX_ITERATIONS = 1_000_000
 
@@ -172,7 +174,7 @@ class SpaceGroup_gap:
         self._P_dict = build_finite_group(self.P_gens, self.P_triv, self.max_iterations)
 
         self._alpha = {str(self.P_triv) : self.G_triv.translation()}
-        self.snot = []
+        self.snot = [self.G_triv]
 
         for el, seq in self._P_dict.items():
             val = from_indices_list(self.G_nontriv, self.G_triv, seq)
@@ -194,6 +196,10 @@ class SpaceGroup_gap:
     def in_alpha(self, sym):
         return str(sym) in self._alpha
 
+    def point_group_normalizer(self, **kwargs): 
+        P = MatrixGroup(self.P_gens)
+        return normalizers(P, **kwargs)
+
     def is_normalized(self):
         """Returns whether L == ZZ^n.""" 
         return True
@@ -209,6 +215,9 @@ class SpaceGroup_gap:
             return False 
         
         return self.contains(el)
+
+    def point_group_elements(self): 
+        return [el.linear_part() for el in self.snot]
 
     @staticmethod
     def _is_integral(translation): 

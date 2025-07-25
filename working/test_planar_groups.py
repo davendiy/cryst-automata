@@ -1,9 +1,9 @@
 
-from sage.all import matrix, QQ
+from sage.all import matrix, QQ, ascii_art
 
 import random
 
-from space_groups import (
+from src.space_groups import (
     prepare_gap_env, to_L_basis,
     build_finite_group, from_indices_list, 
     SpaceGroup_Element, SpaceGroup_gap
@@ -11,7 +11,6 @@ from space_groups import (
 
 
 def test_build_finite():
-    prepare_gap_env()
 
     for n in range(1, 17):
         G = to_L_basis(n, dim=2)
@@ -92,8 +91,15 @@ def test_word_space_group():
         assert str(res) == str(x), f"expected: \n{x}, got: \n{res}, {it_seq}"
 
 
+def test_normalizers():
+    G = SpaceGroup_gap.from_gap_cryst(7, dim=2) 
+    print(ascii_art(G.point_group_normalizer(ignore_trivial=True))) 
+
+
 if __name__ == "__main__": 
+    prepare_gap_env()
     test_build_finite()
     test_space_group()
     test_word_space_group()
+    test_normalizers()
     print('all good.✅')

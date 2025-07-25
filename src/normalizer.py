@@ -2,14 +2,10 @@
 
 from sage.all import gap, matrix, QQ, var, solve, MatrixGroup
 
-from .space_groups import to_L_basis
-
 from collections import defaultdict
 from warnings import warn
 
 
-# noinspection PyShadowingNames
-# ruff: noqa: F821
 def normalize_expressions(exps, allowed=None):
     """Replace all variables except allowed (default: a b c d) with {x0,x1,x2,x3...}"""
     extra_args = set()
@@ -28,57 +24,9 @@ def normalize_expressions(exps, allowed=None):
     return tuple(res)
 
 
-# noinspection PyShadowingNames
-def el2word(G, el, gens=None, verbose=False):
-    """Represent, given an element of a finite group G,
-    as the word over generators."""
-
-    gap.set('G', G)
-    gap.set('g', el)
-
-    if gens is None:
-        gens = G.GeneratorsOfGroup()
-
-    gens_dict = {f'g_{i}': el for i, el in enumerate(list(gens))}
-
-    gens = '"' + '", "'.join(sorted(gens_dict.keys())) + '"'
-    expression = f'FreeGroup({gens})'
-    if verbose:
-        print("Free group to be created:", expression)
-        print("Translation of generators:", gens_dict)
-
-    gap.set("F", expression)
-
-    res = gap('ElementAsWordGeneratorsPointGroup(G, g, F)')
-    return str(res).split("*"), gens_dict
-
-
-# noinspection PyShadowingNames
-def extend_permutation(G, el, gens, maps_to):
-    """Extend given permutation on generators onto the entire group."""
-    word, trans = el2word(G, el, gens=gens)
-
-    if el == G.One():
-        return el
-
-    res = G.One()
-    for g in word:
-        power = 1
-        if "^" in g:
-            g, power = g.split('^')
-            power = int(power)
-        index = gens.index(trans[g])
-        g_to = maps_to[index]
-        #         index_to = perm[index]
-        #         g_to = gens[index_to] ** power
-        res *= g_to ** power
-    return res
-
-
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 
-# noinspection PyShadowingNames
 def create_symbolic_matrix(dim, use_alphabet=False):
     """Create symbolic matrix of given dimention.
 
@@ -170,18 +118,8 @@ def _carthesian_wo_duplicates(*spaces):
             used.remove(str(el))
 
 
-def get_point_group_gens(cryst_num, dim=3, to_l_basis=False):
-    if to_l_basis:
-        group = to_L_basis(cryst_num, dim=dim)
-    else:
-        group = gap(f"SpaceGroupOnLeftIT({dim}, {cryst_num})")
-    gens = group.PointGroup().MinimalGeneratingSet()
-    return [matrix(QQ, el) for el in gens]
-
-
-def normalizers(n, dim=2, verbose=False, use_alphabet=False,
-                   normalize_exp=True, to_matrix=True, ignore_trivial=True,
-                   to_l_basis=False):
+def normalizers(P, verbose=False, use_alphabet=False,
+                normalize_exp=True, to_matrix=True, ignore_trivial=True):
     """Find normalizer of the PointGroup in GL(n, QQ).
 
     Tries to find normalizer as a solution of
@@ -193,10 +131,9 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
 
     Parameters
     ----------
-    n : int
-        index of the Crystallographic group in the Gap CrystCat package
-    dim : int
-        dimension of crystallographic group
+    P : MatrixGroup
+        the respective PointGroup
+
     use_alphabet : bool
         if True, then symbolic matrices are created like
                                 [a, b]
@@ -222,17 +159,17 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
     Else, list of tuples of expressions like "a_00 == x1" which denotes
          what elements of matrix should be
     """
-    S = MatrixGroup(get_point_group_gens(n, dim=dim, to_l_basis=to_l_basis))
-    gens = S.gens()
-    s_elements = list(S)
-    possible_mappings = gens_mappings(gens, s_elements)
+    P_elements = list(P)
+    dim = matrix(QQ, P_elements[0]).dimensions()[0]
+
+    possible_mappings = gens_mappings(P.gens(), P_elements)
 
     if verbose:
         print('\n====================================================')
-        print(n, 'point group:', S)
+        print('point group:', P)
 
         print('group elements:')
-        print(*s_elements, sep='\n')
+        print(*P_elements, sep='\n')
         print('\n----------------normalizers-------------------------')
 
     A, args = create_symbolic_matrix(dim, use_alphabet=use_alphabet)
@@ -245,7 +182,7 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
         # build conditions AX = YA for every X -> Y due to chosen permutation
         cond_perm = set()
         try:
-            homm = S.hom(maps_to)
+            homm = P.hom(maps_to)
         except ValueError:
             warn(f'Something went wrong: couldnt create homomorphism for {maps_to}')
             continue
@@ -254,7 +191,7 @@ def normalizers(n, dim=2, verbose=False, use_alphabet=False,
         if not homm.kernel().is_trivial(): 
             continue 
         
-        for X in s_elements:
+        for X in P_elements:
             Y = homm(X)
 
             X, Y = matrix(QQ, X), matrix(QQ, Y)
