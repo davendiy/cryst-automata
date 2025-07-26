@@ -62,6 +62,36 @@ def test_space_group():
     assert test2 not in G
 
 
+def test_space_group2(): 
+    G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
+
+    for el in G.G_gens: 
+        assert el in G
+
+    for x in G.snot: 
+        assert x in G 
+
+    for x in G.snot: 
+        for y in G.snot: 
+            assert (x * y) in G
+
+
+    test1 = SpaceGroup_Element(
+        matrix(QQ, [[-1, 0, 1/2], 
+                    [0, 1, 0], 
+                    [0, 0, 1]])
+    )
+
+    assert test1 not in G
+
+    test2 = SpaceGroup_Element(
+            matrix(QQ, [[1, 0, 1/2], 
+                        [0, 1, 0], 
+                        [0, 0, 1]])
+        )
+    assert test2 not in G
+
+
 def test_word_space_group(): 
 
     for n in [3, 4, 5, 9, 11, 13, 17]:
@@ -114,6 +144,7 @@ if __name__ == "__main__":
     prepare_gap_env()
     test_build_finite()
     test_space_group()
+    test_space_group2()
     test_word_space_group()
     test_normalizers()
     test_other_basis()

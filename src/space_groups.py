@@ -249,7 +249,7 @@ class SpaceGroup_gap:
             self._alpha[str(el)] = val.translation()
             self.snot.append(val)
 
-        self._in_lattice_precalc = None
+        self._lattice_precalc = None
 
     def _rebuild_names(self): 
         self._gen2name = {}
@@ -300,7 +300,8 @@ class SpaceGroup_gap:
 
     def contains(self, el: SpaceGroup_Element): 
         if not self.in_lattice_basis(): 
-            raise NotImplementedError()
+            el = self._change_basis([el._body], self._tr_basis)[0]
+            return SpaceGroup_Element(el) in self.to_lattice_basis()
         
         p = el.linear_part() 
         if not self.in_alpha(p):
@@ -551,16 +552,17 @@ class SpaceGroup_gap:
 
     def change_basis(self, basis: matrix): 
         new_gens = self._change_basis([el._body for el in self.G_sorted_gens], 
-                                      basis)
-        
-        print(ascii_art(new_gens))
+                                      basis)        
+        # print(ascii_art(new_gens))
         return self.__class__.from_gens(new_gens)
 
     def to_lattice_basis(self): 
         if self.in_lattice_basis(): 
             return self
-        else: 
-            return self.change_basis(self._tr_basis)
+
+        if self._lattice_precalc is None: 
+            self._lattice_precalc = self.change_basis(self._tr_basis)
+        return self._lattice_precalc
 
     def _wreath_recursion(self, action_dict):
 
