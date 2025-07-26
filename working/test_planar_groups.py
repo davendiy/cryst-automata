@@ -101,6 +101,13 @@ def test_normalizers():
 def test_other_basis(): 
     G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
     assert not G.in_lattice_basis()
+    G_prime = G.to_lattice_basis()
+
+    G_expected = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=True)
+    assert G_expected.in_lattice_basis()
+
+    for p_exp, p_got in zip(G_expected.snot, G_prime.snot): 
+        assert str(p_exp) == str(p_got), f"expected: \n{p_exp} got: \n{p_got}"
 
 
 if __name__ == "__main__": 

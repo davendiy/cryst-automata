@@ -33,13 +33,13 @@ def test_wreath_recursion():
 
 
 def test_srdegrees(): 
-    x = SR_Degrees(13)
+    x = SR_Degrees(7)
     x.algorithm()
     
 
 if __name__ == '__main__': 
     prepare_gap_env()
     test_self_similar() 
-    test_wreath_recursion()
-    # test_srdegrees()
+    # test_wreath_recursion()
+    test_srdegrees()
     print('all good.✅')

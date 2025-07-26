@@ -2,8 +2,6 @@
 from sage.all import (latex, matrix, ascii_art, 
                       block_matrix, QQ, var, solve, SR, factor)
 
-
-from .normalizer import normalizers
 from .space_groups import SpaceGroup_gap
 
 
@@ -33,13 +31,13 @@ class SR_Degrees:
     def header(self):
         print(self.title)
         print("Generators of group:")
-        print(self.display([matrix(QQ, el) for el in self.G.G.GeneratorsOfGroup()]))
+        print(self.display([matrix(QQ, el) for el in self.G.gap_G.GeneratorsOfGroup()]))
         print("SNoT")
         print(self.display(self.G.snot))
 
     def construct_congruences(self, A, A_inv):
-        alpha = self.G.alpha
-        P = self.G.P
+        G = self.G
+        P = self.G.point_group_elements()
         snot = self.G.snot
         a0, a1 = var("a0 a1")
         x = matrix([[a0], [a1]])
@@ -50,14 +48,14 @@ class SR_Degrees:
         for i, g in enumerate(P):
             conj = (A * g * A_inv).simplify_rational()
             # conj = g
-            condition = A_inv * alpha[str(g)] - alpha[str(conj)]
+            condition = A_inv * G.alpha(g) - G.alpha(conj)
             sym_res = (conj - E) * x
 
             # print(pref + '\\alpha(g) = ')
             # print(display(alpha[str(g)], use_pref=False) + pref)
             # print(pref + '\\alpha\\left(\\tau\\left(' + display(g) + '\\right)\\right) = ')
 
-            alpha_conj = (E - conj) * x + A_inv() * alpha[str(g)]
+            alpha_conj = (E - conj) * x + A_inv() * G.alpha(g)
             # if disp == 'latex':
             #     print(pref + '(A^{-1}, a)' + display(block_matrix([[g, alpha[str(g)]], [0, 1]]), use_pref=False) + '(A, -Aa) = ')
             #     print(display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + '=')
@@ -76,7 +74,7 @@ class SR_Degrees:
                     self.pref
                     + "(A^{-1}, a)"
                     + self.display(
-                        block_matrix([[g, alpha[str(g)]], [0, 1]]), use_pref=False
+                        block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False
                     )
                     + "(A, -Aa) = "
                 )
@@ -88,7 +86,7 @@ class SR_Degrees:
                 )
                 print(
                     self.display(
-                        block_matrix([[conj, alpha[str(conj)]], [0, 1]]), use_pref=False
+                        block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False
                     )
                     + self.pref
                 )
@@ -107,7 +105,7 @@ class SR_Degrees:
                     + ascii_art(" ")
                     + ascii_art(
                         block_matrix(
-                            [[snot[i][:2, :2], alpha[str(snot[i][:2, :2])]], [0, 1]]
+                            [[snot[i].linear_part(), G.alpha(snot[i].linear_part())], [0, 1]]
                         )
                     )
                 )

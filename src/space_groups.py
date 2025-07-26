@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import os
 from collections import deque
 
 import numpy as np
 from sage.all import (
     QQ,
+    ascii_art,
     block_matrix,
     copy,
     gap,
@@ -13,14 +16,16 @@ from sage.all import (
     Permutation,
 )
 
+from typing import Iterable
+
 from .normalizer import normalizers
 
 MAX_ITERATIONS = 1_000_000
 
 
 # TODO: 
-#   - [ ] possibility to create SpaceGroup from only generators 
-#   - [ ] function to get lattice basis 
+#   - [x] possibility to create SpaceGroup from only generators 
+#   - [x] function to get lattice basis 
 #   - [ ] use lattice basis to check whether g in G for arbitrary G: 
 #     g in G <=>  L(g) in L(G)
 #   - [ ] use previous in self-similar method instead of Gap's one 
@@ -112,7 +117,7 @@ class SpaceGroup_Element:
             mtx = copy(mtx._body)
 
         assert mtx.dimensions()[0] == mtx.dimensions()[1]
-        self._body = mtx
+        self._body = matrix(mtx)
 
     def inverse(self):
         return type(self)(self._body.inverse())
@@ -142,15 +147,15 @@ class SpaceGroup_Element:
 
     @property
     def dim(self):
-        return self._body.dimensions()[0]
+        return self._body.dimensions()[0] - 1
 
     def linear_part(self):
         n = self.dim
-        return self._body[: n - 1, : n - 1]
+        return self._body[:n, :n]
 
     def translation(self):
-        n = self.dim
-        return self._body[: n - 1, -1]
+        n = self.dim 
+        return self._body[:n, -1]
 
     @classmethod
     def construct_element(cls, linear, trans):
@@ -197,25 +202,32 @@ class SpaceGroup_Element:
 class SpaceGroup_gap:
     max_iterations = MAX_ITERATIONS
 
-    def __init__(self, gap_G, dim, ita_num):
-        self.G = gap_G
+    def __init__(self, generators: Iterable[SpaceGroup_Element], 
+                 gap_G=None, dim=2, ita_num=None):
+        """Don't use the constructor explicitly. Instead use class method 
+        `from_gap_cryst` or `from_gens`.
+        """
+        self.gap_G = gap_G
         self.dim = dim
         self.ita_num = ita_num
 
-        self.P = self.G.PointGroup()
+        self.gap_P = self.gap_G.PointGroup()
 
         self.P_triv = matrix.identity(QQ, self.dim)
         self.G_triv = SpaceGroup_Element(matrix.identity(QQ, self.dim + 1))
 
-        self.G_gens = [
-            SpaceGroup_Element.from_gap_element(el) for el in self.G.GeneratorsOfGroup()
-        ]
+        self.G_gens = copy(generators)
+
         self.G_nontriv = [el for el in self.G_gens if el.linear_part() != self.P_triv]
         self._P_names = [f'g_{i+1}' for i in range(len(self.G_nontriv))]
         self._L_names = [f'e_{i+1}' for i in range(dim)]
 
-        self.L_gens = [SpaceGroup_Element.from_translation(row) 
-                       for row in matrix(QQ, self.G.TranslationBasis())]
+        # TODO: wrong assumption that all the elementary vectors would be in the generating set 
+        self.L_gens = [el for el in self.G_gens if el.linear_part() == self.P_triv]
+        if len(self.L_gens) != dim: 
+            raise NotImplementedError(f"not enough generators: {len(self.L_gens)}")
+
+        self._tr_basis = matrix(QQ, [el.translation().column(0) for el in self.L_gens]).T
 
         self._gen2name = {}
         self._name2gen = {}
@@ -258,19 +270,13 @@ class SpaceGroup_gap:
 
     def in_lattice_basis(self):
         """Returns whether L == ZZ^n.""" 
-        if self._in_lattice_precalc is None: 
-            self._in_lattice_precalc = True
-            for i in range(self.dim):
-                tr = [0 for _ in range(self.dim)]
-                tr[i] = 1
-                if self.L_gens[i] != SpaceGroup_Element.from_translation(tr): 
-                    self._in_lattice_precalc = False
-                    break
+        return self._tr_basis == self.P_triv
 
-        return self._in_lattice_precalc
-
-    def alpha(self, el: SpaceGroup_Element):
-        p = el.linear_part() 
+    def alpha(self, el):
+        if isinstance(el, SpaceGroup_Element):
+            p = el.linear_part() 
+        else: 
+            p = el
         if not self.in_alpha(p):
             raise ValueError(f"element: {el} is not in the group.")
         return self._alpha[str(p)]
@@ -371,8 +377,22 @@ class SpaceGroup_gap:
         self._L_names = names
         self._rebuild_names()
 
+    def is_isomorphic(self, other: SpaceGroup_gap): 
+        # TODO: just go to lattice basis and check isomorphism between point groups 
+        #        and snot?
+
+        raise NotImplementedError() 
+
+    def get_ITA(self): 
+        if self.ita_num is not None: 
+            return self.ita_num
+        else: 
+
+            # TODO: go through every space group and check isomorphism 
+            raise NotImplementedError()
+
     def is_symmorphic(self):
-        return self.G.IsSymmorphicSpaceGroup()
+        return self.gap_G.IsSymmorphicSpaceGroup()
 
     def self_similar(self, T, verbose=False, safe=True):
         """Construct self-similar action for a crystallographic group
@@ -436,13 +456,13 @@ class SpaceGroup_gap:
             gens_H.append(conj._body)
 
         # create subgroup as image of virtual endomorphism
-        H = self.G.Subgroup(gens_H)
+        H = self.gap_G.Subgroup(gens_H)
 
         if verbose:
             print("----------------------------------------------------")
-            print("Index of subgroup H:", self.G.Index(H))
+            print("Index of subgroup H:", self.gap_G.Index(H))
 
-        trans = self.G.RightTransversal(H)   # походу треба LeftTransversal
+        trans = self.gap_G.RightTransversal(H)   # походу треба LeftTransversal
         trans_els = [SpaceGroup_Element(matrix(QQ, el)) for el in trans.AsList()]
         if verbose:
             print("Transversal:")
@@ -503,21 +523,44 @@ class SpaceGroup_gap:
 
         if change_basis:
             gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
-            v = matrix(QQ, G.TranslationBasis()).T
-            trans = matrix(QQ, [0 for _ in range(dim)]).T
-            conj = block_matrix(QQ, [[v, trans], [0, 1]])
-            new_gens = [conj.inverse() * el * conj for el in gens]
-            return cls(gap.AffineCrystGroupOnLeft(new_gens), dim, ita_num)
+            new_gens = cls._change_basis(gens, matrix(QQ, G.TranslationBasis()).T)
+            return cls([SpaceGroup_Element(el) for el in new_gens], 
+                       gap.AffineCrystGroupOnLeft(new_gens), dim, ita_num)
         else: 
-            return cls(G, dim, ita_num)
+            return cls(
+                [
+                    SpaceGroup_Element.from_gap_element(el) 
+                        for el in G.GeneratorsOfGroup()
+                ],
+                G, dim, ita_num
+            )
+
+    @classmethod
+    def from_gens(cls, generators: Iterable[matrix]):
+        gens = [SpaceGroup_Element(el) for el in generators]
+        dim = gens[0].dim
+        return cls(gens, gap.AffineCrystGroupOnLeft(generators), dim, None)
+
+    @staticmethod
+    def _change_basis(gens, basis: matrix):
+        dim = basis.dimensions()[0]
+        trans = matrix(QQ, [0 for _ in range(dim)]).T
+        conj = block_matrix(QQ, [[basis, trans], [0, 1]])
+        new_gens = [conj.inverse() * el * conj for el in gens]
+        return new_gens
+
+    def change_basis(self, basis: matrix): 
+        new_gens = self._change_basis([el._body for el in self.G_sorted_gens], 
+                                      basis)
+        
+        print(ascii_art(new_gens))
+        return self.__class__.from_gens(new_gens)
 
     def to_lattice_basis(self): 
         if self.in_lattice_basis(): 
             return self
         else: 
-            return self.__class__.from_gap_cryst(
-                self.ita_num, self.dim, change_basis=True
-            ) 
+            return self.change_basis(self._tr_basis)
 
     def _wreath_recursion(self, action_dict):
 
