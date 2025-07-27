@@ -627,6 +627,9 @@ class SpaceGroup_gap:
         return action
 
     def minimal_self_replicating(self, verbose=False, build_wreath=False): 
+        if self.dim != 2: 
+            raise NotImplementedError()
+
         T = _PLANAR_GROUPS_MIN_SR[self.get_ITA()]
 
         action = self.self_similar(T, verbose=verbose, quiet=False)
