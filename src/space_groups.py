@@ -3,23 +3,11 @@ from __future__ import annotations
 import os
 from collections import deque
 from itertools import product
+from typing import Iterable
 
 import numpy as np
-from sage.all import (
-    QQ,
-    ascii_art,
-    block_matrix,
-    copy,
-    gap,
-    matrix,
-    MatrixGroup,
-    sign,
-    vector,
-    lcm,
-    Permutation,
-)
-
-from typing import Iterable
+from sage.all import (QQ, MatrixGroup, Permutation, ascii_art, block_matrix,
+                      copy, gap, lcm, matrix, sign, vector)
 
 from .normalizer import normalizers
 

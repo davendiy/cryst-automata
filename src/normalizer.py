@@ -1,9 +1,9 @@
 #!/usr/bin/env sage
 
-from sage.all import gap, matrix, QQ, var, solve, MatrixGroup
-
 from collections import defaultdict
 from warnings import warn
+
+from sage.all import QQ, matrix, solve, var
 
 
 def normalize_expressions(exps, allowed=None):

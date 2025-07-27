@@ -1,6 +1,6 @@
 
-from sage.all import (latex, matrix, ascii_art, 
-                      block_matrix, QQ, var, solve, SR, factor)
+from sage.all import (QQ, SR, ascii_art, block_matrix, factor, latex, matrix,
+                      solve, var)
 
 from .space_groups import SpaceGroup_gap
 
