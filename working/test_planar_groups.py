@@ -4,16 +4,17 @@ from sage.all import matrix, QQ, ascii_art
 import random
 
 from src.space_groups import (
-    prepare_gap_env, _to_L_basis,
+    prepare_gap_env, gap_cryst_group,
     build_finite_group, from_indices_list, 
-    SpaceGroup_Element, SpaceGroup_gap
+    SpaceGroup_Element, SpaceGroup_gap, 
+    lattice_cosets,
     )
 
 
 def test_build_finite():
 
     for n in range(1, 17):
-        G = _to_L_basis(n, dim=2)
+        G = gap_cryst_group(n, dim=2)
         P = G.PointGroup()
         gens = [matrix(QQ, el) for el in P.GeneratorsOfGroup()]
 
@@ -140,6 +141,49 @@ def test_other_basis():
         assert str(p_exp) == str(p_got), f"expected: \n{p_exp} got: \n{p_got}"
 
 
+def test_lattice_cosets(): 
+
+    G = gap_cryst_group(1, dim=3)
+
+    for test_n in range(100):
+        for _ in range(100):
+            A = matrix(QQ, [
+                [random.randint(-5, 5) for _ in range(3)] 
+                for _ in range(3)
+            ])
+            if A.det() != 0: 
+                break 
+        else: 
+            continue
+
+        cosets = lattice_cosets(A)
+    
+
+def test_cosets(): 
+
+    G = SpaceGroup_gap.from_gap_cryst(7, dim=2)
+    T = matrix(QQ, [
+        [1/3, 0], 
+        [0, 1/2],
+    ])
+
+    H = G.change_basis(T)
+    print(ascii_art(H.G_sorted_gens))
+
+    assert H.is_subgroup(G)
+    # assert H.is_isomorphic(G)
+
+    print('coset representatives for diag(1/3, 1/2) * G_7:')
+    print(ascii_art(G.cosets(H)))
+
+    tr_cosets = G.cosets(H, lattice_only=True)
+    print('rechosen coset representatives as pure translations:')
+    print(ascii_art(tr_cosets))
+
+    for el in tr_cosets: 
+        assert el.linear_part() == G.P_triv
+
+
 if __name__ == "__main__": 
     prepare_gap_env()
     test_build_finite()
@@ -148,4 +192,5 @@ if __name__ == "__main__":
     test_word_space_group()
     test_normalizers()
     test_other_basis()
+    test_cosets()
     print('all good.✅')

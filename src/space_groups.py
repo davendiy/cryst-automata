@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from collections import deque
+from itertools import product
 
 import numpy as np
 from sage.all import (
@@ -13,6 +14,7 @@ from sage.all import (
     matrix,
     MatrixGroup,
     sign,
+    vector,
     Permutation,
 )
 
@@ -26,7 +28,7 @@ MAX_ITERATIONS = 1_000_000
 # TODO: 
 #   - [x] possibility to create SpaceGroup from only generators 
 #   - [x] function to get lattice basis 
-#   - [ ] use lattice basis to check whether g in G for arbitrary G: 
+#   - [x] use lattice basis to check whether g in G for arbitrary G: 
 #     g in G <=>  L(g) in L(G)
 #   - [ ] use previous in self-similar method instead of Gap's one 
 #   - [ ] LeftTransversal instead of Gap's RightTransvesal
@@ -86,29 +88,23 @@ def from_indices_list(gens, triv, seq):
     return res
 
 
-def _to_L_basis(n, dim=3):
-    """Change basis of the crystallographic group to transform the lattice
-    L to the Z^dim
+def gap_cryst_group(n, dim=3): 
+    return gap(f"SpaceGroupOnLeftIT({dim}, {n})")
 
-    Parameters
-    ----------
-    n : int
-        number of the crystallographic group
-    dim : int
-        dimension
 
-    Returns
-    -------
-    MatrixGroup with new generators
-    """
-    G = gap(f"SpaceGroupOnLeftIT({dim}, {n})")
-    gens = [matrix(QQ, el) for el in G.GeneratorsOfGroup()]
-
-    v = matrix(QQ, G.TranslationBasis()).T
-    trans = matrix(QQ, [0 for _ in range(dim)]).T
-    conj = block_matrix(QQ, [[v, trans], [0, 1]])
-    new_gens = [conj.inverse() * el * conj for el in gens]
-    return gap.AffineCrystGroupOnLeft(new_gens)
+# FIXME: wrong
+def lattice_cosets(A): 
+    if A.det() == 0: 
+        raise NotImplementedError()
+        
+    D, U, V = A.smith_form()
+    n = D.rank() 
+    gens = [list(range(D[i, i])) for i in range(n)]
+    cosets = []
+    for v in product(*gens): 
+        v = vector(QQ, v)
+        cosets.append(V.inverse() * v)
+    return cosets
 
 
 class SpaceGroup_Element:
@@ -256,11 +252,15 @@ class SpaceGroup_gap:
         self._name2gen = {}
         for name, el in zip(self._P_names + self._L_names, 
                             self.G_nontriv + self.L_gens): 
-            self._name2gen[name] = el
+            
             self._name2gen[f'{name}^(-1)'] = el.inverse()
-            self._gen2name[str(el)] = name
+            self._name2gen[name] = el
+
+            # firstly assert inverse elements. This guarantees that 
+            # elements of order 2 will have name x instead of x^(-1)
             self._gen2name[str(el.inverse())] = f'{name}^(-1)'
-    
+            self._gen2name[str(el)] = name
+
     def in_alpha(self, sym):
         return str(sym) in self._alpha
 
@@ -350,6 +350,9 @@ class SpaceGroup_gap:
                 idx = len(self.P_gens) + i + 1
                 res_word = [sign(x) * idx for _ in range(abs(x))] + res_word
 
+        if not res_word: 
+            res_word = ['e']
+
         return res_word
 
     def random_element(self, max_length=100): 
@@ -363,6 +366,62 @@ class SpaceGroup_gap:
     def _trans_entities(self, tr): 
         assert tr.dimensions()[0] == self.dim
         return [row[0] for row in tr]
+
+    def is_subgroup(self, H: SpaceGroup_gap): 
+        for el in self.G_sorted_gens: 
+            if el not in H: 
+                return False 
+        return True
+    
+    def index(self, H: SpaceGroup_gap): 
+        if not H.is_subgroup(self): 
+            raise ValueError("Not a subgroup.")
+        
+        return self.gap_G.Index(H.gap_G)
+    
+    def cosets(self, H: SpaceGroup_gap, action='left', lattice_only=False): 
+        if not H.is_subgroup(self):
+            raise ValueError(f"Can't build cosets for {H}. Not a subgroup")
+        
+        if self.gap_G is None: 
+            raise NotImplementedError
+
+        H_gap = self.gap_G.Subgroup([el._body for el in H.G_sorted_gens])
+        
+        trans = self.gap_G.RightTransversal(H_gap)   
+        trans_els = [SpaceGroup_Element(matrix(QQ, el)) for el in trans.AsList()]
+
+        if action == 'left': 
+            trans_els = [el.inverse() for el in trans_els]
+
+        if lattice_only: 
+            trans_els = [self.rechoose_coset(el, H, action=action) for el in trans_els]
+
+        return trans_els
+    
+    def rechoose_coset(self, g: SpaceGroup_Element, H: SpaceGroup_gap, action="left"): 
+        """Choose coset representative which is pure translation."""
+        p = g.linear_part().inverse()
+        t = H.alpha(p)
+        g_inv = SpaceGroup_Element.construct_element(p, t)
+        assert g_inv in H 
+
+        if action == 'left': 
+            return g * g_inv
+        else: 
+            return g_inv * g
+
+    def find_coset(self, el, transversal, H, action='left'): 
+
+        for i, d in enumerate(transversal): 
+            if action == 'left': 
+                triv = d.inverse() * el 
+            else: 
+                triv = el * d.inverse()
+            if triv in H: 
+                return i
+            
+        raise ValueError(f"Element {el} is not in G.")
 
     def set_P_names(self, names): 
         if len(names) != len(self.G_nontriv): 
@@ -439,15 +498,14 @@ class SpaceGroup_gap:
 
         if verbose:
             print("=====================================================================")
+            print(f"sorted generators of group G #{self.get_ITA()}:")
+            print(ascii_art(self.G_sorted_gens))
+
 
         # check whether there exists virtual endomorphism
         gens_H = []
-        for el in self.G_gens:
-            conj = phi_inv(el)
-            if verbose:
-                print("\nconjugate el:")
-                print(conj)
-                print("conj in G:", conj in self)
+        for el in self.G_sorted_gens:
+            conj = phi_inv(el)            
             if conj not in self and safe:
                 raise ValueError("Bad matrix T, there is no virtual endomorphism")
             elif conj not in self:
@@ -456,52 +514,45 @@ class SpaceGroup_gap:
 
             gens_H.append(conj._body)
 
-        # create subgroup as image of virtual endomorphism
-        H = self.gap_G.Subgroup(gens_H)
+        H = SpaceGroup_gap.from_gens(gens_H)
 
         if verbose:
             print("----------------------------------------------------")
-            print("Index of subgroup H:", self.gap_G.Index(H))
+            print("sorted generators of H:")
+            print(ascii_art(gens_H), end='\n\n')
+            print("Index of subgroup H:", self.index(H))
 
-        trans = self.gap_G.RightTransversal(H)   # походу треба LeftTransversal
-        trans_els = [SpaceGroup_Element(matrix(QQ, el)) for el in trans.AsList()]
+        trans_els = self.cosets(H, action='left', lattice_only=True)
+
         if verbose:
             print("Transversal:")
-            print(*trans_els, sep='\n\n')
+            print(ascii_art(trans_els), end='\n\n')
 
         # create self-similar action
         res_map = {}
-        for a in self.G_gens:
 
-            # NOTE: ENUMERATION STARTS FROM 1
-            for i, d_i in enumerate(trans_els, 1):
+        for a in self.G_sorted_gens:
+            for i, d_i in enumerate(trans_els):
                 adi = a * d_i
+                name_a = self._gen2name[str(a)]
 
                 if verbose:
-                    print(f"{self._gen2name[str(a)]}d_{i}:")
+                    print(f"{name_a}d_{i+1}:")
                     print(adi, end='\n\n')
 
-                # (a * d_i)^{-1} * (a * d_i) = e \in H
-                # ==> d_j^{-1} = (a * d_i)^{-1}
-                #
-                # firstly, find coset for (a * d_i)^{-1}
+                j = self.find_coset(adi, trans_els, H, action='left')
+                d_j = trans_els[j]
 
-                # замість цього треба самому написати
-                d_j_index = trans.PositionCanonical(adi.inverse()._body)
+                if (d_j.inverse() * a * d_i) not in H:
+                    raise ValueError(f"This shouln't happen--wrong coset for triple \n{ascii_art([a, d_i, d_j])}, " 
+                                     f"got: \n{ascii_art(d_j.inverse() * a * d_i)}")
 
-                # then get d_j^{-1}^{-1}
-                d_j = trans_els[int(d_j_index) - 1].inverse()
-
-                if (d_j.inverse() * a * d_i)._body not in H:
-                    raise ValueError(f"This shouln't happen--wrong coset: {(a, d_i, d_j)}")
-
-                # conjugation in the right direction, i.e. apply \phi(d_j^{-1} a d_i)
                 tmp_res = phi(d_j.inverse() * a * d_i)
                 
                 if verbose: 
-                    print('image:', tmp_res, sep='\n')
+                    print(f'phi(d_{j+1}^(-1) {name_a} d_{i + 1}):', tmp_res, sep='\n')
 
-                res_map[(self._gen2name[str(a)], i)] = (int(d_j_index), tmp_res)
+                res_map[(name_a, i + 1)] = (j + 1, tmp_res)
                                                 
         return res_map
 

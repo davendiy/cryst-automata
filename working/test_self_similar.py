@@ -40,6 +40,6 @@ def test_srdegrees():
 if __name__ == '__main__': 
     prepare_gap_env()
     test_self_similar() 
-    # test_wreath_recursion()
+    test_wreath_recursion()
     test_srdegrees()
     print('all good.✅')
