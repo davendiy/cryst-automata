@@ -227,38 +227,3 @@ def normalizers(P, verbose=False, use_alphabet=False,
         return [sol2matrix(solution, dim=dim, use_alphabet=use_alphabet) for solution in found_solutions]
     else:
         return found_solutions
-
-
-def check_div(A):
-    """ Check whether matrix is simply factorizable.
-
-    Exploits the fact that determinant of (A - xE) matrix (i.e. characteristic polynomial)
-    can be found using row/column decomposition. Thus, if a row/column contains
-    n-1 zero, then the determinant can be found as x * det(A'), where A' is a
-    submatrix.
-
-    Parameters
-    ----------
-    A : symbolic matrix
-
-    Returns
-    -------
-    bool
-        True if characteristic polynomial is simply factorizable
-    """
-    x = var('x')
-
-    n = len(list(A))
-    test1 = A - x * matrix.identity(n)
-    test2 = test1.T()
-
-    # check rows
-    for row in test1:
-        if list(row).count(0) >= n - 1:
-            return True
-
-    # check columns
-    for row in test2:
-        if list(row).count(0) >= n - 1:
-            return True
-    return False

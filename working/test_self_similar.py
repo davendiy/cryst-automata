@@ -1,7 +1,7 @@
 
 from sage.all import matrix, QQ
 
-from src.space_groups import SpaceGroup_gap, prepare_gap_env
+from src.space_groups import SpaceGroup_gap, prepare_gap_env, is_simple
 from src.srdegrees import SR_Degrees
 
 
@@ -53,8 +53,41 @@ def test_srdegrees():
     x.algorithm()
 
 
+def test_simplicity(): 
+
+    assert is_simple(matrix(QQ, [
+        [1/2, 0], 
+        [0, 1/2]
+    ]))
+
+    assert not is_simple(matrix(QQ, [
+        [1, 2, 3], 
+        [0, 1, 0], 
+        [0, 0, 2],
+    ]))
+
+    assert is_simple(matrix(QQ, [
+        [1/2, 0, 0, 0], 
+        [0, 1/2, 0, 0], 
+        [0, 0, 1/2, 0],
+        [0, 0, 0, 1/2]
+    ]))
+
+    assert not is_simple(matrix(QQ, [
+        [0, 0, 0], 
+        [0, 0, 2], 
+        [1, 2, 3]
+    ]))
+
+    assert not is_simple(matrix(QQ, [
+        [1/2, 0], 
+        [0, 1]
+    ]))
+
+
 if __name__ == '__main__': 
     prepare_gap_env()
+    test_simplicity()
     test_self_similar() 
     test_wreath_recursion()
     test_min_sr()
