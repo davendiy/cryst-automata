@@ -306,8 +306,9 @@ class SpaceGroup_gap:
 
         self._alpha = {str(self.P_triv) : self.G_triv.translation()}
         self.snot = [self.G_triv]
-
         for el, seq in self._P_dict.items():
+            if el == str(self.P_triv): 
+                continue
             val = from_indices_list(self.G_nontriv, self.G_triv, seq)
             val = SpaceGroup_Element(val)
             assert str(val.linear_part()) == str(el), f"{val.linear_part()}, {el}"
