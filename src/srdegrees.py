@@ -9,10 +9,9 @@ class SR_Degrees:
     def __init__(self, group_index, method="ascii"):
         self.disp = method
         self.group_index = group_index
-        self.method = method
         if method == "latex":
             self._display = latex
-            self.title = "\\newpage\n\\subsection{Group %d}" % group_index
+            self.title = "\\subsection{Group %d}" % group_index
             self.section = "\\subsubsection{%s}"
             self.pref = "$$"
             self.in_sym = "\\in"
@@ -30,9 +29,9 @@ class SR_Degrees:
         self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=2, change_basis=True)
 
     def display(self, *args, use_pref=True) -> str:
-        bod = "" if self.method == "latex" else self._display("")
+        bod = "" if self.disp == "latex" else self._display("")
         for el in args:
-            if isinstance(el, str) and self.method == "latex":
+            if isinstance(el, str) and self.disp == "latex":
                 bod += el
             else:
                 bod += self._display(el)
@@ -48,6 +47,21 @@ class SR_Degrees:
         print(self.display([matrix(QQ, el) for el in self.G.gap_G.GeneratorsOfGroup()]))
         print("SNoT")
         print(self.display(self.G.snot))
+
+    def texdoc_header(self):
+        if self.disp == "latex":
+            print("\\documentclass[12pt]{article}")
+            print("\\usepackage{a4wide}")
+            print("\\usepackage{amsmath,amssymb,amsthm}")
+            print("\\title{Planar Groups}")
+            print("\\begin{document}")
+            print("\\maketitle")
+            print("\\tableofcontents")
+            print("\\section{Planar Groups}")
+
+    def texdoc_ending(self):
+        if self.disp == "latex":
+            print("\\end{document}")
 
     def construct_congruences(self, A, A_inv, include_Avar=False):
         G = self.G
@@ -66,11 +80,14 @@ class SR_Degrees:
             conj = (A * g * A_inv).simplify_rational()
             # conj = g
             condition = A_inv * G.alpha(g) - G.alpha(conj)
+            condition = condition.simplify_rational()
+
             sym_res = (conj - E) * x
 
-            alpha_conj = (E - conj) * x + A_inv * G.alpha(g)
+            alpha_conj = (E - conj) * x + (A_inv * G.alpha(g))
+            for j in range(self.G.dim):
+                alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
 
-            T = block_matrix([[A_inv, x], [0, 1]])
             if self.disp == "latex":
                 print(
                     self.pref
@@ -101,7 +118,7 @@ class SR_Degrees:
                     + ascii_art(" ")
                     + ascii_art("\n=\n\n")
                     + ascii_art(" ")
-                    + ascii_art(T * snot[i] * T.inverse())
+                    + ascii_art(block_matrix([[conj, alpha_conj], [0, 1]]))
                     + ascii_art(" ")
                     + ascii_art("\n=\n\n")
                     + ascii_art(" ")
@@ -154,6 +171,8 @@ class SR_Degrees:
         res = solve(tmp, *variables)
         print(self.display(*res))
 
+        if not res:
+            print("Couldn't solve:", res)
         for cond in res[0]:
             # ugly check if n_i is rational
             if (
@@ -164,6 +183,11 @@ class SR_Degrees:
                 print(f"[*] Contradiction: {cond}!")
                 return None
         return res
+
+    def generate_texdoc(self):
+        self.texdoc_header()
+        self.sc_degrees()
+        self.texdoc_ending()
 
     def algorithm(self):
         self.header()
@@ -179,7 +203,7 @@ class SR_Degrees:
                 f"Group {self.group_index} is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. "
             )
 
-        if self.disp == "latex":
+        if self.disp == "latex" and norms:
             print("\\begin{enumerate}")
             pref2 = "\\item"
         else:
@@ -196,16 +220,16 @@ class SR_Degrees:
                 + self.pref
             )
 
-            A = A_inv.inverse()
+            A = A_inv.inverse().simplify_rational()
             if not G.is_symmorphic():
                 eqs, base_vars, variables = self.construct_congruences(A, A_inv)
                 conds = self.solve_congruences(eqs, base_vars, variables)
                 if conds is None:
                     print("A doens't form a virtual endomorphism.")
                     continue
-                sc_degrees[str(A)] = A, conds
+                sc_degrees[str(A)] = A, A_inv, conds
             else:
-                sc_degrees[str(A)] = A, []
+                sc_degrees[str(A)] = A, A_inv, []
             print("Simplicity")
             print(
                 self.pref
@@ -227,7 +251,7 @@ class SR_Degrees:
                 + self.pref
             )
 
-        if self.disp == "latex":
+        if self.disp == "latex" and norms:
             print("\\end{enumerate}")
         return sc_degrees
 
@@ -239,8 +263,18 @@ class SR_Degrees:
 
         print(self.section % "Self-replicating degrees.")
 
-        for _, (A, conds) in sc_degrees.items():
-            print(self.display(A.inverse().det(), self.in_sym, self.z))
+        if self.disp == "latex" and sc_degrees:
+            print("\\begin{enumerate}")
+            pref2 = "\\item"
+        else:
+            pref2 = "..."
+
+        for _, (A, A_inv, conds) in sc_degrees.items():
+            print(pref2)
+            print(self.display("A^{-1} = ", A_inv))
+            print("Determinant:")
+            print(self.display(A_inv.det(), self.in_sym, self.z))
+            print("Conditions on endomorphism (self-coverings):")
             for r in conds:
                 for cond in r:
                     if cond.right().is_integer():
@@ -248,5 +282,13 @@ class SR_Degrees:
 
                     print(self.display(cond.right(), self.in_sym, self.z))
             f = A.charpoly()
+            print("Coefficients of the charpoly:")
             for c in f.coefficients():
                 print(self.display(c, self.notin_sym, self.z))
+            print("Conditions of eigenvalues:")
+            for e in f.roots():
+                print(self.display(e, self.notin_sym, self.z))
+
+        if self.disp == "latex" and sc_degrees:
+            print("\\end{enumerate}")
+            print("\\newpage")
