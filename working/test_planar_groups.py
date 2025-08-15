@@ -1,0 +1,196 @@
+
+from sage.all import matrix, QQ, ascii_art
+
+import random
+
+from src.space_groups import (
+    prepare_gap_env, gap_cryst_group,
+    build_finite_group, from_indices_list, 
+    SpaceGroup_Element, SpaceGroup_gap, 
+    lattice_cosets,
+    )
+
+
+def test_build_finite():
+
+    for n in range(1, 17):
+        G = gap_cryst_group(n, dim=2)
+        P = G.PointGroup()
+        gens = [matrix(QQ, el) for el in P.GeneratorsOfGroup()]
+
+        triv = matrix(QQ, [[1, 0], [0, 1]])
+
+        found = str(sorted(build_finite_group(gens, triv)))
+
+        needed = str(sorted([str(matrix(QQ, el)) for el in P.AsList()]))
+
+        assert found == needed 
+
+        found = build_finite_group(gens, triv)
+        for el, seq in found.items(): 
+
+            res = from_indices_list(gens, triv, seq)
+            assert str(el) == str(res), f"{el}, {res}, {seq}"
+
+
+def test_space_group(): 
+    G = SpaceGroup_gap.from_gap_cryst(12, dim=2)
+
+    for el in G.G_gens: 
+        assert el in G
+
+    for x in G.snot: 
+        assert x in G 
+
+    for x in G.snot: 
+        for y in G.snot: 
+            assert (x * y) in G
+
+
+    test1 = SpaceGroup_Element(
+        matrix(QQ, [[-1, 0, 1/2], 
+                    [0, 1, 0], 
+                    [0, 0, 1]])
+    )
+
+    assert test1 not in G
+
+    test2 = SpaceGroup_Element(
+            matrix(QQ, [[1, 0, 1/2], 
+                        [0, 1, 0], 
+                        [0, 0, 1]])
+        )
+    assert test2 not in G
+
+
+def test_space_group2(): 
+    G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
+
+    for el in G.G_gens: 
+        assert el in G
+
+    for x in G.snot: 
+        assert x in G 
+
+    for x in G.snot: 
+        for y in G.snot: 
+            assert (x * y) in G
+
+
+    test1 = SpaceGroup_Element(
+        matrix(QQ, [[-1, 0, 1/2], 
+                    [0, 1, 0], 
+                    [0, 0, 1]])
+    )
+
+    assert test1 not in G
+
+    test2 = SpaceGroup_Element(
+            matrix(QQ, [[1, 0, 1/2], 
+                        [0, 1, 0], 
+                        [0, 0, 1]])
+        )
+    assert test2 not in G
+
+
+def test_word_space_group(): 
+
+    for n in [3, 4, 5, 9, 11, 13, 17]:
+        G = SpaceGroup_gap.from_gap_cryst(n, dim=2)
+
+        s_n = len(G.snot)
+
+        for _ in range(100): 
+            idx = random.randint(0, s_n-1)
+            x = SpaceGroup_Element(G.snot[idx])
+
+            k = random.randint(-100, 100)
+            j = random.randint(-100, 100)
+
+            x._body[0, 2] += k
+            x._body[1, 2] += j
+
+            word = ''.join(G.as_word(x, readable=True))
+            if k:
+                assert (_t := f'e_1^({k})') in word, f"expected: {_t}, got: {word}"
+            if j: 
+                assert (_t := f'e_2^({j})') in word, f"expected: {_t}, got: {word}"
+
+        for _ in range(100): 
+            x = G.random_element()
+            it_seq = G.as_word(x, readable=False)
+            res = from_indices_list(G.G_sorted_gens, SpaceGroup_Element(G.G_triv), it_seq)
+
+            assert str(res) == str(x), f"expected: \n{x}, got: \n{res}, {it_seq}"
+
+
+def test_normalizers():
+    G = SpaceGroup_gap.from_gap_cryst(7, dim=2) 
+    print(ascii_art(G.point_group_normalizer(ignore_trivial=True))) 
+
+
+def test_other_basis(): 
+    G = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=False)
+    assert not G.in_lattice_basis()
+    G_prime = G.to_lattice_basis()
+
+    G_expected = SpaceGroup_gap.from_gap_cryst(5, dim=2, change_basis=True)
+    assert G_expected.in_lattice_basis()
+
+    for p_exp, p_got in zip(G_expected.snot, G_prime.snot): 
+        assert str(p_exp) == str(p_got), f"expected: \n{p_exp} got: \n{p_got}"
+
+
+def test_lattice_cosets(): 
+
+    G = gap_cryst_group(1, dim=3)
+
+    for test_n in range(100):
+        for _ in range(100):
+            A = matrix(QQ, [
+                [random.randint(-5, 5) for _ in range(3)] 
+                for _ in range(3)
+            ])
+            if A.det() != 0: 
+                break 
+        else: 
+            continue
+
+        cosets = lattice_cosets(A)
+    
+
+def test_cosets(): 
+
+    G = SpaceGroup_gap.from_gap_cryst(7, dim=2)
+    T = matrix(QQ, [
+        [1/3, 0], 
+        [0, 1/2],
+    ])
+
+    H = G.change_basis(T)
+    print(ascii_art(H.G_sorted_gens))
+
+    assert H.is_subgroup(G)
+    # assert H.is_isomorphic(G)
+
+    print('coset representatives for diag(1/3, 1/2) * G_7:')
+    print(ascii_art(G.cosets(H)))
+
+    tr_cosets = G.cosets(H, lattice_only=True)
+    print('rechosen coset representatives as pure translations:')
+    print(ascii_art(tr_cosets))
+
+    for el in tr_cosets: 
+        assert el.linear_part() == G.P_triv
+
+
+if __name__ == "__main__": 
+    prepare_gap_env()
+    test_build_finite()
+    test_space_group()
+    test_space_group2()
+    test_word_space_group()
+    test_normalizers()
+    test_other_basis()
+    test_cosets()
+    print('all good.✅')

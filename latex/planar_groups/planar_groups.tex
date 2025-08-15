@@ -1,0 +1,4572 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{a4wide}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{Planar Groups}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Planar Groups}
+\subsection{Group 1}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}\right]$$
+$$\left[\right]$$
+\subsubsection{Dilation}
+Group 1 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\subsubsection{Self-replicating degrees.}
+\subsection{Group 2}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\right]$$
+\subsubsection{Dilation}
+Group 2 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\subsubsection{Self-replicating degrees.}
+\subsection{Group 3}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 3 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{1}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)} {\left(x x_{1} - 1\right)}}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 4}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & 1 & \frac{1}{2} \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{-}1{ }{ }{ }{ }0{ }{ }{ }{ }0]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -m_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = \frac{1}{2} \, x_{0} - \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{1}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)} {\left(x x_{1} - 1\right)}}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 5}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+1 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-2 \, x_{0} + x_{1} & 0 \\
+x_{0} & x_{1}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 5 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-2 \, x_{0} + x_{1} & 0 \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{2 \, x_{0} - x_{1}} & 0 \\
+\frac{x_{0}}{2 \, x_{0} x_{1} - x_{1}^{2}} & \frac{1}{x_{1}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2 \, x_{0} - x_{1}}, \frac{1}{x_{1}}\right]$$
+charpoly:
+$$\frac{{\left(2 \, x x_{0} - x x_{1} + 1\right)} {\left(x x_{1} - 1\right)}}{{\left(2 \, x_{0} - x_{1}\right)} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+-{\left(2 \, x_{0} - x_{1}\right)} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-2 \, x_{0} + x_{1} & 0 \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$-{\left(2 \, x_{0} - x_{1}\right)} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{{\left(2 \, x_{0} - x_{1}\right)} x_{1}} \notin \mathbb{Z}$$
+$$\frac{1}{2 \, x_{0} - x_{1}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2 \, x_{0} - x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 6}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 6 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{1}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)} {\left(x x_{1} - 1\right)}}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0} x_{1}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{1}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0} x_{1}}}, \sqrt{\frac{1}{x_{0} x_{1}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0} x_{1} - 1}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 7}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{-}1{ }{ }{ }0{ }1/2]}}\\
+\text{\texttt{[{ }{ }0{ }{ }{ }1{ }{ }{ }0]}}\\
+\text{\texttt{[{ }{ }0{ }{ }{ }0{ }{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{ }1{ }{ }{ }{ }0{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{-}1{ }{ }{ }{ }0]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} + \frac{1}{2} \, x_{1} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{1} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -2 \, a_{0} - n_{2} - \frac{1}{2} \, x_{1} + \frac{1}{2} = 0, -m_{2} = 0, -n_{3} + \frac{1}{2} \, x_{1} - \frac{1}{2} = 0, -2 \, a_{1} - m_{3} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -2 \, a_{0} - \frac{1}{2} \, x_{1} + \frac{1}{2}, m_{2} = 0, n_{3} = \frac{1}{2} \, x_{1} - \frac{1}{2}, m_{3} = -2 \, a_{1}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{1}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)} {\left(x x_{1} - 1\right)}}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0} x_{1}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & -1 & 2 \, a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -n_{2} - \frac{1}{2} = 0, -2 \, a_{1} - m_{2} - \frac{1}{2} \, x_{0} = 0, -2 \, a_{0} - n_{3} + \frac{1}{2} = 0, -m_{3} + \frac{1}{2} \, x_{0} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = \left(-\frac{1}{2}\right), m_{2} = -2 \, a_{1} - \frac{1}{2} \, x_{0}, n_{3} = -2 \, a_{0} + \frac{1}{2}, m_{3} = \frac{1}{2} \, x_{0}\right]$$
+[*] Contradiction: n2 == (-1/2)!
+A doens't form a virtual endomorphism.
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{1} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} - \frac{1}{2} \, x_{1} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 8}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & \frac{1}{2} \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{-}1{ }{ }{ }{ }0{ }{ }1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{ }1{ }{ }{ }{ }0{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{-}1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} + \frac{1}{2} \, x_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{0} \\
+0 & -1 & 2 \, a_{1} - \frac{1}{2} \, x_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -2 \, a_{0} - n_{2} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -m_{2} + \frac{1}{2} \, x_{1} - \frac{1}{2} = 0, -n_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{3} + \frac{1}{2} \, x_{1} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -2 \, a_{0} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{2} = \frac{1}{2} \, x_{1} - \frac{1}{2}, n_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{3} = -2 \, a_{1} + \frac{1}{2} \, x_{1} - \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{1}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)} {\left(x x_{1} - 1\right)}}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0} x_{1}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{1} \\
+0 & -1 & 2 \, a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} - \frac{1}{2} \, x_{1} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -n_{2} + \frac{1}{2} \, x_{1} - \frac{1}{2} = 0, -2 \, a_{1} - m_{2} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{0} - n_{3} + \frac{1}{2} \, x_{1} + \frac{1}{2} = 0, -m_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = \frac{1}{2} \, x_{1} - \frac{1}{2}, m_{2} = -2 \, a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{3} = -2 \, a_{0} + \frac{1}{2} \, x_{1} + \frac{1}{2}, m_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{1}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0} x_{1}}}, \sqrt{\frac{1}{x_{0} x_{1}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0} x_{1} - 1}{x_{0} x_{1}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} + \frac{1}{2} \, x_{1} - \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} - \frac{1}{x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \, x_{1} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0} x_{1}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 9}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+1 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-x_{0} & -2 \, x_{0} \\
+x_{1} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} - 2 \, x_{1} & 0 \\
+x_{1} & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 9 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & -2 \, x_{0} \\
+x_{1} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0} - 2 \, x_{1}} & -\frac{2}{x_{0} - 2 \, x_{1}} \\
+\frac{x_{1}}{x_{0}^{2} - 2 \, x_{0} x_{1}} & \frac{1}{x_{0} - 2 \, x_{1}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{\sqrt{x_{0}^{2} - 2 \, x_{0} x_{1}}}, \frac{1}{\sqrt{x_{0}^{2} - 2 \, x_{0} x_{1}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - 2 \, x^{2} x_{0} x_{1} - 1}{{\left(x_{0} - 2 \, x_{1}\right)} x_{0}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2} + 2 \, x_{0} x_{1}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} - 2 \, x_{1} & 0 \\
+x_{1} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0} - 2 \, x_{1}} & 0 \\
+-\frac{x_{1}}{x_{0}^{2} - 2 \, x_{0} x_{1}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0} - 2 \, x_{1}}, \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 2 \, x x_{1} - 1\right)} {\left(x x_{0} - 1\right)}}{{\left(x_{0} - 2 \, x_{1}\right)} x_{0}}$$
+
+index of subgroup:
+$$[G : H] = 
+{\left(x_{0} - 2 \, x_{1}\right)} x_{0}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & -2 \, x_{0} \\
+x_{1} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} + 2 \, x_{0} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{2 \, x_{1}}{{\left(x_{0}^{2} - 2 \, x_{0} x_{1}\right)} {\left(x_{0} - 2 \, x_{1}\right)}} - \frac{1}{{\left(x_{0} - 2 \, x_{1}\right)}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{\sqrt{x_{0}^{2} - 2 \, x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{\sqrt{x_{0}^{2} - 2 \, x_{0} x_{1}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} - 2 \, x_{1} & 0 \\
+x_{1} & x_{0}
+\end{array}\right)$$
+Determinant:
+$${\left(x_{0} - 2 \, x_{1}\right)} x_{0} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{{\left(x_{0} - 2 \, x_{1}\right)} x_{0}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0} - 2 \, x_{1}} - \frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0} - 2 \, x_{1}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 10}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-x_{1} & x_{0} \\
+x_{0} & x_{1}
+\end{array}\right), \left(\begin{array}{rr}
+x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 10 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{1} & x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{x_{1}}{x_{0}^{2} + x_{1}^{2}} & \frac{x_{0}}{x_{0}^{2} + x_{1}^{2}} \\
+\frac{x_{0}}{x_{0}^{2} + x_{1}^{2}} & \frac{x_{1}}{x_{0}^{2} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{\sqrt{x_{0}^{2} + x_{1}^{2}}}, \frac{1}{\sqrt{x_{0}^{2} + x_{1}^{2}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{1}^{2} - 1}{x_{0}^{2} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2} - x_{1}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{x_{1}}{x_{0}^{2} + x_{1}^{2}} & \frac{x_{0}}{x_{0}^{2} + x_{1}^{2}} \\
+-\frac{x_{0}}{x_{0}^{2} + x_{1}^{2}} & \frac{x_{1}}{x_{0}^{2} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{-i \, x_{0} + x_{1}}{x_{0}^{2} + x_{1}^{2}}, \frac{i \, x_{0} + x_{1}}{x_{0}^{2} + x_{1}^{2}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{1}^{2} - 2 \, x x_{1} + 1}{x_{0}^{2} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2} + x_{1}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{1} & x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} - x_{1}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{2} x_{1}^{2} + x_{1}^{4}} - \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{\sqrt{x_{0}^{2} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{\sqrt{x_{0}^{2} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} + x_{1}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{2} x_{1}^{2} + x_{1}^{4}} + \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2 \, x_{1}}{x_{0}^{2} + x_{1}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{-i \, x_{0} + x_{1}}{x_{0}^{2} + x_{1}^{2}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{i \, x_{0} + x_{1}}{x_{0}^{2} + x_{1}^{2}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 11}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{0} & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 11 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{2 \, x_{0}} & -\frac{1}{2 \, x_{0}} \\
+\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 2 \, x x_{0} + 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{2 \, x_{0}} & -\frac{1}{2 \, x_{0}} \\
+-\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, \frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}} \\
+\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, \frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}} \\
+-\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 2 \, x x_{0} + 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & -\frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-i \, \sqrt{\frac{1}{x_{0}^{2}}}, i \, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)}^{2}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-i \, \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(i \, \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0}}, 2\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 12}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & \frac{1}{2} \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{-}1{ }{ }{ }{ }0{ }{ }1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{ }1{ }{ }{ }{ }0{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{-}1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{-}1{ }{-}1/2]}}\\
+\text{\texttt{[{ }{ }{-}1{ }{ }{ }{ }0{ }{ }1/2]}}\\
+\text{\texttt{[{ }{ }{ }0{ }{ }{ }{ }0{ }{ }{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }{ }0{ }{ }{ }1{ }1/2]}}\\
+\text{\texttt{[{ }{ }1{ }{ }{ }0{ }1/2]}}\\
+\text{\texttt{[{ }{ }0{ }{ }{ }0{ }{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+x_{0} & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+-1 & 0 & a_{0} + a_{1} - x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} - x_{0} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & -1 & 2 \, a_{1} + x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} + x_{0} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} - a_{1} - n_{2} = 0, a_{0} - a_{1} - m_{2} = 0, -a_{0} - a_{1} - n_{3} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{3} + x_{0} + \frac{1}{2} = 0, -a_{0} + a_{1} - n_{4} = 0, -a_{0} - a_{1} - m_{4} = 0, -a_{0} + a_{1} - n_{5} + x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{5} + \frac{1}{2} = 0, -n_{6} - \frac{1}{2} = 0, -2 \, a_{1} - m_{6} - x_{0} - \frac{1}{2} = 0, -2 \, a_{0} - n_{7} - x_{0} + \frac{1}{2} = 0, -m_{7} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} - a_{1}, m_{2} = a_{0} - a_{1}, n_{3} = -a_{0} - a_{1} - \frac{1}{2}, m_{3} = -a_{0} - a_{1} + x_{0} + \frac{1}{2}, n_{4} = -a_{0} + a_{1}, m_{4} = -a_{0} - a_{1}, n_{5} = -a_{0} + a_{1} + x_{0} + \frac{1}{2}, m_{5} = a_{0} - a_{1} + \frac{1}{2}, n_{6} = \left(-\frac{1}{2}\right), m_{6} = -2 \, a_{1} - x_{0} - \frac{1}{2}, n_{7} = -2 \, a_{0} - x_{0} + \frac{1}{2}, m_{7} = \left(-\frac{1}{2}\right)\right]$$
+[*] Contradiction: n6 == (-1/2)!
+A doens't form a virtual endomorphism.
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+-1 & 0 & a_{0} + a_{1} - x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + x_{0} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & 1 & x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -x_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} + a_{1} - n_{2} = 0, -a_{0} - a_{1} - m_{2} = 0, -a_{0} - a_{1} - n_{3} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{3} + x_{0} + \frac{1}{2} = 0, -a_{0} - a_{1} - n_{4} = 0, a_{0} - a_{1} - m_{4} = 0, -a_{0} + a_{1} - n_{5} - x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{5} + \frac{1}{2} = 0, -2 \, a_{0} - n_{6} + \frac{1}{2} = 0, -m_{6} - x_{0} - \frac{1}{2} = 0, -n_{7} + x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{7} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} + a_{1}, m_{2} = -a_{0} - a_{1}, n_{3} = -a_{0} - a_{1} - \frac{1}{2}, m_{3} = -a_{0} - a_{1} + x_{0} + \frac{1}{2}, n_{4} = -a_{0} - a_{1}, m_{4} = a_{0} - a_{1}, n_{5} = -a_{0} + a_{1} - x_{0} + \frac{1}{2}, m_{5} = a_{0} - a_{1} + \frac{1}{2}, n_{6} = -2 \, a_{0} + \frac{1}{2}, m_{6} = -x_{0} - \frac{1}{2}, n_{7} = x_{0} - \frac{1}{2}, m_{7} = -2 \, a_{1} - \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{2 \, x_{0}} & -\frac{1}{2 \, x_{0}} \\
+-\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, \frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} - x_{0} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+-1 & 0 & a_{0} + a_{1} - x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & x_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & 1 & x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} + a_{1} - n_{2} = 0, -a_{0} - a_{1} - m_{2} = 0, -a_{0} + a_{1} - n_{3} + x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{3} + \frac{1}{2} = 0, -a_{0} - a_{1} - n_{4} = 0, a_{0} - a_{1} - m_{4} = 0, -a_{0} - a_{1} - n_{5} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{5} + x_{0} + \frac{1}{2} = 0, -n_{6} - x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{6} - \frac{1}{2} = 0, -2 \, a_{0} - n_{7} + \frac{1}{2} = 0, -m_{7} - x_{0} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} + a_{1}, m_{2} = -a_{0} - a_{1}, n_{3} = -a_{0} + a_{1} + x_{0} + \frac{1}{2}, m_{3} = a_{0} - a_{1} + \frac{1}{2}, n_{4} = -a_{0} - a_{1}, m_{4} = a_{0} - a_{1}, n_{5} = -a_{0} - a_{1} - \frac{1}{2}, m_{5} = -a_{0} - a_{1} + x_{0} + \frac{1}{2}, n_{6} = -x_{0} - \frac{1}{2}, m_{6} = -2 \, a_{1} - \frac{1}{2}, n_{7} = -2 \, a_{0} + \frac{1}{2}, m_{7} = -x_{0} - \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}} \\
+\frac{1}{2 \, x_{0}} & \frac{1}{2 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, \frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{2 \, x^{2} x_{0}^{2} - 1}{2 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-2 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + x_{0} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+-1 & 0 & a_{0} + a_{1} - x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} - x_{0} \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & -1 & 2 \, a_{1} + x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} - a_{1} - n_{2} = 0, a_{0} - a_{1} - m_{2} = 0, -a_{0} + a_{1} - n_{3} - x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{3} + \frac{1}{2} = 0, -a_{0} + a_{1} - n_{4} = 0, -a_{0} - a_{1} - m_{4} = 0, -a_{0} - a_{1} - n_{5} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{5} + x_{0} + \frac{1}{2} = 0, -2 \, a_{0} - n_{6} + x_{0} + \frac{1}{2} = 0, -m_{6} - \frac{1}{2} = 0, -n_{7} - \frac{1}{2} = 0, -2 \, a_{1} - m_{7} - x_{0} - \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} - a_{1}, m_{2} = a_{0} - a_{1}, n_{3} = -a_{0} + a_{1} - x_{0} + \frac{1}{2}, m_{3} = a_{0} - a_{1} + \frac{1}{2}, n_{4} = -a_{0} + a_{1}, m_{4} = -a_{0} - a_{1}, n_{5} = -a_{0} - a_{1} - \frac{1}{2}, m_{5} = -a_{0} - a_{1} + x_{0} + \frac{1}{2}, n_{6} = -2 \, a_{0} + x_{0} + \frac{1}{2}, m_{6} = \left(-\frac{1}{2}\right), n_{7} = \left(-\frac{1}{2}\right), m_{7} = -2 \, a_{1} - x_{0} - \frac{1}{2}\right]$$
+[*] Contradiction: m6 == (-1/2)!
+A doens't form a virtual endomorphism.
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{0} \\
+0 & -1 & 2 \, a_{1} - \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} - \frac{1}{2} \, x_{0} \\
+0 & 1 & \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + \frac{1}{2} \, x_{0} \\
+1 & 0 & -a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+-1 & 0 & a_{0} + a_{1} - \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} - a_{1} - n_{2} = 0, a_{0} - a_{1} - m_{2} = 0, -n_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} + a_{1} - n_{4} = 0, -a_{0} - a_{1} - m_{4} = 0, -2 \, a_{0} - n_{5} + \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -m_{5} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} + a_{1} - n_{6} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{6} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -a_{0} - a_{1} - n_{7} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{7} + \frac{1}{2} \, x_{0} + \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} - a_{1}, m_{2} = a_{0} - a_{1}, n_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{3} = -2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{4} = -a_{0} + a_{1}, m_{4} = -a_{0} - a_{1}, n_{5} = -2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{5} = -\frac{1}{2} \, x_{0} - \frac{1}{2}, n_{6} = -a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{6} = a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, n_{7} = -a_{0} - a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{7} = -a_{0} - a_{1} + \frac{1}{2} \, x_{0} + \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & -\frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-i \, \sqrt{\frac{1}{x_{0}^{2}}}, i \, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{0} \\
+0 & -1 & 2 \, a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} - \frac{1}{2} \, x_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+-1 & 0 & a_{0} + a_{1} - \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + \frac{1}{2} \, x_{0} \\
+1 & 0 & -a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} + a_{1} - n_{2} = 0, -a_{0} - a_{1} - m_{2} = 0, -n_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{3} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - n_{4} = 0, a_{0} - a_{1} - m_{4} = 0, -2 \, a_{0} - n_{5} + \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -m_{5} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - n_{6} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{6} + \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -a_{0} + a_{1} - n_{7} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{7} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} + a_{1}, m_{2} = -a_{0} - a_{1}, n_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{3} = -2 \, a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{4} = -a_{0} - a_{1}, m_{4} = a_{0} - a_{1}, n_{5} = -2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{5} = \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{6} = -a_{0} - a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{6} = -a_{0} - a_{1} + \frac{1}{2} \, x_{0} + \frac{1}{2}, n_{7} = -a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{7} = a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} - \frac{1}{2} \, x_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & \frac{1}{2} \, x_{0} \\
+0 & -1 & 2 \, a_{1} - \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + \frac{1}{2} \, x_{0} \\
+1 & 0 & -a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} - \frac{1}{2} \, x_{0} \\
+-1 & 0 & a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} + a_{1} - n_{2} = 0, -a_{0} - a_{1} - m_{2} = 0, -2 \, a_{0} - n_{3} + \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -m_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - n_{4} = 0, a_{0} - a_{1} - m_{4} = 0, -n_{5} - \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{5} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} + a_{1} - n_{6} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{6} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -a_{0} - a_{1} - n_{7} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{7} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} + a_{1}, m_{2} = -a_{0} - a_{1}, n_{3} = -2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{4} = -a_{0} - a_{1}, m_{4} = a_{0} - a_{1}, n_{5} = -\frac{1}{2} \, x_{0} - \frac{1}{2}, m_{5} = -2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{6} = -a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{6} = a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, n_{7} = -a_{0} - a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{7} = -a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} \\
+0 & -1 & 2 \, a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} \\
+1 & 0 & -a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & 0 \\
+1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+-1 & 0 & 2 \, a_{0} + \frac{1}{2} \, x_{0} \\
+0 & 1 & -\frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+-1 & 0 & \frac{1}{2} \\
+0 & 1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} \\
+-1 & 0 & a_{0} + a_{1} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & 0 \\
+-1 & 0 & 0 \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \, x_{0} \\
+0 & -1 & 2 \, a_{1} - \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+1 & 0 & -\frac{1}{2} \\
+0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & -1 & a_{0} + a_{1} - \frac{1}{2} \, x_{0} \\
+-1 & 0 & a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & -1 & -\frac{1}{2} \\
+-1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+$$(A^{-1}, a)\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)(A, -Aa) = 
+\left(\begin{array}{rr|r}
+0 & 1 & a_{0} - a_{1} + \frac{1}{2} \, x_{0} \\
+1 & 0 & -a_{0} + a_{1} + \frac{1}{2} \, x_{0} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rr|r}
+0 & 1 & \frac{1}{2} \\
+1 & 0 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 1
+\end{array}\right)$$
+
+equations: 
+$$\left[-n_{0} = 0, -m_{0} = 0, -2 \, a_{0} - n_{1} = 0, -2 \, a_{1} - m_{1} = 0, -a_{0} - a_{1} - n_{2} = 0, a_{0} - a_{1} - m_{2} = 0, -2 \, a_{0} - n_{3} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -m_{3} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} + a_{1} - n_{4} = 0, -a_{0} - a_{1} - m_{4} = 0, -n_{5} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -2 \, a_{1} - m_{5} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - n_{6} + \frac{1}{2} \, x_{0} - \frac{1}{2} = 0, -a_{0} - a_{1} - m_{6} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, -a_{0} + a_{1} - n_{7} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0, a_{0} - a_{1} - m_{7} - \frac{1}{2} \, x_{0} + \frac{1}{2} = 0\right]$$
+
+answer:
+$$\left[n_{0} = 0, m_{0} = 0, n_{1} = -2 \, a_{0}, m_{1} = -2 \, a_{1}, n_{2} = -a_{0} - a_{1}, m_{2} = a_{0} - a_{1}, n_{3} = -2 \, a_{0} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{3} = \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{4} = -a_{0} + a_{1}, m_{4} = -a_{0} - a_{1}, n_{5} = \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{5} = -2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2}, n_{6} = -a_{0} - a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2}, m_{6} = -a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, n_{7} = -a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}, m_{7} = a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2}\right]$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)}^{2}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} - x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} + \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} - \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$-\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-2 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} + x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$-\frac{1}{2 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} \, \sqrt{2} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-i \, \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(i \, \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} + \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$-\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+$$-2 \, a_{0} \in \mathbb{Z}$$
+$$-2 \, a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$a_{0} - a_{1} \in \mathbb{Z}$$
+$$-2 \, a_{0} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} \in \mathbb{Z}$$
+$$\frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-2 \, a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} + \frac{1}{2} \, x_{0} - \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$-a_{0} + a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+$$a_{0} - a_{1} - \frac{1}{2} \, x_{0} + \frac{1}{2} \in \mathbb{Z}$$
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0}}, 2\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 13}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 13 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0} + x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \\
+\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, \frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{0} x_{1} + x^{2} x_{1}^{2} - 1}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \\
+-\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0} + x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{x_{0} {\left(-i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, \frac{x_{0} {\left(i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{0} x_{1} + x^{2} x_{1}^{2} - x x_{0} - 2 \, x x_{1} + 1}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} - \frac{x_{0} x_{1}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} - \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} + \frac{x_{0} x_{1}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} + \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$-\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} - \frac{2 \, x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{x_{0} {\left(-i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{x_{0} {\left(i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 14}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & -1 & 0 \\
+-1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+x_{0} & -x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 14 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & -\frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+-\frac{1}{x_{0}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & \frac{1}{x_{0}} \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+x_{0} & -x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+\frac{1}{x_{0}} & -\frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)}^{2}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+x_{0} & -x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0}}, 2\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 15}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 15 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & -\frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+-\frac{1}{x_{0}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & 0 \\
+-\frac{1}{x_{0}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & \frac{1}{x_{0}} \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)}^{2}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0}}, 2\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 16}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 16 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0} + x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \\
+\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, \frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{0} x_{1} + x^{2} x_{1}^{2} - 1}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \\
+-\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} & \frac{x_{0} + x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{x_{0} {\left(-i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, \frac{x_{0} {\left(i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} + x^{2} x_{0} x_{1} + x^{2} x_{1}^{2} - x x_{0} - 2 \, x x_{1} + 1}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{1} & x_{0} + x_{1} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} - \frac{x_{0} x_{1}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} - \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{\sqrt{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{x_{0}^{2}}{x_{0}^{4} + 2 \, x_{0}^{3} x_{1} + 3 \, x_{0}^{2} x_{1}^{2} + 2 \, x_{0} x_{1}^{3} + x_{1}^{4}} + \frac{x_{0} x_{1}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} + \frac{x_{1}^{2}}{{\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}^{2}} \notin \mathbb{Z}$$
+$$-\frac{x_{0}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} - \frac{2 \, x_{1}}{x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{x_{0} {\left(-i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{x_{0} {\left(i \, \sqrt{3} + 1\right)} + 2 \, x_{1}}{2 \, {\left(x_{0}^{2} + x_{0} x_{1} + x_{1}^{2}\right)}}, 1\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\subsection{Group 17}
+Generators of group:
+$$\left[\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+0 & -1 & 0 \\
+-1 & 0 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right]$$
+SNoT
+$$\left[\begin{array}{l}
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[0{ }1{ }0]}}\\
+\text{\texttt{[1{ }0{ }0]}}\\
+\text{\texttt{[0{ }0{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{-}1{ }{ }0{ }{ }0]}}\\
+\text{\texttt{[{-}1{ }{ }1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}, \begin{array}{l}
+\text{\texttt{[{ }1{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{-}1{ }{ }0]}}\\
+\text{\texttt{[{ }0{ }{ }0{ }{ }1]}}
+\end{array}\right]$$
+$$\left[\left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+2 \, x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+\frac{1}{2} \, x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+x_{0} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)\right]$$
+\subsubsection{Dilation}
+Group 17 is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. 
+\begin{enumerate}
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{3 \, x_{0}} & -\frac{1}{3 \, x_{0}} \\
+-\frac{2}{3 \, x_{0}} & \frac{1}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} - 1}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-3 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+2 \, x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{3 \, x_{0}} & \frac{1}{3 \, x_{0}} \\
+-\frac{1}{3 \, x_{0}} & \frac{2}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} - 3 \, x x_{0} + 1}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+3 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{3 \, x_{0}} & -\frac{2}{3 \, x_{0}} \\
+\frac{2}{3 \, x_{0}} & -\frac{1}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} + 1}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+3 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+\frac{1}{2} \, x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{4}{3 \, x_{0}} & -\frac{2}{3 \, x_{0}} \\
+\frac{2}{3 \, x_{0}} & \frac{2}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{x_{0}}, i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} - 6 \, x x_{0} + 4}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+\frac{3}{4} \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{4}{3 \, x_{0}} & \frac{2}{3 \, x_{0}} \\
+-\frac{2}{3 \, x_{0}} & \frac{4}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-2 \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 2 \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} - 4}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-\frac{3}{4} \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & -\frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+-\frac{1}{x_{0}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, \frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}\right]$$
+charpoly:
+$$\frac{x^{2} x_{0}^{2} - x x_{0} + 1}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & 0 \\
+-\frac{1}{x_{0}} & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{x_{0}} & \frac{1}{x_{0}} \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+0 & \frac{1}{x_{0}} \\
+\frac{1}{x_{0}} & 0
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} + 1\right)} {\left(x x_{0} - 1\right)}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+-\frac{1}{3 \, x_{0}} & \frac{2}{3 \, x_{0}} \\
+\frac{1}{3 \, x_{0}} & \frac{1}{3 \, x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[-\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}\right]$$
+charpoly:
+$$\frac{3 \, x^{2} x_{0}^{2} - 1}{3 \, x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+-3 \, x_{0}^{2}$$
+\item testing inverse A (should have integral entities):
+$$A^{-1} = 
+\left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Simplicity
+$$A = 
+\left(\begin{array}{rr}
+\frac{1}{x_{0}} & 0 \\
+0 & \frac{1}{x_{0}}
+\end{array}\right)$$
+
+eigenvalues:
+$$\left[\frac{1}{x_{0}}\right]$$
+charpoly:
+$$\frac{{\left(x x_{0} - 1\right)}^{2}}{x_{0}^{2}}$$
+
+index of subgroup:
+$$[G : H] = 
+x_{0}^{2}$$
+\end{enumerate}
+\subsubsection{Self-replicating degrees.}
+\begin{enumerate}
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & -x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-3 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+2 \, x_{0} & -x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$3 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+-2 \, x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$3 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+\frac{1}{2} \, x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$\frac{3}{4} \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{4}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(i \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & \frac{1}{2} \, x_{0} \\
+-\frac{1}{2} \, x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-\frac{3}{4} \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{4}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-2 \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(2 \, \sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & -x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{1}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\frac{1}{2} i \, \sqrt{3} \sqrt{\frac{1}{x_{0}^{2}}} + \frac{1}{2 \, x_{0}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 0 \\
+-x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & x_{0} \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+0 & x_{0} \\
+x_{0} & 0
+\end{array}\right)$$
+Determinant:
+$$-x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+-x_{0} & 2 \, x_{0} \\
+x_{0} & x_{0}
+\end{array}\right)$$
+Determinant:
+$$-3 \, x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$-\frac{1}{3 \, x_{0}^{2}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(-\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+$$\left(\sqrt{\frac{1}{3}} \sqrt{\frac{1}{x_{0}^{2}}}, 1\right) \notin \mathbb{Z}$$
+\item
+$$A^{-1} = \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{0}
+\end{array}\right)$$
+Determinant:
+$$x_{0}^{2} \in \mathbb{Z}$$
+Conditions on endomorphism (self-coverings):
+Coefficients of the charpoly:
+$$\frac{1}{x_{0}^{2}} \notin \mathbb{Z}$$
+$$-\frac{2}{x_{0}} \notin \mathbb{Z}$$
+$$1 \notin \mathbb{Z}$$
+Conditions of eigenvalues:
+$$\left(\frac{1}{x_{0}}, 2\right) \notin \mathbb{Z}$$
+\end{enumerate}
+\newpage
+\end{document}
