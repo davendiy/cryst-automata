@@ -17,6 +17,14 @@ class SR_Degrees:
             self.in_sym = "\\in"
             self.notin_sym = "\\notin"
             self.z = "\\mathbb{Z}"
+        elif method == "markdown":
+            self._display = latex
+            self.title = f"## Group {group_index}"
+            self.section = "### %s"
+            self.pref = "$$"
+            self.in_sym = "\\in"
+            self.notin_sym = "\\notin"
+            self.z = "\\mathbb{Z}"
         else:
             self._display = ascii_art
             self.title = f"=========================== Group {group_index} =================================="
@@ -29,9 +37,9 @@ class SR_Degrees:
         self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=2, change_basis=True)
 
     def display(self, *args, use_pref=True) -> str:
-        bod = "" if self.disp == "latex" else self._display("")
+        bod = self._display("") if self.disp == "ascii" else ""
         for el in args:
-            if isinstance(el, str) and self.disp == "latex":
+            if isinstance(el, str) and self.disp in ["latex", "markdown"]:
                 bod += el
             else:
                 bod += self._display(el)
@@ -44,7 +52,7 @@ class SR_Degrees:
     def header(self):
         print(self.title)
         print("Generators of group:")
-        print(self.display([matrix(QQ, el) for el in self.G.gap_G.GeneratorsOfGroup()]))
+        print(self.display([matrix(QQ, el) for el in self.G.gap_G.GeneratorsOfGroup()]))  # type: ignore
         print("SNoT")
         print(self.display(self.G.snot))
 
@@ -88,27 +96,15 @@ class SR_Degrees:
             for j in range(self.G.dim):
                 alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
 
-            if self.disp == "latex":
+            if self.disp in ["latex", "markdown"]:
                 print(
                     self.pref
                     + "(A^{-1}, a)"
-                    + self.display(
-                        block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False
-                    )
+                    + self.display(block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False)
                     + "(A, -Aa) = "
                 )
-                print(
-                    self.display(
-                        block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False
-                    )
-                    + "="
-                )
-                print(
-                    self.display(
-                        block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False
-                    )
-                    + self.pref
-                )
+                print(self.display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + "=")
+                print(self.display(block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False) + self.pref)
             else:
                 print(
                     ascii_art("\na_inv\n\n")
@@ -155,9 +151,7 @@ class SR_Degrees:
         U = U.delete_rows(range(nz))  # trimming first nz rows of U
         assert U * M == B  # the key property of U
 
-        L = IntegerLattice(
-            B, lll_reduce=False
-        )  # our basis is already reduced and should not be altered
+        L = IntegerLattice(B, lll_reduce=False)  # our basis is already reduced and should not be altered
         assert r in L  # just in case checking that r belongs to L
         v = L.coordinate_vector(r) * U
         assert v * M == r
@@ -175,11 +169,7 @@ class SR_Degrees:
             print("Couldn't solve:", res)
         for cond in res[0]:
             # ugly check if n_i is rational
-            if (
-                cond.left() in variables
-                and not cond.right().is_integer()
-                and not cond.right().variables()
-            ):
+            if cond.left() in variables and not cond.right().is_integer() and not cond.right().variables():
                 print(f"[*] Contradiction: {cond}!")
                 return None
         return res
@@ -206,6 +196,8 @@ class SR_Degrees:
         if self.disp == "latex" and norms:
             print("\\begin{enumerate}")
             pref2 = "\\item"
+        elif self.disp == 'markdown':
+            pref2 = "- "
         else:
             pref2 = "..."
 
@@ -213,12 +205,7 @@ class SR_Degrees:
 
         for A_inv in norms:
             print(pref2 + " testing inverse A (should have integral entities):")
-            print(
-                self.pref
-                + "A^{-1} = \n"
-                + self.display(A_inv, use_pref=False)
-                + self.pref
-            )
+            print(self.pref + "A^{-1} = \n" + self.display(A_inv, use_pref=False) + self.pref)
 
             A = A_inv.inverse().simplify_rational()
             if not G.is_symmorphic():
@@ -231,12 +218,7 @@ class SR_Degrees:
             else:
                 sc_degrees[str(A)] = A, A_inv, []
             print("Simplicity")
-            print(
-                self.pref
-                + "A = \n"
-                + self.display(A.simplify_rational(), use_pref=False)
-                + self.pref
-            )
+            print(self.pref + "A = \n" + self.display(A.simplify_rational(), use_pref=False) + self.pref)
             print("\neigenvalues:")
             print(self.display([el[0] for el in A.charpoly().roots()]))
             print("charpoly:")
@@ -244,12 +226,7 @@ class SR_Degrees:
             chp = factor(chp)
             print(self.display(chp))
             print("\nindex of subgroup:")
-            print(
-                self.pref
-                + "[G : H] = \n"
-                + self.display(A_inv.det(), use_pref=False)
-                + self.pref
-            )
+            print(self.pref + "[G : H] = \n" + self.display(A_inv.det(), use_pref=False) + self.pref)
 
         if self.disp == "latex" and norms:
             print("\\end{enumerate}")
@@ -266,6 +243,8 @@ class SR_Degrees:
         if self.disp == "latex" and sc_degrees:
             print("\\begin{enumerate}")
             pref2 = "\\item"
+        elif self.disp == 'markdown':
+            pref2 = '- '
         else:
             pref2 = "..."
 

@@ -118,8 +118,7 @@ def _carthesian_wo_duplicates(*spaces):
             used.remove(str(el))
 
 
-def normalizers(P, verbose=False, use_alphabet=False,
-                normalize_exp=True, to_matrix=True, ignore_trivial=True):
+def normalizers(P, verbose=False, use_alphabet=False, normalize_exp=True, to_matrix=True, ignore_trivial=True):
     """Find normalizer of the PointGroup in GL(n, QQ).
 
     Tries to find normalizer as a solution of
@@ -187,10 +186,10 @@ def normalizers(P, verbose=False, use_alphabet=False,
             warn(f'Something went wrong: couldnt create homomorphism for {maps_to}')
             continue
 
-        # we need only automorphisms 
-        if not homm.kernel().is_trivial(): 
-            continue 
-        
+        # we need only automorphisms
+        if not homm.kernel().is_trivial():
+            continue
+
         for X in P_elements:
             Y = homm(X)
 

@@ -8,14 +8,15 @@ from typing import Iterable
 import numpy as np
 from sage.all import (
     QQ,
-    MatrixGroup,
+    MatrixGroup,  # type: ignore
     Permutation,
     Subsets,
-    ascii_art,
+    ascii_art,  # type: ignore
     block_matrix,
     copy,
-    gap,
+    gap,  # type: ignore
     lcm,
+    latex,
     matrix,
     sign,
     var,
@@ -51,11 +52,7 @@ def prepare_gap_env(use_3d_gap=True):
 
 def build_finite_group(gens, trivial, max_iter=MAX_ITERATIONS):
     gens_extended = [trivial] + gens + [el.inverse() for el in gens]
-    names = (
-        [0]
-        + [i for i in range(1, len(gens) + 1)]
-        + [-i for i in range(1, len(gens) + 1)]
-    )
+    names = [0] + [i for i in range(1, len(gens) + 1)] + [-i for i in range(1, len(gens) + 1)]
 
     found = {str(gen): [name] for gen, name in zip(gens_extended, names)}
 
@@ -135,7 +132,7 @@ def _is_simple_brute(f):
         for i in subel:
             pol *= elementaries[i]
         # print(pol)
-        if all(coef.is_integer() for coef, _ in pol.coefficients()):
+        if all(coef.is_integer() for coef, _ in pol.coefficients()):  # type: ignore
             return False
     return True
 
@@ -180,7 +177,7 @@ def lattice_cosets(A):
     if A.det() == 0:
         raise NotImplementedError()
 
-    D, U, V = A.smith_form()
+    D, _, V = A.smith_form()
     n = D.rank()
     gens = [list(range(D[i, i])) for i in range(n)]
     cosets = []
@@ -208,9 +205,7 @@ class SpaceGroup_Element:
         other = SpaceGroup_Element(other)
 
         if self.dim != other.dim:
-            raise ValueError(
-                "can't multiply space group elements of different dimensions"
-            )
+            raise ValueError("can't multiply space group elements of different dimensions")
 
         return SpaceGroup_Element(self._body * other._body)
 
@@ -218,9 +213,7 @@ class SpaceGroup_Element:
         other = SpaceGroup_Element(other)
 
         if self.dim != other.dim:
-            raise ValueError(
-                "can't multiply space group elements of different dimensions"
-            )
+            raise ValueError("can't multiply space group elements of different dimensions")
 
         return SpaceGroup_Element(other._body * self._body)
 
@@ -250,6 +243,9 @@ class SpaceGroup_Element:
         res = matrix.identity(QQ, n)
         res[: n - 1, : n - 1] = linear
         return cls(res)
+
+    def _latex_(self):
+        return latex(self._body)
 
     def __pow__(self, n):
         return self.__class__(self._body**n)
@@ -281,9 +277,7 @@ class SpaceGroup_Element:
 class SpaceGroup_gap:
     max_iterations = MAX_ITERATIONS
 
-    def __init__(
-        self, generators: Iterable[SpaceGroup_Element], gap_G=None, dim=2, ita_num=None
-    ):
+    def __init__(self, generators: Iterable[SpaceGroup_Element], gap_G=None, dim=2, ita_num=None):
         """Don't use the constructor explicitly. Instead use class method
         `from_gap_cryst` or `from_gens`.
         """
@@ -291,7 +285,7 @@ class SpaceGroup_gap:
         self.dim = dim
         self.ita_num = ita_num
 
-        self.gap_P = self.gap_G.PointGroup()
+        self.gap_P = self.gap_G.PointGroup()  # type: ignore
 
         self.P_triv = matrix.identity(QQ, self.dim)
         self.G_triv = SpaceGroup_Element(matrix.identity(QQ, self.dim + 1))
@@ -307,9 +301,7 @@ class SpaceGroup_gap:
         if len(self.L_gens) != dim:
             raise NotImplementedError(f"not enough generators: {len(self.L_gens)}")
 
-        self._tr_basis = matrix(
-            QQ, [el.translation().column(0) for el in self.L_gens]
-        ).T
+        self._tr_basis = matrix(QQ, [el.translation().column(0) for el in self.L_gens]).T
 
         self._gen2name = {}
         self._name2gen = {}
@@ -337,9 +329,7 @@ class SpaceGroup_gap:
     def _rebuild_names(self):
         self._gen2name = {}
         self._name2gen = {}
-        for name, el in zip(
-            self._P_names + self._L_names, self.G_nontriv + self.L_gens
-        ):
+        for name, el in zip(self._P_names + self._L_names, self.G_nontriv + self.L_gens):
             self._name2gen[f"{name}^(-1)"] = el.inverse()
             self._name2gen[name] = el
 
@@ -386,6 +376,24 @@ class SpaceGroup_gap:
         return True
 
     def contains(self, el: SpaceGroup_Element):
+        r"""Check whether an element g belongs to the cryst group G.
+
+        Parameters
+        ----------
+        el : a space group element g
+
+        Notes
+        -----
+        Since every crystallographic group has a structure
+             G = \{ (A, \alpha(A) + t)  |   A \in  P,   t \in L  \}
+        given an element g = (B, b) we need to check two properties:
+           (i)  B in P
+           (ii) (b - alpha(B)) in L
+
+        The property (i) is trivial, while the (ii) requires solving system of
+        linear equations over some lattice. To keep it simple we just
+        change basis to make L be equal Z^n and only check (b - alpha(B)) in Z^n.
+        """
         if not self.in_lattice_basis():
             el = self._change_basis([el._body], self._tr_basis)[0]
             return SpaceGroup_Element(el) in self.to_lattice_basis()
@@ -464,7 +472,7 @@ class SpaceGroup_gap:
         if not H.is_subgroup(self):
             raise ValueError("Not a subgroup.")
 
-        return self.gap_G.Index(H.gap_G)
+        return self.gap_G.Index(H.gap_G)  # type: ignore
 
     def cosets(self, H: SpaceGroup_gap, action="left", lattice_only=False):
         if not H.is_subgroup(self):
@@ -537,7 +545,7 @@ class SpaceGroup_gap:
             raise NotImplementedError()
 
     def is_symmorphic(self):
-        return self.gap_G.IsSymmorphicSpaceGroup()
+        return self.gap_G.IsSymmorphicSpaceGroup()  # type: ignore
 
     def is_simple_virtend(self, T):
         """Checks whether phi(g) = TgT^{-1} forms a simple surjective
@@ -554,7 +562,7 @@ class SpaceGroup_gap:
 
         return is_simple(p)
 
-    def self_similar(self, T, verbose=False, quiet=False):
+    def self_similar(self, T, verbose=False):
         """Construct self-similar action for a crystallographic group
         given element of affine group that is conjugation for virtual
         endomorphism construction.
@@ -597,9 +605,7 @@ class SpaceGroup_gap:
             return T.inverse() * _g * T
 
         if verbose:
-            print(
-                "====================================================================="
-            )
+            print("=====================================================================")
             print(f"sorted generators of group G #{self.get_ITA()}:")
             print(ascii_art(self.G_sorted_gens), end="\n\n")
             print("Virtual endomorphism is generated by T:")
@@ -681,10 +687,7 @@ class SpaceGroup_gap:
             )
         else:
             return cls(
-                [
-                    SpaceGroup_Element.from_gap_element(el)
-                    for el in G.GeneratorsOfGroup()
-                ],
+                [SpaceGroup_Element.from_gap_element(el) for el in G.GeneratorsOfGroup()],
                 G,
                 dim,
                 ita_num,
@@ -720,7 +723,7 @@ class SpaceGroup_gap:
         T = (1 / (m + 1)) * matrix.identity(QQ, self.dim)
         T = SpaceGroup_Element.from_linear(T)
 
-        action = self.self_similar(T, verbose=verbose, quiet=False)
+        action = self.self_similar(T, verbose=verbose)
         if build_wreath:
             self._wreath_recursion(action)
 
@@ -732,7 +735,7 @@ class SpaceGroup_gap:
 
         T = _PLANAR_GROUPS_MIN_SR[self.get_ITA()]
 
-        action = self.self_similar(T, verbose=verbose, quiet=False)
+        action = self.self_similar(T, verbose=verbose)
 
         if build_wreath:
             self._wreath_recursion(action)
@@ -763,7 +766,7 @@ class SpaceGroup_gap:
 
         print("Вінцева рекурсія:")
         for el in w_el.keys():
-            p = Permutation(w_p[el])
+            p = Permutation(w_p[el])  # type: ignore
             if p.to_permutation_group_element().order() == 1:
                 p = "()"
             else:
