@@ -71,7 +71,28 @@ class SR_Degrees:
         if self.disp == "latex":
             print("\\end{document}")
 
-    def construct_congruences(self, A, A_inv, include_Avar=False):
+    def construct_congruences(self, A_inv, A):
+        """Construct congruences for the subgroup check.
+
+        The congruences have the following form:
+            (A, t)(B, alpha(b))(A^{-1}, -A^{-1}t) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+        The lattice just multiplies on matrix, so the index equals to det(A):
+            (A, t)(E, e)(A, t)^{-1} = (E, At)
+
+        Calculate the conjugation:
+            (A, t)(B, alpha(B))(A^{-1}, -A^{-1}t) =
+            = (A, t)(BA^{-1}, -BA^{-1}t + alpha(B)) =
+
+            = (ABA^{-1}, -ABA^{-1}t + A alpha(B) + t)
+            = (ABA^{-1}, (E - ABA^{-1})t + A alpha(B)) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+            or
+
+            A alpha(B) - alpha(ABA^{-1}) = (ABA^{-1} - E)t  mod L
+
+        We can obviously abuse multiple appearence of ABA^{-1}.
+        """
         G = self.G
         P = self.G.point_group_elements()
         snot = self.G.snot
@@ -81,36 +102,39 @@ class SR_Degrees:
         conds = []
         variables = []
         base_variables = []
-        base_variables.extend(A.variables())
+        base_variables.extend(A_inv.variables())
         base_variables.extend([a0, a1])
 
         for i, g in enumerate(P):
+            # hope sage simplifies to one from point group
             conj = (A * g * A_inv).simplify_rational()
-            # conj = g
-            condition = A_inv * G.alpha(g) - G.alpha(conj)
+            assert G.in_alpha(conj)
+            # A alpha(B) - alpha(ABA^{-1})
+            condition = A * G.alpha(g) - G.alpha(conj)
             condition = condition.simplify_rational()
 
+            # (ABA^{-1} - E)t
             sym_res = (conj - E) * x
 
-            alpha_conj = (E - conj) * x + (A_inv * G.alpha(g))
+            alpha_conj = (E - conj) * x + (A * G.alpha(g))
             for j in range(self.G.dim):
                 alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
 
             if self.disp in ["latex", "markdown"]:
                 print(
                     self.pref
-                    + "(A^{-1}, a)"
+                    + "(A, a)"
                     + self.display(block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False)
-                    + "(A, -Aa) = "
+                    + "(A^{-1}, -A^{-1}a) = "
                 )
                 print(self.display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + "=")
                 print(self.display(block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False) + self.pref)
             else:
                 print(
-                    ascii_art("\na_inv\n\n")
+                    ascii_art("\na\n\n")
                     + ascii_art(" ")
                     + ascii_art(snot[i])
-                    + ascii_art("\na\n\n")
+                    + ascii_art("\na_inv\n\n")
                     + ascii_art(" ")
                     + ascii_art("\n=\n\n")
                     + ascii_art(" ")
@@ -203,30 +227,30 @@ class SR_Degrees:
 
         sc_degrees = {}
 
-        for A_inv in norms:
-            print(pref2 + " testing inverse A (should have integral entities):")
-            print(self.pref + "A^{-1} = \n" + self.display(A_inv, use_pref=False) + self.pref)
+        for A in norms:
+            print(pref2 + " testing A (should have integral entities):")
+            print(self.pref + "A = \n" + self.display(A, use_pref=False) + self.pref)
 
-            A = A_inv.inverse().simplify_rational()
+            A_inv = A.inverse().simplify_rational()
             if not G.is_symmorphic():
-                eqs, base_vars, variables = self.construct_congruences(A, A_inv)
+                eqs, base_vars, variables = self.construct_congruences(A_inv, A)
                 conds = self.solve_congruences(eqs, base_vars, variables)
                 if conds is None:
                     print("A doens't form a virtual endomorphism.")
                     continue
-                sc_degrees[str(A)] = A, A_inv, conds
+                sc_degrees[str(A_inv)] = A_inv, A, conds
             else:
-                sc_degrees[str(A)] = A, A_inv, []
+                sc_degrees[str(A_inv)] = A_inv, A, []
             print("Simplicity")
-            print(self.pref + "A = \n" + self.display(A.simplify_rational(), use_pref=False) + self.pref)
+            print(self.pref + "A = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
             print("\neigenvalues:")
-            print(self.display([el[0] for el in A.charpoly().roots()]))
+            print(self.display([el[0] for el in A_inv.charpoly().roots()]))
             print("charpoly:")
-            chp = A.charpoly()(SR("x"))
+            chp = A_inv.charpoly()(SR("x"))
             chp = factor(chp)
             print(self.display(chp))
             print("\nindex of subgroup:")
-            print(self.pref + "[G : H] = \n" + self.display(A_inv.det(), use_pref=False) + self.pref)
+            print(self.pref + "[G : H] = \n" + self.display(A.det(), use_pref=False) + self.pref)
 
         if self.disp == "latex" and norms:
             print("\\end{enumerate}")
@@ -248,11 +272,11 @@ class SR_Degrees:
         else:
             pref2 = "..."
 
-        for _, (A, A_inv, conds) in sc_degrees.items():
+        for _, (A_inv, A, conds) in sc_degrees.items():
             print(pref2)
-            print(self.display("A^{-1} = ", A_inv))
+            print(self.display("A = ", A))
             print("Determinant:")
-            print(self.display(A_inv.det(), self.in_sym, self.z))
+            print(self.display(A.det(), self.in_sym, self.z))
             print("Conditions on endomorphism (self-coverings):")
             for r in conds:
                 for cond in r:
@@ -260,7 +284,7 @@ class SR_Degrees:
                         continue
 
                     print(self.display(cond.right(), self.in_sym, self.z))
-            f = A.charpoly()
+            f = A_inv.charpoly()
             print("Coefficients of the charpoly:")
             for c in f.coefficients():
                 print(self.display(c, self.notin_sym, self.z))
