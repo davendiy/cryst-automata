@@ -49,7 +49,10 @@ def test_naive_sr():
 
 
 def test_srdegrees(): 
-    x = SR_Degrees(7)
+    x = SR_Degrees(7, verbose=False)
+    x.algorithm()
+
+    x = SR_Degrees(7, verbose=True)
     x.algorithm()
 
 

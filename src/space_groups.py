@@ -309,6 +309,8 @@ class SpaceGroup_gap:
 
         self.G_sorted_gens = self.G_nontriv + self.L_gens
         self.P_gens = [el.linear_part() for el in self.G_nontriv]
+        if not self.P_gens:
+            self.P_gens.append(self.P_triv)
 
         self._P_dict = build_finite_group(self.P_gens, self.P_triv, self.max_iterations)
 
