@@ -1,4 +1,4 @@
-from sage.all import QQ, SR, ascii_art, block_matrix, factor, latex, matrix, solve, table, var
+from sage.all import QQ, SR, ascii_art, block_matrix, Expression, factor, latex, matrix, solve, solve_diophantine, var
 from sage.modules.free_module_integer import IntegerLattice
 
 
@@ -281,6 +281,30 @@ class SR_Degrees:
         return self.algorithm()
 
     def sr_degrees(self):
+        """Compute conditions on self replicating degrees of a crystallographic group.
+
+        Notes
+        -----
+
+        Given a matrix
+
+            A  =   [
+                [x0, x1],
+                [x2, x3]
+            ]
+
+        that generates a surjective virtual endomorphism phi : H -> G by a
+        conjugation phi(g) = (A, t)^{-1} g (A, t).
+
+        From this follows that A has integral coefficients and |det(A)| > 1.
+        Then, phi is simple if and only if
+            1) det(A) - tr(A) != -1
+            2) det(A) + tr(A) != -1     (sic!)
+
+        which is equivalent that eigenvalues of A are not +-1.
+
+        A proof comes from the h(1) != 0 and h(-1) != 0, where h(x) is a charpoly of A.
+        """
         sc_degrees = self.algorithm()
 
         self.print(self.section % "Self-replicating degrees.")
@@ -293,31 +317,73 @@ class SR_Degrees:
         else:
             pref2 = "..."
 
-        res_table = [["matrix", "det", "eigenvalue != 1", "eigenvalue != -1", "conds"]]
+        eig_table = [["matrix", "det", "eigenvalue != 1", "eigenvalue != -1"]]
+        res_table = [["matrix", "det", "except"]]
+        cond_table = [["matrix", "conds"]]
         for _, (_, A, conds) in sc_degrees.items():
             self.print(pref2)
             self.print(self.display("A = ", A))
             self.print("Determinant:")
             self.print(self.display(A.det(), self.in_sym, self.z))
             self.print("Conditions on endomorphism (self-coverings):")
+            self.print(self.display(""))
+            nontriv_conds = []
             for r in conds:
                 for cond in r:
                     if cond.right().is_integer():
                         continue
+
                     self.print(self.display(cond.right(), self.in_sym, self.z))
+                    nontriv_conds.append(cond.right())
 
             self.print("Self-replicating degrees:")
             self.print(self.display(A.det(), self.neq, self.pm, 1))
-            x0, x3 = A[0, 0], A[1, 1]
 
             # condition that eigenvalues isnt equal to +-1
-            cond1 = (A.det() + x0 + x3).simplify_rational()
-            cond2 = (A.det() - x0 - x3).simplify_rational()
+            cond1 = (A.det() + A.trace()).simplify_rational()
+            cond2 = (A.det() - A.trace()).simplify_rational()
             self.print(self.display(cond1, self.neq, -1))
             self.print(self.display(cond2, self.neq, -1))
-            res_table.append([A, A.det(), cond1, cond2, conds])
+
+            # sympy handles quadratic diophantine equations pretty well:
+            # https://www.alpertron.com.ar/METHODS.HTM
+            # https://web.archive.org/web/20160323033111/http://www.jpr2718.org/ax2p.pdf
+            # 
+            det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
+            det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
+
+            det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
+            det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
+
+            self.print("Solve diophantine determinant:")
+            self.print(self.display(det_res1))
+            self.print(self.display(det_res2))
+
+            eig_res1 = solve_diophantine(cond1 + 1, cond1.variables(), solution_dict=True)
+            eig_res2 = solve_diophantine(cond2 + 1, cond2.variables(), solution_dict=True)
+
+            if isinstance(eig_res1, dict):
+                eig_res1 = [
+                    eig_res1,
+                ]
+
+            if isinstance(eig_res2, dict):
+                eig_res2 = [
+                    eig_res2,
+                ]
+
+            eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
+            eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
+
+            self.print("Solve diophantine eigenvalues:")
+            self.print(self.display(eig_res1))
+            self.print(self.display(eig_res2))
+
+            eig_table.append([A, A.det(), cond1 + 1, cond2 + 1])
+            res_table.append([A, A.det(), sorted(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))])  # type: ignore
+            cond_table.append([A, nontriv_conds])  # type: ignore
         if self.disp == "latex" and sc_degrees:
             self.print("\\end{enumerate}")
             self.print("\\newpage")
 
-        return table(res_table, header_row=True)
+        return eig_table, res_table, cond_table
