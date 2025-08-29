@@ -138,3 +138,4 @@ literature
 working/src
 *.aux
 *.toc
+*.out
