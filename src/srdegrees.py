@@ -1,4 +1,17 @@
-from sage.all import QQ, SR, ascii_art, block_matrix, Expression, factor, latex, matrix, solve, solve_diophantine, var
+from sage.all import (
+    QQ,
+    SR,
+    ascii_art,
+    block_matrix,
+    Expression,
+    factor,
+    latex,
+    matrix,
+    solve,
+    solve_diophantine,
+    table,
+    var,
+)
 from sage.modules.free_module_integer import IntegerLattice
 
 
@@ -204,10 +217,22 @@ class SR_Degrees:
     def solve_congruences(self, conds, _, variables):
         tmp = [con == 0 for con in conds]
         self.print("\nequations: ")
-        self.print(self.display(tmp))
-        self.print("\nanswer:")
+        printable = []
+        for i, el in enumerate(tmp):
+            if i % 4 == 0:
+                printable.append(list())
+            printable[-1].append(el)
+
+        self.print(self.display(table(printable)))
+
         res = solve(tmp, *variables)
-        self.print(self.display(*res))
+        self.print("\nanswer:")
+        printable = []
+        for i, el in enumerate(res[0]):
+            if i % 4 == 0:
+                printable.append([])
+            printable[-1].append(el)
+        self.print(self.display(table(printable)))
 
         if not res:
             self.print("Couldn't solve:", res)
@@ -348,7 +373,7 @@ class SR_Degrees:
             # sympy handles quadratic diophantine equations pretty well:
             # https://www.alpertron.com.ar/METHODS.HTM
             # https://web.archive.org/web/20160323033111/http://www.jpr2718.org/ax2p.pdf
-            # 
+            #
             det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
             det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
 
