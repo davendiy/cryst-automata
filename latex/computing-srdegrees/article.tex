@@ -1,0 +1,334 @@
+\documentclass[12pt]{article}
+\usepackage{a4wide}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage[ukrainian, english]{babel}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{problem}{Problem}
+\newtheorem{question}{Question}
+\newtheorem{remark}{Remark}
+\newtheorem{algorithm}{Scheme}
+
+
+
+\title{Planar Groups}
+\author{ Davyd Zashkolnyi }
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\section{Planar Groups}
+
+
+\subsection{ Self-similar actions}
+
+- self-similar actions 
+- self-replicating actions 
+- virtual endomorphisms 
+- associative virtual endomorphisms 
+
+
+\subsection{ Crystallographic groups} 
+
+Let $\mathbf{A}(n)$ be a group of affine transformations and $\mathbf{O}(n)$ a group of isometries of
+$\mathbb{R}^n$ respectively. A crystallographic group is a discrete cocompact subgroup of $\mathbf{O}(n)$.
+By the Bieberbach theorem there are finitely many different crystallographic groups up to isometry and every
+isomorphism is induced by a conjugation in $\mathbf{A}(n)$. In case $n = 2$ they are often called plane groups and
+likewise space groups for $n=3$. 
+
+A crystallographic group $G$ can be uniquely defined via triplet $(P, L, \alpha)$ of a point group
+$P < GL_n(\mathbb{R})$, a lattice $L \subset \mathbb{R}^n$ such that there exists short exact sequence
+$L \rightarrow G \rightarrow P$ and a map $\alpha : P \rightarrow \mathbb{R}^n$ such that
+$G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}$. By the Bieberbach theorem, $L$ is the maximal normal free
+abelian subgroup of $G$. The image of $\alpha$ belongs to $\mathbb{R}^n / L$ and is called System of Non-trivial
+Translations (SNoT). Simply, these are translations which make $G$ different from a semi-direct product $P \ltimes L$.
+Crystallographic groups that isomorphic to a semi-direct product are called symmorphic. 
+
+
+
+A surjective virtual endomorphism of crystallographic group is an isomorphism due to results of Bondarenko
+(????cite????), which consequently is induced by an affine conjugation. Consider a crystallographic group
+$G = (P, L, \alpha)$, its isomorphic subgroup of finite index $H = (P', L', \alpha')$ and a virtual endomorphism
+$\phi : H \rightarrow G$ which is given by $\phi(g) = (A, t)^{-1}g(A, t)$. Since $\phi$ is an isomorphism, we can
+obtain exact form of the subgroup $H$ as a preimage $\phi^{-1}(G)$. Consider its action on the generators of $L$: 
+
+$$(A, t)(E, e_i)(A, t)^{-1} = (E, Ae_i + t - AA^{-1}t) = (E, At).$$
+From this follows that $L' = A^{-1}L < L$ and its index equals to the $\det(A)$. 
+
+\begin{lemma}
+$H = (P, L', \alpha)$ and $[G:H] = [L:L']$.
+\end{lemma}
+
+\begin{theorem}
+Let $\phi : H \rightarrow G$ be a virtual endomorphism of crystallographic group $G$ and $H' < H$ be a subgroup of
+finite index. Then $\phi$ is simple if and only if $\phi|_{H'}$ is simple. 
+\end{theorem}
+
+\begin{corollary}
+A surjective virtual endomorpism $\phi : H \rightarrow G$ given by $\phi(g) = (A, t)^{-1}g(A, t)$ is simple if and
+ only if characteristic polynomial of $A$ isn't divisible by a monic polynomial with integral coefficients. 
+\end{corollary}
+
+From now on we consider $L$ to be $\mathbb{Z}^n$, by using generators of original $L$ as a basis. As a result, the SNoT
+consists of vectors from $[0,1]^n$. We now can make an upper bound for self-replicating degree of crystallographic groups: 
+
+
+
+\begin{theorem}
+Every crystallographic group $G$ admits a self-replicating action over an alphabet of size $(m+1)^n$ where $m$ is
+the least common multiplier of denominators of entities of $\alpha(A)$ for every $A \in P$ in the basis of $L$.
+\end{theorem}
+
+\begin{corollary}
+Every planar group admits a self-replicating action over an alphabet of size $\le 9$. 
+\end{corollary}
+
+\begin{corollary}
+Every symmorphic crystallographic group admits a self-replicating action over an alphabet of size $\le 2^n$.
+\end{corollary}
+
+
+We now formulate two computational problems: 
+- Given a crystallographic group $G = (P, L, \alpha)$, find its minimal self-replicating degree. 
+- Given a crystallographic group $G = (P, L, \alpha)$, decide whether there exists a self-similar action over an
+alphabet of size $d \in \mathbb{N}$.
+
+For this, consider a decision problem: 
+
+(self-covering degrees)
+$$SCDegrees = \{d \in \mathbb{N} \, | \, G \text{ has isomorphic subgroup of index d } \}$$
+(self-replicating degrees)
+$$SRDegrees(G) = \{d \in \mathbb{N}\, | \, d \text{ is a self-replicating degree of } G\}$$
+$$MinSRDegree(G) = \min (SRDegrees(G))$$
+
+
+Given a crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$: 
+
+\begin{enumerate}
+
+ \item compute the structure of integer matrices normalizing the group $P$. The set of solutions is a disjoint union of
+ matrices of finitely many types corresponding to $\sigma \in Aut(P)$. For every automorphism $\sigma \in Aut(P)$ we
+ solve system of linear equations $XB = \sigma(B)X, \, B \in P$ over integers. Every solution $X_\sigma$ of type $\sigma$
+ is an integer linear combination of integral matrices that consist of integer variables $x_i$. 
+
+
+ \item determine conditions on the coefficients of matrices $A_{\sigma}$ to preserve cocyle. For every type $\sigma$ we
+ solve system of congruences
+
+ $(A_\sigma, t)(B, \alpha(B))(A_\sigma, t)^{-1} = (\sigma(B), \alpha(\sigma(B))) \mod \mathbb{Z}^n$ for every  $B \in P$;
+
+$(A, t)(B, \alpha(B))(A^{-1}, -A^{-1}t)$
+
+$(A, -At)^{-1} = (A^{-1}, t)$
+
+ \item develop conditions on the matrix $A$ such that characteristic polynomial of $A^{-1}$ isn't divisible by a monic
+ polynomial with integral coeficients.
+
+ \item solve diophantine equation $\det(A) = N$ for every $N$ from 2 to $(m+1)^n$ with respect to conditions from steps
+ 2) and 3).
+
+\end{enumerate}
+
+After solving (1) we obtain a set $\Psi$ of symbolic $n\times n$ matrices, which describes rational normalizer of the
+point group $Norm(P)$. Let $A \in \Psi$ has integral coefficients. The $A^{-1}$ would consist of rational functions
+$f \in \mathbb{Q}(x_0, x_1, \dots x_r)$ and from the recursive formula of inverse matrix its characteristic polynomial
+$m_A \in \mathbb{Q}(x_0, x_1, \dots, x_r)[x]$ has the common divisor $\frac{1}{\det(A)}$.
+
+On the other hand, we know that $A^{-1}$ belongs to the normalizer $Norm(P)$. Therefore, there exists some $A' \in \Psi$
+that has the same form as $A^{-1}$.
+
+
+\newpage
+
+Consider the planar case $G = (P, \mathbb{Z}^2, \alpha)$
+Let $(A, t)$ be an affine element which induces surjective virtual endomorphism
+$\phi : H \rightarrow G, \, \phi(g) = (A, t)^{-1}g(A, t)$, where $H = (A, t) G (A, t)^{-1} \simeq G$.
+From surjectivity follows that $A$ has integral entities and $|\det(A)| > 1$. Denote 
+$$A = \left(\begin{array}{rr}
+x_{0} & x_{1} \\
+x_{2} & x_{3}
+\end{array}\right).$$
+
+
+\begin{proposition}
+A surjective virtual endomorphism, generated by $(A, t)$, is simple if and only if
+$(x_0x_3-x_1x_2) - (x_0 + x_3) \neq -1$ and $(x_0x_3 - x_1x_2) + (x_0 + x_3) \neq -1$.
+\end{proposition}
+
+\begin{proof}
+$A^{-1}$ is simple if and only if its characteristic polynomial $f(x)$ isn't divisible by a monic polynomial with
+integral coefficients. For $\dim =2$ it means that $f(x)$ has no integral coefficient and no integral root. $A$ has an
+eigenvalue $\lambda$ if and only if $1/\lambda$ is an eigenvalue of $A^{-1}$. Let $\lambda_1, \lambda_2$ be two
+eigenvalues of $A$. We can write an explicit form of $f(x)$: 
+$$f(x) = x^2 - \left(\frac{1}{\lambda_1} + \frac{1}{\lambda_2}\right)x + \dfrac{1}{\lambda_1 \lambda_2} =
+x^2 - \dfrac{\lambda_1 + \lambda_2}{\lambda_1 \lambda_2}x + \frac{1}{\lambda_1 \lambda_2} =
+x^2 - \dfrac{\lambda_1 + \lambda_2}{\det(A)}x + \frac{1}{\det(A)}$$
+
+From this follows, that $f(x)$ have at least one rational coefficient for $|\det(A)| >1$. 
+
+Let's now consider $h(x)$ the characteristic polynomial of $A$. It's explicit form: 
+$$h(x) = x^2 - (\lambda_1 + \lambda_2)x + \lambda_1\lambda_2 = x^2 + dx + \det(A).$$
+$A$ has integral entities, therefore $h(x)$ has integral coefficients as well. By rational root theorem, $p/q$
+is a root of integral polynomial if and only if $q$ is an integer factor of the leading coefficient. $h(x)$ is monic
+as a characteristic polynomial. As a result, every rational eigenvalue of $A$ is integral, so the only possible
+integral eigenvalue of $A^{-1}$ is $\pm1$. 
+
+Finally, let's write conditions on the coefficients:
+$$h(\pm1) = 1  \mp (x_0 + x_3) + (x_0x_3 - x_1x_2) \neq 0$$
+$$1 + \det(A) \neq \pm(x_0 + x_3)$$
+\end{proof}
+
+\newpage
+\subsubsection{ Group 7 p2mg }
+
+
+The Group 7 ($p2mg$) from ITA is generated by the following elements: 
+$$G_7 = \left\langle\left(\begin{array}{rr|r}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{array}\right),\left(\begin{array}{rr|r}
+-1 & 0 & 1/2 \\
+0 & 1 & 0 \\
+\end{array}\right)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\end{array}\right)  \right\rangle = \langle a,b,c \rangle$$
+The normalizer of the point group consists of matrices of two types: 
+$$A_1, A_2 = \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array} \right) \quad   \,  x_0,x_1 \in \mathbb{Q}^*$$
+
+Solving the system of congruences from 2) we obtain that for $A_1$ system doesn't have solutions.
+
+For the $A_2$ we get that $x_0$ should be odd integral, and $x_1$ integral. 
+
+All the conjugations are generated by
+$$
+(A, t) = \left(\begin{array}{rr|r}
+x_0 & 0 & a_0 \\
+0 & x_1 & a_1 \\
+\hline
+0 & 0 & 1
+\end{array}\right)
+$$
+where $x_0 = 2k-1, x_1 \in Z, a_0 a_1 \in 1/2 Z$. 
+
+Therefore, $$SCDegrees = \{ |\det(A_2)| = |x_0 x_1|, \, |\,  x_0 \in 2\mathbb{Z} + 1, \, x_1 \in \mathbb{Z}\} = \mathbb{N}$$
+The inverse of matrix $A_2$ fits the condition 3) if and only if $|x_0| > 1, |x_1| > 1$. Therefore, 
+
+$$SRDegrees = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
+or not primes and not powers of 2. In particular, the minimal self-replicating degree is 6 when $x_0 = 3, x_1 = 2$.
+
+
+\newpage
+\scriptsize
+
+\begin{tabular}{|l|l|} \hline
+num & srdegrees \\ \hline \hline
+$3$ & $\begin{tabular}{l}
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$4$ & $\begin{tabular}{l}
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$5$ & $\begin{tabular}{l}
+$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(-1, -1\right),\left(-1, 0\right),\left(1, n_{1}\right),\left(1, 1\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(1, 0\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$6$ & $\begin{tabular}{l}
+$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$7$ & $\begin{tabular}{l}
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$8$ & $\begin{tabular}{l}
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$9$ & $\begin{tabular}{l}
+$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, n_{1}\right),\left(-1, -1\right),\left(-1, 0\right),\left(1, n_{1}\right),\left(1, 1\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} + 2 \, x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$10$ & $\begin{tabular}{l}
+$\left\{ x_{0}^{2} + x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$11$ & $\begin{tabular}{l}
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+\end{tabular}$ \\ \hline
+$12$ & $\begin{tabular}{l}
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+\end{tabular}$ \\ \hline
+$13$ & $\begin{tabular}{l}
+$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$14$ & $\begin{tabular}{l}
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$15$ & $\begin{tabular}{l}
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$16$ & $\begin{tabular}{l}
+$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+\end{tabular}$ \\ \hline
+$17$ & $\begin{tabular}{l}
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ -3 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ -\frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ \frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ 3 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ -\frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ \frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+\end{tabular}$ \\ \hline
+\end{tabular}
+
+\end{document}

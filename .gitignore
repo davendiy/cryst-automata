@@ -136,3 +136,6 @@ literature
 
 # ugly symlink
 working/src
+*.aux
+*.toc
+*.out

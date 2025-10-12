@@ -1,4 +1,17 @@
-from sage.all import QQ, SR, ascii_art, block_matrix, factor, latex, matrix, solve, var
+from sage.all import (
+    QQ,
+    SR,
+    ascii_art,
+    block_matrix,
+    Expression,
+    factor,
+    latex,
+    matrix,
+    solve,
+    solve_diophantine,
+    table,
+    var,
+)
 from sage.modules.free_module_integer import IntegerLattice
 
 
@@ -6,13 +19,16 @@ from .space_groups import SpaceGroup_gap
 
 
 class SR_Degrees:
-    def __init__(self, group_index, method="ascii"):
+    def __init__(self, group_index, method="ascii", verbose=2):
         self.disp = method
         self.group_index = group_index
+        self.verbose = verbose
         if method == "latex":
             self._display = latex
             self.title = "\\subsection{Group %d}" % group_index
             self.section = "\\subsubsection{%s}"
+            self.neq = "\\neq"
+            self.pm = "\\pm"
             self.pref = "$$"
             self.in_sym = "\\in"
             self.notin_sym = "\\notin"
@@ -22,6 +38,8 @@ class SR_Degrees:
             self.title = f"## Group {group_index}"
             self.section = "### %s"
             self.pref = "$$"
+            self.pm = "\\pm"
+            self.neq = "\\neq"
             self.in_sym = "\\in"
             self.notin_sym = "\\notin"
             self.z = "\\mathbb{Z}"
@@ -30,6 +48,8 @@ class SR_Degrees:
             self.title = f"=========================== Group {group_index} =================================="
             self.section = "\n----------------%s-------------------------\n"
             self.pref = "\n"
+            self.pm = '+-'
+            self.neq = '!='
             self.in_sym = "  ∈  "
             self.notin_sym = "  /∈  "
             self.z = "Z"
@@ -49,7 +69,13 @@ class SR_Degrees:
         else:
             return str(bod)
 
+    def print(self, *args, **kwargs):
+        if self.verbose > 1:
+            print(*args, **kwargs)
+
     def header(self):
+        if self.verbose == 0:
+            return
         print(self.title)
         print("Generators of group:")
         print(self.display([matrix(QQ, el) for el in self.G.gap_G.GeneratorsOfGroup()]))  # type: ignore
@@ -57,6 +83,9 @@ class SR_Degrees:
         print(self.display(self.G.snot))
 
     def texdoc_header(self):
+        if self.verbose == 0:
+            return
+
         if self.disp == "latex":
             print("\\documentclass[12pt]{article}")
             print("\\usepackage{a4wide}")
@@ -68,10 +97,34 @@ class SR_Degrees:
             print("\\section{Planar Groups}")
 
     def texdoc_ending(self):
+        if self.verbose == 0:
+            return
+
         if self.disp == "latex":
             print("\\end{document}")
 
-    def construct_congruences(self, A, A_inv, include_Avar=False):
+    def construct_congruences(self, A_inv, A):
+        """Construct congruences for the subgroup check.
+
+        The congruences have the following form:
+            (A, t)(B, alpha(b))(A^{-1}, -A^{-1}t) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+        The lattice just multiplies on matrix, so the index equals to det(A):
+            (A, t)(E, e)(A, t)^{-1} = (E, At)
+
+        Calculate the conjugation:
+            (A, t)(B, alpha(B))(A^{-1}, -A^{-1}t) =
+            = (A, t)(BA^{-1}, -BA^{-1}t + alpha(B)) =
+
+            = (ABA^{-1}, -ABA^{-1}t + A alpha(B) + t)
+            = (ABA^{-1}, (E - ABA^{-1})t + A alpha(B)) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+            or
+
+            A alpha(B) - alpha(ABA^{-1}) = (ABA^{-1} - E)t  mod L
+
+        We can obviously abuse multiple appearence of ABA^{-1}.
+        """
         G = self.G
         P = self.G.point_group_elements()
         snot = self.G.snot
@@ -81,36 +134,40 @@ class SR_Degrees:
         conds = []
         variables = []
         base_variables = []
-        base_variables.extend(A.variables())
+        base_variables.extend(A_inv.variables())
         base_variables.extend([a0, a1])
 
         for i, g in enumerate(P):
+            # hope sage simplifies to one from point group
             conj = (A * g * A_inv).simplify_rational()
-            # conj = g
-            condition = A_inv * G.alpha(g) - G.alpha(conj)
+            assert G.in_alpha(conj)
+            # A alpha(B) - alpha(ABA^{-1})
+            condition = A * G.alpha(g) - G.alpha(conj)
             condition = condition.simplify_rational()
 
+            # (ABA^{-1} - E)t
             sym_res = (conj - E) * x
 
-            alpha_conj = (E - conj) * x + (A_inv * G.alpha(g))
+            # entire left part to print
+            alpha_conj = (E - conj) * x + (A * G.alpha(g))
             for j in range(self.G.dim):
                 alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
 
             if self.disp in ["latex", "markdown"]:
-                print(
+                self.print(
                     self.pref
-                    + "(A^{-1}, a)"
+                    + "(A, a)"
                     + self.display(block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False)
-                    + "(A, -Aa) = "
+                    + "(A^{-1}, -A^{-1}a) = "
                 )
-                print(self.display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + "=")
-                print(self.display(block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False) + self.pref)
+                self.print(self.display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + "=")
+                self.print(self.display(block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False) + self.pref)
             else:
-                print(
-                    ascii_art("\na_inv\n\n")
+                self.print(
+                    ascii_art("\na\n\n")
                     + ascii_art(" ")
                     + ascii_art(snot[i])
-                    + ascii_art("\na\n\n")
+                    + ascii_art("\na_inv\n\n")
                     + ascii_art(" ")
                     + ascii_art("\n=\n\n")
                     + ascii_art(" ")
@@ -127,7 +184,7 @@ class SR_Degrees:
                         )
                     )
                 )
-                print()
+                self.print()
 
             conds.append(sym_res[0][0] - (condition[0][0] + var(f"n{i}")))
             conds.append(sym_res[1][0] - (condition[1][0] + var(f"m{i}")))
@@ -157,20 +214,32 @@ class SR_Degrees:
         assert v * M == r
         return v
 
-    def solve_congruences(self, conds, base_variables, variables):
+    def solve_congruences(self, conds, _, variables):
         tmp = [con == 0 for con in conds]
-        print("\nequations: ")
-        print(self.display(tmp))
-        print("\nanswer:")
+        self.print("\nequations: ")
+        printable = []
+        for i, el in enumerate(tmp):
+            if i % 4 == 0:
+                printable.append(list())
+            printable[-1].append(el)
+
+        self.print(self.display(table(printable)))
+
         res = solve(tmp, *variables)
-        print(self.display(*res))
+        self.print("\nanswer:")
+        printable = []
+        for i, el in enumerate(res[0]):
+            if i % 4 == 0:
+                printable.append([])
+            printable[-1].append(el)
+        self.print(self.display(table(printable)))
 
         if not res:
-            print("Couldn't solve:", res)
+            self.print("Couldn't solve:", res)
         for cond in res[0]:
             # ugly check if n_i is rational
             if cond.left() in variables and not cond.right().is_integer() and not cond.right().variables():
-                print(f"[*] Contradiction: {cond}!")
+                self.print(f"(*) Contradiction: {cond}!")
                 return None
         return res
 
@@ -185,16 +254,17 @@ class SR_Degrees:
         G = self.G
         norms = self.G.point_group_normalizer(verbose=False, ignore_trivial=True)
 
-        print(self.display(norms))
-        print(self.section % "Dilation")
+        self.print(self.display(norms))
+        self.print(self.section % "Dilation")
 
         if G.is_symmorphic():
-            print(
-                f"Group {self.group_index} is a semi-direct product, therefore the dilation part is trivial and only consists of integral vectors. "
+            self.print(
+                f"Group {self.group_index} is a semi-direct product, therefore the dilation part"
+                "is trivial and only consists of integral vectors."
             )
 
         if self.disp == "latex" and norms:
-            print("\\begin{enumerate}")
+            self.print("\\begin{enumerate}")
             pref2 = "\\item"
         elif self.disp == 'markdown':
             pref2 = "- "
@@ -203,71 +273,142 @@ class SR_Degrees:
 
         sc_degrees = {}
 
-        for A_inv in norms:
-            print(pref2 + " testing inverse A (should have integral entities):")
-            print(self.pref + "A^{-1} = \n" + self.display(A_inv, use_pref=False) + self.pref)
+        for A in norms:
+            self.print(pref2 + " testing A (should have integral entities):")
+            self.print(self.pref + "A = \n" + self.display(A, use_pref=False) + self.pref)
 
-            A = A_inv.inverse().simplify_rational()
+            A_inv = A.inverse().simplify_rational()
             if not G.is_symmorphic():
-                eqs, base_vars, variables = self.construct_congruences(A, A_inv)
+                eqs, base_vars, variables = self.construct_congruences(A_inv, A)
                 conds = self.solve_congruences(eqs, base_vars, variables)
                 if conds is None:
-                    print("A doens't form a virtual endomorphism.")
+                    self.print("A doesn't form a virtual endomorphism.")
                     continue
-                sc_degrees[str(A)] = A, A_inv, conds
+                sc_degrees[str(A)] = A_inv, A, conds
             else:
-                sc_degrees[str(A)] = A, A_inv, []
-            print("Simplicity")
-            print(self.pref + "A = \n" + self.display(A.simplify_rational(), use_pref=False) + self.pref)
-            print("\neigenvalues:")
-            print(self.display([el[0] for el in A.charpoly().roots()]))
-            print("charpoly:")
-            chp = A.charpoly()(SR("x"))
+                sc_degrees[str(A)] = A_inv, A, []
+            self.print("Simplicity")
+            self.print(self.pref + "A^{-1} = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
+            self.print("\neigenvalues:")
+            self.print(self.display([el[0] for el in A_inv.charpoly().roots()]))
+            self.print("charpoly:")
+            chp = A_inv.charpoly()(SR("x"))
             chp = factor(chp)
-            print(self.display(chp))
-            print("\nindex of subgroup:")
-            print(self.pref + "[G : H] = \n" + self.display(A_inv.det(), use_pref=False) + self.pref)
+            self.print(self.display(chp))
+            self.print("\nindex of subgroup:")
+            self.print(self.pref + "[G : H] = \n" + self.display(A.det(), use_pref=False) + self.pref)
 
         if self.disp == "latex" and norms:
-            print("\\end{enumerate}")
+            self.print("\\end{enumerate}")
         return sc_degrees
 
     def sc_degrees(self):
         return self.algorithm()
 
     def sr_degrees(self):
+        """Compute conditions on self replicating degrees of a crystallographic group.
+
+        Notes
+        -----
+
+        Given a matrix
+
+            A  =   [
+                [x0, x1],
+                [x2, x3]
+            ]
+
+        that generates a surjective virtual endomorphism phi : H -> G by a
+        conjugation phi(g) = (A, t)^{-1} g (A, t).
+
+        From this follows that A has integral coefficients and |det(A)| > 1.
+        Then, phi is simple if and only if
+            1) det(A) - tr(A) != -1
+            2) det(A) + tr(A) != -1     (sic!)
+
+        which is equivalent that eigenvalues of A are not +-1.
+
+        A proof comes from the h(1) != 0 and h(-1) != 0, where h(x) is a charpoly of A.
+        """
         sc_degrees = self.algorithm()
 
-        print(self.section % "Self-replicating degrees.")
+        self.print(self.section % "Self-replicating degrees.")
 
         if self.disp == "latex" and sc_degrees:
-            print("\\begin{enumerate}")
+            self.print("\\begin{enumerate}")
             pref2 = "\\item"
         elif self.disp == 'markdown':
-            pref2 = '- '
+            pref2 = '--- '
         else:
             pref2 = "..."
 
-        for _, (A, A_inv, conds) in sc_degrees.items():
-            print(pref2)
-            print(self.display("A^{-1} = ", A_inv))
-            print("Determinant:")
-            print(self.display(A_inv.det(), self.in_sym, self.z))
-            print("Conditions on endomorphism (self-coverings):")
+        eig_table = [["matrix", "det", "eigenvalue != 1", "eigenvalue != -1"]]
+        res_table = [["matrix", "det", "except"]]
+        cond_table = [["matrix", "conds"]]
+        for _, (_, A, conds) in sc_degrees.items():
+            self.print(pref2)
+            self.print(self.display("A = ", A))
+            self.print("Determinant:")
+            self.print(self.display(A.det(), self.in_sym, self.z))
+            self.print("Conditions on endomorphism (self-coverings):")
+            self.print(self.display(""))
+            nontriv_conds = []
             for r in conds:
                 for cond in r:
                     if cond.right().is_integer():
                         continue
 
-                    print(self.display(cond.right(), self.in_sym, self.z))
-            f = A.charpoly()
-            print("Coefficients of the charpoly:")
-            for c in f.coefficients():
-                print(self.display(c, self.notin_sym, self.z))
-            print("Conditions of eigenvalues:")
-            for e in f.roots():
-                print(self.display(e, self.notin_sym, self.z))
+                    self.print(self.display(cond.right(), self.in_sym, self.z))
+                    nontriv_conds.append(cond.right())
 
+            self.print("Self-replicating degrees:")
+            self.print(self.display(A.det(), self.neq, self.pm, 1))
+
+            # condition that eigenvalues isnt equal to +-1
+            cond1 = (A.det() + A.trace()).simplify_rational()
+            cond2 = (A.det() - A.trace()).simplify_rational()
+            self.print(self.display(cond1, self.neq, -1))
+            self.print(self.display(cond2, self.neq, -1))
+
+            # sympy handles quadratic diophantine equations pretty well:
+            # https://www.alpertron.com.ar/METHODS.HTM
+            # https://web.archive.org/web/20160323033111/http://www.jpr2718.org/ax2p.pdf
+            #
+            det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
+            det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
+
+            det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
+            det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
+
+            self.print("Solve diophantine determinant:")
+            self.print(self.display(det_res1))
+            self.print(self.display(det_res2))
+
+            eig_res1 = solve_diophantine(cond1 + 1, cond1.variables(), solution_dict=True)
+            eig_res2 = solve_diophantine(cond2 + 1, cond2.variables(), solution_dict=True)
+
+            if isinstance(eig_res1, dict):
+                eig_res1 = [
+                    eig_res1,
+                ]
+
+            if isinstance(eig_res2, dict):
+                eig_res2 = [
+                    eig_res2,
+                ]
+
+            eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
+            eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
+
+            self.print("Solve diophantine eigenvalues:")
+            self.print(self.display(eig_res1))
+            self.print(self.display(eig_res2))
+
+            eig_table.append([A, A.det(), cond1 + 1, cond2 + 1])
+            res_table.append([A, A.det(), sorted(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))])  # type: ignore
+            cond_table.append([A, nontriv_conds])  # type: ignore
         if self.disp == "latex" and sc_degrees:
-            print("\\end{enumerate}")
-            print("\\newpage")
+            self.print("\\end{enumerate}")
+            self.print("\\newpage")
+
+        return eig_table, res_table, cond_table
