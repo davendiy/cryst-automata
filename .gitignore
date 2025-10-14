@@ -139,3 +139,5 @@ working/src
 *.aux
 *.toc
 *.out
+# no sense to keep pdf changes
+*.pdf
