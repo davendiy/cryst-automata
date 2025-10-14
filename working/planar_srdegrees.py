@@ -15,17 +15,17 @@ prepare_gap_env()
 
 giant_table = [["num", "srdegrees"]]
 
-sr = SR_Degrees(1, method='latex', verbose=1)
+sr = SR_Degrees(1, method='latex', verbose=2)
 sr.texdoc_header()
 
 for n in range(2, 18):
     # for n in [12]:
 
-    sr = SR_Degrees(n, method='latex', verbose=1)
+    sr = SR_Degrees(n, method='latex', verbose=2)
     eig_table, res_table, cond_table = sr.sr_degrees()
     eig_table = table(eig_table, header_row=True, frame=True)
 
-    smaller_table = []
+    smaller_table = set()
     for el in res_table[1:]:
         if (el_n := len(el[1].variables())) > 1:    # type: ignore
             degree = f"^{el_n}"
@@ -40,7 +40,7 @@ for n in range(2, 18):
         inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
 
         if not el[2]:
-            smaller_table.append(["$" + inz + "$"])
+            smaller_table.add("$" + inz + "$")
             continue
 
         # / {(-1, 1), (1, 1), (0, 0)}
@@ -49,14 +49,12 @@ for n in range(2, 18):
         new_arr += r'\right\}'
         el[2] = "$" + new_arr + "$"
 
-        smaller_table.append(
-            [
+        smaller_table.add(
                 r"$" + inz.rstrip(r'\right\}') + r"\, / \," + new_arr + r'\right\}' + "$",
-            ]
         )
 
     if smaller_table:
-        giant_table.append([n, table(smaller_table)])  # type: ignore
+        giant_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
 
     res_table = table(res_table, header_row=True, frame=True)
 
@@ -78,9 +76,9 @@ for n in range(2, 18):
 
     cond_table = table(cond_table, header_row=True, frame=True)
     print()
-    print(r'\begin{small}')
+    print(r'\begin{scriptsize}')
     print(latex(cond_table))
-    print(r'\end{small}')
+    print(r'\end{scriptsize}')
 
 print(r'\newpage')
 print(r'\scriptsize')

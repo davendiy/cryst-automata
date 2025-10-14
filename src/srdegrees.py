@@ -355,6 +355,7 @@ class SR_Degrees:
             nontriv_conds = []
             for r in conds:
                 for cond in r:
+                    # skip trivial case int \in Z
                     if cond.right().is_integer():
                         continue
 
@@ -380,7 +381,7 @@ class SR_Degrees:
             det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
             det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
 
-            self.print("Solve diophantine determinant:")
+            self.print("Solve diophantine determinant det(A) = +- 1:")
             self.print(self.display(det_res1))
             self.print(self.display(det_res2))
 
@@ -400,7 +401,7 @@ class SR_Degrees:
             eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
             eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
 
-            self.print("Solve diophantine eigenvalues:")
+            self.print("Solve diophantine eigenvalues det(A) +- tr(A) = -1:")
             self.print(self.display(eig_res1))
             self.print(self.display(eig_res2))
 
