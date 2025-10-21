@@ -280,19 +280,48 @@ group $G = (P, \mathbb{Z}^n, \alpha)$:
  \item compute the structure of integer matrices normalizing the group $P$. The set of solutions is a disjoint union of
  matrices of finitely many types corresponding to $\sigma \in Aut(P)$. For every automorphism $\sigma \in Aut(P)$ we
  solve system of linear equations $XB = \sigma(B)X, \, B \in P$ over integers. Every solution $X_\sigma$ of type $\sigma$
- is an integer linear combination of integral matrices that consist of integer variables $x_i$. 
+ is an integer linear combination of integral matrices that consists of variables $x_i \in \mathbb{Z}$. 
 
  \item ($SCDegrees$) determine conditions on the coefficients of matrices $A_{\sigma}$ to preserve cocyle.
  For every type $\sigma$ we solve system of congruences
 
  $(A_\sigma, t)(B, \alpha(B))(A_\sigma, t)^{-1} = (\sigma(B), \alpha(\sigma(B))) \mod \mathbb{Z}^n$ for every  $B \in P$;
 
-$(A, t)(B, \alpha(B))(A^{-1}, -A^{-1}t)$
+ we can extend the left part:
 
-$(A, -At)^{-1} = (A^{-1}, t)$
+ $(A, t)(B, \alpha(B))(A^{-1}, -A^{-1}t) = (ABA^{-1}, -ABA^{-1}t + A \alpha(B) + t) $
+
+ $= (ABA^{-1}, (E - ABA^{-1})t + A \alpha(B)) = (ABA^{-1}, \alpha(ABA^{-1})) \mod \mathbb{Z}^n$
+
+ or
+
+ \begin{equation}\label{eq:congruence}
+   A_\sigma \alpha(B) - \alpha(\sigma(B)) = (\sigma(B) - E)t  \mod \mathbb{Z}^n
+ \end{equation}
  
- \item ($SRDegrees$) solve the equations $|\det{A}| \neq 1$ and $\det{A} \pm \tr{A} \neq -1$ to exclude combinations that
- form virtual endomorphisms that aren't simple. 
+ This system of equations is linear over an abelian group $\mathbb{Q}/\mathbb{Z}$.
+
+\begin{theorem}
+  The system (\ref{eq:congruence}) can be solved algorithmically.
+\end{theorem}
+\begin{proof}
+\end{proof}
+ 
+ \item ($SRDegrees$) solve the equations
+ \begin{equation}\label{eq:det}
+ |\det{A}| \neq 1
+ \end{equation}
+ and
+ \begin{equation}\label{eq:eigenvalues}
+ \det{A} \pm \tr{A} \neq -1
+ \end{equation}
+ to exclude combinations that form virtual endomorphisms that aren't simple.
+
+ \begin{theorem}
+  The equations (\ref{eq:det}) and (\ref{eq:eigenvalues}) can be solved algorithmically for dim=2.
+ \end{theorem}
+ \begin{proof}
+ \end{proof}
  
 \end{enumerate}
 
@@ -408,8 +437,9 @@ $$\left[\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\r
 
 
 \newpage
-\scriptsize
+\begin{scriptsize}
 \begin{tabular}{|l|l|l|l|} \hline
+
 matrix & det & eigenvalue != 1 & eigenvalue != -1 \\ \hline \hline
 $\left(\begin{array}{rr}
 x_{0} + x_{1} & -x_{0} \\
@@ -432,85 +462,120 @@ $\left(\begin{array}{rr}
 x_{0} & x_{1}
 \end{array}\right)$ & $-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2}$ & $\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\ \hline
 \end{tabular}
-\\
+
+\end{scriptsize}
 
 
 \newpage
-\scriptsize
+As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
+For shorter notation, we use $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ i.e. odd integers.
 
-As a result, we run the proposed algorithm for every planar group and get the following results. 
-\textbf{TODO: add conditions from the congruences}
-
+\begin{scriptsize}
 
 \begin{tabular}{|l|l|} \hline
 num\footnotemark[1]{} & srdegrees\footnotemark[2]{} \\ \hline \hline
 $3$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $4$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $5$ & $\begin{tabular}{l}
-$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right),\left(1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(2 \, t_{0} + 1, t_{0}\right)\right\}\right\}$ \\
+$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(1, 1\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(1, 0\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $6$ & $\begin{tabular}{l}
-$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
+$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $7$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times OZ \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $8$ & $\begin{tabular}{l}
-$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
+$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times OZ \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
+$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times OZ \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $9$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} + 2 \, x_{0} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, -1\right),\left(-1, n_{1}\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right),\left(1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(2 \, t_{0} + 1, t_{0}\right)\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} + 2 \, x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right)\right\}\right\}$ \\
+$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(1, 1\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(1, 0\right),\left(1, n_{1}\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $10$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ x_{0}^{2} + x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ x_{0}^{2} + x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $11$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
-$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $12$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
-$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in OZ \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in OZ \, / \,\left\{-1,1\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $13$ & $\begin{tabular}{l}
-$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $14$ & $\begin{tabular}{l}
-$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $15$ & $\begin{tabular}{l}
-$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $16$ & $\begin{tabular}{l}
-$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in\mathbb{Z}^2 \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
+$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 $17$ & $\begin{tabular}{l}
-$ \left\{ 3 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$ \left\{ -\frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
-$ \left\{ -3 \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
-$ \left\{ \frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in\mathbb{Z} \right\} $ \\
+$ \left\{ 3 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$ \left\{ -\frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$ \left\{ -3 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
+$ \left\{ \frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
+$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
 \end{tabular}$ \\ \hline
 \end{tabular}
 
+\end{scriptsize}
+
 \footnotetext[1]{A positional number of the group in ITA}
 \footnotetext[2]{The explicit forms were generated by \url{https://github.com/davendiy/cryst-automata}}
+
+\newpage
+
+\begin{scriptsize}
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{group} & \textbf{minimal alphabet} & \textbf{gens amount} & \textbf{semi-direct} & \textbf{determinant} & \textbf{cond.2} \\
+\hline
+Group 1 p1    & \textbf{2}     & 2 & + &  &  \\
+Group 2 p2    & \textbf{2}     & 3 & + &  &  \\
+Group 3 p1m1  & \textbf{4}     & 3 & + & $x_0x_1$ &  \\
+Group 4 p1g1  & \textbf{6}     & 2 &   & $x_0x_1$ & $x_1$ odd \\
+Group 5 c1m1  & \textbf{4}     & 3 & + & $\left(x_{0} - 2x_{1}\right)x_{0}$ &  \\
+Group 6 p2mm  & \textbf{2}     & 4 & + & $-x_0x_1$ &  \\
+Group 7 p2mg  & \textbf{6}     & 3 &   & $x_0x_1$ & $x_0$ odd \\
+Group 8 p2gg  & \textbf{3}     & 4 &   & $x_0x_1$ & $x_0, x_1$ odd \\
+Group 9 c2mm  & \textbf{3}     & 4 & + & $x_{1}(2x_{0} - x_{1})$ &  \\
+Group 10 p4   & \textbf{2}     & 4 & + & $x_0^2 + x_1^2$ &  \\
+Group 11 p4mm & \textbf{2}     & 5 & + & $-2x_0^2$ &  \\
+Group 12 p4gm & \textbf{9}     & 5 &   & $x_0^2$ & $x_0$ odd \\
+Group 13 p3   & \textbf{3}     & 3 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 14 p3m1 & \textbf{4}     & 4 & + & $x_0^2$ &  \\
+Group 15 p31m & \textbf{4}     & 4 & + & $x_0^2$ &  \\
+Group 16 p6   & \textbf{3}     & 4 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 17 p6mm & \textbf{3}     & 5 & + & $\tfrac{3}{4}x_0^2$ & $x_0$ is even \\
+\hline
+\end{tabular}
+\caption{Summary of groups and their algebraic properties (without binary alphabet notes)}
+\label{tab:groups}
+\end{table}
+\end{scriptsize}
 
 \end{document}
