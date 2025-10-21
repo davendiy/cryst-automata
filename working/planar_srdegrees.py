@@ -13,7 +13,7 @@ def uncover(el):
 
 prepare_gap_env()
 
-giant_table = [["num", "srdegrees"]]
+general_table = [["num", "srdegrees"]]
 
 sr = SR_Degrees(1, method='latex', verbose=2)
 sr.texdoc_header()
@@ -22,20 +22,24 @@ for n in range(2, 18):
     # for n in [12]:
 
     sr = SR_Degrees(n, method='latex', verbose=2)
-    eig_table, res_table, cond_table = sr.sr_degrees()
+    eig_table, res_table, cond_table, pred_col_table = sr.sr_degrees()
     eig_table = table(eig_table, header_row=True, frame=True)
 
     smaller_table = set()
-    for el in res_table[1:]:
+    for el, pred_sols in zip(res_table[1:], pred_col_table[1:]):
+        pred_sols = pred_sols[1]
+
         if (el_n := len(el[1].variables())) > 1:    # type: ignore
             degree = f"^{el_n}"
             lp = '('
             rp = ')'
         else:
-            lp = rp = degree = ''
+            lp = rp = ''
+            degree = ''
 
+        field = r' \times '.join(r'\mathbb{Z}' if pred_sols.get(v,0) == 0 else r'OZ' for v in el[1].variables())  # type: ignore
         # (x_1, x_2) \in Z^2
-        inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + sr.z + degree  # type: ignore
+        inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field # type: ignore
         # {(x_1, x_2) \in Z^2}
         inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
 
@@ -54,9 +58,10 @@ for n in range(2, 18):
         )
 
     if smaller_table:
-        giant_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
+        general_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
 
     res_table = table(res_table, header_row=True, frame=True)
+    pred_col_table = table(pred_col_table, header_row=True, frame=True)
 
     print(latex(eig_table))
     print(r'\\')
@@ -74,6 +79,8 @@ for n in range(2, 18):
             padded[-1].append("$" + latex(el) + r"\in \mathbb{Z}$")
         row[1] = table(padded)
 
+    print(latex(pred_col_table))
+    print(r'\\')
     cond_table = table(cond_table, header_row=True, frame=True)
     print()
     print(r'\begin{scriptsize}')
@@ -82,6 +89,6 @@ for n in range(2, 18):
 
 print(r'\newpage')
 print(r'\scriptsize')
-print(latex(table(giant_table, header_row=True, frame=True)))
+print(latex(table(general_table, header_row=True, frame=True)))
 
 sr.texdoc_ending()

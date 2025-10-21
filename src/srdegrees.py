@@ -3,19 +3,115 @@ from sage.all import (
     SR,
     ascii_art,
     block_matrix,
-    Expression,
     factor,
+    floor,
     latex,
     matrix,
+    Parent,
+    RingElement,
     solve,
     solve_diophantine,
     table,
     var,
 )
+from sage.categories.rings import Rings
 from sage.modules.free_module_integer import IntegerLattice
-
-
 from .space_groups import SpaceGroup_gap
+
+
+# TODO:
+#  - somehow this should be in the category of Rings, but it doesn't appear there
+class _Q_modZ(Parent):
+
+    def __init__(self):
+        Parent.__init__(self, Rings)
+
+    def _element_constructor_(self, x):
+        return Q_modZ_Element(self, x)
+
+    def _repr_(self):
+        return "Q/Z"
+
+
+# TODO:
+#  - add sage coercion
+#  - make this shit work with matrix(QmodZ, [[...]])
+class Q_modZ_Element(RingElement):
+
+    def __init__(self, parent, r) -> None:
+        RingElement.__init__(self, parent)
+        self.r = QQ(r)
+        self._normalize()
+
+    def _normalize(self):
+        self.r = self.r - floor(self.r)
+
+    def __add__(self, a):
+        if isinstance(a, Q_modZ_Element):
+            return Q_modZ_Element(self.parent(), self.r + a.r)
+        else:
+            return Q_modZ_Element(self.parent(), self.r + QQ(a))
+
+    def __sub__(self, a):
+        if isinstance(a, Q_modZ_Element):
+            return Q_modZ_Element(self.parent(), self.r - a.r)
+        else:
+            return Q_modZ_Element(self.parent(), self.r - QQ(a))
+
+    def __radd__(self, a):
+        return self.__add__(a)
+
+    def __rsub__(self, a):
+        if isinstance(a, Q_modZ_Element):
+            return Q_modZ_Element(self.parent(), a.r - self.r)
+        else:
+            return Q_modZ_Element(self.parent(), QQ(a) - self.r)
+
+    def __eq__(self, value: object, /) -> bool:
+        if isinstance(value, Q_modZ_Element):
+            return self.r == value.r
+        else:
+            return self.r == value
+
+    def __mul__(self, a):
+        if isinstance(a, Q_modZ_Element):
+            return Q_modZ_Element(self.parent(), self.r * a.r)
+        else:
+            return Q_modZ_Element(self.parent(), self.r * QQ(a))
+
+    def inv(self):
+        return 1 / self
+
+    def _div_(self, a):
+        if isinstance(a, Q_modZ_Element):
+            return Q_modZ_Element(self.parent(), self.r / a.r)
+        else:
+            return Q_modZ_Element(self.parent(), self.r / QQ(a))
+
+    def _repr_(self):
+        return repr(self.r)
+
+
+QmodZ = _Q_modZ()
+
+
+# ugly gauss from internet
+def gauss_elim(mat):
+    N = len(mat)
+    M = len(mat[0])
+    for k in range(M):
+        i_max = max(range(k, N), key=lambda i: abs(mat[i][k].r))
+        if mat[i_max][k] == 0:
+            continue
+        mat[k], mat[i_max] = mat[i_max], mat[k]
+
+        for i in range(k + 1, N):
+            f = mat[i][k] / mat[k][k]
+
+            for j in range(k + 1, M):
+                mat[i][j] = mat[i][j] - f * mat[k][j]
+
+            mat[i][k] = 0
 
 
 class SR_Degrees:
@@ -193,6 +289,25 @@ class SR_Degrees:
             variables.append(var(f"m{i}"))
         return conds, base_variables, variables
 
+    def solve_congruences_v3(self, conds, base_vars, variables):
+        variables = base_vars
+        # print(matrix(QQ, [[cond.coefficient(v) for v in variables] for cond in conds]))
+        M = [[QmodZ(cond.coefficient(v)) for v in variables] for cond in conds]
+        # print(M)
+        gauss_elim(M, verbose=True)
+        # print(M)
+        # print(variables)
+        # print(matrix(QQ, [[el.r if isinstance(el, Q_modZ_Element) else el for el in row] for row in M]))
+
+        def to_qq(el):
+            if isinstance(el, Q_modZ_Element):
+                return el.r
+            else:
+                return QQ(el)
+
+        # FIXME: works only if you believe that every system has a solution
+        return {variables[i]: to_qq(M[i][i]) for i in range(len(variables))}
+
     def solve_congruences_v2(self, conds, base_vars, variables):
         # https://ask.sagemath.org/question/62549/solve-equation-of-matrices-over-integers/
 
@@ -214,7 +329,7 @@ class SR_Degrees:
         assert v * M == r
         return v
 
-    def solve_congruences(self, conds, _, variables):
+    def solve_congruences(self, conds, base_variables, variables):
         tmp = [con == 0 for con in conds]
         self.print("\nequations: ")
         printable = []
@@ -284,9 +399,11 @@ class SR_Degrees:
                 if conds is None:
                     self.print("A doesn't form a virtual endomorphism.")
                     continue
-                sc_degrees[str(A)] = A_inv, A, conds
+                predicted_solutions = self.solve_congruences_v3(eqs, base_vars, variables)
+
+                sc_degrees[str(A)] = A_inv, A, conds, predicted_solutions
             else:
-                sc_degrees[str(A)] = A_inv, A, []
+                sc_degrees[str(A)] = A_inv, A, [], {}
             self.print("Simplicity")
             self.print(self.pref + "A^{-1} = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
             self.print("\neigenvalues:")
@@ -342,10 +459,11 @@ class SR_Degrees:
         else:
             pref2 = "..."
 
-        eig_table = [["matrix", "det", "eigenvalue != 1", "eigenvalue != -1"]]
+        eig_table = [["matrix", "det", "det(A) + tr(A) != -1", "det(A) - tr(A) != -1"]]
         res_table = [["matrix", "det", "except"]]
         cond_table = [["matrix", "conds"]]
-        for _, (_, A, conds) in sc_degrees.items():
+        pred_sols_table = [['matrix', 'sols']]
+        for _, (_, A, conds, pred_sols) in sc_degrees.items():
             self.print(pref2)
             self.print(self.display("A = ", A))
             self.print("Determinant:")
@@ -362,7 +480,11 @@ class SR_Degrees:
                     self.print(self.display(cond.right(), self.in_sym, self.z))
                     nontriv_conds.append(cond.right())
 
-            self.print("Self-replicating degrees:")
+            self.print("\nPredicted solutions:")
+            self.print(pred_sols)
+            pred_sols_table.append([A, pred_sols])
+
+            self.print("\nSelf-replicating degrees:")
             self.print(self.display(A.det(), self.neq, self.pm, 1))
 
             # condition that eigenvalues isnt equal to +-1
@@ -412,4 +534,4 @@ class SR_Degrees:
             self.print("\\end{enumerate}")
             self.print("\\newpage")
 
-        return eig_table, res_table, cond_table
+        return eig_table, res_table, cond_table, pred_sols_table
