@@ -145,15 +145,18 @@ finitely generated nilpotent groups, solvable groups, wreath products of abelian
 
 \end{proof}
 
-Despite every virtual abelian group is self-similar, not every one admits self-replicating action.
+Despite every virtual abelian group is self-similar, not every one admits a self-replicating action.
 As an example, consider $G = \mathbb{Z}_2 \times \mathbb{Z}$ which is not
-self-replicating due to \cite{Sidki}. We will prove in the next section that every crystallographic group is self-replicating.
+self-replicating due to \cite{Sidki}. We will prove in the section \ref{sec:cryst} that some of them, particularly
+crystallographic groups, are self-replicating. In the section \ref{sec:computations} we will investigate what
+alphabets -- meaning size of an alphabet -- appear in self-replicating actions of crystallographic groups in dimensions
+2 and 3.
 
 
 % =====================================================================================================================
 
 
-\section{Crystallographic groups}
+\section{Crystallographic groups}\label{sec:cryst}
 
 Crystallographic groups describe symmetries of repeated patterns of an $n$-dimensional space. They were known for
 several centuries in case of $n=2$, though the complete list was only given in 1891 by Fedorov. In general, they appeared
@@ -173,6 +176,9 @@ $\mathbb{R}^n$ respectively.
   A \textit{crystallographic group} is a discrete cocompact subgroup of $\mathbf{E}(n)$.
 \end{definition}
 
+Recall that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$. From this follows that elements of any
+crystallographic group can be represented as pairs $(A, t)$ where $A \in GL_n(\mathbb{R})$ and $t \in \mathbb{R}^n$.
+Recall also the multiplication rule for a semi-direct product: $(A, a)(B, b) = (AB, Ab + a)$.
 We require the following theorems to be able to work with arbitrary crystallographic group.
 
 \begin{theorem}[Bieberbach, 1910]
@@ -194,16 +200,17 @@ We require the following theorems to be able to work with arbitrary crystallogra
 \end{theorem}
 
 In other words, a crystallographic group $G$ is some finitely generated virtually abelian subgroup of affine group $\mathbf{A}(n)$.
-It can be uniquely defined via triplet $(P, L, \alpha)$ of a \textit{crystallographic point group}
-$P < GL_n(\mathbb{R})$, a \textit{lattice} or \textit{translation group} $L \subset \mathbb{R}^n$ and a
-map $\alpha : P \rightarrow \mathbb{R}^n$. There exists short exact sequence
-$L \rightarrow G \rightarrow P$ and we can write the entire group as $G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}$.
+It can be uniquely defined via a triplet $(P, L, \alpha)$ of a \textit{crystallographic point group}
+$P < GL_n(\mathbb{R})$, a $P$-invariant \textit{lattice} or \textit{translation group} $L \subset \mathbb{R}^n$ and a
+map $\alpha : P \rightarrow \mathbb{R}^n$. The former two can be ordered in a short exact sequence
+$L \rightarrow G \rightarrow P$ and the entire group is expressed as $G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}$.
 
 By the Bieberbach theorem, $L$ is the maximal normal free
-abelian subgroup of $G$. The image of $\alpha$ belongs to $\mathbb{R}^n / L$ and is called a \textit{System of Non-trivial
-Translations (SNoT)}. Simply, these are elements that make $G$ different from a semi-direct product $P \ltimes L$.
-
-Given a crystallographic group $G = (P, L, \alpha)$ denote $\Pi(G) := P$ and $T(G) := L$. (\textbf{Question: do we need to choose basis already?})
+abelian subgroup of $G$. The image of $\alpha$ is called a \textit{System of Non-trivial
+Translations (SNoT)}. Simply, these are elements that make $G$ different from a semi-direct product $P \ltimes L$. It is
+also worth noting that the mapping $\Omega : g \mapsto \alpha(g) + L, g \in P$ is a one-dimensional cocycle on $P$ with
+values in $\mathbb{R}^n$ / L. Given a crystallographic group $G = (P, L, \alpha)$ denote $\Pi(G) := P$ and $T(G) := L$.
+(\textbf{Question: do we need to choose basis already?})
 
 \begin{definition}
   A crystallographic group $G$ which is isomorphic to a semi-direct product $\Pi(G) \ltimes T(G)$ of its point group and lattice is
@@ -214,7 +221,7 @@ In this paper we focus mainly on self-replicating actions of abstract crystallog
 action is induced by a surjective virtual endomorphism. The next theorem gives us a way to connect self-replicating
 actions to the results of Bieberbach.
 
-\begin{theorem}(Bondarenko)
+\begin{theorem}(Bondarenko)\label{th:surjection-is-bijection}
   A surjective virtual endomorphism of crystallographic group is an isomorphism from its subgroup to itself.
 \end{theorem}
 
@@ -223,9 +230,11 @@ actions to the results of Bieberbach.
   affine element $(A, t) \in \mathbf{A}(n)$ such that $\phi(g) = (A, t)^{-1}g(A, t)$ and $H = \phi^{-1}(G) = (A, t)G(A, t)^{-1}$.
 \end{corollary}
 
+Let us investigate how surjective virtual endomorphisms act on crystallographic groups, deriving from
+the theorem \ref{th:surjection-is-bijection}.
 Consider a crystallographic group $G$, its isomorphic subgroup of finite index $H < G$
 and a virtual endomorphism $\phi : H \rightarrow G$ which is given by $\phi(g) = (A, t)^{-1}g(A, t)$.
-Its action on the generators of $T(G)$ is reduced to linear operator:
+Its action on the generators of $T(G)$ is reduced to a linear operator:
 
 \begin{equation}
   (A, t)(E, e_i)(A, t)^{-1} = (E, Ae_i + t - AA^{-1}t) = (E, At). \label{eq:trans_gens}
@@ -246,12 +255,13 @@ Its action on the generators of $T(G)$ is reduced to linear operator:
   The equality $[G:H] = [T(G):T(H)]$ follows.
 \end{proof}
 
-From the lemma \ref{lemma:equal_index} and (\ref{eq:trans_gens}) follows that $T(H) = AT(G) < T(G)$ and its index
+From the lemma \ref{lemma:equal_index} and the equation (\ref{eq:trans_gens}) follows that $T(H) = AT(G) < T(G)$ and its index
 equals to the $\det(A)$. We can now choose the basis equal to the generators of $T(G)$. Doing so, we get that the
 lattice $T(G)$ equals to $\mathbb{Z}^n$,
 the point group $\Pi(G)$ consists of invertible integral matrices, i.e. $\Pi(G) < GL_n(\mathbb{Z})$, SNoT $\alpha(G)$
 consists of vectors from $[0, 1]^n$ and the matrix
-$A \in GL_n(\mathbb{Q})$ has integral entities. Note that $t$ can be arbitrary vector from $\mathbb{Q}^n$.
+$A \in GL_n(\mathbb{Q})$ has integral entities. Note that $t$ can be arbitrary vector from $\mathbb{Q}^n$. More detailed
+analysis of admissible pairs $(A, t)$ will be given in the section \ref{sec:computations}.
 
 \begin{theorem}
   A surjective virtual endomorpism $\phi : H \rightarrow G$ given by $\phi(g) = (A, t)^{-1}g(A, t)$ is simple if and
@@ -259,20 +269,20 @@ $A \in GL_n(\mathbb{Q})$ has integral entities. Note that $t$ can be arbitrary v
 \end{theorem}
 \begin{proof}
 
-Denote $L = T(H)$. We will prove that $\phi$ is simple if and only if its restriction on the tranlsation group
-$\phi|_{L} : L \rightarrow G$ is simple as virtual endomorphism of $G$. The statement of the theorem follows from this
-combined with Theorem \ref{th:Nekrashevych-abelian}.
+  Denote $L = T(H)$. We will prove that $\phi$ is simple if and only if its restriction on the tranlsation group
+  $\phi|_{L} : L \rightarrow G$ is simple as virtual endomorphism of $G$. The statement of the theorem follows from this
+  combined with Theorem \ref{th:Nekrashevych-abelian}.
 
-The $\phi|_{L}$-core is a subgroup of the $\phi$-core. Therefore, $\phi$ being simple implies $\phi|_{L}$ is simple.
+  The $\phi|_{L}$-core is a subgroup of the $\phi$-core. Therefore, $\phi$ being simple implies $\phi|_{L}$ is simple.
 
-Conversely, assume that the $\phi$-core $K$ is nontrivial. Since crystallographic groups do not contain finite normal subgroups,
-$K$ is infinite and contains translations. For every $m\in\mathbb{N}$, the subgroup $K_m=\langle a^{m}, a\in K\rangle$
-is nontrivial, normal in $G$, and $\phi$-invariant. Taking $m = lcm(order(B) \, | \, B \in P)$ we have $a^{m}\in L$
-for every $a\in G$. Hence, $K_m\leq L$ and belongs to the $\phi|_{L}$-core. And it is not empty since $K$ contains translations.
+  Conversely, assume that the $\phi$-core $K$ is nontrivial. Since crystallographic groups do not contain finite normal subgroups,
+  $K$ is infinite and contains translations. For every $m\in\mathbb{N}$, the subgroup $K_m=\langle a^{m}, a\in K\rangle$
+  is nontrivial, normal in $G$, and $\phi$-invariant. Taking $m = lcm(order(B) \, | \, B \in P)$ we have $a^{m}\in L$
+  for every $a\in G$. Hence, $K_m\leq L$ and belongs to the $\phi|_{L}$-core. And it is not empty since $K$ contains translations.
 
 \end{proof}
 
-We now can make an upper bound for self-replicating degree of crystallographic groups:
+We can now make an upper bound for self-replicating degrees of crystallographic groups:
 
 \begin{theorem}
   Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ admits a self-replicating action over an alphabet
@@ -284,16 +294,12 @@ We now can make an upper bound for self-replicating degree of crystallographic g
 	Since $A$ is scalar it commutes with any matrix and thus lies in the normalizer of $P$.
 	Consider $A = (m+1)E_n$ where $m = lcm \left(m_i : (B, \frac{p}{m_i}) \in G \right)$ is a least common
   multiplier of denominators of translations from the SNoT. Then $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m}$ and
-  the only thing left to check is whether $(A, 0)G (A, 0)^{-1} \subset G$.
+  the only thing left to check is whether $(A, 0)G (A, 0)^{-1} \subset G$. Using multiplication rules:
 	$$
-	\phi^{-1}((B, t)) = (A, 0) (B, t) (A, 0)^{-1} = (B, At) = (B, (m+1)t)
+	\phi^{-1}((B, t)) = (A, 0) (B, t) (A, 0)^{-1} = (B, At) = (B, (m+1)t) = (B, t) + (E, mt)
 	$$
-	$$
-	\Rightarrow \phi^{-1}(g) = g + (E, mt)
-	$$
-	where $mt \in \mathbb{Z}^n$, which leads to $\phi^{-1}(g) \in G$.
+	where $mt \in \mathbb{Z}^n$ due to the choice of $m$. As a result, $\phi^{-1}(G) < G$.
 \end{proof}
-
 
 \begin{corollary}
   Every planar group admits a self-replicating action over an alphabet of size $\le 9$.
@@ -304,8 +310,10 @@ We now can make an upper bound for self-replicating degree of crystallographic g
 \end{corollary}
 
 
+% =====================================================================================================================
 
-\section{Computing self-replicating degree of crystallographic groups}
+
+\section{Computing self-replicating degree of crystallographic groups}\label{sec:computations}
 
 Let $G$ be a crystallographic group. We consider two sets of positive integers associated with $G$:
 \begin{align*}
