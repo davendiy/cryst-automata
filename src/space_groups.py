@@ -36,6 +36,7 @@ MAX_ITERATIONS = 1_000_000
 #   - [x] use previous in self-similar method instead of Gap's one
 #   - [x] LeftTransversal instead of Gap's RightTransvesal
 #   - [x] check simplicity of the given virtual endomorphism
+#   - [ ] add shift of origin to the change of basis
 #   - [ ] add method to check whether cryst groups isomorphic
 #   - [ ] find min isomorphic subgroup??????
 
@@ -547,7 +548,7 @@ class SpaceGroup_gap:
             raise NotImplementedError()
 
     def is_symmorphic(self):
-        return self.gap_G.IsSymmorphicSpaceGroup()  # type: ignore
+        return self.gap_G.IsSymmorphicSpaceGroup()
 
     def is_simple_virtend(self, T):
         """Checks whether phi(g) = TgT^{-1} forms a simple surjective
@@ -715,6 +716,8 @@ class SpaceGroup_gap:
         return self.__class__.from_gens(new_gens)
 
     def naive_self_replicating(self, verbose=False, build_wreath=False):
+        """Create a self-replicating action from the scalar matrix 1/(m+1)E, where
+        m is a least common multiplier of denominators of the SNoT."""
         denominators = set()
         for el in self._alpha.values():
             for row in el:
@@ -790,26 +793,26 @@ class SpaceGroup_gap:
 # fmt: off
 _PLANAR_GROUPS_MIN_SR = {
     1: [
-        [0, 1/2, 0], 
-        [1, 0, 0], 
+        [0, 1/2, 0],
+        [1, 0, 0],
         [0, 0, 1]
-    ], 
+    ],
 
     2: [
-        [0, 1/2, 0], 
-        [1, 0, 0], 
+        [0, 1/2, 0],
+        [1, 0, 0],
         [0, 0, 1]
-    ], 
-    
+    ],
+
     3: [
-        [1/2, 0, 0], 
-        [0, 1/2, 0], 
+        [1/2, 0, 0],
+        [0, 1/2, 0],
         [0, 0, 1]
     ],
 
     4: [
-        [1/2, 0, 0], 
-        [0, 1/3, 0], 
+        [1/2, 0, 0],
+        [0, 1/3, 0],
         [0, 0, 1]
     ],
 
@@ -826,68 +829,68 @@ _PLANAR_GROUPS_MIN_SR = {
     ],
 
     7: [
-        [1/3, 0, 0], 
-        [0, 1/2, 0], 
+        [1/3, 0, 0],
+        [0, 1/2, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     8: [
-        [0, 1/3, 0], 
-        [1, 0, 0], 
+        [0, 1/3, 0],
+        [1, 0, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     9: [
-        [1/3, 2/3, 0], 
-        [-2/3, -1/3, 0], 
+        [1/3, 2/3, 0],
+        [-2/3, -1/3, 0],
         [0, 0, 1],
     ],
 
     10: [
-        [1/2, 1/2, 0], 
-        [-1/2, 1/2, 0], 
+        [1/2, 1/2, 0],
+        [-1/2, 1/2, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     11: [
-        [1/2, 1/2, 0], 
-        [-1/2, 1/2, 0], 
+        [1/2, 1/2, 0],
+        [-1/2, 1/2, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     12: [
         [-1/3, 0, 0],
         [0, 1/3, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     13: [
         [-1/3, 2/3, 0,],
-        [1/3, 1/3, 0], 
+        [1/3, 1/3, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     14: [
-        [1/2, 0, 0], 
-        [0, 1/2, 0], 
+        [1/2, 0, 0],
+        [0, 1/2, 0],
         [0, 0, 1]
     ],
 
     15: [
-        [1/2, 0, 0], 
-        [0, 1/2, 0], 
+        [1/2, 0, 0],
+        [0, 1/2, 0],
         [0, 0, 1]
     ],
 
     16: [
         [-1/3, 2/3, 0,],
-        [1/3, 1/3, 0], 
+        [1/3, 1/3, 0],
         [0, 0, 1],
-    ], 
+    ],
 
     17: [
-        [2/3, -1/3, 0], 
-        [1/3, 1/3, 0], 
+        [2/3, -1/3, 0],
+        [1/3, 1/3, 0],
         [0, 0, 1],
     ]
 }
