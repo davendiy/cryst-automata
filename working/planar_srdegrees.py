@@ -3,6 +3,7 @@ from sage.all import latex, table
 from src.space_groups import prepare_gap_env
 from src.srdegrees import SR_Degrees
 
+
 def uncover(el):
     if isinstance(el, list) or isinstance(el, tuple):
         if len(el) == 1:
@@ -37,9 +38,9 @@ for n in range(2, 18):
             lp = rp = ''
             degree = ''
 
-        field = r' \times '.join(r'\mathbb{Z}' if pred_sols.get(v,0) == 0 else r'OZ' for v in el[1].variables())  # type: ignore
+        field = r' \times '.join(r'\mathbb{Z}' if pred_sols.get(v, 0) == 0 else r'OZ' for v in el[1].variables())  # type: ignore
         # (x_1, x_2) \in Z^2
-        inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field # type: ignore
+        inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field  # type: ignore
         # {(x_1, x_2) \in Z^2}
         inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
 

@@ -114,8 +114,112 @@ def gauss_elim(mat):
             mat[i][k] = 0
 
 
+class SC_DegreesSolution:
+
+    def __init__(self):
+        self._matrices = {}
+        self._body = {}
+
+    def add_solution(self, mat, inv_mat, conditions, solutions):
+        self._matrices[str(mat)] = mat
+        self._body[str(mat)] = inv_mat, conditions, solutions
+
+    def __iter__(self):
+        for mat in self._matrices:
+            yield self._matrices[mat], *self._body[mat]
+
+
+class SR_DegreesSolution:
+
+    def __init__(self):
+        pass
+
+    def enumerate(self):
+        pass
+
+    def _latex_(self):
+        pass
+
+
+def _solve_simple_mat2(A):
+    """Given matrix of indeterminates A, find when it forms a simple virtual endomorphism
+    of Z^n, using Nekrashevych theorem.
+
+
+    Notes
+    -----
+    A matrix A forms a simple virtual endomorphism if and only its characteristic polynomial isn't divisible
+    by a monic polynomial with integer coefficients. In other words, A is simple if and only if A has no
+    eigenvalue which is algebraic integer.
+
+    For a 2x2 matrix it simplifies to the conditions:
+
+    1. |det(A)| != 1
+    2. det(A) + tr(A) != -1
+    2. det(A) - tr(A) != -1
+    """
+    cond1 = (A.det() + A.trace()).simplify_rational()
+    cond2 = (A.det() - A.trace()).simplify_rational()
+
+    det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
+    det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
+
+    det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
+    det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
+
+    eig_res1 = solve_diophantine(cond1 + 1, cond1.variables(), solution_dict=True)
+    eig_res2 = solve_diophantine(cond2 + 1, cond2.variables(), solution_dict=True)
+
+    if isinstance(eig_res1, dict):
+        eig_res1 = [
+            eig_res1,
+        ]
+
+    if isinstance(eig_res2, dict):
+        eig_res2 = [
+            eig_res2,
+        ]
+
+    eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
+    eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
+
+    return list(set(det_res1 + det_res2 + eig_res1 + eig_res2))
+
+
+def _factorize(A):
+    n = len(A)
+    for i, row in enumerate(A):
+        if row.count(0) == (n-1) and row[i] != 0:
+            return A.from_rows_and_columns([j for j in range(n) if j != i], [j for j in range(n) if j != i]), row[i]
+
+    for i, col in enumerate(A.T):
+        if col.count(0) == (n-1) and col[i] != 0:
+            return A.from_rows_and_columns([j for j in range(n) if j != i], [j for j in range(n) if j != i]), row[i]
+    return None
+
+
+def _solve_simple_mat3(A):
+    subA = _factorize(A)
+    # case of permutational matrix
+    if subA is None:
+        raise NotImplementedError
+    else:
+        subA, varx = subA
+        return _solve_simple_mat2(subA) + [varx == 1]
+
+
+def solve_simple_mat(A):
+    assert len(A) == len(A[0])
+    if len(A) == 2:
+        return _solve_simple_mat2(A)
+    elif len(A) == 3:
+        return _solve_simple_mat3(A)
+    else:
+        raise NotImplementedError
+
+
 class SR_Degrees:
-    def __init__(self, group_index, method="ascii", verbose=2):
+    def __init__(self, group_index, method="ascii", verbose=2, dim=2):
         self.disp = method
         self.group_index = group_index
         self.verbose = verbose
@@ -150,7 +254,7 @@ class SR_Degrees:
             self.notin_sym = "  /∈  "
             self.z = "Z"
 
-        self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=2, change_basis=True)
+        self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=dim, change_basis=True)
 
     def display(self, *args, use_pref=True) -> str:
         bod = self._display("") if self.disp == "ascii" else ""
@@ -363,7 +467,7 @@ class SR_Degrees:
         self.sc_degrees()
         self.texdoc_ending()
 
-    def algorithm(self):
+    def sc_degrees(self) -> SC_DegreesSolution:
         self.header()
 
         G = self.G
@@ -386,7 +490,7 @@ class SR_Degrees:
         else:
             pref2 = "..."
 
-        sc_degrees = {}
+        sc_degrees = SC_DegreesSolution()
 
         for A in norms:
             self.print(pref2 + " testing A (should have integral entities):")
@@ -401,9 +505,9 @@ class SR_Degrees:
                     continue
                 predicted_solutions = self.solve_congruences_v3(eqs, base_vars, variables)
 
-                sc_degrees[str(A)] = A_inv, A, conds, predicted_solutions
+                sc_degrees.add_solution(A, A_inv, conds, predicted_solutions)
             else:
-                sc_degrees[str(A)] = A_inv, A, [], {}
+                sc_degrees.add_solution(A, A_inv, [], {})
             self.print("Simplicity")
             self.print(self.pref + "A^{-1} = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
             self.print("\neigenvalues:")
@@ -417,12 +521,13 @@ class SR_Degrees:
 
         if self.disp == "latex" and norms:
             self.print("\\end{enumerate}")
+
         return sc_degrees
 
-    def sc_degrees(self):
-        return self.algorithm()
+    def sr_degrees_calc(self) -> SR_DegreesSolution:
+        pass
 
-    def sr_degrees(self):
+    def sr_degrees(self) -> SR_DegreesSolution:
         """Compute conditions on self replicating degrees of a crystallographic group.
 
         Notes
@@ -447,7 +552,7 @@ class SR_Degrees:
 
         A proof comes from the h(1) != 0 and h(-1) != 0, where h(x) is a charpoly of A.
         """
-        sc_degrees = self.algorithm()
+        sc_degrees = self.sc_degrees()
 
         self.print(self.section % "Self-replicating degrees.")
 
@@ -463,7 +568,7 @@ class SR_Degrees:
         res_table = [["matrix", "det", "except"]]
         cond_table = [["matrix", "conds"]]
         pred_sols_table = [['matrix', 'sols']]
-        for _, (_, A, conds, pred_sols) in sc_degrees.items():
+        for A, _, conds, pred_sols in sc_degrees:
             self.print(pref2)
             self.print(self.display("A = ", A))
             self.print("Determinant:")
