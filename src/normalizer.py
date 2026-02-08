@@ -181,9 +181,9 @@ def normalizers(P, verbose=False, use_alphabet=False, normalize_exp=True, to_mat
         # build conditions AX = YA for every X -> Y due to chosen permutation
         cond_perm = set()
         try:
-            homm = P.hom(maps_to)
+            homm = P.hom(maps_to, check=False)
         except ValueError:
-            warn(f'Something went wrong: couldnt create homomorphism for {maps_to}')
+            # warn(f'Something went wrong: couldnt create homomorphism for {maps_to}')
             continue
 
         # we need only automorphisms

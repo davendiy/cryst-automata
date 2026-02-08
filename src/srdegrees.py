@@ -187,7 +187,7 @@ def _solve_simple_mat2(A):
 
 
 def _factorize(A):
-    n = len(A)
+    n = len(list(A))
     for i, row in enumerate(A):
         if row.count(0) == (n-1) and row[i] != 0:
             return A.from_rows_and_columns([j for j in range(n) if j != i], [j for j in range(n) if j != i]), row[i]

@@ -29,7 +29,7 @@ def rawdog():
     found = set()
     point_groups = set()
 
-    for i in nontrivial:
+    for i in range(2, 230):
         nprint(f'##################### {i} ############################')
         G = SpaceGroup_gap.from_gap_cryst(i, dim=3, change_basis=True)
         els = list(sorted(MatrixGroup(G.P_gens)))
@@ -37,12 +37,12 @@ def rawdog():
             continue
         point_groups.add(str(els))
         for A in G.point_group_normalizer():
-            if tau(A) == 0:
+            if tau(A) == 0 and A.trace() == 0:
                 continue
             if str(A) in found:
                 continue
-            if check_div(A):
-                continue
+            # if check_div(A):
+            #     continue
             found.add(str(A))
             nprint(A)
             nprint('tau(A) = ', tau(A).simplify_rational())
@@ -359,6 +359,9 @@ cached_matrices = {
         ],
     ],
 }
+
+
+rawdog()
 
 for gr_num in cached_matrices:
     cached_matrices[gr_num] = [matrix(el) for el in cached_matrices[gr_num]]
