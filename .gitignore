@@ -141,3 +141,7 @@ working/src
 *.out
 # no sense to keep pdf changes
 *.pdf
+
+
+# too much generated output
+cached_normalizers_dim3/
