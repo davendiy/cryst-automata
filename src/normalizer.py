@@ -118,6 +118,7 @@ def _carthesian_wo_duplicates(*spaces):
             used.remove(str(el))
 
 
+# TODO: probably should rewrite as a generator
 def normalizers(P, verbose=False, use_alphabet=False, normalize_exp=True, to_matrix=True, ignore_trivial=True):
     """Find normalizer of the PointGroup in GL(n, QQ).
 

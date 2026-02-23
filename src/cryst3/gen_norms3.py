@@ -16,16 +16,10 @@ def bruteforce_normalizers():
     for i in point_groups_representatives:
         nprint(f'##################### {i} ############################')
         G = SpaceGroup_gap.from_gap_cryst(i, dim=3, change_basis=True)
-        if i <= 225:
-            continue
 
         norm_matrices = set()
         for A in G.point_group_normalizer():
             norm_matrices.add(str(A))
-            # if tau(A) == 0 and A.trace() == 0:
-            #     continue
-            # if str(A) in found:
-            #     continue
             if check_div(A):
                 continue
             simple_found.add(str(A))

@@ -142,14 +142,14 @@ class SR_DegreesSolution:
 
 
 def _solve_simple_mat2(A):
-    """Given matrix of indeterminates A, find when it forms a simple virtual endomorphism
+    """Given matrix of integral indeterminates A, find when it forms a simple virtual endomorphism
     of Z^n, using Nekrashevych theorem.
 
 
     Notes
     -----
-    A matrix A forms a simple virtual endomorphism if and only its characteristic polynomial isn't divisible
-    by a monic polynomial with integer coefficients. In other words, A is simple if and only if A has no
+    A matrix A^{-1} forms a simple virtual endomorphism if and only its characteristic polynomial isn't divisible
+    by a monic polynomial with integer coefficients. In other words, A^{-1} is simple if and only if A^{-1} has no
     eigenvalue which is algebraic integer.
 
     For a 2x2 matrix it simplifies to the conditions:
@@ -157,7 +157,29 @@ def _solve_simple_mat2(A):
     1. |det(A)| != 1
     2. det(A) + tr(A) != -1
     2. det(A) - tr(A) != -1
+
+    if tr(A) == 0, then we can further simplify condition |det(A)| != 1 by having |bc| != 1 for integral b, c entities
+    of the matrix A. From which follow four simpler equations
+    [
+        b !=  1 && c !=  1,
+        b !=  1 && c != -1
+        b != -1 && c !=  1
+        b != -1 && c != -1,
+    ]
     """
+
+    # if A.trace() == 0:
+    #     cond1 = (A[0, 1] - 1).simplify_rational(), (A[1, 0] - 1).simplify_rational()
+    #     cond2 = (A[0, 1] - 1).simplify_rational(), (A[1, 0] + 1).simplify_rational()
+    #     cond3 = (A[0, 1] + 1).simplify_rational(), (A[1, 0] - 1).simplify_rational()
+    #     cond4 = (A[0, 1] + 1).simplify_rational(), (A[1, 0] + 1).simplify_rational()
+
+    #     sols = []
+    #     for cond in [cond1, cond2, cond3, cond4]:
+    #         sol = solve(cond)
+    #         if isinstance(sol, dict):
+    #             sol = [sol,]
+
     cond1 = (A.det() + A.trace()).simplify_rational()
     cond2 = (A.det() - A.trace()).simplify_rational()
 
@@ -186,33 +208,49 @@ def _solve_simple_mat2(A):
     return list(set(det_res1 + det_res2 + eig_res1 + eig_res2))
 
 
-def _factorize(A):
-    n = len(list(A))
+def _subminor(A: matrix, i):
+    n = A.dimensions()[0]
+    return matrix([[A[j, k] for k in range(n) if k != i] for j in range(n) if j != i])
+
+
+def factorize(A: matrix):
+    n = A.dimensions()[0]
     for i, row in enumerate(A):
-        if row.count(0) == (n-1) and row[i] != 0:
-            return A.from_rows_and_columns([j for j in range(n) if j != i], [j for j in range(n) if j != i]), row[i]
+        if list(row).count(0) == (n-1) and row[i] != 0:
+            return _subminor(A, i), row[i]
 
     for i, col in enumerate(A.T):
-        if col.count(0) == (n-1) and col[i] != 0:
-            return A.from_rows_and_columns([j for j in range(n) if j != i], [j for j in range(n) if j != i]), row[i]
+        if list(col).count(0) == (n-1) and col[i] != 0:
+            return _subminor(A, i), col[i]
     return None
 
 
+def tau(A: matrix):
+    row1, row2, row3 = A
+    return _tau(*row1, *row2, *row3)
+
+
+def _tau(y0, y1, y2, y3, y4, y5, y6, y7, y8):
+    return y0 * y4 + y0 * y8 + y4 * y8 - y1 * y3 - y2 * y6 - y5 * y7
+
+
 def _solve_simple_mat3(A):
-    subA = _factorize(A)
+    subA = factorize(A)
     # case of permutational matrix
     if subA is None:
-        raise NotImplementedError
+        if not A.trace() == 0 or not tau(A) == 0:
+            raise ValueError("something went wrong, this shouldn't be like that")
+        return [A.det() == 1, A.det() == -1]
     else:
         subA, varx = subA
         return _solve_simple_mat2(subA) + [varx == 1]
 
 
 def solve_simple_mat(A):
-    assert len(A) == len(A[0])
-    if len(A) == 2:
+    assert len(list(A)) == len(list(A[0]))
+    if len(list(A)) == 2:
         return _solve_simple_mat2(A)
-    elif len(A) == 3:
+    elif len(list(A)) == 3:
         return _solve_simple_mat3(A)
     else:
         raise NotImplementedError

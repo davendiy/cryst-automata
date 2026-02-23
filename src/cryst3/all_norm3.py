@@ -1,4 +1,4 @@
-from sage.all import Integer, var
+from sage.all import Integer, var, matrix
 
 int0 = Integer(0)
 int1 = Integer(1)
@@ -3135,3 +3135,8 @@ all_matrices = [
         [int0, int0, x0],
     ],
 ]
+
+all_matrices = [matrix(el) for el in all_matrices]
+
+tmp = {str(el): el for el in all_matrices}
+all_unique_matrices = list(tmp.values())
