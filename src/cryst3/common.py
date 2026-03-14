@@ -1,4 +1,4 @@
-from sage.all import Integer, var
+from sage.all import Integer, var, matrix
 
 half = Integer(1) / Integer(2)
 quar = Integer(1) / Integer(4)
@@ -290,6 +290,9 @@ cached_simple_matrices = {
         ],
     ],
 }
+
+for gr_num in cached_simple_matrices:
+    cached_simple_matrices[gr_num] = [matrix(el) for el in cached_simple_matrices[gr_num]]
 
 
 by_point_groups = [

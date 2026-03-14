@@ -1,11 +1,13 @@
 from sage.all import (
     QQ,
+    ZZ,
     SR,
     ascii_art,
     block_matrix,
     factor,
     floor,
     latex,
+    lcm,
     matrix,
     Parent,
     RingElement,
@@ -80,7 +82,10 @@ class Q_modZ_Element(RingElement):
             return Q_modZ_Element(self.parent(), self.r * QQ(a))
 
     def inv(self):
-        return 1 / self
+        res = 1 / self
+        if res == 0:
+            raise ValueError('inverse is zero')
+        return res
 
     def _div_(self, a):
         if isinstance(a, Q_modZ_Element):
@@ -341,21 +346,88 @@ class SR_Degrees:
         if self.disp == "latex":
             print("\\end{document}")
 
+    def construct_congruences_v2(self, A_inv, A):
+
+        G = self.G
+        P = self.G.point_group_elements()
+        trans_a = list(var(' '.join(f"a{i}" for i in range(G.dim))))
+        x = matrix(trans_a).T
+        E = matrix.identity(QQ, G.dim)
+
+        conds = []
+        base_variables = list(A_inv.variables()) + list(trans_a)
+
+        for i, g in enumerate(P):
+            conj = (A * g * A_inv).simplify_rational()
+            assert G.in_alpha(conj)
+
+            # condition = A * G.alpha(g) - G.alpha(conj)
+            # condition = condition.simplify_rational()
+
+            # sym_res = (conj - E) * x
+
+            alpha_conj = (E - conj) * x + (A * G.alpha(g))
+            real_alpha = G.alpha(conj)
+
+            for ((ll,), (rr,)) in zip(alpha_conj, real_alpha):
+                conds.append(ll - rr)
+            self.print_congruence(g, conj, alpha_conj, real_alpha)
+        return conds, base_variables
+
+    def print_congruence(self, g, conj, alpha_conj, real_alpha):
+        G = self.G
+
+        def construct_el(x, y):
+            return block_matrix([[x, y], [0, 1]])
+
+        for j in range(self.G.dim):
+            alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
+        if self.disp in ["latex", "markdown"]:
+            self.print(
+                self.pref
+                + "(A, a)"
+                + self.display(construct_el(g, G.alpha(g)), use_pref=False)
+                + "(A^{-1}, -A^{-1}a) = "
+            )
+            self.print(self.display(construct_el(conj, alpha_conj), use_pref=False) + "=")
+            self.print(self.display(construct_el(conj, real_alpha), use_pref=False) + self.pref)
+        else:
+            self.print(
+                ascii_art("\na\n\n")
+                + ascii_art(" ")
+                + ascii_art(construct_el(g, G.alpha(g)))
+                + ascii_art("\na_inv\n\n")
+                + ascii_art(" ")
+                + ascii_art("\n=\n\n")
+                + ascii_art(" ")
+                + ascii_art(construct_el(conj, alpha_conj))
+                + ascii_art(" ")
+                + ascii_art("\n=\n\n")
+                + ascii_art(" ")
+                + ascii_art(construct_el(conj, real_alpha))
+            )
+            self.print()
+
     def construct_congruences(self, A_inv, A):
         """Construct congruences for the subgroup check.
 
         The congruences have the following form:
             (A, t)(B, alpha(b))(A^{-1}, -A^{-1}t) = (ABA^{-1}, alpha(ABA^{-1})) mod L
 
-        The lattice just multiplies on matrix, so the index equals to det(A):
+        The action on the lattice L coincides with a linear operator A,
+        so the index equals to det(A):
             (A, t)(E, e)(A, t)^{-1} = (E, At)
 
-        Calculate the conjugation:
+        Calculate the conjugation for every element in the SNoT:
             (A, t)(B, alpha(B))(A^{-1}, -A^{-1}t) =
             = (A, t)(BA^{-1}, -BA^{-1}t + alpha(B)) =
 
             = (ABA^{-1}, -ABA^{-1}t + A alpha(B) + t)
             = (ABA^{-1}, (E - ABA^{-1})t + A alpha(B)) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+            Hence, the result system can be written
+
+            (E - ABA^{-1})t + A alpha(B) = alpha(ABA^{-1})
 
             or
 
@@ -368,7 +440,7 @@ class SR_Degrees:
         snot = self.G.snot
         a0, a1 = var("a0 a1")
         x = matrix([[a0], [a1]])
-        E = matrix(QQ, [[1, 0], [0, 1]])
+        E = matrix.identity(QQ, G.dim)
         conds = []
         variables = []
         base_variables = []
@@ -431,12 +503,13 @@ class SR_Degrees:
             variables.append(var(f"m{i}"))
         return conds, base_variables, variables
 
+    # FIXME: gauss elimination doesn't work in Q/Z
     def solve_congruences_v3(self, conds, base_vars, variables):
         variables = base_vars
         # print(matrix(QQ, [[cond.coefficient(v) for v in variables] for cond in conds]))
-        M = [[QmodZ(cond.coefficient(v)) for v in variables] for cond in conds]
+        M = [[QmodZ(cond.coefficient(v)) for v in base_vars] for cond in conds]
         # print(M)
-        gauss_elim(M, verbose=True)
+        gauss_elim(M)
         # print(M)
         # print(variables)
         # print(matrix(QQ, [[el.r if isinstance(el, Q_modZ_Element) else el for el in row] for row in M]))
@@ -470,6 +543,45 @@ class SR_Degrees:
         v = L.coordinate_vector(r) * U
         assert v * M == r
         return v
+
+    def solve_congruences_v4(self, conds, base_variables, variables):
+        # m * f = 0 in G-module Z^n => we have m as a universal common denominator
+        m_bound = len(self.G.point_group_elements())
+        M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in conds])
+        f = matrix(base_variables).T
+
+        # compute f(0, ... 0) to get variables free part
+        b = [cond({v: 0 for v in base_variables + variables}) for cond in conds]
+        b = matrix(QQ, b).T
+
+        denoms = [el.denominator() for row in M for el in row]
+        denoms += [el.denominator() for (el,) in b]
+
+        # in most cases there is a less common denominator
+        m = lcm(denoms)
+        assert (m_bound % m) == 0
+        self.print(f'using modulo: {m}')
+
+        M_lift = matrix(ZZ, M * m)
+        b_lift = matrix(ZZ, b * m)
+
+        S, U, V = M_lift.smith_form()
+
+        # M * f = b
+        # U * M * V * (V.inverse() * f) = U * b
+        # S * (V.inverse() * f) = U * b
+        left = S * V.inverse() * f
+        right = U * b_lift
+
+        eqs = (left - right)
+        self.print(eqs)
+        self.print()
+        for (el,) in eqs:
+            if el({v: 0 for v in base_variables}) == el:
+                if (int(el) % m) != 0:
+                    self.print(f'contradiction: {el} != 0 mod {m}')
+                    return None
+        return eqs[:len(base_variables)]
 
     def solve_congruences(self, conds, base_variables, variables):
         tmp = [con == 0 for con in conds]

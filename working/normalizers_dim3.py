@@ -1,14 +1,9 @@
 
-from sage.all import matrix
 from src.space_groups import prepare_gap_env
 from src.cryst3.common import cached_simple_matrices
 
 
 prepare_gap_env()
-
-
-for gr_num in cached_simple_matrices:
-    cached_simple_matrices[gr_num] = [matrix(el) for el in cached_simple_matrices[gr_num]]
 
 
 for gr_num in cached_simple_matrices:
