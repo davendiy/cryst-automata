@@ -1,20 +1,21 @@
 from sage.all import (
-    QQ,
-    ZZ,
-    SR,
     ascii_art,
     block_matrix,
+    column_matrix,
     factor,
     floor,
     latex,
     lcm,
     matrix,
     Parent,
+    QQ,
     RingElement,
-    solve,
     solve_diophantine,
+    solve,
+    SR,
     table,
     var,
+    ZZ,
 )
 from sage.categories.rings import Rings
 from sage.modules.free_module_integer import IntegerLattice
@@ -545,43 +546,96 @@ class SR_Degrees:
         return v
 
     def solve_congruences_v4(self, conds, base_variables, variables):
-        # m * f = 0 in G-module Z^n => we have m as a universal common denominator
-        m_bound = len(self.G.point_group_elements())
-        M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in conds])
-        f = matrix(base_variables).T
+        subs = {str(el): 0 for el in base_variables}
 
-        # compute f(0, ... 0) to get variables free part
-        b = [cond({v: 0 for v in base_variables + variables}) for cond in conds]
+        # ugly sage method resolution
+        def is_scalar(cond):
+            if hasattr(cond, 'is_constant'):
+                return cond.is_constant()
+            return cond.substitute(**subs) == cond
+
+        # basic clearing of trivial equations
+        cleared_conds = []
+        for rr in conds:
+            sc = is_scalar(rr)
+            # ignore trivial
+            if sc and rr == 0:
+                continue
+            # check on conditions of kind 1/2 = 0  mod Z
+            if sc and rr != 0:
+                print(f'no solutions: {rr} != 0')
+                return None
+
+            # check on conditions of kind 2 = 4  mod Z
+            if sc and rr.is_integer():   # hope sage finds method `is_integer`
+                continue
+            cleared_conds.append(rr)
+
+        # m * f = 0 in G-module Z^n for m=|G| => we have m as a universal common denominator
+        m_bound = len(self.G.point_group_elements())
+
+        M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in cleared_conds])
+        # f = matrix(base_variables).T
+
+        N_conds = len(cleared_conds)
+        N_vars = len(base_variables)
+        # f_prox = matrix([var(f"y{i}") for i in range(len(base_variables))])
+
+        # compute -f(0, ... 0) to get equations' free part b in Ax = b mod Z
+        b = [-cond({v: 0 for v in base_variables + variables}) for cond in cleared_conds]
         b = matrix(QQ, b).T
 
-        denoms = [el.denominator() for row in M for el in row]
-        denoms += [el.denominator() for (el,) in b]
-
         # in most cases there is a less common denominator
-        m = lcm(denoms)
+        m = lcm(M.denominator(), b.denominator())
         assert (m_bound % m) == 0
-        self.print(f'using modulo: {m}')
 
         M_lift = matrix(ZZ, M * m)
-        b_lift = matrix(ZZ, b * m)
+        b_lift = matrix(b * m)
 
         S, U, V = M_lift.smith_form()
 
-        # M * f = b
-        # U * M * V * (V.inverse() * f) = U * b
-        # S * (V.inverse() * f) = U * b
-        left = S * V.inverse() * f
+        rank = 0
+        for i in range(min(N_conds, N_vars)):
+            if S[i, i] != 0:
+                rank = i+1
         right = U * b_lift
+        for i in range(right.dimensions()[0]):
+            for j in range(right.dimensions()[1]):
+                right[i, j] = right[i, j] % m
 
-        eqs = (left - right)
-        self.print(eqs)
-        self.print()
-        for (el,) in eqs:
-            if el({v: 0 for v in base_variables}) == el:
-                if (int(el) % m) != 0:
-                    self.print(f'contradiction: {el} != 0 mod {m}')
-                    return None
-        return eqs[:len(base_variables)]
+        part_answer = matrix(QQ, [0 for i in range(N_vars)]).T
+        lattice_basis = []
+        null_basis = []
+
+        # every solution for the dx = b  mod M  has the form
+        # x = b/d + nM/d, where n is arbitrary integral
+        for i in range(rank):
+            if right[i] != 0:
+                part_answer[i, 0] = right[i, 0] / S[i, i]
+
+            # the lattice nM/d
+            zv = [0 for i in range(N_vars)]
+            zv[i] = m / S[i, i]
+            lattice_basis.append(zv)
+
+        for i in range(rank, N_conds):
+            if right[i] != 0:
+                print(f'no solutions: {right[i]} != 0')
+                return None
+
+        # the null basis consists of all the arbitrary rational vectors which
+        # can be placed in the equations of kind 0x = 0
+        for i in range(rank, N_vars):
+            rv = [0 for i in range(N_vars)]
+            rv[i] = 1
+            null_basis.append(rv)
+
+        if lattice_basis:
+            lattice_basis = V * column_matrix(QQ, lattice_basis)
+        if null_basis:
+            null_basis = V * column_matrix(QQ, null_basis)
+
+        return V * part_answer, lattice_basis, null_basis
 
     def solve_congruences(self, conds, base_variables, variables):
         tmp = [con == 0 for con in conds]

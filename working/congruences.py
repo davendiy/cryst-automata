@@ -10,7 +10,7 @@ AsciiArt._terminal_width = lambda self: 200
 print('===================== planar case =========================')
 for i in [4, 7, 8, 12]:
     print(f'\n\n\n ---------------------- Group {i} -------------------')
-    t = SR_Degrees(i, verbose=2, method='markdown')
+    t = SR_Degrees(i, verbose=2, method='ascii')
     ps = t.G.point_group_normalizer()
 
     for A in ps:
@@ -23,15 +23,30 @@ for i in [4, 7, 8, 12]:
         print("eqs:")
         print(eqs, base_vars)
         print('solutions:')
-        print(t.solve_congruences_v4(eqs, base_vars, list()))
+        ans = (t.solve_congruences_v4(eqs, base_vars, list()))
+        if ans is None:
+            continue
+        sol, lattice, nullbasis = ans
+
+        print('sol:')
+        print(sol)
+        print('lattice:')
+        print(lattice)
+        print('reduced lattice:')
+        print(lattice.T.LLL().T)
+        print('nullbasis:')
+        print(nullbasis)
+        # for v, s in zip(base_vars, sol):
+        #     print(f'{v} == {s} mod {m}')
 
 
+input()
 print('==================== spatial case ==========================')
 
 for i in [4, 12, 50, 55, 120, 220]:
 
     print(f'\n\n\n ---------------------- Group {i} -------------------')
-    t = SR_Degrees(i, dim=3, verbose=2, method='markdown')
+    t = SR_Degrees(i, dim=3, verbose=2, method='ascii')
     if t.G.is_symmorphic():
         continue
 
@@ -45,4 +60,16 @@ for i in [4, 12, 50, 55, 120, 220]:
 
         eqs, base_vars = t.construct_congruences_v2(A_inv, A)
         print('solutions:')
-        print(t.solve_congruences_v4(eqs, base_vars, list()))
+        ans = (t.solve_congruences_v4(eqs, base_vars, list()))
+        if ans is None:
+            continue
+        sol, lattice, nullbasis = ans
+
+        print('sol:')
+        print(sol)
+        print('lattice:')
+        print(lattice)
+        print('reduced lattice:')
+        print(lattice.T.LLL().T)
+        print('nullbasis:')
+        print(nullbasis)
