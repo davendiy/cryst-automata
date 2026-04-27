@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{a4wide}
 \usepackage{setspace}
+\usepackage{float}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
 
@@ -16,6 +17,7 @@
  pdfpagemode=FullScreen,
 }
 
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Dom}{Dom}
 \newtheorem{theorem}{Theorem}
@@ -50,6 +52,20 @@
 \end{abstract}
 
 \tableofcontents
+\newpage
+\listoftables
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 \section{Self-similar actions}
@@ -153,6 +169,17 @@ alphabets -- meaning size of an alphabet -- appear in self-replicating actions o
 2 and 3.
 
 
+
+
+
+
+
+
+
+
+
+
+
 % =====================================================================================================================
 
 
@@ -163,7 +190,7 @@ several centuries in case of $n=2$, though the complete list was only given in 1
 as a part of 18th Hilbert's problem, and were characterized by Bieberbach and Zassenhaus later on. There are 17 distinct
 groups for $n=2$ up to isometry, known as wallpaper groups or plane groups. Likewise, in $n=3$ there are 219 crystallographic groups,
 known as space groups. If, however, space groups are considered up to conjugacy with respect
-to orientation-preserving affine transformations, their number is 230.
+to orientation-preserving affine transformations, the number is increased to 230.
 
 Crystallographic groups for dimensions $n=2,3$  are thoroughly studied due to their high value in physics. Most of the
 symmetric properties and applied results for every group can be found in the International Tables for Crystallography \cite{CrystTables}.
@@ -310,6 +337,26 @@ We can now make an upper bound for self-replicating degrees of crystallographic 
 \end{corollary}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % =====================================================================================================================
 
 
@@ -327,7 +374,8 @@ We denote by $MinSRD(G)$ the minimal degree of a self-replicating action of $G$.
 From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as decision problems for the group $G$: given an integer $d$, determine whether $G$ contains a subgroup $H \le G$ of index $d$ with $H \cong G$, or whether $G$ admits a self-replicating action of degree $d$.
 
 \vspace{0.2cm}
-\textbf{Computing self-covering degrees.}
+
+\subsection{Computing self-covering degrees.}
 Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$. A positive integer $d$ belongs to $SCD(G)$ if and only if there exists an affine transformation $a=(A,t)\in Aff(\mathbb{Q})$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This condition splits into three parts:
 \begin{enumerate}
   \item[1)] Point group compatibility: $APA^{-1}=P$.
@@ -351,6 +399,10 @@ X = \sum_{i=1}^{m} x_i X_i, \quad x_i \in \mathbb{Z}.
 \end{equation}
 The total set $\mathcal{X}$ of matrices $A$ satisfying 1) is the union of $\mathcal{X}_\sigma$ over all $\sigma \in \mathrm{Aut}(P)$.
 
+
+% тут ми, по суті, визначаємо розвʼязок в загальному вигляді y = y1 + L + N, де L -- скінченно-породжена ґратка, N -- nullbasis.
+% єдине що, ми ніяк не показуємо N, оскільки після підстановки в X він не буде ніяк фігурувати. Лише розвʼязок на t ми пропускаємо,
+% але по ідеї це якраз хендлиться отим самим v(sigma(B) - E) \in Z^n
 Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle compatibility condition. Let $\sigma \in \mathrm{Aut}(P)$ and $X\in \mathcal{X}_\sigma$ be written as the linear combination (\ref{eqn:X_sum_Xi}) with unknown $x_i\in\mathbb{Z}$. The equation (\ref{eqn:cocycle_compatibility}) for the matrix $X$ can be written as a system of congruence: for every $B\in P$,
 \begin{equation}\label{eqn:cocycle_condition}
   \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t \quad (\bmod\ \mathbb{Z}^n).
@@ -376,14 +428,21 @@ Finally, we get the following description of the set of self-covering and self-r
 The set of integer values of an integer polynomial generally admits no simple or computable arithmetic description.
 Determining whether a given integer $d>0$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine equation $|f_\sigma(y_1,\ldots, y_r)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem, such problems are undecidable for arbitrary polynomials. We do not know whether the problem is decidable in our settings:
 
+
+% визначити чи належить d множині SCDegrees рівносильно перевірці чи лежить d в деякій ґратці L. По ідеї, солвиться
+% алгоритмом LLL
+% тіки от з нюансом, що цих ґраток буде m штук насправді, бо матриця ж не одна.
 \begin{problem}
   Let $G$ be a crystallographic group. 
 
   (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$? Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
 
+% з SRDegrees складніше. Треба визначити чи лежить він в ґратці і чи існує многочлен з визначником d, який не має таких власних чисел....
+% типу маючи многочлени f(lambda, x), det(x), треба побудувати МТ, яка визначатиме чи існує x з det(x) == d, та f(lambda, x) не матиме цілих власних чисел.
   (2) Is it decidable, for a given integer $d$, whether the group $G$ admits a self-replicating action of degree $d$?
 \end{problem} 
 
+\subsection{Planar groups}
 Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in dimension two. In this case, every determinant polynomial $f_\sigma$ is a quadratic form, and one can explicitly describe the set $SCD(G)$. The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues to a simpler arithmetic condition.
 
 \begin{proposition}
@@ -409,9 +468,13 @@ The trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_
 SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_r)|>1 \ : & \ \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
 & \quad ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_r)\neq -1 \big\}.
 \end{align*}
+One can find calculated matrices $\mathcal{X}$ and their subset satisfying cocycle compatibility $\mathcal{Y}$ for all the planar
+groups in the appendix \ref{app:all_norm_dim2}.
 
+
+\subsection{Space Groups}
 A similar approach is possible for reducing the condition on eigenvalues for dimension three. The result, however,
-will still be a cubic diophantine equation which we should approach carefully later.
+is still a cubic diophantine equation which we should approach carefully later.
 Let $A$ be an arbitrary $3\times 3$ integral matrix.
 $$
   A = \left(\begin{array}{rrr}
@@ -422,18 +485,21 @@ $$
 $$
 and denote $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 
-We can show by direct computation that every solution $X_i$ satisfying the point group compatibility for every
-crystallographic group has $\tau(X_i) = 0$. This gives us a similar result:
 
-\begin{proposition}
-  Let $A \in M_3(\mathbb{Z})$ and $\det(A) \neq 0$ as well as $\tau(A) = 0$. Then no eigenvalue of $A^{-1}$
-  is an algebraic integer if and only if
-  $det(A) \neq \pm 1$, $\det(A) + \tr(A) \neq \pm 1$ and $\det(A) - \tr(A) \neq \pm 1$.. 
-\end{proposition}
+% матриці в dim=3 або розкладні, або мають tau(A)=0, trace(A)=0. Отже вони або розкладні, або прості.
 
+\begin{theorem}
+  Let $A \in \mathcal{X}$ be an integral matrix with $|\det(A)|>1$ satisfying 1) for a space group.
+  Then either $A$ is a block-triangular matrix and hence has factorizable characteristic polynomial,
+  or $A^{-1}$ is simple. 
+\end{theorem}
 \begin{proof}
 
-  The characteristic polynomial is written as
+  By direct computation we get that either $A$ is a block-triangular matrix or $\tau(A) = 0$ and $\tr(A) = 0$. We need
+  to prove that the second case leads to a simple $A^{-1}$. The full list of possible matrices $\mathcal{X}$ of
+  every space group one can find in the appendix \ref{app:all_norm_dim3}.
+
+  The characteristic polynomial of an arbitrary $3\times 3$ matrix $A$ is written as
   $$
     \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
   $$
@@ -454,43 +520,64 @@ crystallographic group has $\tau(X_i) = 0$. This gives us a similar result:
   $$
   Then, the characteristic polynomial of $A^{-1}$ can be explicitly written in terms of coefficients of $A$:
   $$
-    \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A)
-  $$
-  $$
     \chi_{A^{-1}}(x)= x^3 - \frac{\tau(A)}{\det(A)}x^2 + \frac{\tr(A)}{\det(A)}x + \frac{1}{\det(A)}
   $$
-  If $\det(A) = \pm 1$ then $\chi_{A^{-1}}(x) \in \mathbb{Z}[x]$ and its roots are algebraic integers.
-  If $\det(A) \pm \tr(A) = \pm 1$ then $A^{-1}$ has an eigenvalue 1 or -1. 
+  Similarly to the two-dimensional case, if $\det(A) = \pm 1$ then $\chi_{A^{-1}}(x) \in \mathbb{Z}[x]$
+  and its roots are algebraic integers. If $\det(A) \pm \tr(A) = \pm 1$ then $A^{-1}$ has an eigenvalue 1 or -1.
 
-  Conversely, assume the conditions required in the proposition are met and $\chi_{A^{-1}}(x)$ is
-  divisible by a monic polynomial $p(x) \in \mathbb{Z}[x]$. If $\deg p(x) = 3$ then $p(x) = \chi_{A^{-1}}(x)$ and
-  $\det(A) = \pm 1$. If $\deg p(x) = 1$ then $p(x) = x - a$ and $a$ is an algebraic integer eigenvalue of $A^{-1}$.
-  Similarly to the dimension two, $a$ and $a^{-1}$ are both algebraic integers. Therefore, we have $a = \pm 1$ and
+  Now, every non-factorizable matrix has $\tau(A) = 0$ and $\tr(A) = 0$. From this follows that the explicit form
+  of characteristic polynomial is further simplified:
   $$
-  \chi_A(\pm 1) = \pm 1 -\tr(A) \pm \tau(A) + \det(A) = 0
+    \chi_{A^{-1}}(x) = x^3 + 1/\det(A)
   $$
-  $$
-  \chi_{A^{-1}}(\pm 1)= \pm 1 - \frac{\tau(A)}{\det(A)} \pm \frac{\tr(A)}{\det(A)} + \frac{1}{\det(A)} =0
-  $$
-  Having $\tau(A) = 0$ we get  $\det(A) + \tr(A) = \pm 1$ and $\det(A) - \tr(A) = \pm 1$.
-  Finally, if $\deg p(x) = 2$, then we have a decomposition
-  $$
-  \chi_{A^{-1}}(x) = (x - a)(x^2 + bx + c) = x^3 + (b - a)x^2 + (c-ba)x + c
-  $$
-  for $b,c \in \mathbb{Z}$. Since $\tau(A)=0$ and $\chi_{A^{-1}}$ is a depressed cubic polynomial we get that $a = b$ and
-  $\chi_{A^{-1}}$ also has an integral root.
-
+  $\chi_{A^{-1}}$ isn't divisible by a monic polynomial with integral coefficients if and only if it has no integral roots.
+  Combined with the given condition $|\det(A)| > 1$ we get that $A^{-1}$ is simple.
 \end{proof}
 
+\subsection{Algorithm formulation}
 
-\begin{proposition}
+\subsection{Miscellaneous}
 
-\end{proposition}
+As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
+For shorter notation, we use $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ i.e. odd integers.
+
+\input{table_srdegrees.tex}
+
+
+\begin{table}[H]
+\begin{footnotesize}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{group} & \textbf{minimal alphabet} & \textbf{gens amount} & \textbf{semi-direct} & \textbf{determinant} & \textbf{cond.2} \\
+\hline
+Group 1 p1    & \textbf{2}     & 2 & + &  &  \\
+Group 2 p2    & \textbf{2}     & 3 & + &  &  \\
+Group 3 p1m1  & \textbf{4}     & 3 & + & $x_0x_1$ &  \\
+Group 4 p1g1  & \textbf{6}     & 2 &   & $x_0x_1$ & $x_1$ odd \\
+Group 5 c1m1  & \textbf{4}     & 3 & + & $\left(x_{0} - 2x_{1}\right)x_{0}$ &  \\
+Group 6 p2mm  & \textbf{2}     & 4 & + & $-x_0x_1$ &  \\
+Group 7 p2mg  & \textbf{6}     & 3 &   & $x_0x_1$ & $x_0$ odd \\
+Group 8 p2gg  & \textbf{3}     & 4 &   & $x_0x_1$ & $x_0, x_1$ odd \\
+Group 9 c2mm  & \textbf{3}     & 4 & + & $x_{1}(2x_{0} - x_{1})$ &  \\
+Group 10 p4   & \textbf{2}     & 4 & + & $x_0^2 + x_1^2$ &  \\
+Group 11 p4mm & \textbf{2}     & 5 & + & $-2x_0^2$ &  \\
+Group 12 p4gm & \textbf{9}     & 5 &   & $x_0^2$ & $x_0$ odd \\
+Group 13 p3   & \textbf{3}     & 3 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 14 p3m1 & \textbf{4}     & 4 & + & $x_0^2$ &  \\
+Group 15 p31m & \textbf{4}     & 4 & + & $x_0^2$ &  \\
+Group 16 p6   & \textbf{3}     & 4 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 17 p6mm & \textbf{3}     & 5 & + & $\tfrac{3}{4}x_0^2$ & $x_0$ is even \\
+\hline
+\end{tabular}
+\caption{Summary of groups and their algebraic properties (without binary alphabet notes)}
+\label{tab:groups}
+\end{footnotesize}
+\end{table}
 
 
 
-
-\vspace{2cm}
+% напевно нерелевантно для цієї статті
 \begin{proposition}
   Let $A_\sigma$ be a general solution of the linear system $XB = \sigma(B)X, B \in P$, written in terms of free variables
   $x_1, x_2, \dots x_m, m \le n^2$ and their linear combinations. Then $\det(A_\sigma)$ is a homogeneous polynomial of degree $n$
@@ -508,8 +595,26 @@ crystallographic group has $\tau(X_i) = 0$. This gives us a similar result:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ==============================================================================================
 \newpage
-\subsection{ Group 7 p2mg }
+\section{Examples}
+\subsection{Planar Group 7 p2mg}
 
 
 The Group 7 ($p2mg$) from ITA is generated by the following elements:
@@ -553,7 +658,7 @@ The inverse of matrix $A_2$ fits the condition 3) if and only if $|x_0| > 1, |x_
 $$SRDegrees = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
 or not primes and not powers of 2. In particular, the minimal self-replicating degree is 6 when $x_0 = 3, x_1 = 2$.
 
-\subsection{Group 13}
+\subsection{Planar Group 13 p3}
 
 The Group 13 (p3) from ITA is generated by the following elements:
 $$G_{13} = \left\langle\left(\begin{array}{rrr}
@@ -582,7 +687,6 @@ are trivial and the only condition for translation is to be integral.
 
 $$SCDegrees = \{ |\det(A_1)|, |\det(A_2)|\} = \{ |x_{0}^{2} + {\left(x_{0} + x_{1}\right)}| \quad | \quad x_0, x_1 \in \mathbb{Z}\}$$
 
-\subsubsection{Self-replicating degrees.}
 \begin{enumerate}
 \item Consider the first matrix
 $$A = \left(\begin{array}{rr}
@@ -650,117 +754,18 @@ x_{0} & x_{1}
 \end{scriptsize}
 
 
-\newpage
-As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
-For shorter notation, we use $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ i.e. odd integers.
+\subsection{Space Group 11 $P\, 1\, 2_1 \,/\, m\, 1$}
 
-\begin{scriptsize}
 
-\begin{tabular}{|l|l|} \hline
-num\footnotemark[1]{} & srdegrees\footnotemark[2]{} \\ \hline \hline
-$3$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$4$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$5$ & $\begin{tabular}{l}
-$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(1, 1\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(1, 0\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$6$ & $\begin{tabular}{l}
-$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$7$ & $\begin{tabular}{l}
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times OZ \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$8$ & $\begin{tabular}{l}
-$\left\{ -x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times OZ \, / \,\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ x_{0} x_{1} \, | \, (x_{0},x_{1})\in OZ \times OZ \, / \,\left\{\left(n_{1}, -1\right),\left(n_{1}, 1\right),\left(-1, -1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, -1\right),\left(1, 1\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$9$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} + 2 \, x_{0} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(-1, 0\right),\left(1, 0\right),\left(1, 1\right)\right\}\right\}$ \\
-$\left\{ {\left(x_{0} - 2 \, x_{1}\right)} x_{0} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, -1\right),\left(1, 1\right),\left(2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, n_{1}\right),\left(2 \, t_{0} - 1, t_{0}\right),\left(1, 0\right),\left(1, n_{1}\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$10$ & $\begin{tabular}{l}
-$\left\{ x_{0}^{2} + x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ -x_{0}^{2} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$11$ & $\begin{tabular}{l}
-$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$12$ & $\begin{tabular}{l}
-$ \left\{ -2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$ \left\{ 2 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in OZ \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in OZ \, / \,\left\{-1,1\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$13$ & $\begin{tabular}{l}
-$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$14$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$15$ & $\begin{tabular}{l}
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$16$ & $\begin{tabular}{l}
-$\left\{ -{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-$\left\{ x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} \, | \, (x_{0},x_{1})\in \mathbb{Z} \times \mathbb{Z} \, / \,\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-$17$ & $\begin{tabular}{l}
-$ \left\{ 3 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$ \left\{ -\frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$ \left\{ -3 \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$\left\{ x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-$ \left\{ \frac{3}{4} \, x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \right\} $ \\
-$\left\{ -x_{0}^{2} \, | \, x_{0}\in \mathbb{Z} \, / \,\left\{-1,1\right\}\right\}$ \\
-\end{tabular}$ \\ \hline
-\end{tabular}
+\subsection{Space Group 24 $I\, 2_1\, 2_1\, 2_1$}
 
-\end{scriptsize}
+\subsection{Space Group 220 $I\, \minus 4\, 3\, d$}
 
-\footnotetext[1]{A positional number of the group in ITA}
-\footnotetext[2]{The explicit forms were generated by \url{https://github.com/davendiy/cryst-automata}}
 
-\newpage
 
-\begin{scriptsize}
-\begin{table}
-\centering
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-\textbf{group} & \textbf{minimal alphabet} & \textbf{gens amount} & \textbf{semi-direct} & \textbf{determinant} & \textbf{cond.2} \\
-\hline
-Group 1 p1    & \textbf{2}     & 2 & + &  &  \\
-Group 2 p2    & \textbf{2}     & 3 & + &  &  \\
-Group 3 p1m1  & \textbf{4}     & 3 & + & $x_0x_1$ &  \\
-Group 4 p1g1  & \textbf{6}     & 2 &   & $x_0x_1$ & $x_1$ odd \\
-Group 5 c1m1  & \textbf{4}     & 3 & + & $\left(x_{0} - 2x_{1}\right)x_{0}$ &  \\
-Group 6 p2mm  & \textbf{2}     & 4 & + & $-x_0x_1$ &  \\
-Group 7 p2mg  & \textbf{6}     & 3 &   & $x_0x_1$ & $x_0$ odd \\
-Group 8 p2gg  & \textbf{3}     & 4 &   & $x_0x_1$ & $x_0, x_1$ odd \\
-Group 9 c2mm  & \textbf{3}     & 4 & + & $x_{1}(2x_{0} - x_{1})$ &  \\
-Group 10 p4   & \textbf{2}     & 4 & + & $x_0^2 + x_1^2$ &  \\
-Group 11 p4mm & \textbf{2}     & 5 & + & $-2x_0^2$ &  \\
-Group 12 p4gm & \textbf{9}     & 5 &   & $x_0^2$ & $x_0$ odd \\
-Group 13 p3   & \textbf{3}     & 3 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
-Group 14 p3m1 & \textbf{4}     & 4 & + & $x_0^2$ &  \\
-Group 15 p31m & \textbf{4}     & 4 & + & $x_0^2$ &  \\
-Group 16 p6   & \textbf{3}     & 4 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
-Group 17 p6mm & \textbf{3}     & 5 & + & $\tfrac{3}{4}x_0^2$ & $x_0$ is even \\
-\hline
-\end{tabular}
-\caption{Summary of groups and their algebraic properties (without binary alphabet notes)}
-\label{tab:groups}
-\end{table}
-\end{scriptsize}
+
+% =========================================================================================================
+
 
 
 \begin{thebibliography}{20}
@@ -773,5 +778,18 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
   \bibitem{CrystTables} International Tables for Crystallography (2016). Volume A, Space-group symmetry.
 
 \end{thebibliography}
+
+\appendix
+
+\newpage
+\section{List of all matrices satisfying point group compatibility in dimension 2}\label{app:all_norm_dim2}
+
+\input{table_normalizers_dim2.tex}
+
+\newpage
+\section{List of all unique matrices satisfying point group compatibility in dimension 3}\label{app:all_norm_dim3}
+
+\input{table_normalizers_dim3.tex}
+
 
 \end{document}
