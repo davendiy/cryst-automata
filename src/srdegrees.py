@@ -545,6 +545,12 @@ class SR_Degrees:
         assert v * M == r
         return v
 
+    def cocycle_compat(self, A):
+        A_inv = A.inverse().simplify_rational()
+        eqs, base_vars = self.construct_congruences_v2(A_inv, A)
+        ans = self.solve_congruences_v4(eqs, base_vars, list())
+        return ans is not None
+
     def solve_congruences_v4(self, conds, base_variables, variables):
         subs = {str(el): 0 for el in base_variables}
 
@@ -563,7 +569,7 @@ class SR_Degrees:
                 continue
             # check on conditions of kind 1/2 = 0  mod Z
             if sc and rr != 0:
-                print(f'no solutions: {rr} != 0')
+                self.print(f'no solutions: {rr} != 0')
                 return None
 
             # check on conditions of kind 2 = 4  mod Z
@@ -620,7 +626,7 @@ class SR_Degrees:
 
         for i in range(rank, N_conds):
             if right[i] != 0:
-                print(f'no solutions: {right[i]} != 0')
+                self.print(f'no solutions: {right[i]} != 0')
                 return None
 
         # the null basis consists of all the arbitrary rational vectors which
