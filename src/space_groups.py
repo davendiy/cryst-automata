@@ -317,6 +317,10 @@ class SpaceGroup_gap:
 
         self._alpha = {str(self.P_triv): self.G_triv.translation()}
         self.snot = [self.G_triv]
+
+        # FIXME: there is probably a better way to find SNoT. Building element from space group, using the
+        #   representation of the linear part, doesn't guarantee minimal possible translation. It should probably
+        #   use LLL algo somehow.
         for el, seq in self._P_dict.items():
             if el == str(self.P_triv):
                 continue
