@@ -348,9 +348,11 @@ class SpaceGroup_gap:
     def in_alpha(self, sym):
         return str(sym) in self._alpha
 
-    def point_group_normalizer(self, **kwargs):
+    def point_group_normalizer(self, enforce_integral=True, **kwargs):
         P = MatrixGroup(self.P_gens)
-        return normalizers(P, **kwargs)
+        sols = normalizers(P, **kwargs)
+        if kwargs.get('to_matrix', True) and enforce_integral:
+            return [(A * A.denominator()).simplify_rational() for A in sols]
 
     def in_lattice_basis(self):
         """Returns whether L == ZZ^n."""
