@@ -562,7 +562,6 @@ For shorter notation, denote $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ as a set of o
 
 \input{table_srdegrees.tex}
 
-
 \begin{table}[H]
 \begin{footnotesize}
 \centering
@@ -595,36 +594,29 @@ Group 17 p6mm & \textbf{3}     & 5 & + & $\tfrac{3}{4}x_0^2$ & $x_0$ is even \\
 \end{table}
 
 
+Unfortunately, the proposed algorithm struggle to automatically check simplicity for every matrix in dimension 3.
+There are 17 unique block diagonal matrices, which involve problematic polynomial to solve diophantine equation
+$f(x_1, \cdots x_n) = 1$ in minor determinant. These minors don't appear in case of dimension 2.
 
-% напевно нерелевантно для цієї статті
-\begin{proposition}
-  Let $A_\sigma$ be a general solution of the linear system $XB = \sigma(B)X, B \in P$, written in terms of free variables
-  $x_1, x_2, \dots x_m, m \le n^2$ and their linear combinations. Then $\det(A_\sigma)$ is a homogeneous polynomial of degree $n$
-  over $x_i$. (\textbf{Question: why $m$ is always less than $n$? Does it come from $B \in P$ being integral of $\det B=1$?})
-\end{proposition}
-
-\begin{proof}
-  Let $X$ be a matrix of $n^2$ indeterminates $x_i$. Then the system $XB - \sigma(B)X = 0$ is a homogeneous system
-  of $d * n^2$ linear equations for $d = |P|$. If the system is not singular, then it has infinite amount of solutions for $m \le n$
-  independent variables and their linear combinations. By definition, the determinant equals to
-  $$\det A = \sum_{\pi} sign(\pi) \prod_{i} a_{i\pi(i)}$$
-  which is a sum of multiples of some $n$ elements of $A$. Since every element of $A$ is either 0 or a linear combination
-  of free variables, then $\det A$ is either homogeneous polynomial of degree $n$ or 0.
-\end{proof}
+\input{problem_normalizers.tex}
 
 
 
+% % напевно нерелевантно для цієї статті
+% \begin{proposition}
+%   Let $A_\sigma$ be a general solution of the linear system $XB = \sigma(B)X, B \in P$, written in terms of free variables
+%   $x_1, x_2, \dots x_m, m \le n^2$ and their linear combinations. Then $\det(A_\sigma)$ is a homogeneous polynomial of degree $n$
+%   over $x_i$. (\textbf{Question: why $m$ is always less than $n$? Does it come from $B \in P$ being integral of $\det B=1$?})
+% \end{proposition}
 
-
-
-
-
-
-
-
-
-
-
+% \begin{proof}
+%   Let $X$ be a matrix of $n^2$ indeterminates $x_i$. Then the system $XB - \sigma(B)X = 0$ is a homogeneous system
+%   of $d * n^2$ linear equations for $d = |P|$. If the system is not singular, then it has infinite amount of solutions for $m \le n$
+%   independent variables and their linear combinations. By definition, the determinant equals to
+%   $$\det A = \sum_{\pi} sign(\pi) \prod_{i} a_{i\pi(i)}$$
+%   which is a sum of multiples of some $n$ elements of $A$. Since every element of $A$ is either 0 or a linear combination
+%   of free variables, then $\det A$ is either homogeneous polynomial of degree $n$ or 0.
+% \end{proof}
 
 
 
@@ -775,12 +767,17 @@ x_{0} & x_{1}
 
 \subsection{Space Group 11 $P\, 1\, 2_1 \,/\, m\, 1$}
 
+\input{example_group11_dim3.tex}
+
 
 \subsection{Space Group 24 $I\, 2_1\, 2_1\, 2_1$}
+
+\input{example_group24_dim3.tex}
 
 \subsection{Space Group 220 $I\, \minus 4\, 3\, d$}
 
 
+\input{example_group220_dim3.tex}
 
 
 % =========================================================================================================

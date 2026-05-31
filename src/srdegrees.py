@@ -1,3 +1,5 @@
+import random
+
 from sage.all import (
     ascii_art,
     block_matrix,
@@ -264,6 +266,7 @@ def solve_simple_mat(A):
 
 class SR_Degrees:
     def __init__(self, group_index, method="ascii", verbose=2, dim=2):
+        self.congruence_print_thresh = 10
         self.disp = method
         self.group_index = group_index
         self.verbose = verbose
@@ -300,9 +303,17 @@ class SR_Degrees:
 
         self.G = SpaceGroup_gap.from_gap_cryst(group_index, dim=dim, change_basis=True)
 
-    def display(self, *args, use_pref=True) -> str:
+    def display(self, *args, use_pref=True, sep='') -> str:
         bod = self._display("") if self.disp == "ascii" else ""
+        first = True
         for el in args:
+            if not first and sep:
+                if self.disp in ['latex', 'markdown']:
+                    bod += sep
+                else:
+                    bod += self._display(sep)
+            first = False
+
             if isinstance(el, str) and self.disp in ["latex", "markdown"]:
                 bod += el
             else:
@@ -358,7 +369,18 @@ class SR_Degrees:
         conds = []
         base_variables = list(A_inv.variables()) + list(trans_a)
 
+        if len(P) > 5:
+            self.print(f'Note that the point group consists of {len(P)} elements. Omitting most matrices..')
+            indexes_to_print = list(range(len(P)))
+            random.shuffle(indexes_to_print)
+            indexes_to_print = indexes_to_print[:5]
+        else:
+            indexes_to_print = list(range(len(P)))
         for i, g in enumerate(P):
+            # there is no point of checking identity element, since it always satisfies cocycle compatibility
+            # a^{-1} (E, 0) a = (E, 0)
+            if g.is_one():
+                continue
             conj = (A * g * A_inv).simplify_rational()
             assert G.in_alpha(conj)
 
@@ -372,8 +394,27 @@ class SR_Degrees:
 
             for ((ll,), (rr,)) in zip(alpha_conj, real_alpha):
                 conds.append(ll - rr)
-            self.print_congruence(g, conj, alpha_conj, real_alpha)
+
+            if i in indexes_to_print:
+                self.print_congruence(g, conj, alpha_conj, real_alpha)
+
         return conds, base_variables
+
+    def print_system(self, *eqs):
+        if self.disp in ["latex", "markdown"]:
+            if self.disp == 'markdown':
+                self.print('$$')
+            self.print(r"\begin{align*}")
+            for eq in set(eqs):
+                # print(eq)
+                self.print(self.display(eq, '&=', 0, r'\quad', r'\mod' r'\mathbb{Z}\\', use_pref=False))
+            self.print(r"\end{align*}")
+            if self.disp == 'markdown':
+                self.print('$$')
+            self.print()
+        else:
+            for eq in set(eqs):
+                self.print(self.display(eq == 0))
 
     def print_congruence(self, g, conj, alpha_conj, real_alpha):
         G = self.G
@@ -384,6 +425,8 @@ class SR_Degrees:
         for j in range(self.G.dim):
             alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
         if self.disp in ["latex", "markdown"]:
+            if self.disp == 'latex':
+                self.print(r'\begin{footnotesize}')
             self.print(
                 self.pref
                 + "(A, a)"
@@ -392,6 +435,8 @@ class SR_Degrees:
             )
             self.print(self.display(construct_el(conj, alpha_conj), use_pref=False) + "=")
             self.print(self.display(construct_el(conj, real_alpha), use_pref=False) + self.pref)
+            if self.disp == 'latex':
+                self.print(r'\end{footnotesize}')
         else:
             self.print(
                 ascii_art("\na\n\n")
@@ -551,6 +596,17 @@ class SR_Degrees:
         ans = self.solve_congruences_v4(eqs, base_vars, list())
         return ans is not None
 
+    def print_large_mtx(self, mtx):
+        rows = mtx.nrows()
+        cols = mtx.ncols()
+        self.print(r'\begin{pmatrix}')
+        for i in range(self.congruence_print_thresh // 2):
+            self.print(self.display(*mtx[i], sep=' & ', use_pref=False), r'\\')
+        self.print(' & '.join([r'\cdots'] * cols), r'\\')
+        for i in range(rows - self.congruence_print_thresh // 2, rows):
+            self.print(self.display(*mtx[i], sep=' & ', use_pref=False), r'\\')
+        self.print(r'\end{pmatrix}')
+
     def solve_congruences_v4(self, conds, base_variables, variables):
         subs = {str(el): 0 for el in base_variables}
 
@@ -590,6 +646,18 @@ class SR_Degrees:
         # compute -f(0, ... 0) to get equations' free part b in Ax = b mod Z
         b = [-cond({v: 0 for v in base_variables + variables}) for cond in cleared_conds]
         b = matrix(QQ, b).T
+
+        x = matrix(base_variables).T
+        # FIXME: works only for latex
+        if len(cleared_conds) > self.congruence_print_thresh:
+            self.print('$$')
+            self.print_large_mtx(M)
+            self.print(self.display('*', x, '=', use_pref=False))
+            self.print_large_mtx(b)
+            self.print(self.display(r'\quad', r'\mod \mathbb{Z}', use_pref=False))
+            self.print('$$')
+        else:
+            self.print(self.display(M, '*', x, '=', b, r'\quad', r'\mod \mathbb{Z}'))
 
         # in most cases there is a less common denominator
         m = lcm(M.denominator(), b.denominator())
