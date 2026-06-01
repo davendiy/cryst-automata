@@ -6,6 +6,8 @@ int2 = Integer(2)
 int3 = Integer(3)
 int4 = Integer(4)
 
+
+# TODO: deprecated
 x0, x1, x2, x3, x4, x5 = var('x0 x1 x2 x3 x4 x5')
 all_matrices = [
     [

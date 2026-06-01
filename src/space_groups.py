@@ -286,8 +286,6 @@ class SpaceGroup_gap:
         self.dim = dim
         self.ita_num = ita_num
 
-        self.gap_P = self.gap_G.PointGroup()  # type: ignore
-
         self.P_triv = matrix.identity(QQ, self.dim)
         self.G_triv = SpaceGroup_Element(matrix.identity(QQ, self.dim + 1))
 

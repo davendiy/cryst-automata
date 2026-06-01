@@ -15,36 +15,36 @@ $$G_{24} = \left\langle\left(\begin{array}{rrrr}
 
 Normalizer of the point group:
 $$\left(\begin{array}{rrr}
+2 \, x_{0} & 0 & 0 \\
+-x_{0} + x_{1} & 2 \, x_{1} & 0 \\
+-x_{0} + x_{2} & 0 & 2 \, x_{2}
+\end{array}\right) , \left(\begin{array}{rrr}
+2 \, x_{0} & 0 & 0 \\
+-x_{0} + x_{1} & 0 & 2 \, x_{1} \\
+-x_{0} + x_{2} & 2 \, x_{2} & 0
+\end{array}\right) , \left(\begin{array}{rrr}
 x_{0} - 2 \, x_{1} & 0 & 2 \, x_{0} - 4 \, x_{1} \\
 x_{2} & 0 & -x_{0} + 2 \, x_{1} \\
 x_{1} & x_{0} & -x_{0} + 2 \, x_{1}
-\end{array}\right) , \left(\begin{array}{rrr}
-x_{0} & 0 & 0 \\
-x_{1} & 0 & x_{0} + 2 \, x_{1} \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & x_{2} & 0
-\end{array}\right) , \left(\begin{array}{rrr}
-x_{0} & 2 \, x_{0} & 0 \\
-x_{1} & -x_{0} & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & -x_{0} & x_{2}
 \end{array}\right)$$
 $$\left(\begin{array}{rrr}
-\frac{1}{2} \, x_{1} & x_{1} & 0 \\
-x_{2} & -\frac{1}{2} \, x_{1} & \frac{1}{2} \, x_{1} + 2 \, x_{2} \\
-x_{0} & -\frac{1}{2} \, x_{1} & 0
+2 \, x_{0} & 4 \, x_{0} & 0 \\
+2 \, x_{1} & -2 \, x_{0} & 0 \\
+-x_{0} + x_{2} & -2 \, x_{0} & 2 \, x_{2}
 \end{array}\right) , \left(\begin{array}{rrr}
-x_{0} & 0 & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{1} & x_{1} & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & 0 & x_{2}
+x_{1} & 2 \, x_{1} & 0 \\
+2 \, x_{2} & -x_{1} & x_{1} + 4 \, x_{2} \\
+2 \, x_{0} & -x_{1} & 0
 \end{array}\right) , \left(\begin{array}{rrr}
-\frac{1}{2} \, x_{0} & 0 & x_{0} \\
-x_{1} & \frac{1}{2} \, x_{0} + 2 \, x_{1} & -\frac{1}{2} \, x_{0} \\
-x_{2} & 0 & -\frac{1}{2} \, x_{0}
+x_{0} & 0 & 2 \, x_{0} \\
+2 \, x_{1} & x_{0} + 4 \, x_{1} & -x_{0} \\
+2 \, x_{2} & 0 & -x_{0}
 \end{array}\right)$$
 
 Consider matrix A=$ \left(\begin{array}{rrr}
-x_{0} - 2 \, x_{1} & 0 & 2 \, x_{0} - 4 \, x_{1} \\
-x_{2} & 0 & -x_{0} + 2 \, x_{1} \\
-x_{1} & x_{0} & -x_{0} + 2 \, x_{1}
+2 \, x_{0} & 0 & 0 \\
+-x_{0} + x_{1} & 2 \, x_{1} & 0 \\
+-x_{0} + x_{2} & 0 & 2 \, x_{2}
 \end{array}\right) $.
 
 \begin{footnotesize}
@@ -56,9 +56,215 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
-1 & 0 & 0 & -x_{0} + 2 \, x_{1} \\
--1 & -1 & 0 & a_{0} + 2 \, a_{1} + x_{0} - 2 \, x_{1} + x_{2} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} + \frac{1}{2} \, x_{0} - x_{1} \\
+-1 & 0 & 0 & 2 \, a_{0} + 2 \, x_{0} \\
+0 & -1 & 0 & 2 \, a_{1} - x_{0} \\
+1 & 0 & 1 & -a_{0} - x_{0} - x_{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 2 \, a_{0} \\
+1 & 1 & 0 & -a_{0} - x_{1} \\
+0 & 0 & -1 & 2 \, a_{2} + x_{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 2 \, x_{0} \\
+-1 & -1 & 0 & a_{0} + 2 \, a_{1} - x_{0} - x_{1} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} - x_{0} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+$$\left(\begin{array}{rrrrrr}
+2 & 0 & 0 & 2 & 0 & 0 \\
+-1 & 0 & 0 & 0 & 2 & 0 \\
+-1 & 0 & -1 & -1 & 0 & 0 \\
+0 & 0 & 0 & 2 & 0 & 0 \\
+0 & -1 & 0 & -1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 2 \\
+2 & 0 & 0 & 0 & 0 & 0 \\
+-1 & -1 & 0 & 1 & 2 & 0 \\
+-1 & 0 & 0 & 1 & 0 & 2
+\end{array}\right) * \left(\begin{array}{r}
+x_{0} \\
+x_{1} \\
+x_{2} \\
+a_{0} \\
+a_{1} \\
+a_{2}
+\end{array}\right) = \left(\begin{array}{r}
+1 \\
+-\frac{1}{2} \\
+-1 \\
+0 \\
+-\frac{1}{2} \\
+\frac{1}{2} \\
+1 \\
+-1 \\
+-\frac{1}{2}
+\end{array}\right) \quad \mod \mathbb{Z}$$
+Consider matrix A=$ \left(\begin{array}{rrr}
+2 \, x_{0} & 0 & 0 \\
+-x_{0} + x_{1} & 0 & 2 \, x_{1} \\
+-x_{0} + x_{2} & 2 \, x_{2} & 0
+\end{array}\right) $.
+
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 2 \, a_{0} + 2 \, x_{0} \\
+1 & 1 & 0 & -a_{0} - x_{0} - x_{1} \\
+0 & 0 & -1 & 2 \, a_{2} - x_{0} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 2 \, a_{0} \\
+0 & -1 & 0 & 2 \, a_{1} + x_{1} \\
+1 & 0 & 1 & -a_{0} - x_{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 2 \, x_{0} \\
+-1 & -1 & 0 & a_{0} + 2 \, a_{1} - x_{0} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} - x_{0} - x_{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+$$\left(\begin{array}{rrrrrr}
+2 & 0 & 0 & 2 & 0 & 0 \\
+-1 & -1 & 0 & -1 & 0 & 0 \\
+-1 & 0 & 0 & 0 & 0 & 2 \\
+0 & 0 & 0 & 2 & 0 & 0 \\
+0 & 1 & 0 & 0 & 2 & 0 \\
+0 & 0 & -1 & -1 & 0 & 0 \\
+2 & 0 & 0 & 0 & 0 & 0 \\
+-1 & 0 & 0 & 1 & 2 & 0 \\
+-1 & 0 & -1 & 1 & 0 & 2
+\end{array}\right) * \left(\begin{array}{r}
+x_{0} \\
+x_{1} \\
+x_{2} \\
+a_{0} \\
+a_{1} \\
+a_{2}
+\end{array}\right) = \left(\begin{array}{r}
+0 \\
+-\frac{1}{2} \\
+\frac{1}{2} \\
+1 \\
+-\frac{1}{2} \\
+-1 \\
+1 \\
+-1 \\
+-\frac{1}{2}
+\end{array}\right) \quad \mod \mathbb{Z}$$
+Consider matrix A=$ \left(\begin{array}{rrr}
+x_{1} - 2 \, x_{2} & 0 & 2 \, x_{1} - 4 \, x_{2} \\
+x_{0} & 0 & -x_{1} + 2 \, x_{2} \\
+x_{2} & x_{1} & -x_{1} + 2 \, x_{2}
+\end{array}\right) $.
+
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & -x_{1} + 2 \, x_{2} \\
+-1 & -1 & 0 & a_{0} + 2 \, a_{1} + x_{0} + x_{1} - 2 \, x_{2} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} + \frac{1}{2} \, x_{1} - x_{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -79,9 +285,9 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} + x_{0} - 2 \, x_{1} \\
-0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{0} + x_{1} \\
-1 & 0 & 1 & -a_{0} - x_{0} + x_{1} \\
+-1 & 0 & 0 & 2 \, a_{0} + x_{1} - 2 \, x_{2} \\
+0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{1} + x_{2} \\
+1 & 0 & 1 & -a_{0} - x_{1} + x_{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -103,8 +309,8 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 2 \, a_{0} \\
-1 & 1 & 0 & -a_{0} + \frac{1}{2} \, x_{0} - x_{1} + x_{2} \\
-0 & 0 & -1 & 2 \, a_{2} - \frac{1}{2} \, x_{0} \\
+1 & 1 & 0 & -a_{0} + x_{0} + \frac{1}{2} \, x_{1} - x_{2} \\
+0 & 0 & -1 & 2 \, a_{2} - \frac{1}{2} \, x_{1} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -117,15 +323,15 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{array}\right)$$
 \end{footnotesize}
 $$\left(\begin{array}{rrrrrr}
--1 & 2 & 0 & 0 & 0 & 0 \\
-1 & -2 & 1 & 1 & 2 & 0 \\
-\frac{1}{2} & -1 & 0 & 1 & 0 & 2 \\
-1 & -2 & 0 & 2 & 0 & 0 \\
--\frac{1}{2} & 1 & 0 & 0 & 2 & 0 \\
--1 & 1 & 0 & -1 & 0 & 0 \\
+0 & -1 & 2 & 0 & 0 & 0 \\
+1 & 1 & -2 & 1 & 2 & 0 \\
+0 & \frac{1}{2} & -1 & 1 & 0 & 2 \\
+0 & 1 & -2 & 2 & 0 & 0 \\
+0 & -\frac{1}{2} & 1 & 0 & 2 & 0 \\
+0 & -1 & 1 & -1 & 0 & 0 \\
 0 & 0 & 0 & 2 & 0 & 0 \\
-\frac{1}{2} & -1 & 1 & -1 & 0 & 0 \\
--\frac{1}{2} & 0 & 0 & 0 & 0 & 2
+1 & \frac{1}{2} & -1 & -1 & 0 & 0 \\
+0 & -\frac{1}{2} & 0 & 0 & 0 & 2
 \end{array}\right) * \left(\begin{array}{r}
 x_{0} \\
 x_{1} \\
@@ -145,9 +351,9 @@ a_{2}
 \frac{1}{2}
 \end{array}\right) \quad \mod \mathbb{Z}$$
 Consider matrix A=$ \left(\begin{array}{rrr}
-\frac{1}{2} \, x_{1} & 0 & x_{1} \\
-x_{2} & \frac{1}{2} \, x_{1} + 2 \, x_{2} & -\frac{1}{2} \, x_{1} \\
-x_{0} & 0 & -\frac{1}{2} \, x_{1}
+2 \, x_{0} & 4 \, x_{0} & 0 \\
+2 \, x_{1} & -2 \, x_{0} & 0 \\
+-x_{0} + x_{2} & -2 \, x_{0} & 2 \, x_{2}
 \end{array}\right) $.
 
 \begin{footnotesize}
@@ -159,16 +365,16 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
-1 & 0 & 0 & -\frac{1}{2} \, x_{1} \\
--1 & -1 & 0 & a_{0} + 2 \, a_{1} + \frac{1}{4} \, x_{1} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} + x_{0} + \frac{1}{2} \, x_{1} \\
+-1 & 0 & 0 & 2 \, a_{0} \\
+0 & -1 & 0 & 2 \, a_{1} + x_{0} + 2 \, x_{1} \\
+1 & 0 & 1 & -a_{0} - x_{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
 \left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)$$
@@ -182,9 +388,32 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} + \frac{1}{2} \, x_{1} \\
-1 & 1 & 0 & -a_{0} - \frac{1}{2} \, x_{1} - x_{2} \\
-0 & 0 & -1 & 2 \, a_{2} - \frac{1}{4} \, x_{1} \\
+1 & 0 & 0 & -2 \, x_{0} \\
+-1 & -1 & 0 & a_{0} + 2 \, a_{1} + x_{0} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} + x_{0} + x_{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 2 \, a_{0} - 2 \, x_{0} \\
+1 & 1 & 0 & -a_{0} + 2 \, x_{0} + 2 \, x_{1} \\
+0 & 0 & -1 & 2 \, a_{2} + x_{0} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -196,18 +425,98 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)$$
 \end{footnotesize}
+$$\left(\begin{array}{rrrrrr}
+0 & 0 & 0 & 2 & 0 & 0 \\
+1 & 2 & 0 & 0 & 2 & 0 \\
+0 & 0 & -1 & -1 & 0 & 0 \\
+-2 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 2 & 0 \\
+1 & 0 & 1 & 1 & 0 & 2 \\
+-2 & 0 & 0 & 2 & 0 & 0 \\
+2 & 2 & 0 & -1 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 & 2
+\end{array}\right) * \left(\begin{array}{r}
+x_{0} \\
+x_{1} \\
+x_{2} \\
+a_{0} \\
+a_{1} \\
+a_{2}
+\end{array}\right) = \left(\begin{array}{r}
+1 \\
+-\frac{1}{2} \\
+-1 \\
+1 \\
+-1 \\
+-\frac{1}{2} \\
+0 \\
+-\frac{1}{2} \\
+\frac{1}{2}
+\end{array}\right) \quad \mod \mathbb{Z}$$
+Consider matrix A=$ \left(\begin{array}{rrr}
+x_{1} & 2 \, x_{1} & 0 \\
+2 \, x_{2} & -x_{1} & x_{1} + 4 \, x_{2} \\
+2 \, x_{0} & -x_{1} & 0
+\end{array}\right) $.
+
 \begin{footnotesize}
 $$(A, a)\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
+-1 & 0 & 0 & 1 \\
+0 & -1 & 0 & -\frac{1}{2} \\
+1 & 0 & 1 & -1 \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 2 \, a_{0} \\
-0 & -1 & 0 & 2 \, a_{1} - \frac{1}{4} \, x_{1} - x_{2} \\
-1 & 0 & 1 & -a_{0} + x_{0} + \frac{1}{4} \, x_{1} \\
+1 & 1 & 0 & -a_{0} - \frac{1}{2} \, x_{1} - 2 \, x_{2} \\
+0 & 0 & -1 & 2 \, a_{2} + 2 \, x_{0} + \frac{1}{2} \, x_{1} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 0 \\
+1 & 1 & 0 & -\frac{1}{2} \\
+0 & 0 & -1 & \frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & -x_{1} \\
+-1 & -1 & 0 & a_{0} + 2 \, a_{1} + x_{1} + 2 \, x_{2} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} + \frac{1}{2} \, x_{1} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)=
+\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)$$
+\end{footnotesize}
+\begin{footnotesize}
+$$(A, a)\left(\begin{array}{rrr|r}
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
+\hline
+ 0 & 0 & 0 & 1
+\end{array}\right)(A^{-1}, -A^{-1}a) = 
+\left(\begin{array}{rrr|r}
+-1 & 0 & 0 & 2 \, a_{0} - x_{1} \\
+0 & -1 & 0 & 2 \, a_{1} + \frac{1}{2} \, x_{1} \\
+1 & 0 & 1 & -a_{0} + 2 \, x_{0} + x_{1} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -220,15 +529,15 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{array}\right)$$
 \end{footnotesize}
 $$\left(\begin{array}{rrrrrr}
-0 & -\frac{1}{2} & 0 & 0 & 0 & 0 \\
-0 & \frac{1}{4} & 0 & 1 & 2 & 0 \\
-1 & \frac{1}{2} & 0 & 1 & 0 & 2 \\
-0 & \frac{1}{2} & 0 & 2 & 0 & 0 \\
-0 & -\frac{1}{2} & -1 & -1 & 0 & 0 \\
-0 & -\frac{1}{4} & 0 & 0 & 0 & 2 \\
 0 & 0 & 0 & 2 & 0 & 0 \\
-0 & -\frac{1}{4} & -1 & 0 & 2 & 0 \\
-1 & \frac{1}{4} & 0 & -1 & 0 & 0
+0 & -\frac{1}{2} & -2 & -1 & 0 & 0 \\
+2 & \frac{1}{2} & 0 & 0 & 0 & 2 \\
+0 & -1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 2 & 1 & 2 & 0 \\
+0 & \frac{1}{2} & 0 & 1 & 0 & 2 \\
+0 & -1 & 0 & 2 & 0 & 0 \\
+0 & \frac{1}{2} & 0 & 0 & 2 & 0 \\
+2 & 1 & 0 & -1 & 0 & 0
 \end{array}\right) * \left(\begin{array}{r}
 x_{0} \\
 x_{1} \\
@@ -237,20 +546,20 @@ a_{0} \\
 a_{1} \\
 a_{2}
 \end{array}\right) = \left(\begin{array}{r}
-1 \\
--1 \\
--\frac{1}{2} \\
 0 \\
 -\frac{1}{2} \\
 \frac{1}{2} \\
+1 \\
+-1 \\
+-\frac{1}{2} \\
 1 \\
 -\frac{1}{2} \\
 -1
 \end{array}\right) \quad \mod \mathbb{Z}$$
 Consider matrix A=$ \left(\begin{array}{rrr}
-x_{0} & 2 \, x_{0} & 0 \\
-x_{1} & -x_{0} & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & -x_{0} & x_{2}
+x_{0} & 0 & 2 \, x_{0} \\
+2 \, x_{1} & x_{0} + 4 \, x_{1} & -x_{0} \\
+2 \, x_{2} & 0 & -x_{0}
 \end{array}\right) $.
 
 \begin{footnotesize}
@@ -258,36 +567,13 @@ $$(A, a)\left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 1 \\
 0 & -1 & 0 & -\frac{1}{2} \\
 1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} \\
-0 & -1 & 0 & 2 \, a_{1} + \frac{1}{2} \, x_{0} + x_{1} \\
-1 & 0 & 1 & -a_{0} - \frac{1}{2} \, x_{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 1 & 0 & 0 & -x_{0} \\
 -1 & -1 & 0 & a_{0} + 2 \, a_{1} + \frac{1}{2} \, x_{0} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} + \frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} \\
+-1 & 0 & -1 & a_{0} + 2 \, a_{2} + x_{0} + 2 \, x_{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -295,86 +581,6 @@ $$(A, a)\left(\begin{array}{rrr|r}
 1 & 0 & 0 & 1 \\
 -1 & -1 & 0 & -1 \\
 -1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} - x_{0} \\
-1 & 1 & 0 & -a_{0} + x_{0} + x_{1} \\
-0 & 0 & -1 & 2 \, a_{2} + \frac{1}{2} \, x_{0} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-$$\left(\begin{array}{rrrrrr}
-0 & 0 & 0 & 2 & 0 & 0 \\
-\frac{1}{2} & 1 & 0 & 0 & 2 & 0 \\
-0 & 0 & -\frac{1}{2} & -1 & 0 & 0 \\
--1 & 0 & 0 & 0 & 0 & 0 \\
-\frac{1}{2} & 0 & 0 & 1 & 2 & 0 \\
-\frac{1}{2} & 0 & \frac{1}{2} & 1 & 0 & 2 \\
--1 & 0 & 0 & 2 & 0 & 0 \\
-1 & 1 & 0 & -1 & 0 & 0 \\
-\frac{1}{2} & 0 & 0 & 0 & 0 & 2
-\end{array}\right) * \left(\begin{array}{r}
-x_{0} \\
-x_{1} \\
-x_{2} \\
-a_{0} \\
-a_{1} \\
-a_{2}
-\end{array}\right) = \left(\begin{array}{r}
-1 \\
--\frac{1}{2} \\
--1 \\
-1 \\
--1 \\
--\frac{1}{2} \\
-0 \\
--\frac{1}{2} \\
-\frac{1}{2}
-\end{array}\right) \quad \mod \mathbb{Z}$$
-Consider matrix A=$ \left(\begin{array}{rrr}
-\frac{1}{2} \, x_{1} & x_{1} & 0 \\
-x_{2} & -\frac{1}{2} \, x_{1} & \frac{1}{2} \, x_{1} + 2 \, x_{2} \\
-x_{0} & -\frac{1}{2} \, x_{1} & 0
-\end{array}\right) $.
-
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} \\
-1 & 1 & 0 & -a_{0} - \frac{1}{4} \, x_{1} - x_{2} \\
-0 & 0 & -1 & 2 \, a_{2} + x_{0} + \frac{1}{4} \, x_{1} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)$$
@@ -384,195 +590,12 @@ $$(A, a)\left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 0 \\
 1 & 1 & 0 & -\frac{1}{2} \\
 0 & 0 & -1 & \frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & -\frac{1}{2} \, x_{1} \\
--1 & -1 & 0 & a_{0} + 2 \, a_{1} + \frac{1}{2} \, x_{1} + x_{2} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} + \frac{1}{4} \, x_{1} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} - \frac{1}{2} \, x_{1} \\
-0 & -1 & 0 & 2 \, a_{1} + \frac{1}{4} \, x_{1} \\
-1 & 0 & 1 & -a_{0} + x_{0} + \frac{1}{2} \, x_{1} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-$$\left(\begin{array}{rrrrrr}
-0 & 0 & 0 & 2 & 0 & 0 \\
-0 & -\frac{1}{4} & -1 & -1 & 0 & 0 \\
-1 & \frac{1}{4} & 0 & 0 & 0 & 2 \\
-0 & -\frac{1}{2} & 0 & 0 & 0 & 0 \\
-0 & \frac{1}{2} & 1 & 1 & 2 & 0 \\
-0 & \frac{1}{4} & 0 & 1 & 0 & 2 \\
-0 & -\frac{1}{2} & 0 & 2 & 0 & 0 \\
-0 & \frac{1}{4} & 0 & 0 & 2 & 0 \\
-1 & \frac{1}{2} & 0 & -1 & 0 & 0
-\end{array}\right) * \left(\begin{array}{r}
-x_{0} \\
-x_{1} \\
-x_{2} \\
-a_{0} \\
-a_{1} \\
-a_{2}
-\end{array}\right) = \left(\begin{array}{r}
-0 \\
--\frac{1}{2} \\
-\frac{1}{2} \\
-1 \\
--1 \\
--\frac{1}{2} \\
-1 \\
--\frac{1}{2} \\
--1
-\end{array}\right) \quad \mod \mathbb{Z}$$
-Consider matrix A=$ \left(\begin{array}{rrr}
-x_{0} & 0 & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{1} & x_{1} & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & 0 & x_{2}
-\end{array}\right) $.
-
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 2 \, a_{0} + x_{0} \\
-0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{0} \\
-1 & 0 & 1 & -a_{0} - \frac{1}{2} \, x_{0} - \frac{1}{2} \, x_{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} \\
-1 & 1 & 0 & -a_{0} - \frac{1}{2} \, x_{1} \\
-0 & 0 & -1 & 2 \, a_{2} + \frac{1}{2} \, x_{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & x_{0} \\
--1 & -1 & 0 & a_{0} + 2 \, a_{1} - \frac{1}{2} \, x_{0} - \frac{1}{2} \, x_{1} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} - \frac{1}{2} \, x_{0} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
-$$\left(\begin{array}{rrrrrr}
-1 & 0 & 0 & 2 & 0 & 0 \\
--\frac{1}{2} & 0 & 0 & 0 & 2 & 0 \\
--\frac{1}{2} & 0 & -\frac{1}{2} & -1 & 0 & 0 \\
-0 & 0 & 0 & 2 & 0 & 0 \\
-0 & -\frac{1}{2} & 0 & -1 & 0 & 0 \\
-0 & 0 & \frac{1}{2} & 0 & 0 & 2 \\
-1 & 0 & 0 & 0 & 0 & 0 \\
--\frac{1}{2} & -\frac{1}{2} & 0 & 1 & 2 & 0 \\
--\frac{1}{2} & 0 & 0 & 1 & 0 & 2
-\end{array}\right) * \left(\begin{array}{r}
-x_{0} \\
-x_{1} \\
-x_{2} \\
-a_{0} \\
-a_{1} \\
-a_{2}
-\end{array}\right) = \left(\begin{array}{r}
-1 \\
--\frac{1}{2} \\
--1 \\
-0 \\
--\frac{1}{2} \\
-\frac{1}{2} \\
-1 \\
--1 \\
--\frac{1}{2}
-\end{array}\right) \quad \mod \mathbb{Z}$$
-Consider matrix A=$ \left(\begin{array}{rrr}
-x_{0} & 0 & 0 \\
-x_{2} & 0 & x_{0} + 2 \, x_{2} \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{1} & x_{1} & 0
-\end{array}\right) $.
-
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 1 \\
-0 & -1 & 0 & -\frac{1}{2} \\
-1 & 0 & 1 & -1 \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 2 \, a_{0} + x_{0} \\
-1 & 1 & 0 & -a_{0} - x_{0} - x_{2} \\
+1 & 1 & 0 & -a_{0} - x_{0} - 2 \, x_{1} \\
 0 & 0 & -1 & 2 \, a_{2} - \frac{1}{2} \, x_{0} \\
 \hline
  0 & 0 & 0 & 1
@@ -587,16 +610,16 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{footnotesize}
 \begin{footnotesize}
 $$(A, a)\left(\begin{array}{rrr|r}
--1 & 0 & 0 & 0 \\
-1 & 1 & 0 & -\frac{1}{2} \\
-0 & 0 & -1 & \frac{1}{2} \\
+1 & 0 & 0 & 1 \\
+-1 & -1 & 0 & -1 \\
+-1 & 0 & -1 & -\frac{1}{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 2 \, a_{0} \\
-0 & -1 & 0 & 2 \, a_{1} + \frac{1}{2} \, x_{0} + x_{2} \\
-1 & 0 & 1 & -a_{0} - \frac{1}{2} \, x_{1} \\
+0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{0} - 2 \, x_{1} \\
+1 & 0 & 1 & -a_{0} + \frac{1}{2} \, x_{0} + 2 \, x_{2} \\
 \hline
  0 & 0 & 0 & 1
 \end{array}\right)=
@@ -608,39 +631,16 @@ $$(A, a)\left(\begin{array}{rrr|r}
  0 & 0 & 0 & 1
 \end{array}\right)$$
 \end{footnotesize}
-\begin{footnotesize}
-$$(A, a)\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)(A^{-1}, -A^{-1}a) = 
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & x_{0} \\
--1 & -1 & 0 & a_{0} + 2 \, a_{1} - \frac{1}{2} \, x_{0} \\
--1 & 0 & -1 & a_{0} + 2 \, a_{2} - \frac{1}{2} \, x_{0} - \frac{1}{2} \, x_{1} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)=
-\left(\begin{array}{rrr|r}
-1 & 0 & 0 & 1 \\
--1 & -1 & 0 & -1 \\
--1 & 0 & -1 & -\frac{1}{2} \\
-\hline
- 0 & 0 & 0 & 1
-\end{array}\right)$$
-\end{footnotesize}
 $$\left(\begin{array}{rrrrrr}
+-1 & 0 & 0 & 0 & 0 & 0 \\
+\frac{1}{2} & 0 & 0 & 1 & 2 & 0 \\
+1 & 0 & 2 & 1 & 0 & 2 \\
 1 & 0 & 0 & 2 & 0 & 0 \\
--1 & 0 & -1 & -1 & 0 & 0 \\
+-1 & -2 & 0 & -1 & 0 & 0 \\
 -\frac{1}{2} & 0 & 0 & 0 & 0 & 2 \\
 0 & 0 & 0 & 2 & 0 & 0 \\
-\frac{1}{2} & 0 & 1 & 0 & 2 & 0 \\
-0 & -\frac{1}{2} & 0 & -1 & 0 & 0 \\
-1 & 0 & 0 & 0 & 0 & 0 \\
--\frac{1}{2} & 0 & 0 & 1 & 2 & 0 \\
--\frac{1}{2} & -\frac{1}{2} & 0 & 1 & 0 & 2
+-\frac{1}{2} & -2 & 0 & 0 & 2 & 0 \\
+\frac{1}{2} & 0 & 2 & -1 & 0 & 0
 \end{array}\right) * \left(\begin{array}{r}
 x_{0} \\
 x_{1} \\
@@ -649,13 +649,13 @@ a_{0} \\
 a_{1} \\
 a_{2}
 \end{array}\right) = \left(\begin{array}{r}
+1 \\
+-1 \\
+-\frac{1}{2} \\
 0 \\
 -\frac{1}{2} \\
 \frac{1}{2} \\
 1 \\
 -\frac{1}{2} \\
--1 \\
-1 \\
--1 \\
--\frac{1}{2}
+-1
 \end{array}\right) \quad \mod \mathbb{Z}$$

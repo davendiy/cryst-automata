@@ -3,8 +3,8 @@ from sage.all import table, latex
 
 from src.space_groups import prepare_gap_env  # , check_div
 # from src.cryst3.common import cached_simple_matrices
-from src.cryst3.all_norm3 import all_unique_matrices
-from src.cryst3.gen_norms3 import find_groups
+# from src.cryst3.all_norm3 import all_unique_matrices
+from src.cryst3.gen_norms3 import find_groups, all_unique_matrices
 
 # from src.srdegrees import tau
 

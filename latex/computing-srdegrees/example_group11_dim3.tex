@@ -21,9 +21,9 @@ x_{2} & 0 & x_{3}
 \end{array}\right)$$
 
 Consider matrix A=$ \left(\begin{array}{rrr}
-x_{1} & 0 & x_{0} \\
-0 & x_{2} & 0 \\
-x_{3} & 0 & x_{4}
+x_{0} & 0 & x_{1} \\
+0 & x_{3} & 0 \\
+x_{2} & 0 & x_{4}
 \end{array}\right) $.
 
 \begin{footnotesize}
@@ -36,7 +36,7 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 2 \, a_{0} \\
-0 & 1 & 0 & -\frac{1}{2} \, x_{2} \\
+0 & 1 & 0 & -\frac{1}{2} \, x_{3} \\
 0 & 0 & -1 & 2 \, a_{2} \\
 \hline
  0 & 0 & 0 & 1
@@ -82,7 +82,7 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{array}\right)(A^{-1}, -A^{-1}a) = 
 \left(\begin{array}{rrr|r}
 1 & 0 & 0 & 0 \\
-0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{2} \\
+0 & -1 & 0 & 2 \, a_{1} - \frac{1}{2} \, x_{3} \\
 0 & 0 & 1 & 0 \\
 \hline
  0 & 0 & 0 & 1
@@ -97,12 +97,12 @@ $$(A, a)\left(\begin{array}{rrr|r}
 \end{footnotesize}
 $$\left(\begin{array}{rrrrrrrr}
 0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 \\
-0 & 0 & -\frac{1}{2} & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -\frac{1}{2} & 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 \\
 0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 \\
 0 & 0 & 0 & 0 & 0 & 0 & 2 & 0 \\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 \\
-0 & 0 & -\frac{1}{2} & 0 & 0 & 0 & 2 & 0
+0 & 0 & 0 & -\frac{1}{2} & 0 & 0 & 2 & 0
 \end{array}\right) * \left(\begin{array}{r}
 x_{0} \\
 x_{1} \\

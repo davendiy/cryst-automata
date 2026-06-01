@@ -1,7 +1,6 @@
 #!/usr/bin/env sage
 
 from collections import defaultdict
-from warnings import warn
 
 from sage.all import QQ, matrix, solve, var
 
