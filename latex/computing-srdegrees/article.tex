@@ -13,7 +13,7 @@
  linkcolor=blue,
  filecolor=magenta,
  urlcolor=cyan,
- pdftitle={Overleaf Example},
+ pdftitle={Article2026},
  pdfpagemode=FullScreen,
 }
 
@@ -169,14 +169,6 @@
 % Virtual endomorphisms were used to analyze self-similar actions for a wide range of groups: free abelian groups,
 % finitely generated nilpotent groups, solvable groups, wreath products of abelian groups ....
 
-
-In this paper we focus mainly on self-replicating actions of abstract crystallographic groups. Recall that a self-replicating
-action is induced by a surjective virtual endomorphism. The next theorem gives us a way to connect self-replicating
-actions to the results of Bieberbach.
-
-
-
-
 Crystallographic groups describe symmetries of repeated patterns of an $n$-dimensional space. They were known for
 several centuries in case of $n=2$, though the complete list was only given in 1891 by Fedorov. In general, they appeared
 as a part of 18th Hilbert's problem, and were characterized by Bieberbach and Zassenhaus later on. There are 17 distinct
@@ -184,7 +176,32 @@ groups for $n=2$ up to isometry, known as wallpaper groups or plane groups. Like
 known as space groups. If, however, space groups are considered up to conjugacy with respect
 to orientation-preserving affine transformations, the number is increased to 230.
 
-Crystallographic groups for dimensions $n=2,3$  are thoroughly studied due to their high value in physics. 
+Self-similar and self-replicating actions describe the recursive patterns of groups acting on words over the given finite
+alphabet. They can also be viewed as actions on a rooted tree or as a result of the work of a finite transducer. It was
+studied by Grigorchuk, Nekrashevych, Sidki, etc, and has great impact on dynamical systems, bla bla bla.
+
+In this paper we focus mainly on self-replicating actions of crystallographic groups, particularly on sizes of the
+respective alphabets that occur therein. A group has a self-replicating degree $d$, if it admits a self-replicating
+action over an alphabet of size $d$. We, however, will use another definition, which does not depend on actions.
+In his work \cite{Nekrashevych:Self-similar} Nekrashevych introduced a way to work with self-similar actions using
+associative virtual endomorsphisms.
+\begin{definition}
+  A virtual endomophism $\phi : H \rightarrow G$ of a group $G$ is a homomorphism from
+  its subgroup of finite index $H$. A virtual endomorphism $\phi$ is called \textit{simple}, if there is no nontrivial
+  $\phi$-invariant normal subgroup of $G$.
+\end{definition}
+
+A group has a \textit{self-replicating degree} $d$ if there exists a surjective virtual endomorphism from its subgroup of
+index $d$. This concept is closely related to the following one: a group has a \textit{self-covering degree} $d$
+if it has an isomorphic subgroup of index $d$. Self-similar groups can be viewed as the iterated monodromy groups of
+a self-covering map of the complex plane.
+
+In this paper we will investigate the way virtual endomorphisms appear on crystallographic groups and how they connect to
+linear maps on the integral lattices. We will provide the criterion when the surjective virtual endomorphisms are simple
+and use it to describe self-covering and self-replicating degrees of the plane groups. We will also provide an algorithm
+to compute sets $SCDegrees$ and $SRDegrees$ for the space groups.
+
+
 % =====================================================================================================================
 
 
@@ -292,7 +309,6 @@ A surjective simple virtual endomorphism of crystallographic group is an isomorp
 by the Bieberbach theorem, for every surjective virtual endomorphism $\phi : H \rightarrow G$
 of a crystallographic group $G$ there exists an
 affine element $(A, t) \in \mathbf{A}(n)$ such that $\phi(g) = (A, t)^{-1}g(A, t)$ and $H = \phi^{-1}(G) = (A, t)G(A, t)^{-1}$.
-
 
 
 Let us investigate the structure of surjective virtual endomorphisms on crystallographic groups, deriving from
