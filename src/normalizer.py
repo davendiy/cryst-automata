@@ -78,7 +78,7 @@ def sol2matrix(solution, dim=2, use_alphabet=False):
 
         A.append(row)
     A = matrix(A)
-    return A
+    return standardize_sol_matrix(A)
 
 
 def els_by_order(group_elements):
@@ -115,6 +115,25 @@ def _carthesian_wo_duplicates(*spaces):
             used.add(str(el))
             yield res + [el], used
             used.remove(str(el))
+
+
+def standardize_sol_matrix(mtx):
+    """Standardize the solution matrix, created from """
+
+    assert all(str(v).startswith('x') for v in mtx.variables()), "Bad indeterminates. All should have form x{i}"
+
+    vars_seq = []
+    for row in mtx:
+        for el in row:
+            elvars = el.variables()
+            for v in elvars:
+                if v not in vars_seq:
+                    vars_seq.append(v)
+
+    tmp_vars = [var(f't{i}') for i in range(len(vars_seq))]
+    tmp_mtx = mtx.subs({v: tmp_v for v, tmp_v in zip(vars_seq, tmp_vars)})
+    sorted_vars = [var(f'x{i}') for i in range(len(vars_seq))]
+    return tmp_mtx.subs({tmp_v: v for tmp_v, v in zip(tmp_vars, sorted_vars)})
 
 
 # TODO: probably should rewrite as a generator

@@ -2,6 +2,7 @@
 import sys
 
 
+# TODO: deprecated
 def normalize_matrice(m: str):
     m = m.replace(' + ', '+').replace(' - ', '-')
     res = []
