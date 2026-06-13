@@ -17,7 +17,7 @@ prepare_gap_env()
 FULL = False
 verbose = 2 if FULL else 0
 
-general_table = [[r"num\footnotemark[1]{}", r"srdegrees\footnotemark[2]{}"]]
+general_table = [[r"num\footnotemark[1]{}", r"scdegrees\footnotemark[2]{}", r"srdegrees restriction"]]
 
 sr = SR_Degrees(1, method='latex', verbose=verbose)
 
@@ -42,14 +42,17 @@ for n in range(2, 18):
             lp = rp = ''
             degree = ''
 
-        field = r' \times '.join(r'\mathbb{Z}' if pred_sols.get(v, 0) == 0 else r'OZ' for v in el[1].variables())  # type: ignore
+        field = r' \times '.join(
+            r'\mathbb{Z}' if pred_sols.get(v, 0) == 0
+            else r'\mathbb{Z}_{odd}' for v in el[1].variables()
+        )  # type: ignore
         # (x_1, x_2) \in Z^2
         inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field  # type: ignore
         # {(x_1, x_2) \in Z^2}
         inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
 
         if not el[2]:
-            smaller_table.add("$" + inz + "$")
+            smaller_table.add(("$" + inz + "$", ""))
             continue
 
         # / {(-1, 1), (1, 1), (0, 0)}
@@ -59,11 +62,13 @@ for n in range(2, 18):
         el[2] = "$" + new_arr + "$"
 
         smaller_table.add(
-                r"$" + inz.rstrip(r'\right\}') + r"\, / \," + new_arr + r'\right\}' + "$",
+                ('$' + inz + '$', '$' + new_arr + '$')
+                # r"$" + inz.rstrip(r'\right\}') + r"\, / \," + new_arr + r'\right\}' + "$",
         )
 
     if smaller_table:
-        general_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
+        # general_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
+        general_table.append([n, table([[el[0]] for el in smaller_table]), table([[el[1]] for el in smaller_table])])
 
     res_table = table(res_table, header_row=True, frame=True)
     pred_col_table = table(pred_col_table, header_row=True, frame=True)

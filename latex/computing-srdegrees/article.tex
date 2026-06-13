@@ -146,10 +146,7 @@
 
 % \end{proof}
 
-% Despite every virtual abelian group is self-similar, not every one admits a self-replicating action.
-% As an example, consider $G = \mathbb{Z}_2 \times \mathbb{Z}$ which is not
-% self-replicating due to \cite{Sidki}. We will prove in the section \ref{sec:cryst} that some of them, particularly
-% crystallographic groups, are self-replicating. In the section \ref{sec:computations} we will investigate what
+% In the section \ref{sec:computations} we will investigate what
 % alphabets -- meaning size of an alphabet -- appear in self-replicating actions of crystallographic groups in dimensions
 % 2 and 3.
 
@@ -166,8 +163,6 @@
 % некрашевич придумав як працювати з самоподібними діями через віртуальні ендоморфізми
 % кожна кристалографічна є віртуально абелевою і тому є самоподібною, але незрозуміло чи є рекурентною
 % 
-% Virtual endomorphisms were used to analyze self-similar actions for a wide range of groups: free abelian groups,
-% finitely generated nilpotent groups, solvable groups, wreath products of abelian groups ....
 
 Crystallographic groups describe symmetries of repeated patterns of an $n$-dimensional space. They were known for
 several centuries in case of $n=2$, though the complete list was only given in 1891 by Fedorov. In general, they appeared
@@ -178,28 +173,38 @@ to orientation-preserving affine transformations, the number is increased to 230
 
 Self-similar and self-replicating actions describe the recursive patterns of groups acting on words over the given finite
 alphabet. They can also be viewed as actions on a rooted tree or as a result of the work of a finite transducer. It was
-studied by Grigorchuk, Nekrashevych, Sidki, etc, and has great impact on dynamical systems, bla bla bla.
+studied by Grigorchuk, Nekrashevych, Sidki, etc, and has great impact on dynamical systems, \textbf{TODO} bla bla bla.
 
 In this paper we focus mainly on self-replicating actions of crystallographic groups, particularly on sizes of the
 respective alphabets that occur therein. A group has a self-replicating degree $d$, if it admits a self-replicating
-action over an alphabet of size $d$. We, however, will use another definition, which does not depend on actions.
-In his work \cite{Nekrashevych:Self-similar} Nekrashevych introduced a way to work with self-similar actions using
-associative virtual endomorsphisms.
+action over an alphabet of size $d$. We, however, will use another definition, which does not depend on actions and
+uses a toolkit of virtual endomorphisms developed by Nekrashevych \cite{Nekrashevych:Self-similar}.
 \begin{definition}
   A virtual endomophism $\phi : H \rightarrow G$ of a group $G$ is a homomorphism from
   its subgroup of finite index $H$. A virtual endomorphism $\phi$ is called \textit{simple}, if there is no nontrivial
   $\phi$-invariant normal subgroup of $G$.
 \end{definition}
 
-A group has a \textit{self-replicating degree} $d$ if there exists a surjective virtual endomorphism from its subgroup of
-index $d$. This concept is closely related to the following one: a group has a \textit{self-covering degree} $d$
-if it has an isomorphic subgroup of index $d$. Self-similar groups can be viewed as the iterated monodromy groups of
-a self-covering map of the complex plane.
+A group is \textit{self-similar} if there exists a simple virtual endomorphism from its subgroup of index $d$.
+If it is also surjective, then we say the group is \textit{self-replicating} and
+has a \textit{self-replicating degree} $d$. This concept will be the main object of our studying. It is closely
+related to the following one: a group has a \textit{self-covering degree} $d$ if it has an isomorphic subgroup of
+index $d$. Self-similar groups can be viewed as the iterated monodromy groups of a self-covering map of the complex
+plane. % TODO: more details of self-covering
 
+Virtual endomorphisms were used to analyze self-similarity for a wide range of groups: free abelian groups,
+finitely generated nilpotent groups, solvable groups, wreath products of abelian groups and so on. 
+Despite every virtual abelian group is self-similar (\cite{Abelian}), and therefore every crystallographic as well,
+not every one is self-replicating. As an example, consider $G = \mathbb{Z}_2 \times \mathbb{Z}$ as a counterexample
+due to \cite{Sidki}. 
+
+% TODO: minimal srdegrees, examples, appendix
 In this paper we will investigate the way virtual endomorphisms appear on crystallographic groups and how they connect to
-linear maps on the integral lattices. We will provide the criterion when the surjective virtual endomorphisms are simple
-and use it to describe self-covering and self-replicating degrees of the plane groups. We will also provide an algorithm
-to compute sets $SCDegrees$ and $SRDegrees$ for the space groups.
+linear maps on the integral lattices. We will prove in the section \ref{sec:cryst} that every crystallographic group
+is self-replicating and provide the criterion when the surjective virtual endomorphisms are simple.
+We will use it to describe self-covering and self-replicating degrees of the plane groups in section \ref{subsec:planar}.
+For the space groups we will provide an algorithm to compute sets $SCD$ and $SRD$ in section \ref{subsec:space}.
+
 
 
 % =====================================================================================================================
@@ -208,9 +213,8 @@ to compute sets $SCDegrees$ and $SRDegrees$ for the space groups.
 \section{Crystallographic groups}\label{sec:cryst}
 
 
-% пересунити в розділ, де використовуються таблиці
-Most of the symmetric properties and applied results for every group can be found in the International Tables for Crystallography \cite{CrystTables}.
-We, however, consider crystallographic groups from the group theoretical perspective, which can be found in \cite{Szcz:CrystBook}.
+% TODO: переписать
+We consider crystallographic groups from the group theoretical perspective, more can be found in \cite{Szcz:CrystBook}.
 
 Let $\mathbf{A}(n)$ be a group of affine transformations and $\mathbf{E}(n)$ a group of isometries of
 $\mathbb{R}^n$ respectively. It's easy to show that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$.
@@ -222,7 +226,7 @@ where $A, B \in GL_n(\mathbb{R})$ and $a, b \in \mathbb{R}^n$ the product is def
 \end{definition}
 
 The definition on its own gives little information of the internal structure of a crystallographic group. To work with it
-we require two fundamental theorems:
+we require three fundamental theorems:
 
 \begin{theorem}[Bieberbach, 1910]
 \begin{enumerate}
@@ -244,12 +248,13 @@ we require two fundamental theorems:
 % \end{theorem}
 
 
-% TODO: важливо при записі віртуальних ендоморфізмів не провтикатись, що в ізоморфній підгрупі вопшето коцикл інакший.
-%   алгоритмічно ніби ніц не міняється, але теоретично це треба легітимізувати
+% TODO: визначити спершу явно Point group i transllation group.
 From the first Bieberbach theorem any crystallographic group $G$ defines a short exact sequence
 $$
   0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
 $$
+
+% TODO alpha -- це відображення в класи суміжності, а ми потім їх додаєм до векторів з L. Треба краще формалізувати
 where $P < GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
 $P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
 that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
@@ -291,25 +296,26 @@ called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$
   The equality $[G:H] = [T(G):T(H)]$ follows.
 \end{proof}
 
-
-
-
 \begin{lemma}\label{th:surjection-is-bijection}
   If a virtual endomorphism of a crystallographic group is surjective, then it is an isomorphism.
 \end{lemma}
 \begin{proof}
 
 Let $\phi : H \rightarrow G$ is a surjective virtual endomorphism. Since $H < G$ has a finite index, $H$ has
-the same hisch length as $G$. From this follows that the $|\text{Ker} \phi| < \infty$, which is normal subgroup
-of $G$. However, the only normal finite subgroup of crystallographic group is trivial one.
+the same Hirsch length as $G$. From this follows that the $|\text{Ker} \phi| < \infty$, which is normal subgroup
+
+
+% TODO: отут забагато повторювального тексту, треба просто сформувати спряження і поєднати з дією на гратці. Потім
+% перейти до простотиof $G$. However, the only normal finite subgroup of crystallographic group is trivial one.
 
 \end{proof}
 
+% TODO: отут забагато повторювального тексту, треба просто сформувати спряження і поєднати з дією на гратці. Потім
+% перейти до простоти
 A surjective simple virtual endomorphism of crystallographic group is an isomorphism from its subgroup to itself. Then,
 by the Bieberbach theorem, for every surjective virtual endomorphism $\phi : H \rightarrow G$
 of a crystallographic group $G$ there exists an
 affine element $(A, t) \in \mathbf{A}(n)$ such that $\phi(g) = (A, t)^{-1}g(A, t)$ and $H = \phi^{-1}(G) = (A, t)G(A, t)^{-1}$.
-
 
 Let us investigate the structure of surjective virtual endomorphisms on crystallographic groups, deriving from
 the theorem \ref{th:surjection-is-bijection}.
@@ -321,9 +327,10 @@ The action of $G$ on the generators of $T(G)$ is reduced to a linear operator:
   (A, t)(E, e_i)(A, t)^{-1} = (E, Ae_i + t - AA^{-1}t) = (E, At). \label{eq:trans_gens}
 \end{equation}
 
-% TODO: описати тут одразу спряження і властивості, зокрема шо індекс дорівнює модулю визначника.
-From the lemma \ref{lemma:equal_index} and the equation (\ref{eq:trans_gens}) follows that $T(H) = AT(G) < T(G)$ and its index
-equals to the $|\det(A)|$. As a result, self-replicating degree =
+From the lemma \ref{lemma:equal_index} and the equation (\ref{eq:trans_gens}) follows that $T(H) = AT(G) < T(G)$
+and its index equals to the $|\det(A)|$. As a result, the set of self-covering degrees consists of determinants
+of applicable matrices as linear parts of surjective virtual endomorphisms. To derive self-replicating degrees
+we also need to inspect the simplicity.
 
 
 % \begin{corollary}
@@ -340,23 +347,20 @@ equals to the $|\det(A)|$. As a result, self-replicating degree =
 % \end{proof}
 
 
-We can easily characterize simple virtual endomorphisms for groups with integral lattice. Let $G = (P, \mathbb{Z}^n, \alpha)$
-be a crystallographic group. An affine element $a = (A,t)$ conjugate $G$ to its subgroup $H= aGa^{-1}$ then $A$ has
+We can characterize simple virtual endomorphisms for groups with integral lattice. Let $G = (P, \mathbb{Z}^n, \alpha)$
+be a crystallographic group. An affine element $a = (A,t)$ conjugates $G$ to its subgroup $H= aGa^{-1}$ then $A$ has
 integral coefficients and $t$ is rational.
-
-% We can now choose the basis equal to the generators of $T(G)$. Doing so, we get that the
-% lattice $T(G)$ equals to $\mathbb{Z}^n$,
-% the point group $\Pi(G)$ consists of invertible integral matrices, i.e. $\Pi(G) < GL_n(\mathbb{Z})$, SNoT $\alpha(G)$
-% consists of vectors from $[0, 1]^n$ and the matrix
-% $A \in GL_n(\mathbb{Q})$ has integral entities. Note that $t$ can be arbitrary vector from $\mathbb{Q}^n$. More detailed
-% analysis of admissible pairs $(A, t)$ will be given in the section \ref{sec:computations}.
-
-% TODO: зафіксувати кристалографічну групу трійкою прям перед теоремою, зокрема вказати Z^n гратку
-
-\begin{theorem}
+\begin{theorem}\label{th:simpe_virt}
   A virtual endomorpism $\phi : H \rightarrow G$, $\phi(g) = a^{-1}ga$ for $a =(A, t) \in Aff(n)$ is simple if and
   only if the characteristic polynomial of $A^{-1}$ is not divisible by a monic polynomial with integral coefficients.
 \end{theorem}
+
+% TODO: додати, що це серцевина тривіальна буде, + додати опис серцевини через перетин
+% TODO: називати A^{-1} simple
+It worth noting that an invertible matrix $A$ satisfying condition from the Theorem \ref{th:simpe_virt} forms a simple
+surjective virtual endomorphism on a free abelian group $\phi : A\mathbb{Z}^n \rightarrow \mathbb{Z}^n$ in a way
+$\phi(g) = A^{-1}g$. From now on we will also call such matrices \textit{simple}.
+
 \begin{proof}
 
   Denote $L = T(H)$. We will prove that $\phi$ is simple if and only if its restriction on the tranlsation group
@@ -383,13 +387,13 @@ integral coefficients and $t$ is rational.
 We can now make an upper bound for self-replicating degrees of crystallographic groups:
 
 \begin{corollary}
-  
   Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ possesses a self-replicating degree 
   $\le (m+1)^n$, where $m$ is the least common multiplier of denominators of entries of $\alpha(B)$
   for every $B \in P$.
 \end{corollary}
 
 \begin{proof}
+  % TODO: переписати
 	Since $A$ is scalar it commutes with any matrix and thus lies in the normalizer of $P$.
 	Consider $A = (m+1)E_n$ where $m = lcm \left(m_i : (B, \frac{p}{m_i}) \in G \right)$ is a least common
   multiplier of denominators of translations from the SNoT. Then $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m}$ and
@@ -404,20 +408,13 @@ We can now make an upper bound for self-replicating degrees of crystallographic 
   Every planar group possesses a self-replicating degree $\le 9$.
 \end{corollary}
 
-% TODO: додать мінімальне доведення чому в планарних тільки 1/2.
+\begin{proof}
+  Every planar group $G = (P, \mathbb{Z}^2, \alpha)$ has 
+\end{proof}
 
 \begin{corollary}
-  Every symmorphic crystallographic group possesses a self-replicating degree $\le 2^n$.
+  Every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree $\le 2^n$.
 \end{corollary}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -429,21 +426,22 @@ We can now make an upper bound for self-replicating degrees of crystallographic 
 
 \section{Computing self-replicating degrees of crystallographic groups}\label{sec:computations}
 
-
 Let $G$ be a crystallographic group. We consider two sets of positive integers associated with $G$:
 \begin{align*}
 SCD(G) &= \{d \in \mathbb{N} \, | \, \text{ $G$ has a subgroup $H$ of index $d$ isomorphic to $G$ } \},\\
-SRD(G) &= \{d \in \mathbb{N}\, | \, \text{ $G$ admits a self-replicating action of degree $d$ } \}.
+SRD(G) &= \{d \in \mathbb{N}\, | \, \text{ $G$ admits a simple surjective virtual
+                                               endomorphism from subgroup of index $d$ } \}.
 \end{align*}
 It is clear that $SRD\subset SCD$.
-We denote by $MinSRD(G)$ the minimal degree of a self-replicating action of $G$.
-
-From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as decision problems for the group $G$: given an integer $d$, determine whether $G$ contains a subgroup $H \le G$ of index $d$ with $H \cong G$, or whether $G$ admits a self-replicating action of degree $d$.
+We denote by $MinSCD(G)$ and $MinSRD(G)$ as the minimal self-covering and self-replicating degrees.
+From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as decision problems for the group $G$.
 
 \vspace{0.2cm}
 
 \subsection{Computing self-covering degrees.}
-Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$. A positive integer $d$ belongs to $SCD(G)$ if and only if there exists an affine transformation $a=(A,t)\in Aff(\mathbb{Q})$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This condition splits into three parts:
+Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$.
+A positive integer $d$ belongs to $SCD(G)$ if and only if there exists an affine transformation
+$a=(A,t)\in Aff(\mathbb{Q})$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This condition splits into three parts:
 \begin{enumerate}
   \item[1)] Point group compatibility: $APA^{-1}=P$.
   \item[2)] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
@@ -452,7 +450,9 @@ Let us describe a method for computing the set $SCD(G)$ for a given crystallogra
 \alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B) \ (\bmod\ \mathbb{Z}^n).
 \end{equation}
 \end{enumerate}
-To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the first condition and then identify those for which there exists a translation $t$ satisfying the third condition.
+To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the first condition
+and then identify those for which there exists a translation $t$ satisfying the third condition. It is clear that
+for symmorphic groups the third condition is trivial.
 
 The integer matrices $A$ satisfying the first condition can be described as follows.
 Let $\sigma \in \mathrm{Aut}(P)$ be an automorphism of the point group.
@@ -460,27 +460,36 @@ Consider the system of linear equations over the integers
 \[
 X B = \sigma(B) X \quad \mbox{ for all $B \in P$},
 \]
-where $X \in \mathrm{Mat}_{n \times n}(\mathbb{Z})$ is the unknown matrix. The set $\mathcal{X}_\sigma$ of all solutions  is a finitely generated $\mathbb{Z}$-module, and there exists a finite, computable set of integral matrices $X_1, \dots, X_m \in \mathcal{X}_\sigma$ such that every $X \in \mathcal{X}_\sigma$ can be written as
+where $X \in \mathrm{Mat}_{n \times n}(\mathbb{Z})$ is the unknown matrix. The set $\mathcal{X}_\sigma$ of all
+solutions is a finitely generated $\mathbb{Z}$-module, and there exists a finite, computable set of integral
+matrices $X_1, \dots, X_m \in \mathcal{X}_\sigma$ such that every $X \in \mathcal{X}_\sigma$ can be written as
 \begin{equation}\label{eqn:X_sum_Xi}
 X = \sum_{i=1}^{m} x_i X_i, \quad x_i \in \mathbb{Z}.
 \end{equation}
-The total set $\mathcal{X}$ of matrices $A$ satisfying 1) is the union of $\mathcal{X}_\sigma$ over all $\sigma \in \mathrm{Aut}(P)$.
+The total set $\mathcal{X}$ of matrices $A$ satisfying 1) is the union of $\mathcal{X}_\sigma$
+over all $\sigma \in \mathrm{Aut}(P)$.
 
 
 % тут ми, по суті, визначаємо розвʼязок в загальному вигляді y = y1 + L + N, де L -- скінченно-породжена ґратка, N -- nullbasis.
 % єдине що, ми ніяк не показуємо N, оскільки після підстановки в X він не буде ніяк фігурувати. Лише розвʼязок на t ми пропускаємо,
 % але по ідеї це якраз хендлиться отим самим v(sigma(B) - E) \in Z^n
-Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle compatibility condition. Let $\sigma \in \mathrm{Aut}(P)$ and $X\in \mathcal{X}_\sigma$ be written as the linear combination (\ref{eqn:X_sum_Xi}) with unknown $x_i\in\mathbb{Z}$. The equation (\ref{eqn:cocycle_compatibility}) for the matrix $X$ can be written as a system of congruence: for every $B\in P$,
+Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle
+compatibility condition. Let $\sigma \in \mathrm{Aut}(P)$ and $X\in \mathcal{X}_\sigma$ be written as the linear
+combination (\ref{eqn:X_sum_Xi}) with unknown $x_i\in\mathbb{Z}$. The equation (\ref{eqn:cocycle_compatibility})
+for the matrix $X$ can be written as a system of congruence: for every $B\in P$,
 \begin{equation}\label{eqn:cocycle_condition}
   \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t \quad (\bmod\ \mathbb{Z}^n).
 \end{equation}
 in the unknown $x_i\in\mathbb{Z}$ and $t\in\mathbb{Q}^n$.
-The congruence system is solvable in $t\in\mathbb{Q}^n$ if and only if, for every $B\in P$ and $v\in\mathbb{Q}^n$ such that $v^{\top}(\sigma(B)-E)\in\mathbb{Z}^n$,
+The congruence system is solvable in $t\in\mathbb{Q}^n$ if and only if, for every $B\in P$ and $v\in\mathbb{Q}^n$
+such that $v^{\top}(\sigma(B)-E)\in\mathbb{Z}^n$,
 \[
 \sum_{i=1}^m x_i(v^{\top} X_i\alpha(B))\equiv v^{\top}\alpha(\sigma(B)) \quad (\bmod \ 1).
 \]
 This yields a finite system of linear congruences in the integer variables
-$x_i$. Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set of integral matrices $Y_0, Y_1, \dots, Y_r$. The subset $\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions 1)--3) is then given by
+$x_i$. Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set
+of integral matrices $Y_0, Y_1, \dots, Y_r$. The subset $\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting
+of all matrices satisfying conditions 1)--3) is then given by
 \begin{equation}\label{eqn:Y_sum_Yi}
   Y = Y_0+\sum_{i=1}^{r} y_i Y_i, \quad y_i \in \mathbb{Z}.
 \end{equation}
@@ -489,11 +498,14 @@ Let $\mathcal{Y}$ be the union of $\mathcal{Y}_\sigma$ over $\sigma \in \mathrm{
 
 Finally, we get the following description of the set of self-covering and self-replicating degrees:
 \begin{align*}
-  SCD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}\}=\{ |f_\sigma(y_1,\ldots, y_r)|\neq 0 : y_i\in\mathbb{Z} \mbox{ and } \sigma\in Aut(P) \},\\
+  SCD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}\}=\{ |f_\sigma(y_1,\ldots, y_r)|\neq 0 : y_i\in\mathbb{Z} \mbox{ and }
+  \sigma\in Aut(P) \},\\
   SRD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y} \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
 \end{align*}
 The set of integer values of an integer polynomial generally admits no simple or computable arithmetic description.
-Determining whether a given integer $d>0$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine equation $|f_\sigma(y_1,\ldots, y_r)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem, such problems are undecidable for arbitrary polynomials. We do not know whether the problem is decidable in our settings:
+Determining whether a given integer $d>0$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine
+equation $|f_\sigma(y_1,\ldots, y_r)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem, such problems are
+undecidable for arbitrary polynomials. We do not know whether the problem is decidable in our settings:
 
 % TODO: додати тут, що в алгоритмі послідовність інакша: спершу розглядаємо матриці з X, навішуєм на них умову 3,
 % а потім вже додаєм умову на коцикли.
@@ -505,18 +517,23 @@ Determining whether a given integer $d>0$ belongs to $SCD(G)$ amounts to decidin
 \begin{problem}
   Let $G$ be a crystallographic group. 
 
-  (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$? Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
+  (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$?
+   Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
 
 % з SRDegrees складніше. Треба визначити чи лежить він в ґратці і чи існує многочлен з визначником d, який не має таких власних чисел....
 % типу маючи многочлени f(lambda, x), det(x), треба побудувати МТ, яка визначатиме чи існує x з det(x) == d, та f(lambda, x) не матиме цілих власних чисел.
-  (2) Is it decidable, for a given integer $d$, whether the group $G$ admits a self-replicating action of degree $d$?
+  (2) Is it decidable, for a given integer $d$, whether the group $G$ has a self-replicating degree $d$? Equivalently,
+  does $G$ admit a self-replicating action over the alphabet of size $d$?
 \end{problem} 
 
-\subsection{Planar groups}
-Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in dimension two. In this case, every determinant polynomial $f_\sigma$ is a quadratic form, and one can explicitly describe the set $SCD(G)$. The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues to a simpler arithmetic condition.
+\subsection{Planar groups}\label{subsec:planar}
+Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in dimension two. In this case,
+every determinant polynomial $f_\sigma$ is a quadratic form, and one can explicitly describe the set $SCD(G)$.
+The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues to a simpler arithmetic condition.
 
 \begin{proposition}
-  Let $A\in M_2(\mathbb{Z})$ and $\det(A)\neq 0$. No eigenvalue of $A^{-1}$ is an algebraic integer if and only if $\det(A)\neq \pm 1$ and $\det(A) \pm \operatorname{tr}(A) \neq -1$.
+  Let $A\in M_2(\mathbb{Z})$ and $\det(A)\neq 0$. No eigenvalue of $A^{-1}$ is an algebraic integer if and only if
+   $\det(A)\neq \pm 1$ and $\det(A) \pm \operatorname{tr}(A) \neq -1$.
 \end{proposition}
 
 \begin{proof}
@@ -527,22 +544,26 @@ Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic
   \end{align*}
   If $\det(A)=\pm 1$, then $\chi_{A^{-1}}(x)\in\mathbb{Z}[x]$ and its roots are algebraic integers. If $\det(A) \pm \tr(A) = -1$, then $A^{-1}$ has an eigenvalue $1$ or $-1$. 
 
-  Conversely, assume $\chi_{A^{-1}}(x)$ is divisible by a monic polynomial $p(x)\in\mathbb{Z}[x]$. If $\deg p(x)=2$, then $p(x)=\chi_{A^{-1}}(x)$ and $\det(A)=\pm 1$. If $\deg p(x)=1$ and $p(x)=x-a$, then $a$ is an integer eigenvalue of $A^{-1}$. Now $a^{-1}$ is a root of a monic integer polynomial $\chi_A(x)$. Since $a$ and $a^{-1}$ are both algebraic integer, we have $a=\pm 1$ and
+  Conversely, assume $\chi_{A^{-1}}(x)$ is divisible by a monic polynomial $p(x)\in\mathbb{Z}[x]$. If $\deg p(x)=2$,
+  then $p(x)=\chi_{A^{-1}}(x)$ and $\det(A)=\pm 1$. If $\deg p(x)=1$ and $p(x)=x-a$, then $a$ is an integer eigenvalue
+  of $A^{-1}$. Now $a^{-1}$ is a root of a monic integer polynomial $\chi_A(x)$. Since $a$ and $a^{-1}$ are both
+  algebraic integer, we have $a=\pm 1$ and
   \[
   \chi_{A}(\pm 1)=1\mp \tr(A)+\det(A)=0 \quad \Rightarrow  \quad \det(A)\mp \tr(A)=-1.
   \]
 \end{proof}
 
-The trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}) can be expressed by the polynomial $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characterization of $SRD(G)$:
+The trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}) can be expressed by the
+polynomial $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characterization of $SRD(G)$:
 \begin{align*}
-SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_r)|>1 \ : & \ \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
-& \quad ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_r)\neq -1 \big\}.
+  SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_r)|>1 \ : & \ \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
+  & \quad ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_r)\neq -1 \big\}.
 \end{align*}
-One can find calculated matrices $\mathcal{X}$ and their subset satisfying cocycle compatibility $\mathcal{Y}$ for all the planar
-groups in the appendix \ref{app:all_norm_dim2}.
+Calculated matrices $\mathcal{X}$ and their subset satisfying cocycle compatibility $\mathcal{Y}$ for all the planar
+groups are given in the appendix \ref{app:all_norm_dim2}.
 
 
-\subsection{Space Groups}
+\subsection{Space Groups}\label{subsec:space}
 A similar approach is possible for reducing the condition on eigenvalues for dimension three. The result, however,
 is still a cubic diophantine equation which we should approach carefully later.
 Let $A$ be an arbitrary $3\times 3$ integral matrix.
@@ -553,40 +574,29 @@ $$
   x_{6} & x_{7} & x_{8}
   \end{array}\right)
 $$
-and denote $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
+It's characteristic polynomial is written as:
+$$
+  \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
+$$
+where $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 
-
-% матриці в dim=3 або розкладні, або мають tau(A)=0, trace(A)=0. Отже вони або розкладні, або прості.
-
-% TODO: сформувати краще які матриці звуться simple десь після теореми Некрашевича
 % TODO: сформувати, що в другому випадку self-replicating співпадають з self-covering
+% TODO: тут не треба твердження, тут достатньо це просто описати випадки і далі все +- очевидно
+Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $A \in \mathcal{N}(P)$ be an integral matrix
+with $|\det(A)|>1$.
+Then either:
+\begin{itemize}
+  \item $A$ is a block-triangular matrix and hence has factorizable characteristic polynomial;
+  \item $A$ is simple.
+\end{itemize}
 
-\begin{theorem}
-  Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $A \in \mathcal{N}(P)$ be an integral matrix
-  with $|\det(A)|>1$.
-  Then either $A$ is a block-triangular matrix and hence has factorizable characteristic polynomial,
-  or $A^{-1}$ is simple. 
-\end{theorem}
 \begin{proof}
 
   By direct computation we get that either $A$ is a block-triangular matrix or $\tau(A) = 0$ and $\tr(A) = 0$. We need
-  to prove that the second case leads to a simple $A^{-1}$. The full list of possible matrices $\mathcal{X}$ of
+  to prove that the second case leads to a simple $A$. The full list of possible matrices $\mathcal{X}$ of
   every space group one can find in the appendix \ref{app:all_norm_dim3}.
-
-  The characteristic polynomial of an arbitrary $3\times 3$ matrix $A$ is written as
-  $$
-    \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
-  $$
-  Using recursive algorithm we can write the explicit form of $A^{-1}$:
-  $$
-     A^{-1} = \frac{1}{\det(A)}
-    \left(\begin{array}{rrr}
-    -x_{5} x_{7} + x_{4} x_{8} & x_{2} x_{7} - x_{1} x_{8} & -x_{2} x_{4} + x_{1} x_{5} \\
-    x_{5} x_{6} - x_{3} x_{8} & -x_{2} x_{6} + x_{0} x_{8} & x_{2} x_{3} - x_{0} x_{5} \\
-    -x_{4} x_{6} + x_{3} x_{7} & x_{1} x_{6} - x_{0} x_{7} & -x_{1} x_{3} + x_{0} x_{4}
-    \end{array},\right)
-  $$
-  from which we can observe the relations
+  
+  We can write the explicit form of $A^{-1}$ and observe the relations:
   $$
     \tr(A^{-1}) =  \tau(A) / \det(A)
     \quad
@@ -618,6 +628,11 @@ and denote $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
 For shorter notation, denote $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ as a set of odd integers.
 
+Most of the symmetric properties and applied results for every group can be found in the International Tables for Crystallography \cite{CrystTables}.
+
+% TODO: замість розвʼязків просто давати пару многочленів. А потім треба дослідити чи можна оцінити мінімальні по
+% цих двох многочленах
+
 \input{table_srdegrees.tex}
 
 \begin{table}[H]
@@ -625,28 +640,28 @@ For shorter notation, denote $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ as a set of o
 \centering
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-\textbf{group} & \textbf{minimal alphabet} & \textbf{generators} & \textbf{symmorphic} & \textbf{determinant} & \textbf{cocycle} \\
+\textbf{group} & \textbf{minimal scdegree} & \textbf{minimal srdegree} & \textbf{symmorphic} & \textbf{determinant} & \textbf{cocycle} \\
 \hline
-Group 1 p1    & \textbf{2}     & 2 & + &  &  \\
-Group 2 p2    & \textbf{2}     & 3 & + &  &  \\
-Group 3 p1m1  & \textbf{4}     & 3 & + & $x_0x_1$ &  \\
-Group 4 p1g1  & \textbf{6}     & 2 &   & $x_0x_1$ & $x_1$ odd \\
-Group 5 c1m1  & \textbf{4}     & 3 & + & $\left(x_{0} - 2x_{1}\right)x_{0}$ &  \\
-Group 6 p2mm  & \textbf{2}     & 4 & + & $-x_0x_1$ &  \\
-Group 7 p2mg  & \textbf{6}     & 3 &   & $x_0x_1$ & $x_0$ odd \\
-Group 8 p2gg  & \textbf{3}     & 4 &   & $x_0x_1$ & $x_0, x_1$ odd \\
-Group 9 c2mm  & \textbf{3}     & 4 & + & $x_{1}(2x_{0} - x_{1})$ &  \\
-Group 10 p4   & \textbf{2}     & 4 & + & $x_0^2 + x_1^2$ &  \\
-Group 11 p4mm & \textbf{2}     & 5 & + & $-2x_0^2$ &  \\
-Group 12 p4gm & \textbf{9}     & 5 &   & $x_0^2$ & $x_0$ odd \\
-Group 13 p3   & \textbf{3}     & 3 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
-Group 14 p3m1 & \textbf{4}     & 4 & + & $x_0^2$ &  \\
-Group 15 p31m & \textbf{4}     & 4 & + & $x_0^2$ &  \\
-Group 16 p6   & \textbf{3}     & 4 & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
-Group 17 p6mm & \textbf{3}     & 5 & + & $\tfrac{3}{4}x_0^2$ & $x_0$ is even \\
+Group 1 p1    & \textbf{2}  & \textbf{2}    & + &  &  \\
+Group 2 p2    & \textbf{2}  & \textbf{2}    & + &  &  \\
+Group 3 p1m1  & \textbf{2}  & \textbf{4}    & + & $x_0x_1$ &  \\
+Group 4 p1g1  & \textbf{2}  & \textbf{6}    &   & $x_0x_1$ & $x_1$ odd \\
+Group 5 c1m1  & \textbf{2}  & \textbf{4}    & + & $\left(x_{0} - 2x_{1}\right)x_{0}$ &  \\
+Group 6 p2mm  & \textbf{2}  & \textbf{2}    & + & $-x_0x_1$ &  \\
+Group 7 p2mg  & \textbf{2}  & \textbf{6}    &   & $x_0x_1$ & $x_0$ odd \\
+Group 8 p2gg  & \textbf{3}  & \textbf{3}    &   & $x_0x_1$ & $x_0, x_1$ odd \\
+Group 9 c2mm  & \textbf{?}  & \textbf{3}    & + & $x_{1}(2x_{0} - x_{1})$ &  \\
+Group 10 p4   & \textbf{2}  & \textbf{2}    & + & $x_0^2 + x_1^2$ &  \\
+Group 11 p4mm & \textbf{2}  & \textbf{2}    & + & $-2x_0^2$ &  \\
+Group 12 p4gm & \textbf{?}  & \textbf{9}    &   & $x_0^2$ & $x_0$ odd \\
+Group 13 p3   & \textbf{?}  & \textbf{3}    & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 14 p3m1 & \textbf{?}  & \textbf{4}    & + & $x_0^2$ &  \\
+Group 15 p31m & \textbf{?}  & \textbf{4}    & + & $x_0^2$ &  \\
+Group 16 p6   & \textbf{?}  & \textbf{3}    & + & $x_0^2 + x_0x_1 + x_1^2$ &  \\
+Group 17 p6mm & \textbf{?}  & \textbf{3}    & + & $3 x_0^2$ &  \\
 \hline
 \end{tabular}
-\caption{Summary of groups and their algebraic properties (without binary alphabet notes)}
+\caption{Minimal self-covering and self-replicating degrees of planar groups}
 \label{tab:groups}
 \end{footnotesize}
 \end{table}
@@ -657,27 +672,6 @@ There are 17 unique block diagonal matrices, which involve problematic polynomia
 $f(x_1, \cdots x_n) = 1$ in minor determinant. These minors don't appear in case of dimension 2.
 
 \input{problem_normalizers.tex}
-
-
-
-% % напевно нерелевантно для цієї статті
-% \begin{proposition}
-%   Let $A_\sigma$ be a general solution of the linear system $XB = \sigma(B)X, B \in P$, written in terms of free variables
-%   $x_1, x_2, \dots x_m, m \le n^2$ and their linear combinations. Then $\det(A_\sigma)$ is a homogeneous polynomial of degree $n$
-%   over $x_i$. (\textbf{Question: why $m$ is always less than $n$? Does it come from $B \in P$ being integral of $\det B=1$?})
-% \end{proposition}
-
-% \begin{proof}
-%   Let $X$ be a matrix of $n^2$ indeterminates $x_i$. Then the system $XB - \sigma(B)X = 0$ is a homogeneous system
-%   of $d * n^2$ linear equations for $d = |P|$. If the system is not singular, then it has infinite amount of solutions for $m \le n$
-%   independent variables and their linear combinations. By definition, the determinant equals to
-%   $$\det A = \sum_{\pi} sign(\pi) \prod_{i} a_{i\pi(i)}$$
-%   which is a sum of multiples of some $n$ elements of $A$. Since every element of $A$ is either 0 or a linear combination
-%   of free variables, then $\det A$ is either homogeneous polynomial of degree $n$ or 0.
-% \end{proof}
-
-
-
 
 
 % ==============================================================================================
