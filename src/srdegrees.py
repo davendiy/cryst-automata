@@ -1,5 +1,10 @@
 import random
 
+from enum import Enum
+from dataclasses import dataclass
+
+from typing import Generic, TypeVar
+
 from sage.all import (
     ascii_art,
     block_matrix,
@@ -22,6 +27,9 @@ from sage.all import (
 from sage.categories.rings import Rings
 from sage.modules.free_module_integer import IntegerLattice
 from .space_groups import SpaceGroup_gap
+
+
+T = TypeVar('T')
 
 
 # TODO:
@@ -264,6 +272,163 @@ def solve_simple_mat(A):
         raise NotImplementedError
 
 
+class Result(Enum):
+    Success = 0
+    Error = 1
+
+
+@dataclass
+class Option(Generic[T]):
+    status: Result
+    error_msg: str
+    result: T
+
+    @classmethod
+    def error(cls, error_msg):
+        return cls(Result.Error, error_msg, None)
+
+    @classmethod
+    def success(cls, result: T):
+        return cls(Result.Success, '', result)
+
+
+@dataclass
+class Solution_QZ_rational:
+    part_answer: matrix
+    lattice_basis: matrix
+    nullbasis: matrix
+
+    @classmethod
+    def error(cls, msg):
+        return cls(Result.Error, msg, None, None, None)
+
+    @classmethod
+    def construct(cls):
+        pass
+
+
+@dataclass
+class Solution_QZ_integral:
+    base_variables: list
+    free_variables: list
+    expressions: list
+
+
+def solve_qz_integral(M, b, base_variables) -> Option[Solution_QZ_integral]:
+    # in most cases there is a less common denominator
+    m = lcm(M.denominator(), b.denominator())
+
+    N_conds = M.nrows()
+
+    M_lift = matrix(ZZ, M * m)
+    b_lift = matrix(ZZ, b * m)
+
+    E = matrix.identity(ZZ, N_conds)
+
+    # transform system Mx = b mod Z into equivalent -z + Mx = b for integral z
+    # then lift it to integers by multiplying on lcm of denominators:   -mz + mMx = mb
+    M_aug = (-m * E).augment(M_lift)
+
+    try:
+        # one solution for inhomogeneous system
+        base_vec = M_aug.solve_right(b_lift, extend=False)
+    except ValueError:
+        return Option[Solution_QZ_integral].error("can't solve over integers: no part answer")
+
+    # solutions space for homogeneous system. The result solution will be base_vec + lattice
+    # Notes:
+    #     right_kernel returns echelon form of the basis vectors. We placed auxiliary variables at the beginning of
+    #     the list of variables. Therefore, the first r columns of the lattice will be the standard e1 e2 ... er vectors
+    #     and the respective first r variables will be free, which are all auxiliary variables + free base variables.
+    #
+    #     By multiplying variables*lattice we get linear combinations for all the dependent variables, which will be
+    #     our answer.
+    lattice = M_aug.right_kernel(algorithm='pari').basis_matrix()
+    aug_variables = [var(f'y{i}') for i in range(N_conds)]
+    variables = aug_variables + list(base_variables)
+
+    # exploit echelon form
+    free_n = lattice.nrows()
+    free_vars = variables[:free_n]
+    free_vars = matrix(free_vars)
+
+    # get only base variables, don't use auxiliary
+    result = (free_vars * lattice + base_vec.T)
+    # print('base sol:')
+    # print(base_vec)
+    # print('result:')
+    # print(result[0])
+    result = result[0][N_conds:]
+
+    return Option[Solution_QZ_rational].success(
+        Solution_QZ_integral(
+            base_variables,
+            free_vars,
+            result,
+        )
+    )
+
+
+def solve_qz_rational(M, b) -> Option[Solution_QZ_rational]:
+    # in most cases there is a less common denominator
+    m = lcm(M.denominator(), b.denominator())
+
+    N_conds, N_vars = M.nrows(), M.ncols()
+
+    M_lift = matrix(ZZ, M * m)
+    b_lift = matrix(b * m)
+
+    S, U, V = M_lift.smith_form()
+
+    rank = 0
+    for i in range(min(N_conds, N_vars)):
+        if S[i, i] != 0:
+            rank = i+1
+    right = U * b_lift
+    for i in range(right.dimensions()[0]):
+        for j in range(right.dimensions()[1]):
+            right[i, j] = right[i, j] % m
+
+    part_answer = matrix(QQ, [0 for i in range(N_vars)]).T
+    lattice_basis = []
+    null_basis = []
+
+    # every solution for the dx = b  mod M  has the form
+    # x = b/d + nM/d, where n is arbitrary integral
+    for i in range(rank):
+        if right[i] != 0:
+            part_answer[i, 0] = right[i, 0] / S[i, i]
+
+        # the lattice nM/d
+        zv = [0 for i in range(N_vars)]
+        zv[i] = m / S[i, i]
+        lattice_basis.append(zv)
+
+    for i in range(rank, N_conds):
+        if right[i] != 0:
+            return Option[Solution_QZ_rational].error(f'no solutions: {right[i]} != 0')
+
+    # the null basis consists of all the arbitrary rational vectors which
+    # can be placed in the equations of kind 0x = 0
+    for i in range(rank, N_vars):
+        rv = [0 for i in range(N_vars)]
+        rv[i] = 1
+        null_basis.append(rv)
+
+    if lattice_basis:
+        lattice_basis = V * column_matrix(QQ, lattice_basis)
+    if null_basis:
+        null_basis = V * column_matrix(QQ, null_basis)
+
+    return Option[Solution_QZ_rational].success(
+        Solution_QZ_rational(
+            V * part_answer,
+            lattice_basis,
+            null_basis,
+        )
+    )
+
+
 class SR_Degrees:
     def __init__(self, group_index, method="ascii", verbose=2, dim=2):
         self.congruence_print_thresh = 10
@@ -399,6 +564,42 @@ class SR_Degrees:
                 self.print_congruence(g, conj, alpha_conj, real_alpha)
 
         return conds, base_variables
+
+    def construct_congruences_v3(self, A_inv, A):
+        G = self.G
+        P = self.G.point_group_elements()
+
+        M = []
+        b_var = []
+        b_num = []
+        E = matrix.identity(QQ, G.dim)
+        for i, g in enumerate(P):
+            if g.is_one():
+                continue
+
+            conj = (A * g * A_inv).simplify_rational()
+            assert G.in_alpha(conj)
+            M.extend((conj - E).rows())
+            b_var.extend((A * G.alpha(g)).rows())
+            b_num.extend(G.alpha(conj).rows())
+
+        M = matrix(ZZ, M)
+        b_var = matrix(b_var)
+        b_num = matrix(QQ, b_num)
+
+        S, U, _ = M.smith_form()
+        r = M.rank()
+
+        ui = U.matrix_from_rows(range(r, U.nrows()))
+
+        res_left = ui * b_var
+        res_right = ui * b_num
+        return res_left, res_right
+
+    def solve_congruences_v5(self, left, right):
+        base_variables = left.variables()
+        M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in left.list()])
+        return solve_qz_integral(M, right, base_variables)
 
     def print_system(self, *eqs):
         if self.disp in ["latex", "markdown"]:
@@ -659,57 +860,9 @@ class SR_Degrees:
         else:
             self.print(self.display(M, '*', x, '=', b, r'\quad', r'\mod \mathbb{Z}'))
 
-        # in most cases there is a less common denominator
         m = lcm(M.denominator(), b.denominator())
         assert (m_bound % m) == 0
-
-        M_lift = matrix(ZZ, M * m)
-        b_lift = matrix(b * m)
-
-        S, U, V = M_lift.smith_form()
-
-        rank = 0
-        for i in range(min(N_conds, N_vars)):
-            if S[i, i] != 0:
-                rank = i+1
-        right = U * b_lift
-        for i in range(right.dimensions()[0]):
-            for j in range(right.dimensions()[1]):
-                right[i, j] = right[i, j] % m
-
-        part_answer = matrix(QQ, [0 for i in range(N_vars)]).T
-        lattice_basis = []
-        null_basis = []
-
-        # every solution for the dx = b  mod M  has the form
-        # x = b/d + nM/d, where n is arbitrary integral
-        for i in range(rank):
-            if right[i] != 0:
-                part_answer[i, 0] = right[i, 0] / S[i, i]
-
-            # the lattice nM/d
-            zv = [0 for i in range(N_vars)]
-            zv[i] = m / S[i, i]
-            lattice_basis.append(zv)
-
-        for i in range(rank, N_conds):
-            if right[i] != 0:
-                self.print(f'no solutions: {right[i]} != 0')
-                return None
-
-        # the null basis consists of all the arbitrary rational vectors which
-        # can be placed in the equations of kind 0x = 0
-        for i in range(rank, N_vars):
-            rv = [0 for i in range(N_vars)]
-            rv[i] = 1
-            null_basis.append(rv)
-
-        if lattice_basis:
-            lattice_basis = V * column_matrix(QQ, lattice_basis)
-        if null_basis:
-            null_basis = V * column_matrix(QQ, null_basis)
-
-        return V * part_answer, lattice_basis, null_basis
+        return solve_qz_rational(M, b, N_conds, N_vars)
 
     def solve_congruences(self, conds, base_variables, variables):
         tmp = [con == 0 for con in conds]

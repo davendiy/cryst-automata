@@ -481,13 +481,47 @@ for the matrix $X$ can be written as a system of congruence: for every $B\in P$,
   \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t \quad (\bmod\ \mathbb{Z}^n).
 \end{equation}
 in the unknown $x_i\in\mathbb{Z}$ and $t\in\mathbb{Q}^n$.
-The congruence system is solvable in $t\in\mathbb{Q}^n$ if and only if, for every $B\in P$ and $v\in\mathbb{Q}^n$
-such that $v^{\top}(\sigma(B)-E)\in\mathbb{Z}^n$,
+
+Denote left part of the (\ref{eqn:cocycle_condition}) as an unknown rational vector $b \in \mathbb{Q}^n$ and
+the right part $(\sigma(B) - E)$ as an integer matrix $M$. Then we consider an auxiliary system:
+\begin{equation}\label{eqn:rational_t}
+  Mt = b \mod \mathbb{Z}^n
+\end{equation}
+
+\begin{proposition}
+  The congruence system (\ref{eqn:rational_t}) is solvable in $t \in \mathbb{Q}^n$ if and only if
+  for every integral $v \in \mathbb{Z}^n$ from $v^\top M = 0$ follows that $v^\top b \in \mathbb{Z}$.
+\end{proposition}
+\begin{proof}
+  $(\Rightarrow)$ If $Mt = b + z$ for some rational $t$ and integral $z$, then for every integral vector
+  $v$ we can write $v^\top Mt= v^\top b+v^\top z$, which proves the statement.
+
+  $(\Leftarrow)$
+  Let us write the Smith Normal Form for $M$ as a matrix over the principal ideal domain $\mathbb{Z}$:
+  $UMV=D$, where $D$ is a diagonal matrix of rank $r$ and $U,V$ are invertible square integral matrices.
+  Then $Mt-b \in Z^n$ if and only if
+  $U(Mt-b) \in Z^n$. Rewrite it as $U(Mt-b) = UMV t'-b'$, where $t'=V^{-1} t$ and $b'= Ub$.
+
+  Now $Dt'-b' \in Z^n$ for some rational $t'$ if and only if for every zero diagonal element of $D$ with index
+  $i>r$ the respective vector's entity $b'_i \in Z^n$. Returning to the original notation $b'_i= u_ib$, where $u_i$ is
+  an integral row vector of $U$ we observe that $u_i M = 0$ for $i>r$. This, combined with the assumed
+  statement, leads to $b'_i = u_i b \in Z$.
+\end{proof}
+
+Denote $u_i(M)$ as the i-th row of the matrix $U$ in the Smith decomposition $UMV = D$ over the ring $\mathbb{Z}$.
+ 
+\begin{corollary}
+  The system $Mt = b \mod \mathbb{Z}$ has a rational solution $t$ if and only if
+  for every $i > r$ $u_i(M)b\in \mathbb{Z}$, where $r$ is the rank of $M$.
+\end{corollary}
+
+This gives us a constructive way to eliminate the rational $t$ from the system (\ref{eqn:cocycle_condition})
+and instead consider a finite system of linear congruences in the integral indeterminates $x_i$: for every
+$B \in P$ and $j > \text{rank}(\sigma(B) - E)$
 \[
-\sum_{i=1}^m x_i(v^{\top} X_i\alpha(B))\equiv v^{\top}\alpha(\sigma(B)) \quad (\bmod \ 1).
+\sum_{i=1}^m x_i u_j(\sigma(B) - E) X_i\alpha(B)\equiv u_j(\sigma(B) - E)\alpha(\sigma(B)) \quad (\bmod \ 1).
 \]
-This yields a finite system of linear congruences in the integer variables
-$x_i$. Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set
+Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set
 of integral matrices $Y_0, Y_1, \dots, Y_r$. The subset $\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting
 of all matrices satisfying conditions 1)--3) is then given by
 \begin{equation}\label{eqn:Y_sum_Yi}
