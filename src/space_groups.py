@@ -349,6 +349,8 @@ class SpaceGroup_gap:
     def point_group_normalizer(self, enforce_integral=True, **kwargs):
         P = MatrixGroup(self.P_gens)
         sols = normalizers(P, **kwargs)
+
+        # FIXME: free variables of A shouldn't multiply on denominator (probably those which occur only once?)
         if kwargs.get('to_matrix', True) and enforce_integral:
             return [(A * A.denominator()).simplify_rational() for A in sols]
 

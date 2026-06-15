@@ -9,11 +9,11 @@ from sage.all import dumps, loads
 from ..space_groups import SpaceGroup_gap, check_div
 from ..srdegrees import tau
 
-from .common import point_groups_representatives
+from .common import point_groups_representatives, by_point_groups
 
 root = os.path.realpath(__file__)
 root = os.path.realpath(os.path.join(root, '../../../'))
-datafolder = os.path.join(root, 'cached_normalizers_dim3')
+datafolder = os.path.join(root, 'new_cache')
 
 
 cached_b64 = re.compile(r'######## INTERNAL_REPR #######\n(.*)\n#### END OF INTERNAL_REPR ####')
@@ -71,6 +71,15 @@ for i in point_groups_representatives:
 
 
 all_unique_matrices = list({str(el): el for el in all_matrices}.values())
+
+
+def load_cached_normalizers(group_num):
+    point_group = [el[0] for el in by_point_groups if group_num in el]
+    if len(point_group) != 1:
+        raise ValueError(f'found {len(point_group)} point group representatives for {group_num}..')
+    point_group = point_group[0]
+    matrices = __cached_matrices[point_group]
+    return matrices
 
 
 def find_groups(A):

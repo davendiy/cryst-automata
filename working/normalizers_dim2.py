@@ -6,6 +6,7 @@ from src.srdegrees import SR_Degrees
 
 prepare_gap_env()
 
+
 def unwrap(row):
 
     res = []

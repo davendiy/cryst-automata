@@ -590,6 +590,10 @@ class SR_Degrees:
             b_num.extend(G.alpha(conj).rows())
 
         M = matrix(ZZ, M)
+
+        self.print('matrix M of (sigma(P) - E):')
+        self.print(self.display(M))
+
         b_var = matrix(b_var)
         b_num = matrix(QQ, b_num)
 
@@ -670,6 +674,8 @@ class SR_Degrees:
     def cocycle_compat_v2(self, A) -> Option[matrix]:
         A_inv = A.inverse().simplify_rational()
         left, right = self.construct_congruences_v3(A_inv, A)
+        self.print('congruence system:')
+        self.print(self.display(left, right, use_pref=True, sep='='))
         res = self.solve_congruences_v5(left, right)
         if res.status != res.status.Success:
             return Option.error(res.error_msg)
