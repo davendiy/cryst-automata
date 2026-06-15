@@ -27,12 +27,11 @@ if FULL:
 for n in range(2, 18):
 
     sr = SR_Degrees(n, method='latex', verbose=verbose)
-    eig_table, res_table, cond_table, pred_col_table = sr.sr_degrees()
+    eig_table, res_table = sr.sr_degrees()
     eig_table = table(eig_table, header_row=True, frame=True)
 
     smaller_table = set()
-    for el, pred_sols in zip(res_table[1:], pred_col_table[1:]):
-        pred_sols = pred_sols[1]
+    for el in res_table[1:]:
 
         if (el_n := len(el[1].variables())) > 1:    # type: ignore
             degree = f"^{el_n}"
@@ -42,10 +41,7 @@ for n in range(2, 18):
             lp = rp = ''
             degree = ''
 
-        field = r' \times '.join(
-            r'\mathbb{Z}' if pred_sols.get(v, 0) == 0
-            else r'\mathbb{Z}_{odd}' for v in el[1].variables()
-        )  # type: ignore
+        field = r'\mathbb{Z}^2'
         # (x_1, x_2) \in Z^2
         inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field  # type: ignore
         # {(x_1, x_2) \in Z^2}
@@ -71,7 +67,6 @@ for n in range(2, 18):
         general_table.append([n, table([[el[0]] for el in smaller_table]), table([[el[1]] for el in smaller_table])])
 
     res_table = table(res_table, header_row=True, frame=True)
-    pred_col_table = table(pred_col_table, header_row=True, frame=True)
 
     if FULL:
         print(latex(eig_table))
@@ -83,25 +78,8 @@ for n in range(2, 18):
     if sr.G.is_symmorphic():
         continue
 
-    for row in cond_table[1:]:
-        padded = []
-        for i, el in enumerate(row[1]):
-            if i % 4 == 0:
-                padded.append(list())
-            padded[-1].append("$" + latex(el) + r"\in \mathbb{Z}$")
-        row[1] = table(padded)
 
-    if FULL:
-        print(latex(pred_col_table))
-        print(r'\\')
-        cond_table = table(cond_table, header_row=True, frame=True)
-        print()
-        print(r'\begin{scriptsize}')
-        print(latex(cond_table))
-        print(r'\end{scriptsize}')
-
-
-print(r'\newpage')
+# print(r'\newpage')
 print(r'\begin{table}[H]')
 print(r'\begin{scriptsize}')
 print(latex(table(general_table, header_row=True, frame=True)))

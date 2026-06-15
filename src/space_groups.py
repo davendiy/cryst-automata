@@ -773,7 +773,7 @@ class SpaceGroup_gap:
             w_el[el][let - 1] = "".join(self.as_word(v[1], readable=True))
             w_p[el][let - 1] = v[0]
 
-        print("Вінцева рекурсія:")
+        print("Wreath recursion:")
         for el in w_el.keys():
             p = Permutation(w_p[el])  # type: ignore
             if p.to_permutation_group_element().order() == 1:

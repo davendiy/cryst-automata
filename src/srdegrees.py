@@ -1,7 +1,7 @@
 import random
 
 from enum import Enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from typing import Generic, TypeVar
 
@@ -9,7 +9,6 @@ from sage.all import (
     ascii_art,
     block_matrix,
     column_matrix,
-    factor,
     floor,
     latex,
     lcm,
@@ -18,18 +17,34 @@ from sage.all import (
     QQ,
     RingElement,
     solve_diophantine,
-    solve,
-    SR,
-    table,
     var,
     ZZ,
 )
 from sage.categories.rings import Rings
-from sage.modules.free_module_integer import IntegerLattice
 from .space_groups import SpaceGroup_gap
 
 
 T = TypeVar('T')
+
+
+class Result(Enum):
+    Success = 0
+    Error = 1
+
+
+@dataclass
+class Option(Generic[T]):
+    status: Result
+    error_msg: str
+    result: T
+
+    @classmethod
+    def error(cls, error_msg):
+        return cls(Result.Error, error_msg, None)
+
+    @classmethod
+    def success(cls, result: T):
+        return cls(Result.Success, '', result)
 
 
 # TODO:
@@ -47,6 +62,7 @@ class _Q_modZ(Parent):
 
 
 # TODO:
+#  - change it to Z-module
 #  - add sage coercion
 #  - make this shit work with matrix(QmodZ, [[...]])
 class Q_modZ_Element(RingElement):
@@ -111,53 +127,21 @@ class Q_modZ_Element(RingElement):
 QmodZ = _Q_modZ()
 
 
-# ugly gauss from internet
-def gauss_elim(mat):
-    N = len(mat)
-    M = len(mat[0])
-    for k in range(M):
-        i_max = max(range(k, N), key=lambda i: abs(mat[i][k].r))
-        if mat[i_max][k] == 0:
-            continue
-        mat[k], mat[i_max] = mat[i_max], mat[k]
+@dataclass
+class SolutionSimpleMatrix:
+    except_values: list
+    extra_eqs: list = field(default_factory=list)
 
-        for i in range(k + 1, N):
-            f = mat[i][k] / mat[k][k]
+    def add_equation(self, eq):
+        self.extra_eqs.append(eq)
+        return self
 
-            for j in range(k + 1, M):
-                mat[i][j] = mat[i][j] - f * mat[k][j]
-
-            mat[i][k] = 0
+    def solution_list(self):
+        # TODO: add combination with extra_eqs
+        return sorted(self.except_values)
 
 
-class SC_DegreesSolution:
-
-    def __init__(self):
-        self._matrices = {}
-        self._body = {}
-
-    def add_solution(self, mat, inv_mat, conditions, solutions):
-        self._matrices[str(mat)] = mat
-        self._body[str(mat)] = inv_mat, conditions, solutions
-
-    def __iter__(self):
-        for mat in self._matrices:
-            yield self._matrices[mat], *self._body[mat]
-
-
-class SR_DegreesSolution:
-
-    def __init__(self):
-        pass
-
-    def enumerate(self):
-        pass
-
-    def _latex_(self):
-        pass
-
-
-def _solve_simple_mat2(A):
+def _solve_simple_mat2(A) -> SolutionSimpleMatrix:
     """Given matrix of integral indeterminates A, find when it forms a simple virtual endomorphism
     of Z^n, using Nekrashevych theorem.
 
@@ -221,7 +205,7 @@ def _solve_simple_mat2(A):
     eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
     eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
 
-    return list(set(det_res1 + det_res2 + eig_res1 + eig_res2))
+    return SolutionSimpleMatrix(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))
 
 
 def _subminor(A: matrix, i):
@@ -250,46 +234,26 @@ def _tau(y0, y1, y2, y3, y4, y5, y6, y7, y8):
     return y0 * y4 + y0 * y8 + y4 * y8 - y1 * y3 - y2 * y6 - y5 * y7
 
 
-def _solve_simple_mat3(A):
+def _solve_simple_mat3(A) -> SolutionSimpleMatrix:
     subA = factorize(A)
     # case of permutational matrix
     if subA is None:
         if not A.trace() == 0 or not tau(A) == 0:
             raise ValueError("something went wrong, this shouldn't be like that")
-        return [A.det() == 1, A.det() == -1]
+        return SolutionSimpleMatrix([]).add_equation(A.det() == 1).add_equation(A.det() == -1)
     else:
         subA, varx = subA
-        return _solve_simple_mat2(subA) + [varx == 1]
+        return _solve_simple_mat2(subA).add_equation(varx == 1)
 
 
-def solve_simple_mat(A):
+def solve_simple_mat(A) -> Option[SolutionSimpleMatrix]:
     assert len(list(A)) == len(list(A[0]))
     if len(list(A)) == 2:
-        return _solve_simple_mat2(A)
+        return Option.success(_solve_simple_mat2(A))
     elif len(list(A)) == 3:
-        return _solve_simple_mat3(A)
+        return Option.success(_solve_simple_mat3(A))
     else:
-        raise NotImplementedError
-
-
-class Result(Enum):
-    Success = 0
-    Error = 1
-
-
-@dataclass
-class Option(Generic[T]):
-    status: Result
-    error_msg: str
-    result: T
-
-    @classmethod
-    def error(cls, error_msg):
-        return cls(Result.Error, error_msg, None)
-
-    @classmethod
-    def success(cls, result: T):
-        return cls(Result.Success, '', result)
+        return Option.error('not implemented for higher dimensions.')
 
 
 @dataclass
@@ -298,20 +262,41 @@ class Solution_QZ_rational:
     lattice_basis: matrix
     nullbasis: matrix
 
-    @classmethod
-    def error(cls, msg):
-        return cls(Result.Error, msg, None, None, None)
-
-    @classmethod
-    def construct(cls):
-        pass
-
 
 @dataclass
 class Solution_QZ_integral:
     base_variables: list
     free_variables: list
     expressions: list
+
+
+@dataclass
+class SC_DegreesSolution:
+    matrices: list = field(default_factory=list)
+    _unique_matrices: dict = field(default_factory=dict)
+
+    def add_matrix(self, m: matrix):
+        h = str(m)
+        if h not in self._unique_matrices:
+            self._unique_matrices[h] = m
+            self.matrices.append(m)
+
+    def unique_determinants(self):
+        found = set()
+        for M in self.matrices:
+            p = M.det()
+            p = self._standardize_poly(p)
+            if str(p) not in found:
+                yield p
+                found.add(str(p))
+
+    @staticmethod
+    def _standardize_poly(p):
+        vs = p.variables()
+        tmp_vars = [var(f'z{i}') for i in range(len(vs))]
+        tmp_p = p.subs({v: tmp for v, tmp in zip(vs, tmp_vars)})
+        resvars = [var(f'y{i}') for i in range(len(vs))]
+        return tmp_p.subs({tmp: new_v for tmp, new_v in zip(tmp_vars, resvars)})
 
 
 def solve_qz_integral(M, b, base_variables) -> Option[Solution_QZ_integral]:
@@ -354,10 +339,6 @@ def solve_qz_integral(M, b, base_variables) -> Option[Solution_QZ_integral]:
 
     # get only base variables, don't use auxiliary
     result = (free_vars * lattice + base_vec.T)
-    # print('base sol:')
-    # print(base_vec)
-    # print('result:')
-    # print(result[0])
     result = result[0][N_conds:]
 
     return Option[Solution_QZ_rational].success(
@@ -524,7 +505,32 @@ class SR_Degrees:
             print("\\end{document}")
 
     def construct_congruences_v2(self, A_inv, A):
+        """Construct congruences for the subgroup check.
 
+        The congruences have the following form:
+            (A, t)(B, alpha(b))(A^{-1}, -A^{-1}t) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+        The action on the lattice L coincides with a linear operator A,
+        so the index equals to det(A):
+            (A, t)(E, e)(A, t)^{-1} = (E, At)
+
+        Calculate the conjugation for every element in the SNoT:
+            (A, t)(B, alpha(B))(A^{-1}, -A^{-1}t) =
+            = (A, t)(BA^{-1}, -BA^{-1}t + alpha(B)) =
+
+            = (ABA^{-1}, -ABA^{-1}t + A alpha(B) + t)
+            = (ABA^{-1}, (E - ABA^{-1})t + A alpha(B)) = (ABA^{-1}, alpha(ABA^{-1})) mod L
+
+            Hence, the result system can be written
+
+            (E - ABA^{-1})t + A alpha(B) = alpha(ABA^{-1})
+
+            or
+
+            A alpha(B) - alpha(ABA^{-1}) = (ABA^{-1} - E)t  mod L
+
+        We can obviously abuse multiple appearence of ABA^{-1}.
+        """
         G = self.G
         P = self.G.point_group_elements()
         trans_a = list(var(' '.join(f"a{i}" for i in range(G.dim))))
@@ -655,147 +661,22 @@ class SR_Degrees:
             )
             self.print()
 
-    def construct_congruences(self, A_inv, A):
-        """Construct congruences for the subgroup check.
-
-        The congruences have the following form:
-            (A, t)(B, alpha(b))(A^{-1}, -A^{-1}t) = (ABA^{-1}, alpha(ABA^{-1})) mod L
-
-        The action on the lattice L coincides with a linear operator A,
-        so the index equals to det(A):
-            (A, t)(E, e)(A, t)^{-1} = (E, At)
-
-        Calculate the conjugation for every element in the SNoT:
-            (A, t)(B, alpha(B))(A^{-1}, -A^{-1}t) =
-            = (A, t)(BA^{-1}, -BA^{-1}t + alpha(B)) =
-
-            = (ABA^{-1}, -ABA^{-1}t + A alpha(B) + t)
-            = (ABA^{-1}, (E - ABA^{-1})t + A alpha(B)) = (ABA^{-1}, alpha(ABA^{-1})) mod L
-
-            Hence, the result system can be written
-
-            (E - ABA^{-1})t + A alpha(B) = alpha(ABA^{-1})
-
-            or
-
-            A alpha(B) - alpha(ABA^{-1}) = (ABA^{-1} - E)t  mod L
-
-        We can obviously abuse multiple appearence of ABA^{-1}.
-        """
-        G = self.G
-        P = self.G.point_group_elements()
-        snot = self.G.snot
-        a0, a1 = var("a0 a1")
-        x = matrix([[a0], [a1]])
-        E = matrix.identity(QQ, G.dim)
-        conds = []
-        variables = []
-        base_variables = []
-        base_variables.extend(A_inv.variables())
-        base_variables.extend([a0, a1])
-
-        for i, g in enumerate(P):
-            # hope sage simplifies to one from point group
-            conj = (A * g * A_inv).simplify_rational()
-            assert G.in_alpha(conj)
-            # A alpha(B) - alpha(ABA^{-1})
-            condition = A * G.alpha(g) - G.alpha(conj)
-            condition = condition.simplify_rational()
-
-            # (ABA^{-1} - E)t
-            sym_res = (conj - E) * x
-
-            # entire left part to print
-            alpha_conj = (E - conj) * x + (A * G.alpha(g))
-            for j in range(self.G.dim):
-                alpha_conj[j, 0] = alpha_conj[j, 0].simplify_rational()
-
-            if self.disp in ["latex", "markdown"]:
-                self.print(
-                    self.pref
-                    + "(A, a)"
-                    + self.display(block_matrix([[g, G.alpha(g)], [0, 1]]), use_pref=False)
-                    + "(A^{-1}, -A^{-1}a) = "
-                )
-                self.print(self.display(block_matrix([[conj, alpha_conj], [0, 1]]), use_pref=False) + "=")
-                self.print(self.display(block_matrix([[conj, G.alpha(conj)], [0, 1]]), use_pref=False) + self.pref)
-            else:
-                self.print(
-                    ascii_art("\na\n\n")
-                    + ascii_art(" ")
-                    + ascii_art(snot[i])
-                    + ascii_art("\na_inv\n\n")
-                    + ascii_art(" ")
-                    + ascii_art("\n=\n\n")
-                    + ascii_art(" ")
-                    + ascii_art(block_matrix([[conj, alpha_conj], [0, 1]]))
-                    + ascii_art(" ")
-                    + ascii_art("\n=\n\n")
-                    + ascii_art(" ")
-                    + ascii_art(
-                        block_matrix(
-                            [
-                                [snot[i].linear_part(), G.alpha(snot[i].linear_part())],
-                                [0, 1],
-                            ]
-                        )
-                    )
-                )
-                self.print()
-
-            conds.append(sym_res[0][0] - (condition[0][0] + var(f"n{i}")))
-            conds.append(sym_res[1][0] - (condition[1][0] + var(f"m{i}")))
-
-            variables.append(var(f"n{i}"))
-            variables.append(var(f"m{i}"))
-        return conds, base_variables, variables
-
-    # FIXME: gauss elimination doesn't work in Q/Z
-    def solve_congruences_v3(self, conds, base_vars, variables):
-        variables = base_vars
-        # print(matrix(QQ, [[cond.coefficient(v) for v in variables] for cond in conds]))
-        M = [[QmodZ(cond.coefficient(v)) for v in base_vars] for cond in conds]
-        # print(M)
-        gauss_elim(M)
-        # print(M)
-        # print(variables)
-        # print(matrix(QQ, [[el.r if isinstance(el, Q_modZ_Element) else el for el in row] for row in M]))
-
-        def to_qq(el):
-            if isinstance(el, Q_modZ_Element):
-                return el.r
-            else:
-                return QQ(el)
-
-        # FIXME: works only if you believe that every system has a solution
-        return {variables[i]: to_qq(M[i][i]) for i in range(len(variables))}
-
-    def solve_congruences_v2(self, conds, base_vars, variables):
-        # https://ask.sagemath.org/question/62549/solve-equation-of-matrices-over-integers/
-
-        variables = base_vars + variables
-        M = matrix(QQ, [[cond.coefficient(v) for v in variables] for cond in conds])
-
-        r = matrix(QQ, [0 for _ in variables])
-
-        # NotImplementedError: only integer lattices supported
-        B, U = M.LLL(transformation=True)
-        nz = sum(1 for r in B.rows() if r == 0)  # number of zero rows in B
-        B = B.delete_rows(range(nz))  # trimming first nz rows of B
-        U = U.delete_rows(range(nz))  # trimming first nz rows of U
-        assert U * M == B  # the key property of U
-
-        L = IntegerLattice(B, lll_reduce=False)  # our basis is already reduced and should not be altered
-        assert r in L  # just in case checking that r belongs to L
-        v = L.coordinate_vector(r) * U
-        assert v * M == r
-        return v
-
-    def cocycle_compat(self, A):
+    def cocycle_compat(self, A) -> bool:
         A_inv = A.inverse().simplify_rational()
         eqs, base_vars = self.construct_congruences_v2(A_inv, A)
         ans = self.solve_congruences_v4(eqs, base_vars, list())
-        return ans is not None
+        return ans.status == ans.status.Success
+
+    def cocycle_compat_v2(self, A) -> Option[matrix]:
+        A_inv = A.inverse().simplify_rational()
+        left, right = self.construct_congruences_v3(A_inv, A)
+        res = self.solve_congruences_v5(left, right)
+        if res.status != res.status.Success:
+            return Option.error(res.error_msg)
+
+        ans = res.result
+        A_new = A.subs({var: exp for var, exp in zip(list(ans.base_variables), list(ans.expressions))})
+        return Option.success(A_new)
 
     def print_large_mtx(self, mtx):
         rows = mtx.nrows()
@@ -808,7 +689,7 @@ class SR_Degrees:
             self.print(self.display(*mtx[i], sep=' & ', use_pref=False), r'\\')
         self.print(r'\end{pmatrix}')
 
-    def solve_congruences_v4(self, conds, base_variables, variables):
+    def solve_congruences_v4(self, conds, base_variables, variables) -> Option[Solution_QZ_rational]:
         subs = {str(el): 0 for el in base_variables}
 
         # ugly sage method resolution
@@ -864,41 +745,12 @@ class SR_Degrees:
         assert (m_bound % m) == 0
         return solve_qz_rational(M, b, N_conds, N_vars)
 
-    def solve_congruences(self, conds, base_variables, variables):
-        tmp = [con == 0 for con in conds]
-        self.print("\nequations: ")
-        printable = []
-        for i, el in enumerate(tmp):
-            if i % 4 == 0:
-                printable.append(list())
-            printable[-1].append(el)
-
-        self.print(self.display(table(printable)))
-
-        res = solve(tmp, *variables)
-        self.print("\nanswer:")
-        printable = []
-        for i, el in enumerate(res[0]):
-            if i % 4 == 0:
-                printable.append([])
-            printable[-1].append(el)
-        self.print(self.display(table(printable)))
-
-        if not res:
-            self.print("Couldn't solve:", res)
-        for cond in res[0]:
-            # ugly check if n_i is rational
-            if cond.left() in variables and not cond.right().is_integer() and not cond.right().variables():
-                self.print(f"(*) Contradiction: {cond}!")
-                return None
-        return res
-
     def generate_texdoc(self):
         self.texdoc_header()
         self.sc_degrees()
         self.texdoc_ending()
 
-    def sc_degrees(self) -> SC_DegreesSolution:
+    def sc_degrees(self):
         self.header()
 
         G = self.G
@@ -927,38 +779,34 @@ class SR_Degrees:
             self.print(pref2 + " testing A (should have integral entities):")
             self.print(self.pref + "A = \n" + self.display(A, use_pref=False) + self.pref)
 
-            A_inv = A.inverse().simplify_rational()
-            if not G.is_symmorphic():
-                eqs, base_vars, variables = self.construct_congruences(A_inv, A)
-                conds = self.solve_congruences(eqs, base_vars, variables)
-                if conds is None:
-                    self.print("A doesn't form a virtual endomorphism.")
-                    continue
-                predicted_solutions = self.solve_congruences_v3(eqs, base_vars, variables)
-
-                sc_degrees.add_solution(A, A_inv, conds, predicted_solutions)
+            # A_inv = A.inverse().simplify_rational()
+            if G.is_symmorphic():
+                sc_degrees.add_matrix(A)
             else:
-                sc_degrees.add_solution(A, A_inv, [], {})
-            self.print("Simplicity")
-            self.print(self.pref + "A^{-1} = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
-            self.print("\neigenvalues:")
-            self.print(self.display([el[0] for el in A_inv.charpoly().roots()]))
-            self.print("charpoly:")
-            chp = A_inv.charpoly()(SR("x"))
-            chp = factor(chp)
-            self.print(self.display(chp))
-            self.print("\nindex of subgroup:")
-            self.print(self.pref + "[G : H] = \n" + self.display(A.det(), use_pref=False) + self.pref)
+                new_a_opt = self.cocycle_compat_v2(A)
+                if new_a_opt.status == Result.Success:
+                    sc_degrees.add_matrix(new_a_opt.result)
+                else:
+                    self.print('not compatible with cocycle.')
+                    continue
+
+            # self.print("Simplicity")
+            # self.print(self.pref + "A^{-1} = \n" + self.display(A_inv.simplify_rational(), use_pref=False) + self.pref)
+            # self.print("\neigenvalues:")
+            # self.print(self.display([el[0] for el in A_inv.charpoly().roots()]))
+            # self.print("charpoly:")
+            # chp = A_inv.charpoly()(SR("x"))
+            # chp = factor(chp)
+            # self.print(self.display(chp))
+            # self.print("\nindex of subgroup:")
+            # self.print(self.pref + "[G : H] = \n" + self.display(A.det(), use_pref=False) + self.pref)
 
         if self.disp == "latex" and norms:
             self.print("\\end{enumerate}")
 
         return sc_degrees
 
-    def sr_degrees_calc(self) -> SR_DegreesSolution:
-        pass
-
-    def sr_degrees(self) -> SR_DegreesSolution:
+    def sr_degrees(self):
         """Compute conditions on self replicating degrees of a crystallographic group.
 
         Notes
@@ -997,28 +845,11 @@ class SR_Degrees:
 
         eig_table = [["matrix", "det", "det(A) + tr(A) != -1", "det(A) - tr(A) != -1"]]
         res_table = [["matrix", "det", "except"]]
-        cond_table = [["matrix", "conds"]]
-        pred_sols_table = [['matrix', 'sols']]
-        for A, _, conds, pred_sols in sc_degrees:
+        for A in sc_degrees.matrices:
             self.print(pref2)
             self.print(self.display("A = ", A))
             self.print("Determinant:")
             self.print(self.display(A.det(), self.in_sym, self.z))
-            self.print("Conditions on endomorphism (self-coverings):")
-            self.print(self.display(""))
-            nontriv_conds = []
-            for r in conds:
-                for cond in r:
-                    # skip trivial case int \in Z
-                    if cond.right().is_integer():
-                        continue
-
-                    self.print(self.display(cond.right(), self.in_sym, self.z))
-                    nontriv_conds.append(cond.right())
-
-            self.print("\nPredicted solutions:")
-            self.print(pred_sols)
-            pred_sols_table.append([A, pred_sols])
 
             self.print("\nSelf-replicating degrees:")
             self.print(self.display(A.det(), self.neq, self.pm, 1))
@@ -1029,45 +860,12 @@ class SR_Degrees:
             self.print(self.display(cond1, self.neq, -1))
             self.print(self.display(cond2, self.neq, -1))
 
-            # sympy handles quadratic diophantine equations pretty well:
-            # https://www.alpertron.com.ar/METHODS.HTM
-            # https://web.archive.org/web/20160323033111/http://www.jpr2718.org/ax2p.pdf
-            #
-            det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
-            det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
-
-            det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
-            det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
-
-            self.print("Solve diophantine determinant det(A) = +- 1:")
-            self.print(self.display(det_res1))
-            self.print(self.display(det_res2))
-
-            eig_res1 = solve_diophantine(cond1 + 1, cond1.variables(), solution_dict=True)
-            eig_res2 = solve_diophantine(cond2 + 1, cond2.variables(), solution_dict=True)
-
-            if isinstance(eig_res1, dict):
-                eig_res1 = [
-                    eig_res1,
-                ]
-
-            if isinstance(eig_res2, dict):
-                eig_res2 = [
-                    eig_res2,
-                ]
-
-            eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
-            eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
-
-            self.print("Solve diophantine eigenvalues det(A) +- tr(A) = -1:")
-            self.print(self.display(eig_res1))
-            self.print(self.display(eig_res2))
+            res = solve_simple_mat(A).result
 
             eig_table.append([A, A.det(), cond1 + 1, cond2 + 1])
-            res_table.append([A, A.det(), sorted(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))])  # type: ignore
-            cond_table.append([A, nontriv_conds])  # type: ignore
+            res_table.append([A, A.det(), res.solution_list()])
         if self.disp == "latex" and sc_degrees:
             self.print("\\end{enumerate}")
             self.print("\\newpage")
 
-        return eig_table, res_table, cond_table, pred_sols_table
+        return eig_table, res_table

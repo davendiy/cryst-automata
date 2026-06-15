@@ -118,7 +118,7 @@ def _carthesian_wo_duplicates(*spaces):
 
 
 def standardize_sol_matrix(mtx):
-    """Standardize the solution matrix, created from """
+    """Standardize the solution matrix, created from normalizer function."""
 
     assert all(str(v).startswith('x') for v in mtx.variables()), "Bad indeterminates. All should have form x{i}"
 
