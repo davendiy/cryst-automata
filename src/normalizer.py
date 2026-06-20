@@ -136,6 +136,36 @@ def standardize_sol_matrix(mtx):
     return tmp_mtx.subs({tmp_v: v for tmp_v, v in zip(tmp_vars, sorted_vars)})
 
 
+def to_integral(mtx):
+    need_apply = set()
+
+    chained_vars = {str(v): set() for v in mtx.variables()}
+    denom = mtx.denominator()
+    new_mtx = []
+
+    for i in range(mtx.nrows()):
+        row = []
+        new_mtx.append(row)
+        for j in range(mtx.ncols()):
+            el = mtx[i, j]
+            row.append(el)
+            elv = [str(v) for v in el.variables()]
+            for v in elv:
+                chained_vars[v].update(elv)
+            if any(not el.coefficient(v).is_integer() for v in el.variables()):
+                need_apply.update(elv)
+
+    for v in chained_vars:
+        if v in need_apply:
+            need_apply.update(chained_vars[v])
+    new_mtx = matrix(new_mtx)
+    for i in range(mtx.nrows()):
+        for j in range(mtx.ncols()):
+            if any(str(v) in need_apply for v in new_mtx[i, j].variables()):
+                new_mtx[i, j] *= denom
+    return new_mtx
+
+
 # TODO: probably should rewrite as a generator
 def normalizers(P, verbose=False, use_alphabet=False, normalize_exp=True, to_matrix=True, ignore_trivial=True):
     """Find normalizer of the PointGroup in GL(n, QQ).

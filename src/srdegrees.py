@@ -553,7 +553,7 @@ class SR_Degrees:
             if g.is_one():
                 continue
             conj = (A * g * A_inv).simplify_rational()
-            assert G.in_alpha(conj)
+            assert G.in_alpha(conj), conj
 
             # condition = A * G.alpha(g) - G.alpha(conj)
             # condition = condition.simplify_rational()
@@ -584,7 +584,7 @@ class SR_Degrees:
                 continue
 
             conj = (A * g * A_inv).simplify_rational()
-            assert G.in_alpha(conj)
+            assert G.in_alpha(conj), conj
             M.extend((conj - E).rows())
             b_var.extend((A * G.alpha(g)).rows())
             b_num.extend(G.alpha(conj).rows())

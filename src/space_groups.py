@@ -23,7 +23,7 @@ from sage.all import (
     vector,
 )
 
-from .normalizer import normalizers
+from .normalizer import normalizers, to_integral
 
 MAX_ITERATIONS = 1_000_000
 
@@ -352,7 +352,9 @@ class SpaceGroup_gap:
 
         # FIXME: free variables of A shouldn't multiply on denominator (probably those which occur only once?)
         if kwargs.get('to_matrix', True) and enforce_integral:
-            return [(A * A.denominator()).simplify_rational() for A in sols]
+            return [to_integral(A) for A in sols]
+        else:
+            return sols
 
     def in_lattice_basis(self):
         """Returns whether L == ZZ^n."""

@@ -24,7 +24,7 @@ def nprint(*args, **kwargs):
     # print(*args, **kwargs, file=__f)
 
 
-def bruteforce_normalizers(folder=datafolder):
+def bruteforce_normalizers(folder=datafolder, enforce_integral=True):
     simple_found = set()
 
     for i in point_groups_representatives:
@@ -32,7 +32,7 @@ def bruteforce_normalizers(folder=datafolder):
         G = SpaceGroup_gap.from_gap_cryst(i, dim=3, change_basis=True)
 
         norm_matrices = {}
-        for A in G.point_group_normalizer():
+        for A in G.point_group_normalizer(enforce_integral=enforce_integral):
             norm_matrices[str(A)] = A
             if check_div(A):
                 continue

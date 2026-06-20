@@ -7,4 +7,4 @@ prepare_gap_env()
 
 folder = sys.argv[1]
 
-bruteforce_normalizers(folder)
+bruteforce_normalizers(folder, enforce_integral=False)
