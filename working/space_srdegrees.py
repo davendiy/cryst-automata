@@ -11,23 +11,30 @@ prepare_gap_env()
 
 # for i in [24]:
 # for i in [9]:
+# for i in [148]:
 for i in range(2, 231):
     print('\n\n')
     print(f'==================== group #{i} ======================')
     t = SR_Degrees(group_index=i, dim=3, verbose=2)
-    # for A in t.G.point_group_normalizer(enforce_integral=True):
+    # for A in t.G.point_group_normalizer(enforce_integral=False):
     for A in load_cached_normalizers(i):
         print()
         print('original A:')
         print(A)
 
+        print('\nlattice compat A:')
+        B = t.lattice_compat(A)
+        assert B.status == B.status.Success
+        B = B.result
+        print(B)
+
         if t.G.is_symmorphic():
-            print(solve_simple_mat(A))
+            print(solve_simple_mat(B).result)
             continue
 
         # t.construct_congruences_v2(A.inverse().simplify_rational(), A)
 
-        m = t.cocycle_compat_v2(A)
+        m = t.cocycle_compat_v2(B)
         if m.status == m.status.Error:
             print('no solutions')
             continue

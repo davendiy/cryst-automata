@@ -18,9 +18,10 @@ from sage.all import (
     ZZ,
 )
 from sage.categories.rings import Rings
+from .normalizer import standardize_sol_matrix
 from .space_groups import SpaceGroup_gap
 from .meta import Option, Result
-from .congruences import solve_qz_integral, solve_qz_rational
+from .congruences import solve_qz_integral, solve_qz_rational, Solution_QZ_rational
 
 
 # TODO:
@@ -531,6 +532,17 @@ class SR_Degrees:
             )
             self.print()
 
+    def lattice_compat(self, A) -> Option[matrix]:
+        left = A
+        right = matrix(QQ, [0 for _ in range(len(left.list()))]).T
+        res = self.solve_congruences_v5(left, right)
+        if res.status != res.status.Success:
+            return Option.error(res.error_msg)
+
+        ans = res.result
+        A_new = A.subs({var: exp for var, exp in zip(list(ans.base_variables), list(ans.expressions))})
+        return Option.success(standardize_sol_matrix(A_new, new_var='z'))
+
     def cocycle_compat(self, A) -> bool:
         A_inv = A.inverse().simplify_rational()
         eqs, base_vars = self.construct_congruences_v2(A_inv, A)
@@ -580,7 +592,7 @@ class SR_Degrees:
             # check on conditions of kind 1/2 = 0  mod Z
             if sc and rr != 0:
                 self.print(f'no solutions: {rr} != 0')
-                return None
+                return Option.error(f'no solutions: {rr} != 0')
 
             # check on conditions of kind 2 = 4  mod Z
             if sc and rr.is_integer():   # hope sage finds method `is_integer`
@@ -622,7 +634,7 @@ class SR_Degrees:
         self.sc_degrees()
         self.texdoc_ending()
 
-    def sc_degrees(self):
+    def sc_degrees(self) -> SC_DegreesSolution:
         self.header()
 
         G = self.G

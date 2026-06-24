@@ -117,10 +117,10 @@ def _carthesian_wo_duplicates(*spaces):
             used.remove(str(el))
 
 
-def standardize_sol_matrix(mtx):
+def standardize_sol_matrix(mtx, new_var='x'):
     """Standardize the solution matrix, created from normalizer function."""
 
-    assert all(str(v).startswith('x') for v in mtx.variables()), "Bad indeterminates. All should have form x{i}"
+    assert all(not str(v).startswith('t') for v in mtx.variables()), "Bad indeterminates. Variable ti isn't allowed"
 
     vars_seq = []
     for row in mtx:
@@ -132,7 +132,7 @@ def standardize_sol_matrix(mtx):
 
     tmp_vars = [var(f't{i}') for i in range(len(vars_seq))]
     tmp_mtx = mtx.subs({v: tmp_v for v, tmp_v in zip(vars_seq, tmp_vars)})
-    sorted_vars = [var(f'x{i}') for i in range(len(vars_seq))]
+    sorted_vars = [var(f'{new_var}{i}') for i in range(len(vars_seq))]
     return tmp_mtx.subs({tmp_v: v for tmp_v, v in zip(tmp_vars, sorted_vars)})
 
 

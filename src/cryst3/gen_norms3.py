@@ -13,7 +13,8 @@ from .common import point_groups_representatives, by_point_groups
 
 root = os.path.realpath(__file__)
 root = os.path.realpath(os.path.join(root, '../../../'))
-datafolder = os.path.join(root, 'cached_normalizers_dim3')
+datafolder_norms = os.path.join(root, 'cached_normalizers_dim3')
+datafolder_latts = os.path.join(root, 'cached_norm_lattice_dim3')
 
 
 cached_b64 = re.compile(r'######## INTERNAL_REPR #######\n(.*)\n#### END OF INTERNAL_REPR ####')
@@ -24,7 +25,7 @@ def nprint(*args, **kwargs):
     # print(*args, **kwargs, file=__f)
 
 
-def bruteforce_normalizers(folder=datafolder, enforce_integral=True):
+def bruteforce_normalizers(folder=datafolder_norms, enforce_integral=False):
     simple_found = set()
 
     # for i in [148]:
@@ -56,9 +57,12 @@ __cached = {}
 __cached_matrices = {}
 all_matrices = []
 
+__cached_lat = {}
+__cached_matrices_lat = {}
+all_lattice_matrices = []
 
 for i in point_groups_representatives:
-    filename = os.path.join(datafolder, f'norm_{i}.txt')
+    filename = os.path.join(datafolder_norms, f'norm_{i}.txt')
     if not os.path.exists(filename):
         print(f'couldnt find {filename}')
         continue
@@ -70,22 +74,39 @@ for i in point_groups_representatives:
         __cached_matrices[i] = mts
         all_matrices.extend(mts)
 
+for i in point_groups_representatives:
+    filename = os.path.join(datafolder_latts, f'norm_{i}.txt')
+    if not os.path.exists(filename):
+        print(f'couldnt find {filename}')
+        continue
+    with open(filename) as file:
+        data = file.read()
+        __cached_lat[i] = data
+        mts = [el.encode() for el in cached_b64.findall(data)]
+        mts = [loads(b64decode(el)) for el in mts]
+        __cached_matrices_lat[i] = mts
+        all_lattice_matrices.extend(mts)
 
 all_unique_matrices = list({str(el): el for el in all_matrices}.values())
+all_unique_lattice_matrices = list({str(el): el for el in all_lattice_matrices}.values())
 
 
-def load_cached_normalizers(group_num):
+def load_cached_normalizers(group_num, latt=False):
     point_group = [el[0] for el in by_point_groups if group_num in el]
     if len(point_group) != 1:
         raise ValueError(f'found {len(point_group)} point group representatives for {group_num}..')
     point_group = point_group[0]
-    matrices = __cached_matrices[point_group]
+    if latt:
+        matrices = __cached_matrices_lat[point_group]
+    else:
+        matrices = __cached_matrices[point_group]
     return matrices
 
 
-def find_groups(A):
+def find_groups(A, latt=False):
     res = []
-    for i, val in __cached.items():
+    cache = __cached_lat if latt else __cached
+    for i, val in cache.items():
         if str(A) in val:
             res.append(i)
     return res

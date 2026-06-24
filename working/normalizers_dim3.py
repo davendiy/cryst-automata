@@ -4,7 +4,7 @@ from sage.all import table, latex
 from src.space_groups import prepare_gap_env  # , check_div
 # from src.cryst3.common import cached_simple_matrices
 # from src.cryst3.all_norm3 import all_unique_matrices
-from src.cryst3.gen_norms3 import find_groups, all_unique_matrices
+from src.cryst3.gen_norms3 import find_groups, all_unique_lattice_matrices
 
 # from src.srdegrees import tau
 
@@ -43,7 +43,7 @@ for i in range(N):
     header.append('Groups')
     header.append('Matrix')
 
-matrices = [(find_groups(A), A) for A in all_unique_matrices]
+matrices = [(find_groups(A, latt=True), A) for A in all_unique_lattice_matrices]
 matrices = sorted(matrices)
 
 
