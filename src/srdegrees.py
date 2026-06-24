@@ -1,14 +1,11 @@
 import random
 
-from enum import Enum
 from dataclasses import dataclass, field
 
-from typing import Generic, TypeVar
 
 from sage.all import (
     ascii_art,
     block_matrix,
-    column_matrix,
     floor,
     latex,
     lcm,
@@ -22,29 +19,8 @@ from sage.all import (
 )
 from sage.categories.rings import Rings
 from .space_groups import SpaceGroup_gap
-
-
-T = TypeVar('T')
-
-
-class Result(Enum):
-    Success = 0
-    Error = 1
-
-
-@dataclass
-class Option(Generic[T]):
-    status: Result
-    error_msg: str
-    result: T
-
-    @classmethod
-    def error(cls, error_msg):
-        return cls(Result.Error, error_msg, None)
-
-    @classmethod
-    def success(cls, result: T):
-        return cls(Result.Success, '', result)
+from .meta import Option, Result
+from .congruences import solve_qz_integral, solve_qz_rational
 
 
 # TODO:
@@ -183,8 +159,21 @@ def _solve_simple_mat2(A) -> SolutionSimpleMatrix:
     cond1 = (A.det() + A.trace()).simplify_rational()
     cond2 = (A.det() - A.trace()).simplify_rational()
 
+    if len(A.det().variables()) > 2:
+        raise NotImplementedError
+
     det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
     det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
+
+    if isinstance(det_res1, dict):
+        det_res1 = [
+            det_res1,
+        ]
+
+    if isinstance(det_res2, dict):
+        det_res2 = [
+            det_res2,
+        ]
 
     det_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res1]
     det_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in det_res2]
@@ -243,6 +232,8 @@ def _solve_simple_mat3(A) -> SolutionSimpleMatrix:
         return SolutionSimpleMatrix([]).add_equation(A.det() == 1).add_equation(A.det() == -1)
     else:
         subA, varx = subA
+        if len(subA.det().variables()) > 2:
+            return None
         return _solve_simple_mat2(subA).add_equation(varx == 1)
 
 
@@ -254,20 +245,6 @@ def solve_simple_mat(A) -> Option[SolutionSimpleMatrix]:
         return Option.success(_solve_simple_mat3(A))
     else:
         return Option.error('not implemented for higher dimensions.')
-
-
-@dataclass
-class Solution_QZ_rational:
-    part_answer: matrix
-    lattice_basis: matrix
-    nullbasis: matrix
-
-
-@dataclass
-class Solution_QZ_integral:
-    base_variables: list
-    free_variables: list
-    expressions: list
 
 
 @dataclass
@@ -297,117 +274,6 @@ class SC_DegreesSolution:
         tmp_p = p.subs({v: tmp for v, tmp in zip(vs, tmp_vars)})
         resvars = [var(f'y{i}') for i in range(len(vs))]
         return tmp_p.subs({tmp: new_v for tmp, new_v in zip(tmp_vars, resvars)})
-
-
-def solve_qz_integral(M, b, base_variables) -> Option[Solution_QZ_integral]:
-    # in most cases there is a less common denominator
-    m = lcm(M.denominator(), b.denominator())
-
-    N_conds = M.nrows()
-
-    M_lift = matrix(ZZ, M * m)
-    b_lift = matrix(ZZ, b * m)
-
-    E = matrix.identity(ZZ, N_conds)
-
-    # transform system Mx = b mod Z into equivalent -z + Mx = b for integral z
-    # then lift it to integers by multiplying on lcm of denominators:   -mz + mMx = mb
-    M_aug = (-m * E).augment(M_lift)
-
-    try:
-        # one solution for inhomogeneous system
-        base_vec = M_aug.solve_right(b_lift, extend=False)
-    except ValueError:
-        return Option[Solution_QZ_integral].error("can't solve over integers: no part answer")
-
-    # solutions space for homogeneous system. The result solution will be base_vec + lattice
-    # Notes:
-    #     right_kernel returns echelon form of the basis vectors. We placed auxiliary variables at the beginning of
-    #     the list of variables. Therefore, the first r columns of the lattice will be the standard e1 e2 ... er vectors
-    #     and the respective first r variables will be free, which are all auxiliary variables + free base variables.
-    #
-    #     By multiplying variables*lattice we get linear combinations for all the dependent variables, which will be
-    #     our answer.
-    lattice = M_aug.right_kernel(algorithm='pari').basis_matrix()
-    aug_variables = [var(f'y{i}') for i in range(N_conds)]
-    variables = aug_variables + list(base_variables)
-
-    # exploit echelon form
-    free_n = lattice.nrows()
-    free_vars = variables[:free_n]
-    free_vars = matrix(free_vars)
-
-    # get only base variables, don't use auxiliary
-    result = (free_vars * lattice + base_vec.T)
-    result = result[0][N_conds:]
-
-    return Option[Solution_QZ_rational].success(
-        Solution_QZ_integral(
-            base_variables,
-            free_vars,
-            result,
-        )
-    )
-
-
-def solve_qz_rational(M, b) -> Option[Solution_QZ_rational]:
-    # in most cases there is a less common denominator
-    m = lcm(M.denominator(), b.denominator())
-
-    N_conds, N_vars = M.nrows(), M.ncols()
-
-    M_lift = matrix(ZZ, M * m)
-    b_lift = matrix(b * m)
-
-    S, U, V = M_lift.smith_form()
-
-    rank = 0
-    for i in range(min(N_conds, N_vars)):
-        if S[i, i] != 0:
-            rank = i+1
-    right = U * b_lift
-    for i in range(right.dimensions()[0]):
-        for j in range(right.dimensions()[1]):
-            right[i, j] = right[i, j] % m
-
-    part_answer = matrix(QQ, [0 for i in range(N_vars)]).T
-    lattice_basis = []
-    null_basis = []
-
-    # every solution for the dx = b  mod M  has the form
-    # x = b/d + nM/d, where n is arbitrary integral
-    for i in range(rank):
-        if right[i] != 0:
-            part_answer[i, 0] = right[i, 0] / S[i, i]
-
-        # the lattice nM/d
-        zv = [0 for i in range(N_vars)]
-        zv[i] = m / S[i, i]
-        lattice_basis.append(zv)
-
-    for i in range(rank, N_conds):
-        if right[i] != 0:
-            return Option[Solution_QZ_rational].error(f'no solutions: {right[i]} != 0')
-
-    # the null basis consists of all the arbitrary rational vectors which
-    # can be placed in the equations of kind 0x = 0
-    for i in range(rank, N_vars):
-        rv = [0 for i in range(N_vars)]
-        rv[i] = 1
-        null_basis.append(rv)
-
-    if lattice_basis:
-        lattice_basis = V * column_matrix(QQ, lattice_basis)
-    if null_basis:
-        null_basis = V * column_matrix(QQ, null_basis)
-
-    return Option[Solution_QZ_rational].success(
-        Solution_QZ_rational(
-            V * part_answer,
-            lattice_basis,
-            null_basis,
-        )
-    )
 
 
 class SR_Degrees:

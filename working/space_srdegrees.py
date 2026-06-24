@@ -2,7 +2,7 @@
 # from sage.all import latex
 from src.space_groups import prepare_gap_env
 
-from src.srdegrees import SR_Degrees
+from src.srdegrees import SR_Degrees, solve_simple_mat
 from src.cryst3.gen_norms3 import load_cached_normalizers
 
 
@@ -15,13 +15,14 @@ for i in range(2, 231):
     print('\n\n')
     print(f'==================== group #{i} ======================')
     t = SR_Degrees(group_index=i, dim=3, verbose=2)
-    # for A in load_cached_normalizers(i):
-    for A in t.G.point_group_normalizer(enforce_integral=True):
+    # for A in t.G.point_group_normalizer(enforce_integral=True):
+    for A in load_cached_normalizers(i):
         print()
         print('original A:')
         print(A)
 
         if t.G.is_symmorphic():
+            print(solve_simple_mat(A))
             continue
 
         # t.construct_congruences_v2(A.inverse().simplify_rational(), A)
@@ -35,4 +36,4 @@ for i in range(2, 231):
         print()
         print('det(A) =', m.result.det().simplify_rational())
         print('tr(A) =', m.result.trace().simplify_rational())
-
+        print(solve_simple_mat(m.result))

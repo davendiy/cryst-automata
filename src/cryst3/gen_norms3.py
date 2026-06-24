@@ -13,7 +13,7 @@ from .common import point_groups_representatives, by_point_groups
 
 root = os.path.realpath(__file__)
 root = os.path.realpath(os.path.join(root, '../../../'))
-datafolder = os.path.join(root, 'new_cache')
+datafolder = os.path.join(root, 'cached_normalizers_dim3')
 
 
 cached_b64 = re.compile(r'######## INTERNAL_REPR #######\n(.*)\n#### END OF INTERNAL_REPR ####')
@@ -27,6 +27,7 @@ def nprint(*args, **kwargs):
 def bruteforce_normalizers(folder=datafolder, enforce_integral=True):
     simple_found = set()
 
+    # for i in [148]:
     for i in point_groups_representatives:
         nprint(f'##################### {i} ############################')
         G = SpaceGroup_gap.from_gap_cryst(i, dim=3, change_basis=True)
