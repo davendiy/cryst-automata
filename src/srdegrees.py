@@ -233,8 +233,6 @@ def _solve_simple_mat3(A) -> SolutionSimpleMatrix:
         return SolutionSimpleMatrix([]).add_equation(A.det() == 1).add_equation(A.det() == -1)
     else:
         subA, varx = subA
-        if len(subA.det().variables()) > 2:
-            return None
         return _solve_simple_mat2(subA).add_equation(varx == 1)
 
 

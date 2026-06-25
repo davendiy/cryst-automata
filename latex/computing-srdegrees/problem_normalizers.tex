@@ -1,101 +1,71 @@
 $$ \left(\begin{array}{rrr}
-x_{0} & 0 & x_{1} \\
-0 & x_{2} & 0 \\
-x_{3} & 0 & x_{4}
+z_{0} & 0 & z_{1} \\
+0 & z_{2} & 0 \\
+z_{3} & 0 & z_{4}
 \end{array}\right) $$
 
-sub determinant: $ -x_{1} x_{3} + x_{0} x_{4} $
+sub determinant: $ -z_{1} z_{3} + z_{0} z_{4} $
 group num: [3, 6, 10]
 
 
 $$ \left(\begin{array}{rrr}
-2 \, x_{0} & 0 & -4 \, x_{1} \\
--x_{0} + x_{2} & 2 \, x_{2} & 2 \, x_{1} \\
-2 \, x_{3} & 0 & 2 \, x_{4}
+z_{0} & 0 & 2 \, z_{1} \\
+z_{2} & z_{0} + 2 \, z_{2} & -z_{1} \\
+z_{3} & 0 & z_{4}
 \end{array}\right) $$
 
-sub determinant: $ 8 \, x_{1} x_{3} + 4 \, x_{0} x_{4} $
+sub determinant: $ -2 \, z_{1} z_{3} + z_{0} z_{4} $
 group num: [5, 8, 12]
 
 
 $$ \left(\begin{array}{rrr}
-0 & x_{0} - 2 \, x_{1} & 0 \\
-x_{0} - 2 \, x_{2} & 0 & 0 \\
-x_{2} & x_{1} & x_{0}
+z_{0} & 0 & 0 \\
+z_{1} & z_{0} + 2 \, z_{1} & 0 \\
+0 & 0 & z_{2}
 \end{array}\right) $$
 
-sub determinant: $ -{\left(x_{0} - 2 \, x_{1}\right)} {\left(x_{0} - 2 \, x_{2}\right)} $
+sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $
+group num: [20, 35, 63]
+
+
+$$ \left(\begin{array}{rrr}
+z_{0} & 0 & 0 \\
+0 & z_{0} + 2 \, z_{1} & 0 \\
+z_{2} & -z_{1} + z_{2} & z_{0} + 2 \, z_{2}
+\end{array}\right) $$
+
+sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)} $
 group num: [22, 42, 69]
 
 
 $$ \left(\begin{array}{rrr}
-2 \, x_{0} & 0 & 0 \\
-2 \, x_{1} & 0 & 2 \, x_{0} + 4 \, x_{1} \\
--x_{0} + x_{2} & 2 \, x_{2} & 0
+z_{0} & 0 & 0 \\
+z_{0} + 2 \, z_{1} & z_{0} + 2 \, z_{1} & 2 \, z_{0} + 4 \, z_{1} \\
+-z_{0} - z_{1} & z_{2} & -z_{0} - 2 \, z_{1}
 \end{array}\right) $$
 
-sub determinant: $ -4 \, {\left(x_{0} + 2 \, x_{1}\right)} x_{2} $
+sub determinant: $ -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $
+group num: [22, 69]
+
+
+$$ \left(\begin{array}{rrr}
+z_{0} & 0 & 0 \\
+z_{1} & z_{0} + 2 \, z_{1} & 0 \\
+z_{2} & 0 & z_{0} + 2 \, z_{2}
+\end{array}\right) $$
+
+sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)} $
+group num: [23, 44, 71]
+
+
+$$ \left(\begin{array}{rrr}
+z_{0} & 0 & 0 \\
+z_{1} & 0 & z_{0} + 2 \, z_{1} \\
+z_{2} & z_{0} + 2 \, z_{2} & 0
+\end{array}\right) $$
+
+sub determinant: $ -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)} $
 group num: [23, 71]
 
 
-$$ \left(\begin{array}{rrr}
-x_{0} - 2 \, x_{1} & 2 \, x_{0} - 4 \, x_{1} & 0 \\
-x_{2} & -x_{0} + 2 \, x_{1} & 0 \\
-x_{1} & -x_{0} + 2 \, x_{1} & x_{0}
-\end{array}\right) $$
-
-sub determinant: $ -{\left(x_{0} - 2 \, x_{1}\right)}^{2} - 2 \, {\left(x_{0} - 2 \, x_{1}\right)} x_{2} $
-group num: [23, 44]
-
-
-$$ \left(\begin{array}{rrr}
--2 \, x_{0} + x_{1} & 0 & 0 \\
-x_{2} & -2 \, x_{0} + x_{1} + 2 \, x_{2} & 0 \\
-x_{0} & 0 & x_{1}
-\end{array}\right) $$
-
-sub determinant: $ -{\left(2 \, x_{0} - x_{1} - 2 \, x_{2}\right)} x_{1} $
-group num: [44]
-
-
-$$ \left(\begin{array}{rrr}
-2 \, x_{0} - 4 \, x_{1} & 2 \, x_{2} & 0 \\
--2 \, x_{0} + 4 \, x_{1} + x_{2} & -2 \, x_{0} + 4 \, x_{1} & 0 \\
-2 \, x_{1} & -x_{2} & 2 \, x_{0}
-\end{array}\right) $$
-
-sub determinant: $ -4 \, {\left(x_{0} - 2 \, x_{1}\right)}^{2} + 2 \, {\left(2 \, x_{0} - 4 \, x_{1} - x_{2}\right)} x_{2} $
-group num: [87]
-
-
-$$ \left(\begin{array}{rrr}
-2 \, x_{0} - 3 \, x_{1} & -3 \, x_{2} & 0 \\
--2 \, x_{0} + 3 \, x_{1} - x_{2} & -2 \, x_{0} + 3 \, x_{1} & 0 \\
-2 \, x_{1} & 2 \, x_{2} & 2 \, x_{0}
-\end{array}\right) $$
-
-sub determinant: $ -{\left(2 \, x_{0} - 3 \, x_{1}\right)}^{2} - 3 \, {\left(2 \, x_{0} - 3 \, x_{1} + x_{2}\right)} x_{2} $
-group num: [146]
-
-
-$$ \left(\begin{array}{rrr}
-2 \, x_{0} - 3 \, x_{1} & -6 \, x_{2} & 0 \\
-2 \, x_{2} & 2 \, x_{0} - 3 \, x_{1} + 6 \, x_{2} & 0 \\
-2 \, x_{1} & 4 \, x_{2} & 2 \, x_{0}
-\end{array}\right) $$
-
-sub determinant: $ {\left(2 \, x_{0} - 3 \, x_{1} + 6 \, x_{2}\right)} {\left(2 \, x_{0} - 3 \, x_{1}\right)} + 12 \, x_{2}^{2} $
-group num: [146]
-
-
-$$ \left(\begin{array}{rrr}
-2 \, x_{0} - 3 \, x_{1} & 6 \, x_{0} - 9 \, x_{1} + 6 \, x_{2} & 0 \\
-2 \, x_{2} & -2 \, x_{0} + 3 \, x_{1} & 0 \\
-2 \, x_{1} & -4 \, x_{0} + 6 \, x_{1} - 4 \, x_{2} & 2 \, x_{0}
-\end{array}\right) $$
-
-sub determinant: $ -{\left(2 \, x_{0} - 3 \, x_{1}\right)}^{2} - 6 \, {\left(2 \, x_{0} - 3 \, x_{1} + 2 \, x_{2}\right)} x_{2} $
-group num: [148]
-
-
-no solvable: 10
+no solvable: 7
