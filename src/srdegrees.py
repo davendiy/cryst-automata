@@ -271,7 +271,7 @@ class SC_DegreesSolution:
     @staticmethod
     def _standardize_poly(p):
         vs = p.variables()
-        tmp_vars = [var(f'z{i}') for i in range(len(vs))]
+        tmp_vars = [var(f't{i}') for i in range(len(vs))]
         tmp_p = p.subs({v: tmp for v, tmp in zip(vs, tmp_vars)})
         resvars = [var(f'y{i}') for i in range(len(vs))]
         return tmp_p.subs({tmp: new_v for tmp, new_v in zip(tmp_vars, resvars)})
@@ -663,11 +663,13 @@ class SR_Degrees:
             self.print(pref2 + " testing A (should have integral entities):")
             self.print(self.pref + "A = \n" + self.display(A, use_pref=False) + self.pref)
 
+            B = self.lattice_compat(A).result
+
             # A_inv = A.inverse().simplify_rational()
             if G.is_symmorphic():
-                sc_degrees.add_matrix(A)
+                sc_degrees.add_matrix(B)
             else:
-                new_a_opt = self.cocycle_compat_v2(A)
+                new_a_opt = self.cocycle_compat_v2(B)
                 if new_a_opt.status == Result.Success:
                     sc_degrees.add_matrix(new_a_opt.result)
                 else:

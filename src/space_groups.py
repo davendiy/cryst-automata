@@ -346,7 +346,7 @@ class SpaceGroup_gap:
     def in_alpha(self, sym):
         return str(sym) in self._alpha
 
-    def point_group_normalizer(self, enforce_integral=True, **kwargs):
+    def point_group_normalizer(self, enforce_integral=False, **kwargs):
         P = MatrixGroup(self.P_gens)
         sols = normalizers(P, **kwargs)
 
