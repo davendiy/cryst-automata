@@ -19,6 +19,7 @@
 
 \newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Imag}{Im}
 \DeclareMathOperator{\Dom}{Dom}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -151,11 +152,6 @@
 % 2 and 3.
 
 
-
-
-
-
-
 \section{Introduction}
 
 % самоподібні дії, їх важливість
@@ -241,34 +237,28 @@ we require three fundamental theorems:
 \end{enumerate}
 \end{theorem}
 
-% TODO: може й знадобиться
-% \begin{theorem}[Zassenhaus]
-%   A group $G$ is isomorphic to a crystallographic group of dimension $n$ if and only if $G$ has a normal,
-%   free abelian subgroup $\mathbb{Z}^n$ of finite index, which is a maximal abelian subgroup of $G$.
-% \end{theorem}
 
-
-% TODO: визначити спершу явно Point group i transllation group.
+% TODO: визначити спершу явно Point group i translation group.
 From the first Bieberbach theorem any crystallographic group $G$ defines a short exact sequence
 $$
   0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
 $$
 
-% TODO alpha -- це відображення в класи суміжності, а ми потім їх додаєм до векторів з L. Треба краще формалізувати
 where $P < GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
 $P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
 that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
 $H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
 $G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocycle $\alpha \in H^1(P, \mathbb{R}^n / L)$.
-To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and there is no
-element $m \in \mathbb{R}^n / L$ such that $\alpha(A) = Am - m$ for every $A \in P$. More details about cohomology of
+To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
+$\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
+for some $m \in \mathbb{R}^n / L$. More details about cohomology of
 groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}. 
 
 This allows us to explicitly write the structure of a group:
 $$
 G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}.
 $$
-The image of $\alpha$ is also called a \textit{System of Non-trivial Translations (SNoT)}. When it is trivial, i.e.
+When $\alpha$ is trivial, i.e.
 $\alpha(A) = 0$ for every $A \in P$, the group $G$ is isomorphic to a semi-direct product $P \ltimes L$ and is
 called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$ 
 
@@ -303,10 +293,7 @@ called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$
 
 Let $\phi : H \rightarrow G$ is a surjective virtual endomorphism. Since $H < G$ has a finite index, $H$ has
 the same Hirsch length as $G$. From this follows that the $|\text{Ker} \phi| < \infty$, which is normal subgroup
-
-
-% TODO: отут забагато повторювального тексту, треба просто сформувати спряження і поєднати з дією на гратці. Потім
-% перейти до простотиof $G$. However, the only normal finite subgroup of crystallographic group is trivial one.
+of $G$. However, the only normal finite subgroup of crystallographic group is trivial one.
 
 \end{proof}
 
@@ -351,21 +338,25 @@ We can characterize simple virtual endomorphisms for groups with integral lattic
 be a crystallographic group. An affine element $a = (A,t)$ conjugates $G$ to its subgroup $H= aGa^{-1}$ then $A$ has
 integral coefficients and $t$ is rational.
 \begin{theorem}\label{th:simpe_virt}
-  A virtual endomorpism $\phi : H \rightarrow G$, $\phi(g) = a^{-1}ga$ for $a =(A, t) \in Aff(n)$ is simple if and
+  A virtual endomorpism $\phi : H \rightarrow G$, $\phi(g) = a^{-1}ga$ for $a =(A, t) \in \mathbf{A}(n)$ is simple if and
   only if the characteristic polynomial of $A^{-1}$ is not divisible by a monic polynomial with integral coefficients.
 \end{theorem}
 
-% TODO: додати, що це серцевина тривіальна буде, + додати опис серцевини через перетин
-% TODO: називати A^{-1} simple
 It worth noting that an invertible matrix $A$ satisfying condition from the Theorem \ref{th:simpe_virt} forms a simple
 surjective virtual endomorphism on a free abelian group $\phi : A\mathbb{Z}^n \rightarrow \mathbb{Z}^n$ in a way
-$\phi(g) = A^{-1}g$. From now on we will also call such matrices \textit{simple}.
+$\phi(g) = A^{-1}g$. The maximal $\phi$-invariant normal subgroup $K(\phi)$ of $\mathbb{Z}^n$ can be
+computed as follows (see Proposition 2.9.1 in \cite{Nekrashevych:Self-similar}):
+$$
+K(\phi) = \bigcap_{n=1}^{\infty} A^n \mathbb{Z}^n
+$$
+We will call such $A^{-1}$ \textit{simple}. As a result, the statement of Theorem \ref{th:simpe_virt} can be rewritten:
+a surjective virtual endomorphism $\phi(g) = a^{-1}ga$ for $a = (A, t)$ of a crystallographic group
+$G = (P, \mathbb{Z}^n, \alpha)$ is simple if and only if $A^{-1}$ is simple as a virtual endomorphism of $\mathbb{Z}^n$.
 
 \begin{proof}
-
   Denote $L = T(H)$. We will prove that $\phi$ is simple if and only if its restriction on the tranlsation group
   $\phi|_{L} : L \rightarrow G$ is simple as virtual endomorphism of $G$. The statement of the theorem follows from this
-  combined with Theorem \ref{th:Nekrashevych-abelian}.
+  combined with Proposition 2.9.2 in \cite{Nekrashevych:Self-similar}.
 
   The $\phi|_{L}$-core is a subgroup of the $\phi$-core. Therefore, $\phi$ being simple implies $\phi|_{L}$ is simple.
 
@@ -386,43 +377,47 @@ $\phi(g) = A^{-1}g$. From now on we will also call such matrices \textit{simple}
 
 We can now make an upper bound for self-replicating degrees of crystallographic groups:
 
-\begin{corollary}
+\begin{theorem}\label{th:upper_bound}
   Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ possesses a self-replicating degree 
-  $\le (m+1)^n$, where $m$ is the least common multiplier of denominators of entries of $\alpha(B)$
-  for every $B \in P$.
-\end{corollary}
+  $\le (|P|+1)^n$.
+\end{theorem}
 
 \begin{proof}
-  % TODO: переписати
-	Since $A$ is scalar it commutes with any matrix and thus lies in the normalizer of $P$.
-	Consider $A = (m+1)E_n$ where $m = lcm \left(m_i : (B, \frac{p}{m_i}) \in G \right)$ is a least common
-  multiplier of denominators of translations from the SNoT. Then $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m}$ and
-  the only thing left to check is whether $(A, 0)G (A, 0)^{-1} \subset G$. Using multiplication rules:
+	Consider a scalar matrix $A = (m+1)E_n$ for $m = |P|$ that always commutes and therefore
+  lies in the normalizer of $P$. $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m+1}$ and
+  the only thing left to check is cocycle compatibility, i.e. whether $(A, 0)G (A, 0)^{-1} \subset G$.
+  By a fundamental theorem in the cohomology of finite groups $[m\alpha] = 0$ for
+  every $[\alpha] \in H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$ (see \cite{Brown:Cohomology}).
+  This leads to the following:
 	$$
 	\phi^{-1}((B, t)) = (A, 0) (B, t) (A, 0)^{-1} = (B, At) = (B, (m+1)t) = (B, t) + (E, mt)
 	$$
-	where $mt \in \mathbb{Z}^n$ due to the choice of $m$. As a result, $\phi^{-1}(G) < G$.
+  where $mt = m\alpha(B) + mz = mz \in \mathbb{Z}^b$ and hence $(E, mt)$ belongs to $G$.
 \end{proof}
 
-\begin{corollary}
-  Every planar group possesses a self-replicating degree $\le 9$.
+\begin{corollary} Upper bounds for self-replicating degrees of crystallographic groups:
+  \begin{itemize}
+    \item every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree $\le 2^n$.
+    \item every planar group possesses a self-replicating degree $\le 9$;
+    \item every space group possesses a self-replicating degree $\le 343$;
+  \end{itemize}
 \end{corollary}
 
 \begin{proof}
-  Every planar group $G = (P, \mathbb{Z}^2, \alpha)$ has 
-\end{proof}
+  The similar approach as in Theorem \ref{th:upper_bound} works if we choose $m$
+  as the multiple of denominators appearing in $\alpha$. In other words, every crystallographic group of dimension $n$
+  possesses a self-replicating degree $\le (m+1)^n$ for $m = l(\alpha) := lcm(m_i : \alpha(B) = \frac{p}{m_i}, B \in P)$,
+  which is less than and divides $|P|$. For symmorphic groups $l(\alpha) = 1$ by definition.
+  
+  Every planar group $G = (P, \mathbb{Z}^2, \alpha)$ has $\alpha : P \rightarrow \{0, \frac{1}{2}\}^2$,
+  therefore $l(\alpha) \le 2$ and $G$ possesses a self-replicating less than $(2 + 1)^2 = 9$.
 
-\begin{corollary}
-  Every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree $\le 2^n$.
-\end{corollary}
-
-
-
+  Every space group $G = (P, \mathbb{Z}^3, \alpha)$ can only have $l(\alpha)$ equal to
+  $1, 2, 3, 4$ or $6$ due to the crystallographic restriction theorem, resulting in $l(\alpha) \le 6$ which proves the statement.
+  \end{proof}
 
 % =====================================================================================================================
 
-
-% TODO: прибрати self-replicating actions, всюди використовувати self-replicating degree
 
 \section{Computing self-replicating degrees of crystallographic groups}\label{sec:computations}
 
@@ -447,7 +442,7 @@ $a=(A,t)\in Aff(\mathbb{Q})$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This
   \item[2)] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
   \item[3)] Cocycle compatibility: for every $B\in P$,
 \begin{equation}\label{eqn:cocycle_compatibility}
-\alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B) \ (\bmod\ \mathbb{Z}^n).
+\alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B)  \mod \mathbb{Z}^n.
 \end{equation}
 \end{enumerate}
 To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the first condition
@@ -460,7 +455,7 @@ Consider the system of linear equations over the integers
 \[
 X B = \sigma(B) X \quad \mbox{ for all $B \in P$},
 \]
-where $X \in \mathrm{Mat}_{n \times n}(\mathbb{Z})$ is the unknown matrix. The set $\mathcal{X}_\sigma$ of all
+where $X \in M_{n}(\mathbb{Z})$ is the unknown matrix. The set $\mathcal{X}_\sigma$ of all
 solutions is a finitely generated $\mathbb{Z}$-module, and there exists a finite, computable set of integral
 matrices $X_1, \dots, X_m \in \mathcal{X}_\sigma$ such that every $X \in \mathcal{X}_\sigma$ can be written as
 \begin{equation}\label{eqn:X_sum_Xi}
@@ -469,24 +464,23 @@ X = \sum_{i=1}^{m} x_i X_i, \quad x_i \in \mathbb{Z}.
 The total set $\mathcal{X}$ of matrices $A$ satisfying 1) is the union of $\mathcal{X}_\sigma$
 over all $\sigma \in \mathrm{Aut}(P)$.
 
-
-% тут ми, по суті, визначаємо розвʼязок в загальному вигляді y = y1 + L + N, де L -- скінченно-породжена ґратка, N -- nullbasis.
-% єдине що, ми ніяк не показуємо N, оскільки після підстановки в X він не буде ніяк фігурувати. Лише розвʼязок на t ми пропускаємо,
-% але по ідеї це якраз хендлиться отим самим v(sigma(B) - E) \in Z^n
 Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle
 compatibility condition. Let $\sigma \in \mathrm{Aut}(P)$ and $X\in \mathcal{X}_\sigma$ be written as the linear
 combination (\ref{eqn:X_sum_Xi}) with unknown $x_i\in\mathbb{Z}$. The equation (\ref{eqn:cocycle_compatibility})
-for the matrix $X$ can be written as a system of congruence: for every $B\in P$,
+for the matrix $X$ can be written as a system of congruence: given fixed unknown coefficients
+$x_i\in\mathbb{Z}$ and the translation vector $t\in\mathbb{Q}^n$ for all $B\in P$ the following is true
 \begin{equation}\label{eqn:cocycle_condition}
-  \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t \quad (\bmod\ \mathbb{Z}^n).
+  \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t  \mod \mathbb{Z}^n.
 \end{equation}
-in the unknown $x_i\in\mathbb{Z}$ and $t\in\mathbb{Q}^n$.
-
-Denote left part of the (\ref{eqn:cocycle_condition}) as an unknown rational vector $b \in \mathbb{Q}^n$ and
-the right part $(\sigma(B) - E)$ as an integer matrix $M$. Then we consider an auxiliary system:
+Denote left part of the (\ref{eqn:cocycle_condition}) as an unknown rational vector $b_B(x_1, \dots x_n) \in \mathbb{Q}^n$ and
+the right part $(\sigma(B) - E)$ as an integer matrix $M_B$. Combining for every $B \in P$ we get an auxiliary
+linear system:
 \begin{equation}\label{eqn:rational_t}
-  Mt = b \mod \mathbb{Z}^n
+  Mt \equiv b \mod \mathbb{Z}^n
 \end{equation}
+where $M = \begin{pmatrix} \dots \\ M_{B} \\ \dots \end{pmatrix}$ and
+$b = \begin{pmatrix} \dots \\ b_{B} \\ \dots \end{pmatrix}$ are the large matrix and vector consisting
+of stacked $M_B$ and $b_B$ respectively for every $B$ from the point group.
 
 \begin{proposition}
   The congruence system (\ref{eqn:rational_t}) is solvable in $t \in \mathbb{Q}^n$ if and only if
@@ -509,21 +503,34 @@ the right part $(\sigma(B) - E)$ as an integer matrix $M$. Then we consider an a
 \end{proof}
 
 Denote $u_i(M)$ as the i-th row of the matrix $U$ in the Smith decomposition $UMV = D$ over the ring $\mathbb{Z}$.
- 
+The proof allows us to rewrite the proposition and focus on the $u_i$, instead of checking the statement
+for every integral vector.
+
 \begin{corollary}
-  The system $Mt = b \mod \mathbb{Z}$ has a rational solution $t$ if and only if
+  The system $Mt \equiv b \mod \mathbb{Z}^n$ has a rational solution $t$ if and only if
   for every $i > r$ $u_i(M)b\in \mathbb{Z}$, where $r$ is the rank of $M$.
 \end{corollary}
 
 This gives us a constructive way to eliminate the rational $t$ from the system (\ref{eqn:cocycle_condition})
-and instead consider a finite system of linear congruences in the integral indeterminates $x_i$: for every
-$B \in P$ and $j > \text{rank}(\sigma(B) - E)$
+and instead consider a finite system of linear congruences in the integral indeterminates $x_i$:
+for $j > \text{rank}([\sigma(B) - E \, | \, B \in P]^\top)$
 \[
-\sum_{i=1}^m x_i u_j(\sigma(B) - E) X_i\alpha(B)\equiv u_j(\sigma(B) - E)\alpha(\sigma(B)) \quad (\bmod \ 1).
+u_j(M)
+\begin{pmatrix}
+  \dots \\
+  \sum_{i=1}^m x_i X_i\alpha(B) \\
+  \dots
+\end{pmatrix}
+\equiv u_j(M) \begin{pmatrix}
+  \dots \\
+  \alpha(\sigma(B)) \\
+  \dots
+\end{pmatrix}
+\mod \ 1.
 \]
-Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set
-of integral matrices $Y_0, Y_1, \dots, Y_r$. The subset $\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting
-of all matrices satisfying conditions 1)--3) is then given by
+Solving this system in general form (check \cite{Algo:Cocycle}) and substituting the solution into $X$,
+we obtain a finite, computable set of integral matrices $Y_0, Y_1, \dots, Y_r$. The subset
+$\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions 1)--3) is then given by
 \begin{equation}\label{eqn:Y_sum_Yi}
   Y = Y_0+\sum_{i=1}^{r} y_i Y_i, \quad y_i \in \mathbb{Z}.
 \end{equation}
@@ -541,21 +548,13 @@ Determining whether a given integer $d>0$ belongs to $SCD(G)$ amounts to decidin
 equation $|f_\sigma(y_1,\ldots, y_r)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem, such problems are
 undecidable for arbitrary polynomials. We do not know whether the problem is decidable in our settings:
 
-% TODO: додати тут, що в алгоритмі послідовність інакша: спершу розглядаємо матриці з X, навішуєм на них умову 3,
-% а потім вже додаєм умову на коцикли.
 
-
-% визначити чи належить d множині SCDegrees рівносильно перевірці чи лежить d в деякій ґратці L. По ідеї, солвиться
-% алгоритмом LLL
-% тіки от з нюансом, що цих ґраток буде m штук насправді, бо матриця ж не одна.
 \begin{problem}
   Let $G$ be a crystallographic group. 
 
   (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$?
    Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
 
-% з SRDegrees складніше. Треба визначити чи лежить він в ґратці і чи існує многочлен з визначником d, який не має таких власних чисел....
-% типу маючи многочлени f(lambda, x), det(x), треба побудувати МТ, яка визначатиме чи існує x з det(x) == d, та f(lambda, x) не матиме цілих власних чисел.
   (2) Is it decidable, for a given integer $d$, whether the group $G$ has a self-replicating degree $d$? Equivalently,
   does $G$ admit a self-replicating action over the alphabet of size $d$?
 \end{problem} 
@@ -565,7 +564,7 @@ Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic
 every determinant polynomial $f_\sigma$ is a quadratic form, and one can explicitly describe the set $SCD(G)$.
 The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues to a simpler arithmetic condition.
 
-\begin{proposition}
+\begin{proposition}\label{propos:planar-srdegrees}
   Let $A\in M_2(\mathbb{Z})$ and $\det(A)\neq 0$. No eigenvalue of $A^{-1}$ is an algebraic integer if and only if
    $\det(A)\neq \pm 1$ and $\det(A) \pm \operatorname{tr}(A) \neq -1$.
 \end{proposition}
@@ -588,7 +587,7 @@ The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues 
 \end{proof}
 
 The trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}) can be expressed by the
-polynomial $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characterization of $SRD(G)$:
+linear combination $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characterization of $SRD(G)$:
 \begin{align*}
   SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_r)|>1 \ : & \ \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
   & \quad ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_r)\neq -1 \big\}.
@@ -596,10 +595,22 @@ polynomial $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characteri
 Calculated matrices $\mathcal{X}$ and their subset satisfying cocycle compatibility $\mathcal{Y}$ for all the planar
 groups are given in the appendix \ref{app:all_norm_dim2}.
 
+As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
+Most of the symmetric properties and applied results for every group can be found in the
+International Tables for Crystallography \cite{CrystTables}.
+
+% TODO: замість розвʼязків просто давати пару многочленів. А потім треба дослідити чи можна оцінити мінімальні по
+% цих двох многочленах
+
+\input{table_srdegrees.tex}
+
 
 \subsection{Space Groups}\label{subsec:space}
-A similar approach is possible for reducing the condition on eigenvalues for dimension three. The result, however,
-is still a cubic diophantine equation which we should approach carefully later.
+A similar approach for describing the sets $SCD$ and $SRD$ is possible for dimension 3. Although every polynomial
+$f_\sigma$ has degree 3 and can't be solved in general case, we can exploit the matrix structure appearing in the
+normalizer. We then reduce the condition on the eigenvalues to the two-dimensional case and
+the Proposition \ref{propos:planar-srdegrees}.
+
 Let $A$ be an arbitrary $3\times 3$ integral matrix.
 $$
   A = \left(\begin{array}{rrr}
@@ -612,62 +623,66 @@ It's characteristic polynomial is written as:
 $$
   \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
 $$
+$$
+  \chi_{A^{-1}}(x)= x^3 - \frac{\tau(A)}{\det(A)}x^2 + \frac{\tr(A)}{\det(A)}x + \frac{1}{\det(A)}.
+$$
 where $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 
-% TODO: сформувати, що в другому випадку self-replicating співпадають з self-covering
-% TODO: тут не треба твердження, тут достатньо це просто описати випадки і далі все +- очевидно
-Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $A \in \mathcal{N}(P)$ be an integral matrix
-with $|\det(A)|>1$.
-Then either:
+Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
+a famility of matrices satisfying conditions 1)-3), written in the form (\ref{eqn:Y_sum_Yi})
+for a fixed automorphism $\sigma \in Aut(P)$. Writing down explicit forms of $Y$ for every $\sigma$ for every
+crystallographic group $G$ we get that either
 \begin{itemize}
-  \item $A$ is a block-triangular matrix and hence has factorizable characteristic polynomial;
-  \item $A$ is simple.
+  \item $Y$ is a block-triangular matrix;
+  \item $\tr(Y) = \tau(Y) = 0$.
 \end{itemize}
+The full list of possible matrices $X \in \mathcal{X}_\sigma$ satisfying conditions 1)-2) for every point group
+one can find in the appendix \ref{app:all_norm_dim3}. The full list of $Y \in \mathcal{Y}_\sigma$ is omitted due to the
+large variety\footnotemark[1]{}.
 
-\begin{proof}
+\footnotetext[1]{All the source code is provided on the author's Github: \href{https://github.com/davendiy/cryst-automata/}{https://github.com/davendiy/cryst-automata/}}
 
-  By direct computation we get that either $A$ is a block-triangular matrix or $\tau(A) = 0$ and $\tr(A) = 0$. We need
-  to prove that the second case leads to a simple $A$. The full list of possible matrices $\mathcal{X}$ of
-  every space group one can find in the appendix \ref{app:all_norm_dim3}.
-  
-  We can write the explicit form of $A^{-1}$ and observe the relations:
-  $$
-    \tr(A^{-1}) =  \tau(A) / \det(A)
-    \quad
-    \tau(A^{-1}) = \tr(A) / \det(A).
-  $$
-  Then, the characteristic polynomial of $A^{-1}$ can be explicitly written in terms of coefficients of $A$:
-  $$
-    \chi_{A^{-1}}(x)= x^3 - \frac{\tau(A)}{\det(A)}x^2 + \frac{\tr(A)}{\det(A)}x + \frac{1}{\det(A)}
-  $$
-  Similarly to the two-dimensional case, if $\det(A) = \pm 1$ then $\chi_{A^{-1}}(x) \in \mathbb{Z}[x]$
-  and its roots are algebraic integers. If $\det(A) \pm \tr(A) = \pm 1$ then $A^{-1}$ has an eigenvalue 1 or -1.
+% TODO: уточнити оці всі позначення через Y_sigma. Треба якось послідовно це все зробити
+Consider closer the first case. Without loss of generality, the matrix $Y$ has the following form:
+$$
+Y = \begin{pmatrix}
+  C & c \\
+  0 & p
+\end{pmatrix},
+\quad
+Y^{-1} = \begin{pmatrix}
+  C^{-1} & d \\
+  0      & \frac{1}{p}
+\end{pmatrix}
+$$
+so the determinant is the product of a linear combination $p(y_1, \dots y_r)$
+and a quadratic polynomial $q(y_1, \dots y_r) = \det(C)$. We can also explicitly write the characteristic polynomial
+of the $Y^{-1}$:
+$$
+  \chi_{Y^{-1}}(x) = \chi_{C^{-1}}(x)\left(x - \frac{1}{p}\right) =
+  \left(x^2 - \frac{\tr(C)}{\det(C)}x + \frac{1}{\det(C)}\right)\left(x - \frac{1}{p}\right)
+$$
+Note that this expression also depends on the variables $y_1, \dots y_r$.
+Now we can exploit the Proposition \ref{propos:planar-srdegrees} and write the implicit form of $SRD$
+denoting $g_\sigma(y_1, \dots y_r) := \tr(C)$:
+\begin{align*}
+  SRD = \big\{ \, |(p_\sigma*q_\sigma)(y_1, \dots y_r)|  > 1 \ :  \ p_\sigma(y_1, \dots y_r) &\neq  \pm 1 \\
+        (q_\sigma \pm g_\sigma)(y_1, \dots y_r) &\neq -1, \,  y_i \in \mathbb{Z} \, \big\}
+\end{align*}
 
-  Now, every non-factorizable matrix has $\tau(A) = 0$ and $\tr(A) = 0$. From this follows that the explicit form
-  of characteristic polynomial is further simplified:
-  $$
-    \chi_{A^{-1}}(x) = x^3 + 1/\det(A)
-  $$
-  $\chi_{A^{-1}}$ isn't divisible by a monic polynomial with integral coefficients if and only if it has no integral roots.
-  Combined with the given condition $|\det(A)| > 1$ we get that $A^{-1}$ is simple.
-\end{proof}
+The second case is even simplier. Since $\tau(Y)=\tr(Y)=0$, the characteristic polynomial of $Y^{-1}$ becomes depressed:
+\[
+  \chi_{Y^{-1}}(x) = x^3 + 1 / \det(Y)
+\]
+and it is not divisible by a monic polynomial with integral coefficients for $|\det(Y)| > 1$. As a result, the set
+of self-covering degrees equals to the set of self-replicating degrees:
+\[
+   SCD = SRD =\{ |f_\sigma(y_1,\ldots, y_r)| > 1 : y_i\in\mathbb{Z} \} 
+\]
+where $f_\sigma = \det(Y)$.
 
-% TODO: додати аналог розпису як виглядає множина SRDegrees, схоже до планарного випадку
+\subsection{Minimal degrees and algorithm limitations}
 
-
-\subsection{Algorithm formulation}
-
-\subsection{Miscellaneous}
-
-As a result, we run the proposed algorithm for every planar group and get the following self-repicating degrees.
-For shorter notation, denote $OZ := \{2k + 1 | k \in \mathbb{Z}\}$ as a set of odd integers.
-
-Most of the symmetric properties and applied results for every group can be found in the International Tables for Crystallography \cite{CrystTables}.
-
-% TODO: замість розвʼязків просто давати пару многочленів. А потім треба дослідити чи можна оцінити мінімальні по
-% цих двох многочленах
-
-\input{table_srdegrees.tex}
 
 \begin{table}[H]
 \begin{footnotesize}
@@ -710,6 +725,8 @@ $f(x_1, \cdots x_n) = 1$ in minor determinant. These minors don't appear in case
 
 % ==============================================================================================
 \newpage
+
+% TODO: розписати один приклад повністю, а інші навести з використанням таблиці
 \section{Examples}
 \subsection{Planar Group 7 p2mg}
 

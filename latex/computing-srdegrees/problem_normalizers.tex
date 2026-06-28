@@ -18,25 +18,6 @@ sub determinant: $ -2 \, z_{1} z_{3} + z_{0} z_{4} $
 group num: [5, 8, 12]
 
 
-$$ \left(\begin{array}{rrr}
-z_{0} & 0 & 0 \\
-z_{1} & z_{0} + 2 \, z_{1} & 0 \\
-0 & 0 & z_{2}
-\end{array}\right) $$
-
-sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $
-group num: [20, 35, 63]
-
-
-$$ \left(\begin{array}{rrr}
-z_{0} & 0 & 0 \\
-0 & z_{0} + 2 \, z_{1} & 0 \\
-z_{2} & -z_{1} + z_{2} & z_{0} + 2 \, z_{2}
-\end{array}\right) $$
-
-sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)} $
-group num: [22, 42, 69]
-
 
 $$ \left(\begin{array}{rrr}
 z_{0} & 0 & 0 \\
@@ -50,16 +31,6 @@ group num: [22, 69]
 
 $$ \left(\begin{array}{rrr}
 z_{0} & 0 & 0 \\
-z_{1} & z_{0} + 2 \, z_{1} & 0 \\
-z_{2} & 0 & z_{0} + 2 \, z_{2}
-\end{array}\right) $$
-
-sub determinant: $ {\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)} $
-group num: [23, 44, 71]
-
-
-$$ \left(\begin{array}{rrr}
-z_{0} & 0 & 0 \\
 z_{1} & 0 & z_{0} + 2 \, z_{1} \\
 z_{2} & z_{0} + 2 \, z_{2} & 0
 \end{array}\right) $$
@@ -68,4 +39,4 @@ sub determinant: $ -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\
 group num: [23, 71]
 
 
-no solvable: 7
+no solvable: 4
