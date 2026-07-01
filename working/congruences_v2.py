@@ -25,7 +25,7 @@ for i in [4, 7, 8, 12]:
 
         print('----------------answer----------------')
         res = t.solve_congruences_v5(left, right)
-        if res.status == res.status.Success:
+        if not res.failed:
             ans = res.result
             A_new = A.subs({var: exp for var, exp in zip(list(ans.base_variables), list(ans.expressions))})
             print('result matrix:')
@@ -60,7 +60,7 @@ for i in [9, 11]:        # , 13, 21, 24, 64, 149]:
 
         print('----------------answer----------------')
         res = t.solve_congruences_v5(left, right)
-        if res.status == res.status.Success:
+        if not res.failed:
             ans = res.result
             A_new = A.subs({var: exp for var, exp in zip(list(ans.base_variables), list(ans.expressions))})
             print('result matrix:')

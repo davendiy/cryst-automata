@@ -20,7 +20,7 @@ from sage.all import (
 from sage.categories.rings import Rings
 from .normalizer import standardize_sol_matrix
 from .space_groups import SpaceGroup_gap
-from .meta import Option, Result
+from .meta import Option
 from .congruences import solve_qz_integral, solve_qz_rational, Solution_QZ_rational
 
 
@@ -471,8 +471,10 @@ class SR_Degrees:
         res_right = ui * b_num
         return res_left, res_right
 
-    def solve_congruences_v5(self, left, right):
-        base_variables = left.variables()
+    def solve_congruences_v5(self, left, right, base_variables=None):
+        if base_variables is None:
+            base_variables = left.variables()
+
         M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in left.list()])
         return solve_qz_integral(M, right, base_variables)
 
@@ -534,7 +536,7 @@ class SR_Degrees:
         left = A
         right = matrix(QQ, [0 for _ in range(len(left.list()))]).T
         res = self.solve_congruences_v5(left, right)
-        if res.status != res.status.Success:
+        if res.failed:
             return Option.error(res.error_msg)
 
         ans = res.result
@@ -545,20 +547,20 @@ class SR_Degrees:
         A_inv = A.inverse().simplify_rational()
         eqs, base_vars = self.construct_congruences_v2(A_inv, A)
         ans = self.solve_congruences_v4(eqs, base_vars, list())
-        return ans.status == ans.status.Success
+        return not ans.failed
 
     def cocycle_compat_v2(self, A) -> Option[matrix]:
         A_inv = A.inverse().simplify_rational()
         left, right = self.construct_congruences_v3(A_inv, A)
         self.print('congruence system:')
         self.print(self.display(left, right, use_pref=True, sep='='))
-        res = self.solve_congruences_v5(left, right)
-        if res.status != res.status.Success:
+        res = self.solve_congruences_v5(left, right, base_variables=A.variables())
+        if res.failed:
             return Option.error(res.error_msg)
 
         ans = res.result
         A_new = A.subs({var: exp for var, exp in zip(list(ans.base_variables), list(ans.expressions))})
-        return Option.success(A_new)
+        return Option.success(standardize_sol_matrix(A_new, new_var='y'))
 
     def print_large_mtx(self, mtx):
         rows = mtx.nrows()
@@ -603,8 +605,8 @@ class SR_Degrees:
         M = matrix(QQ, [[cond.coefficient(v) for v in base_variables] for cond in cleared_conds])
         # f = matrix(base_variables).T
 
-        N_conds = len(cleared_conds)
-        N_vars = len(base_variables)
+        # N_conds = len(cleared_conds)
+        # N_vars = len(base_variables)
         # f_prox = matrix([var(f"y{i}") for i in range(len(base_variables))])
 
         # compute -f(0, ... 0) to get equations' free part b in Ax = b mod Z
@@ -625,7 +627,7 @@ class SR_Degrees:
 
         m = lcm(M.denominator(), b.denominator())
         assert (m_bound % m) == 0
-        return solve_qz_rational(M, b, N_conds, N_vars)
+        return solve_qz_rational(M, b)
 
     def generate_texdoc(self):
         self.texdoc_header()
@@ -665,10 +667,10 @@ class SR_Degrees:
 
             # A_inv = A.inverse().simplify_rational()
             if G.is_symmorphic():
-                sc_degrees.add_matrix(B)
+                sc_degrees.add_matrix(standardize_sol_matrix(B, 'y'))
             else:
                 new_a_opt = self.cocycle_compat_v2(B)
-                if new_a_opt.status == Result.Success:
+                if not new_a_opt.failed:
                     sc_degrees.add_matrix(new_a_opt.result)
                 else:
                     self.print('not compatible with cocycle.')

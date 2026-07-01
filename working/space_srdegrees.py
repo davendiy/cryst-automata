@@ -24,7 +24,7 @@ for i in range(2, 231):
 
         print('\nlattice compat A:')
         B = t.lattice_compat(A)
-        assert B.status == B.status.Success
+        assert not B.failed
         B = B.result
         print(B)
 
@@ -35,7 +35,7 @@ for i in range(2, 231):
         # t.construct_congruences_v2(A.inverse().simplify_rational(), A)
 
         m = t.cocycle_compat_v2(B)
-        if m.status == m.status.Error:
+        if m.failed:
             print('no solutions')
             continue
         print('cocycle compat A:')

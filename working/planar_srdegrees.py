@@ -31,28 +31,39 @@ for n in range(2, 18):
     eig_table = table(eig_table, header_row=True, frame=True)
 
     smaller_table = set()
+    used_polys = set()
     for el in res_table[1:]:
 
         if (el_n := len(el[1].variables())) > 1:    # type: ignore
             degree = f"^{el_n}"
             lp = '('
             rp = ')'
+            var = '(' + ','.join(latex(v) for v in el[1].variables()) + ')'
         else:
             lp = rp = ''
             degree = ''
+            var = latex(el[1].variables()[0])
 
-        field = r'\mathbb{Z}^2'
-        # (x_1, x_2) \in Z^2
-        inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field  # type: ignore
-        # {(x_1, x_2) \in Z^2}
-        inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
+        if latex(el[1]) in used_polys:
+            continue
+
+        # field = r'\mathbb{Z}^2'
+        # # (x_1, x_2) \in Z^2
+        # inz = lp + ",".join([latex(_x) for _x in el[1].variables()]) + rp + sr.in_sym + ' ' + field  # type: ignore
+        # # {(x_1, x_2) \in Z^2}
+        # inz = r"\left\{" + latex(el[1]) + r'\, | \,' + inz + r'\right\}'
+
+        inz = latex(el[1].abs())
+
+        used_polys.add(latex(el[1]))
+        used_polys.add(latex(-el[1]))
 
         if not el[2]:
             smaller_table.add(("$" + inz + "$", ""))
             continue
 
         # / {(-1, 1), (1, 1), (0, 0)}
-        new_arr = r"\left\{"
+        new_arr = var + r'\notin' + r"\left\{"
         new_arr += ','.join(latex(uncover(tuple(sol))) for sol in el[2])
         new_arr += r'\right\}'
         el[2] = "$" + new_arr + "$"

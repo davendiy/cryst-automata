@@ -16,7 +16,7 @@ def unwrap(row):
     return res
 
 
-headers = (r'\textbf{ITA num}', r'$A \in \mathcal{X}$', r'$\det{A}$', r'$A \in \mathcal{Y}$')
+headers = (r'\textbf{ITA num}', r'$A \in \mathcal{Y}$', r'$\det{A}$')
 table_end = r'\end{tabular}'
 cur_t = []
 first_i = 1
@@ -26,8 +26,19 @@ for i in range(1, 18):
 
     for A in G.point_group_normalizer():
         # TODO: add check whether A forms virtual endomorphism
-        compat = '+' if t.cocycle_compat(A) else ''
-        cur_t.append((r'\textbf{' + str(i) + '}', A, A.det().simplify_rational(), compat))
+        # compat = '+' if t.cocycle_compat(A) else ''
+
+        l_compat = t.lattice_compat(A)
+        if l_compat.failed:
+            continue
+
+        # print(l_compat.result)
+        c_compat = t.cocycle_compat_v2(l_compat.result)
+        if c_compat.failed:
+            continue
+
+        C = c_compat.result
+        cur_t.append((r'\textbf{' + str(i) + '}', C, C.det()))
 
     if i in [10, 15, 17]:
 
