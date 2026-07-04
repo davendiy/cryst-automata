@@ -260,13 +260,12 @@ G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}.
 $$
 When $\alpha$ is trivial, i.e.
 $\alpha(A) = 0$ for every $A \in P$, the group $G$ is isomorphic to a semi-direct product $P \ltimes L$ and is
-called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$ 
+called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$, denote $\Pi(G) := P$ and $T(G) := L$.
 
 \begin{proposition}(Properties of crystallographic groups)
  \begin{itemize}
     \item A normal subgroup of a crystallographic group is infinite or trivial.
     \item A subgroup of finite index of a crystallographic group is also crystallographic.
-    \item  
  \end{itemize}
 
 \end{proposition}
@@ -297,19 +296,10 @@ of $G$. However, the only normal finite subgroup of crystallographic group is tr
 
 \end{proof}
 
-% TODO: отут забагато повторювального тексту, треба просто сформувати спряження і поєднати з дією на гратці. Потім
-% перейти до простоти
-A surjective simple virtual endomorphism of crystallographic group is an isomorphism from its subgroup to itself. Then,
-by the Bieberbach theorem, for every surjective virtual endomorphism $\phi : H \rightarrow G$
-of a crystallographic group $G$ there exists an
+By the Bieberbach theorem and Lemma \ref{th:surjection-is-bijection},
+for every surjective virtual endomorphism $\phi : H \rightarrow G$ of a crystallographic group $G$ there exists an
 affine element $(A, t) \in \mathbf{A}(n)$ such that $\phi(g) = (A, t)^{-1}g(A, t)$ and $H = \phi^{-1}(G) = (A, t)G(A, t)^{-1}$.
-
-Let us investigate the structure of surjective virtual endomorphisms on crystallographic groups, deriving from
-the theorem \ref{th:surjection-is-bijection}.
-Consider a crystallographic group $G = (P, L, \alpha)$, its isomorphic subgroup of finite index $H < G$
-and a virtual endomorphism $\phi : H \rightarrow G$ which is given by $\phi(g) = (A, t)^{-1}g(A, t)$.
-For the sake of simplicity, denote $\Pi(G) := P$ and $T(G) := L$.
-The action of $G$ on the generators of $T(G)$ is reduced to a linear operator:
+The action of $\phi$ on the generators of $T(G)$ is reduced to a linear operator:
 \begin{equation}
   (A, t)(E, e_i)(A, t)^{-1} = (E, Ae_i + t - AA^{-1}t) = (E, At). \label{eq:trans_gens}
 \end{equation}
@@ -599,8 +589,6 @@ As a result, we run the proposed algorithm for every planar group and get the fo
 Most of the symmetric properties and applied results for every group can be found in the
 International Tables for Crystallography \cite{CrystTables}.
 
-% TODO: замість розвʼязків просто давати пару многочленів. А потім треба дослідити чи можна оцінити мінімальні по
-% цих двох многочленах
 
 \input{table_srdegrees.tex}
 
@@ -916,5 +904,9 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 
 \input{table_normalizers_dim3.tex}
 
+\newpage
+
+\section{SCD and SRD for space groups}
+\input{space_polynoms.tex}
 
 \end{document}
