@@ -118,7 +118,7 @@ class SolutionSimpleMatrix:
         return sorted(self.except_values)
 
 
-def _solve_simple_mat2(A) -> SolutionSimpleMatrix:
+def _solve_simple_mat2(A) -> Option[SolutionSimpleMatrix]:
     """Given matrix of integral indeterminates A, find when it forms a simple virtual endomorphism
     of Z^n, using Nekrashevych theorem.
 
@@ -161,7 +161,7 @@ def _solve_simple_mat2(A) -> SolutionSimpleMatrix:
     cond2 = (A.det() - A.trace()).simplify_rational()
 
     if len(A.det().variables()) > 2:
-        raise NotImplementedError
+        return Option.error('cant solve for more than 2 variables')
 
     det_res1 = solve_diophantine(A.det() - 1, A.det().variables(), solution_dict=True)
     det_res2 = solve_diophantine(A.det() + 1, A.det().variables(), solution_dict=True)
@@ -195,7 +195,9 @@ def _solve_simple_mat2(A) -> SolutionSimpleMatrix:
     eig_res1 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res1]
     eig_res2 = [tuple([val for _, val in sorted(sol.items())]) for sol in eig_res2]
 
-    return SolutionSimpleMatrix(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))
+    return Option.success(
+        SolutionSimpleMatrix(list(set(det_res1 + det_res2 + eig_res1 + eig_res2)))
+    )
 
 
 def _subminor(A: matrix, i):
@@ -224,24 +226,31 @@ def _tau(y0, y1, y2, y3, y4, y5, y6, y7, y8):
     return y0 * y4 + y0 * y8 + y4 * y8 - y1 * y3 - y2 * y6 - y5 * y7
 
 
-def _solve_simple_mat3(A) -> SolutionSimpleMatrix:
+def _solve_simple_mat3(A) -> Option[SolutionSimpleMatrix]:
     subA = factorize(A)
     # case of permutational matrix
     if subA is None:
         if not A.trace() == 0 or not tau(A) == 0:
             raise ValueError("something went wrong, this shouldn't be like that")
-        return SolutionSimpleMatrix([]).add_equation(A.det() == 1).add_equation(A.det() == -1)
+        return Option.success(
+            SolutionSimpleMatrix([]).add_equation(A.det() == 1).add_equation(A.det() == -1)
+        )
     else:
         subA, varx = subA
-        return _solve_simple_mat2(subA).add_equation(varx == 1)
+        res = _solve_simple_mat2(subA)
+        if res.failed:
+            return res
+        else:
+            res.result.add_equation(varx == 1)
+            return res
 
 
 def solve_simple_mat(A) -> Option[SolutionSimpleMatrix]:
     assert len(list(A)) == len(list(A[0]))
     if len(list(A)) == 2:
-        return Option.success(_solve_simple_mat2(A))
+        return _solve_simple_mat2(A)
     elif len(list(A)) == 3:
-        return Option.success(_solve_simple_mat3(A))
+        return _solve_simple_mat3(A)
     else:
         return Option.error('not implemented for higher dimensions.')
 
