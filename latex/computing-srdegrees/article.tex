@@ -158,7 +158,7 @@
 % self-covering degrees
 % некрашевич придумав як працювати з самоподібними діями через віртуальні ендоморфізми
 % кожна кристалографічна є віртуально абелевою і тому є самоподібною, але незрозуміло чи є рекурентною
-% 
+%
 
 Crystallographic groups describe symmetries of repeated patterns of an $n$-dimensional space. They were known for
 several centuries in case of $n=2$, though the complete list was only given in 1891 by Fedorov. In general, they appeared
@@ -189,10 +189,10 @@ index $d$. Self-similar groups can be viewed as the iterated monodromy groups of
 plane. % TODO: more details of self-covering
 
 Virtual endomorphisms were used to analyze self-similarity for a wide range of groups: free abelian groups,
-finitely generated nilpotent groups, solvable groups, wreath products of abelian groups and so on. 
+finitely generated nilpotent groups, solvable groups, wreath products of abelian groups and so on.
 Despite every virtual abelian group is self-similar (\cite{Abelian}), and therefore every crystallographic as well,
 not every one is self-replicating. As an example, consider $G = \mathbb{Z}_2 \times \mathbb{Z}$ as a counterexample
-due to \cite{Sidki}. 
+due to \cite{Sidki}.
 
 % TODO: minimal srdegrees, examples, appendix
 In this paper we will investigate the way virtual endomorphisms appear on crystallographic groups and how they connect to
@@ -210,41 +210,74 @@ For the space groups we will provide an algorithm to compute sets $SCD$ and $SRD
 
 
 % TODO: переписать
-We consider crystallographic groups from the group theoretical perspective, more can be found in \cite{Szcz:CrystBook}.
+%We consider crystallographic groups from the group theoretical perspective, more can be found in \cite{Szcz:CrystBook}.
 
-Let $\mathbf{A}(n)$ be a group of affine transformations and $\mathbf{E}(n)$ a group of isometries of
-$\mathbb{R}^n$ respectively. It's easy to show that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$.
-We will use the semi-direct product as the standard representation: for every two elements $(A, a), (B, b) \in \mathbf{A}(n)$
-where $A, B \in GL_n(\mathbb{R})$ and $a, b \in \mathbb{R}^n$ the product is defined by the rule $(A, a)(B, b) = (AB, Ab + a)$. 
+
+%Let $\mathbf{A}(n)$ be the group of affine transformations and $\mathbf{E}(n)$ a group of isometries of
+%$\mathbb{R}^n$ respectively. It's easy to show that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$.
+%We will use the semi-direct product as the standard representation: for every two elements $(A, a), (B, b) \in \mathbf{A}(n)$
+%where $A, B \in GL_n(\mathbb{R})$ and $a, b \in \mathbb{R}^n$ the product is defined by the rule $(A, a)(B, b) = (AB, Ab + a)$.
+%
+%\begin{definition}
+%  A \textit{crystallographic group} is a discrete cocompact subgroup of $\mathbf{E}(n)$.
+%\end{definition}
+
+%The definition on its own gives little information of the internal structure of a crystallographic group. To work with it we require three fundamental theorems:
+
+% TODO: визначити спершу явно Point group i translation group.
+%By the Bieberbach theorems, any crystallographic group $G$ fits into a short exact sequence
+%\[
+%0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
+%\]
+%where $L\simeq\mathbb{Z}^n$ is the translation subgroup (or lattice) of $G$, and $P$ is a finite subgroup of $GL_n(\mathbb{R})$, called the \emph{point group} of $G$.
+%
+%
+%where $P\le GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
+%$P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
+%that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
+%$H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
+%$G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocycle $\alpha \in H^1(P, \mathbb{R}^n / L)$.
+%To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
+%$\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
+%for some $m \in \mathbb{R}^n / L$. More details about cohomology of
+%groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}.
+
+We briefly recall the necessary background on crystallographic groups; a detailed exposition can be found in \cite{Szcz:CrystBook}.
+
+Let $\mathbf{A}(n)$ denote the group of affine transformations of $\mathbb{R}^n$, and let $\mathbf{E}(n)\le \mathbf{A}(n)$ denote the group of Euclidean isometries. The group $\mathbf{A}(n)$ admits the decomposition
+$\mathbf{A}(n)=GL_n(\mathbb{R})\ltimes \mathbb{R}^n$, and every element can be written in the form $(A,a)$, where $A\in GL_n(\mathbb{R})$ and $a\in\mathbb{R}^n$; the multiplication is given by
+\[
+(A,a)(B,b)=(AB,Ab+a).
+\]
 
 \begin{definition}
-  A \textit{crystallographic group} is a discrete cocompact subgroup of $\mathbf{E}(n)$.
+A \emph{crystallographic group} of dimension $n$ is a discrete cocompact subgroup of $\mathbf{E}(n)$.
 \end{definition}
 
-The definition on its own gives little information of the internal structure of a crystallographic group. To work with it
-we require three fundamental theorems:
 
-\begin{theorem}[Bieberbach, 1910]
+The algebraic structure of crystallographic groups is described by the following classical theorems of Bieberbach.
+
+\begin{theorem}[Bieberbach]
 \begin{enumerate}
-  \item If $G \subset \mathbf{E}(n)$ is a crystallographic group, then the set of translations
-  $G \cap (I \times \mathbb{R}^n)$ is a torsion free and finitely generated abelian group of rank $n$, and
-  is a maximal abelian and normal subgroup of finite index.
+  \item Let $G\le\mathbf{E}(n)$ be a crystallographic group. Then the subgroup of translations
+  $G \cap (I \times \mathbb{R}^n)$ is a free abelian group of rank $n$, and it
+  is a maximal abelian normal subgroup of finite index in $G$.
 
   \item Two crystallographic groups of dimension $n$ are isomorphic if and only if they are conjugate
   in the affine group $\mathbf{A}(n)$.
 
-  \item For any $n\in\mathbb{N}$ there are only finite number of isomorphism classes of crystallographic groups of dimension $n$.
+  \item For every $n\in\mathbb{N}$, there exist only finitely many isomorphism classes of crystallographic groups of dimension $n$.
 \end{enumerate}
 \end{theorem}
 
+By the Bieberbach theorems, any crystallographic group $G$ fits into a short exact sequence
+\[
+0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
+\]
+where $L\simeq\mathbb{Z}^n$ is the translation subgroup (or lattice) of $G$, and $P$ is a finite subgroup of $GL_n(\mathbb{R})$, called the \emph{point group} of $G$.
 
-% TODO: визначити спершу явно Point group i translation group.
-From the first Bieberbach theorem any crystallographic group $G$ defines a short exact sequence
-$$
-  0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
-$$
 
-where $P < GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
+where $P\le GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
 $P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
 that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
 $H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
@@ -252,7 +285,7 @@ $G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocy
 To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
 $\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
 for some $m \in \mathbb{R}^n / L$. More details about cohomology of
-groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}. 
+groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}.
 
 This allows us to explicitly write the structure of a group:
 $$
@@ -320,7 +353,7 @@ we also need to inspect the simplicity.
 % \begin{proof}
 %   We should only prove that $H = (P, L', \alpha)$, i.e. that $H$ is defined by the same 1-cocycle $\alpha' = \alpha$
 %   and $L' = H \cap L = AL$.
-%   \textbf{TODO}. 
+%   \textbf{TODO}.
 % \end{proof}
 
 
@@ -368,21 +401,21 @@ $G = (P, \mathbb{Z}^n, \alpha)$ is simple if and only if $A^{-1}$ is simple as a
 We can now make an upper bound for self-replicating degrees of crystallographic groups:
 
 \begin{theorem}\label{th:upper_bound}
-  Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ possesses a self-replicating degree 
+  Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ possesses a self-replicating degree
   $\le (|P|+1)^n$.
 \end{theorem}
 
 \begin{proof}
 	Consider a scalar matrix $A = (m+1)E_n$ for $m = |P|$ that always commutes and therefore
-  lies in the normalizer of $P$. $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m+1}$ and
-  the only thing left to check is cocycle compatibility, i.e. whether $(A, 0)G (A, 0)^{-1} \subset G$.
+  lies in the normalizer of $P$. $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m+1}$ and hence is simple for $m>1$.
+  We only have to show the cocycle compatibility, i.e. whether $(A, 0)G (A, 0)^{-1} \subset G$.
   By a fundamental theorem in the cohomology of finite groups $[m\alpha] = 0$ for
   every $[\alpha] \in H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$ (see \cite{Brown:Cohomology}).
   This leads to the following:
 	$$
 	\phi^{-1}((B, t)) = (A, 0) (B, t) (A, 0)^{-1} = (B, At) = (B, (m+1)t) = (B, t) + (E, mt)
 	$$
-  where $mt = m\alpha(B) + mz = mz \in \mathbb{Z}^b$ and hence $(E, mt)$ belongs to $G$.
+  where $mt = m\alpha(B) + mz = mz \in \mathbb{Z}^n$ and hence $(E, mt)$ belongs to $G$.
 \end{proof}
 
 \begin{corollary} Upper bounds for self-replicating degrees of crystallographic groups:
@@ -398,7 +431,7 @@ We can now make an upper bound for self-replicating degrees of crystallographic 
   as the multiple of denominators appearing in $\alpha$. In other words, every crystallographic group of dimension $n$
   possesses a self-replicating degree $\le (m+1)^n$ for $m = l(\alpha) := lcm(m_i : \alpha(B) = \frac{p}{m_i}, B \in P)$,
   which is less than and divides $|P|$. For symmorphic groups $l(\alpha) = 1$ by definition.
-  
+
   Every planar group $G = (P, \mathbb{Z}^2, \alpha)$ has $\alpha : P \rightarrow \{0, \frac{1}{2}\}^2$,
   therefore $l(\alpha) \le 2$ and $G$ possesses a self-replicating less than $(2 + 1)^2 = 9$.
 
@@ -540,14 +573,14 @@ undecidable for arbitrary polynomials. We do not know whether the problem is dec
 
 
 \begin{problem}
-  Let $G$ be a crystallographic group. 
+  Let $G$ be a crystallographic group.
 
   (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$?
    Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
 
   (2) Is it decidable, for a given integer $d$, whether the group $G$ has a self-replicating degree $d$? Equivalently,
   does $G$ admit a self-replicating action over the alphabet of size $d$?
-\end{problem} 
+\end{problem}
 
 \subsection{Planar groups}\label{subsec:planar}
 Next we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in dimension two. In this case,
@@ -565,7 +598,7 @@ The case of $SRD(G)$ is more subtle; we reduce the condition on the eigenvalues 
   \chi_A(x)&=x^2-\tr(A) x + \det(A)\in\mathbb{Z}[x],\\
   \chi_{A^{-1}}(x)&=x^2-\frac{\tr(A)}{\det(A)} x + \frac{1}{\det(A)}\in\mathbb{Q}[x].
   \end{align*}
-  If $\det(A)=\pm 1$, then $\chi_{A^{-1}}(x)\in\mathbb{Z}[x]$ and its roots are algebraic integers. If $\det(A) \pm \tr(A) = -1$, then $A^{-1}$ has an eigenvalue $1$ or $-1$. 
+  If $\det(A)=\pm 1$, then $\chi_{A^{-1}}(x)\in\mathbb{Z}[x]$ and its roots are algebraic integers. If $\det(A) \pm \tr(A) = -1$, then $A^{-1}$ has an eigenvalue $1$ or $-1$.
 
   Conversely, assume $\chi_{A^{-1}}(x)$ is divisible by a monic polynomial $p(x)\in\mathbb{Z}[x]$. If $\deg p(x)=2$,
   then $p(x)=\chi_{A^{-1}}(x)$ and $\det(A)=\pm 1$. If $\deg p(x)=1$ and $p(x)=x-a$, then $a$ is an integer eigenvalue
@@ -589,13 +622,15 @@ As a result, we run the proposed algorithm for every planar group and get the fo
 Most of the symmetric properties and applied results for every group can be found in the
 International Tables for Crystallography \cite{CrystTables}.
 
+% TODO: замість розвʼязків просто давати пару многочленів. А потім треба дослідити чи можна оцінити мінімальні по
+% цих двох многочленах
 
 \input{table_srdegrees.tex}
 
 
 \subsection{Space Groups}\label{subsec:space}
 A similar approach for describing the sets $SCD$ and $SRD$ is possible for dimension 3. Although every polynomial
-$f_\sigma$ has degree 3 and can't be solved in general case, we can exploit the matrix structure appearing in the
+$f_\sigma$ has degree 3 and can not be solved in general case, we can exploit the matrix structure appearing in the
 normalizer. We then reduce the condition on the eigenvalues to the two-dimensional case and
 the Proposition \ref{propos:planar-srdegrees}.
 
@@ -607,7 +642,7 @@ $$
   x_{6} & x_{7} & x_{8}
   \end{array}\right)
 $$
-It's characteristic polynomial is written as:
+Its characteristic polynomial is written as:
 $$
   \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
 $$
@@ -617,7 +652,7 @@ $$
 where $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 
 Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
-a famility of matrices satisfying conditions 1)-3), written in the form (\ref{eqn:Y_sum_Yi})
+a family of matrices satisfying conditions 1)-3), written in the form (\ref{eqn:Y_sum_Yi})
 for a fixed automorphism $\sigma \in Aut(P)$. Writing down explicit forms of $Y$ for every $\sigma$ for every
 crystallographic group $G$ we get that either
 \begin{itemize}
@@ -665,7 +700,7 @@ The second case is even simplier. Since $\tau(Y)=\tr(Y)=0$, the characteristic p
 and it is not divisible by a monic polynomial with integral coefficients for $|\det(Y)| > 1$. As a result, the set
 of self-covering degrees equals to the set of self-replicating degrees:
 \[
-   SCD = SRD =\{ |f_\sigma(y_1,\ldots, y_r)| > 1 : y_i\in\mathbb{Z} \} 
+   SCD = SRD =\{ |f_\sigma(y_1,\ldots, y_r)| > 1 : y_i\in\mathbb{Z} \}
 \]
 where $f_\sigma = \det(Y)$.
 
@@ -706,7 +741,7 @@ Group 17 p6mm & 3           & 3            & + & $3 y_0^2$ \\
 
 Unfortunately, the proposed algorithm struggle to automatically check simplicity for every matrix in dimension 3.
 There are 17 unique block diagonal matrices, which involve problematic polynomial to solve diophantine equation
-$f(x_1, \cdots x_n) = 1$ in minor determinant. These minors don't appear in case of dimension 2.
+$f(x_1, \cdots x_n) = 1$ in minor determinant. These minors do not appear in case of dimension 2.
 
 \input{problem_normalizers.tex}
 
@@ -739,7 +774,7 @@ x_{0} & 0 \\
 0 & x_{1}
 \end{array} \right) \quad   \,  x_0,x_1 \in \mathbb{Q}^*$$
 
-Solving the system of congruences from 2) we obtain that for $A_1$ system doesn't have solutions.
+Solving the system of congruences from 2) we obtain that for $A_1$ system does not have solutions.
 
 For the $A_2$ we get that $x_0$ should be odd integral, and $x_1$ integral.
 
