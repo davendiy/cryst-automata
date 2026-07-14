@@ -208,59 +208,24 @@ For the space groups we will provide an algorithm to compute sets $SCD$ and $SRD
 
 \section{Crystallographic groups}\label{sec:cryst}
 
-
-% TODO: переписать
-%We consider crystallographic groups from the group theoretical perspective, more can be found in \cite{Szcz:CrystBook}.
-
-
-%Let $\mathbf{A}(n)$ be the group of affine transformations and $\mathbf{E}(n)$ a group of isometries of
-%$\mathbb{R}^n$ respectively. It's easy to show that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$.
-%We will use the semi-direct product as the standard representation: for every two elements $(A, a), (B, b) \in \mathbf{A}(n)$
-%where $A, B \in GL_n(\mathbb{R})$ and $a, b \in \mathbb{R}^n$ the product is defined by the rule $(A, a)(B, b) = (AB, Ab + a)$.
-%
-%\begin{definition}
-%  A \textit{crystallographic group} is a discrete cocompact subgroup of $\mathbf{E}(n)$.
-%\end{definition}
-
-%The definition on its own gives little information of the internal structure of a crystallographic group. To work with it we require three fundamental theorems:
-
-% TODO: визначити спершу явно Point group i translation group.
-%By the Bieberbach theorems, any crystallographic group $G$ fits into a short exact sequence
-%\[
-%0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
-%\]
-%where $L\simeq\mathbb{Z}^n$ is the translation subgroup (or lattice) of $G$, and $P$ is a finite subgroup of $GL_n(\mathbb{R})$, called the \emph{point group} of $G$.
-%
-%
-%where $P\le GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
-%$P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
-%that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
-%$H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
-%$G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocycle $\alpha \in H^1(P, \mathbb{R}^n / L)$.
-%To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
-%$\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
-%for some $m \in \mathbb{R}^n / L$. More details about cohomology of
-%groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}.
-
 We briefly recall the necessary background on crystallographic groups; a detailed exposition can be found in \cite{Szcz:CrystBook}.
 
 Let $\mathbf{A}(n)$ denote the group of affine transformations of $\mathbb{R}^n$, and let $\mathbf{E}(n)\le \mathbf{A}(n)$ denote the group of Euclidean isometries. The group $\mathbf{A}(n)$ admits the decomposition
-$\mathbf{A}(n)=GL_n(\mathbb{R})\ltimes \mathbb{R}^n$, and every element can be written in the form $(A,a)$, where $A\in GL_n(\mathbb{R})$ and $a\in\mathbb{R}^n$; the multiplication is given by
+$\mathbf{A}(n)=GL_n(\mathbb{R})\ltimes \mathbb{R}^n$, and every element can be written in the form $(A,a)$, where $A\in GL_n(\mathbb{R})$ and $a\in\mathbb{R}^n$. The group operation is given by
 \[
 (A,a)(B,b)=(AB,Ab+a).
 \]
 
 \begin{definition}
-A \emph{crystallographic group} of dimension $n$ is a discrete cocompact subgroup of $\mathbf{E}(n)$.
+A \emph{crystallographic group} of dimension $n$ is a discrete cocompact subgroup of $\mathbf{E}(n)$. Crystallographic groups of dimension $2$ are called \emph{planar groups}, and those of dimension $3$ are called \emph{space groups}.
 \end{definition}
-
 
 The algebraic structure of crystallographic groups is described by the following classical theorems of Bieberbach.
 
 \begin{theorem}[Bieberbach]
 \begin{enumerate}
   \item Let $G\le\mathbf{E}(n)$ be a crystallographic group. Then the subgroup of translations
-  $G \cap (I \times \mathbb{R}^n)$ is a free abelian group of rank $n$, and it
+  $G \cap (E \times \mathbb{R}^n)$ is a free abelian group of rank $n$, and it
   is a maximal abelian normal subgroup of finite index in $G$.
 
   \item Two crystallographic groups of dimension $n$ are isomorphic if and only if they are conjugate
@@ -270,174 +235,129 @@ The algebraic structure of crystallographic groups is described by the following
 \end{enumerate}
 \end{theorem}
 
-By the Bieberbach theorems, any crystallographic group $G$ fits into a short exact sequence
+For a crystallographic group $G$, its \emph{translation subgroup} is $T(G)=G \cap (E \times \mathbb{R}^n)$, and the corresponding subgroup $L(G)=\{v\in\mathbb{R}^n : (E,v)\in T(G)\}\cong T(G)$ is called the \emph{translation lattice} of $G$. The \emph{point group} $P(G)$ is the image of $G$ under the natural projection onto $GL_n(\mathbb{R})$.
+By the Bieberbach theorems, there is a short exact sequence
 \[
 0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
 \]
-where $L\simeq\mathbb{Z}^n$ is the translation subgroup (or lattice) of $G$, and $P$ is a finite subgroup of $GL_n(\mathbb{R})$, called the \emph{point group} of $G$.
+where $L=L(G)\cong\mathbb{Z}^n$ and $P=P(G)$ is a finite subgroup of $GL_n(\mathbb{R})$. 
 
-
-where $P\le GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
-$P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
-that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
-$H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
-$G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocycle $\alpha \in H^1(P, \mathbb{R}^n / L)$.
-To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
-$\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
-for some $m \in \mathbb{R}^n / L$. More details about cohomology of
-groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}.
-
-This allows us to explicitly write the structure of a group:
+Conversely, given a finite subgroup $P\le GL_n(\mathbb{R})$ and a $P$-invariant lattice $L\le\mathbb{R}^n$, the crystallographic groups fitting this sequence are classified by the cohomology group
+$H^1(P, \mathbb{R}^n / L) \cong H^2(P, L)$. Thus, an arbitrary crystallographic group can be represented as a triple
+$G = (P, L, \alpha)$, where $\alpha \in H^1(P, \mathbb{R}^n / L)$, that is, $\alpha : P \rightarrow \mathbb{R}^n / L$ satisfies $\alpha(AB) = \alpha(A) + A\alpha(B)$. Two cocycles $\alpha$ and
+$\alpha'$ represent the same cohomology class if they differ by a $1$-coboundary, meaning $\alpha'(A) = \alpha(A) + Am - m$ for some $m \in \mathbb{R}^n / L$. Choosing representatives of $\alpha(A)$ in $\mathbb{R}^n$ for $A\in P$, the elements of $G$ admit explicit representation:
 $$
 G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}.
 $$
-When $\alpha$ is trivial, i.e.
-$\alpha(A) = 0$ for every $A \in P$, the group $G$ is isomorphic to a semi-direct product $P \ltimes L$ and is
-called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$, denote $\Pi(G) := P$ and $T(G) := L$.
+If $\alpha$ is trivial, i.e.
+$\alpha(A) = 0$ for every $A \in P$, the group $G$ is isomorphic to the semidirect product $P \ltimes L$ and is
+called \textit{symmorphic}.
+More details on group cohomology and its applications to crystallographic groups can be found in \cite{Szcz:CrystBook,Brown:Cohomology}.
 
-\begin{proposition}(Properties of crystallographic groups)
- \begin{itemize}
-    \item A normal subgroup of a crystallographic group is infinite or trivial.
-    \item A subgroup of finite index of a crystallographic group is also crystallographic.
- \end{itemize}
+The following properties of crystallographic groups will be used in what follows.
 
-\end{proposition}
+\begin{lemma}\label{lemma:norm_cryst}
+Every normal subgroup of a crystallographic group is either trivial or infinite.
+\end{lemma}
+
+\begin{lemma}\label{lemma:fisubgroup_cryst}
+Every finite-index subgroup of a crystallographic group is crystallographic.
+\end{lemma}
+
 
 \begin{lemma}\label{lemma:equal_index}
-  Let $G$ be a crystallographic group and $H<G$ be a subgroup isomorphic to $G$.
-  Then $T(H)=T(G)\cap H$ and $[G:H] = [T(G):T(H)]$.
+Let $G$ be a crystallographic group and $H\le G$ be a subgroup isomorphic to $G$.
+Then $T(H)=T(G)\cap H$ and $[G:H] = [T(G):T(H)]$.
 \end{lemma}
 \begin{proof}
-  The equality $T(H)=H\cap T(G)$ holds by the definition of the translation subgroup. Since $G$ and $H$ are isomorphic,
-  they have the same point groups. Then the subgroup $HT(G)$ contains all translations and linear parts of $G$, and
-  therefore $HT(G)=G$. We can apply the second isomorphism theorem to the subgroups $H$ and $T(G)$, and get $[H:T(H)]=[G:T(G)]$.
-  The index of $T(H)$ in $G$ can be expressed in two ways as
-  \[
-  [G:T(H)]=[G:H][H:T(H)]=[G:T(G)][T(G):T(H)].
-  \]
-  The equality $[G:H] = [T(G):T(H)]$ follows.
+The equality $T(H)=H\cap T(G)$ follows directly from the definition of the translation subgroup. Since $G$ and $H$ are isomorphic, the Bieberbach theorem implies that $P(G)\cong P(H)$. On the other hand, $P(H)\le P(G)$ and hence $P(H)=P(G)$. Then $[H:T(H)]=|P(H)|=|P(G)|=[G:T(G)]$. The index of $T(H)$ in $G$ can be expressed in two ways as
+\[
+[G:T(H)]=[G:H][H:T(H)]=[G:T(G)][T(G):T(H)].
+\]
+The equality $[G:H] = [T(G):T(H)]$ follows.
 \end{proof}
 
 \begin{lemma}\label{th:surjection-is-bijection}
-  If a virtual endomorphism of a crystallographic group is surjective, then it is an isomorphism.
+Let $G$ be a crystallographic group, $H\le G$ a subgroup of finite index, and $\phi:H\rightarrow G$ a surjective homomorphism. Then $\phi$ is an isomorphism.
 \end{lemma}
 \begin{proof}
-
-Let $\phi : H \rightarrow G$ is a surjective virtual endomorphism. Since $H < G$ has a finite index, $H$ has
-the same Hirsch length as $G$. From this follows that the $|\text{Ker} \phi| < \infty$, which is normal subgroup
-of $G$. However, the only normal finite subgroup of crystallographic group is trivial one.
-
+Let $h(\cdot)$ denote the Hirsch length of a group, and let $K$ be the kernel of $\phi$. Since $\phi$ is surjective, $h(H)=h(G)+h(K)$. As $H\le G$ has finite index, $h(H)=h(G)$. Hence, $h(K)=0$, and therefore $K$ is finite. Since $K$ is a normal subgroup of $H$ and $H$ is crystallographic by Lemma~\ref{lemma:fisubgroup_cryst}, Lemma~\ref{lemma:norm_cryst} implies $K$ is trivial. Hence $\phi$ is injective, and therefore an isomorphism.
 \end{proof}
 
-By the Bieberbach theorem and Lemma \ref{th:surjection-is-bijection},
-for every surjective virtual endomorphism $\phi : H \rightarrow G$ of a crystallographic group $G$ there exists an
-affine element $(A, t) \in \mathbf{A}(n)$ such that $\phi(g) = (A, t)^{-1}g(A, t)$ and $H = \phi^{-1}(G) = (A, t)G(A, t)^{-1}$.
-The action of $\phi$ on the generators of $T(G)$ is reduced to a linear operator:
-\begin{equation}
-  (A, t)(E, e_i)(A, t)^{-1} = (E, Ae_i + t - AA^{-1}t) = (E, At). \label{eq:trans_gens}
-\end{equation}
+By the Bieberbach theorem and Lemma~\ref{th:surjection-is-bijection},
+every surjective virtual endomorphism $\phi: H \rightarrow G$ of a crystallographic group $G$ is induced by conjugation with an affine element $(A, t) \in \mathbf{A}(n)$:
+\[
+\phi(g) = (A, t)^{-1}g(A, t)  \ \mbox{ for } \ h\in H = (A, t)G(A, t)^{-1}.
+\] 
+The action of $\phi$ on the translation subgroup $T(H)$ is determined by the linear part $A$:
+\[
+\phi(E,v)=(A, t)^{-1}(E,v)(A, t)=(E,A^{-1}v) \ \mbox{ for } \ (E,v)\in H.
+\]
+It follows that $L(H) = AL(G)\le L(G)$, and by Lemma~\ref{lemma:equal_index},
+\[
+[G:H]=[T(G):T(H)]=[L(G):L(H)]=[L(G):AL(G)]=|\det(A)|.
+\]
+Therefore, the set of self-covering degrees coincides with the set of absolute values of determinants of matrices occurring as linear parts of surjective virtual endomorphisms. To determine the self-replicating degrees, it remains to analyze the simplicity condition.
 
-From the lemma \ref{lemma:equal_index} and the equation (\ref{eq:trans_gens}) follows that $T(H) = AT(G) < T(G)$
-and its index equals to the $|\det(A)|$. As a result, the set of self-covering degrees consists of determinants
-of applicable matrices as linear parts of surjective virtual endomorphisms. To derive self-replicating degrees
-we also need to inspect the simplicity.
-
-
-% \begin{corollary}
-%   For a crystallographic group $G = (P, L, \alpha)$ its isomorphic subgroup $H$ can be explicitly written as
-%   $$
-%     H = \{ (B, \alpha'(B) + t) \,|\, B \in P, \, t \in AL \},
-%   $$
-%   for some matrix $A$.
-% \end{corollary}
-% \begin{proof}
-%   We should only prove that $H = (P, L', \alpha)$, i.e. that $H$ is defined by the same 1-cocycle $\alpha' = \alpha$
-%   and $L' = H \cap L = AL$.
-%   \textbf{TODO}.
-% \end{proof}
-
-
-We can characterize simple virtual endomorphisms for groups with integral lattice. Let $G = (P, \mathbb{Z}^n, \alpha)$
-be a crystallographic group. An affine element $a = (A,t)$ conjugates $G$ to its subgroup $H= aGa^{-1}$ then $A$ has
-integral coefficients and $t$ is rational.
+%We next characterize simple virtual endomorphisms for crystallographic groups with translation lattice $\mathbb{Z}^n$. 
 \begin{theorem}\label{th:simpe_virt}
-  A virtual endomorpism $\phi : H \rightarrow G$, $\phi(g) = a^{-1}ga$ for $a =(A, t) \in \mathbf{A}(n)$ is simple if and
-  only if the characteristic polynomial of $A^{-1}$ is not divisible by a monic polynomial with integral coefficients.
+Let $G\le\mathbf{A}(n)$ be a crystallographic group, and let $a = (A,t)\in \mathbf{A}(n)$ be such that $aGa^{-1}\le G$. Consider the virtual endomorphism $\phi: H=aGa^{-1}\rightarrow G$ defined by $\phi(g) = a^{-1}ga$. Then $\phi$ is simple if and only if no eigenvalue of $A^{-1}$ is an algebraic integer (equivalently, the characteristic polynomial of $A^{-1}$ is not divisible by a non-constant monic polynomial with integral coefficients).
 \end{theorem}
-
-It worth noting that an invertible matrix $A$ satisfying condition from the Theorem \ref{th:simpe_virt} forms a simple
-surjective virtual endomorphism on a free abelian group $\phi : A\mathbb{Z}^n \rightarrow \mathbb{Z}^n$ in a way
-$\phi(g) = A^{-1}g$. The maximal $\phi$-invariant normal subgroup $K(\phi)$ of $\mathbb{Z}^n$ can be
-computed as follows (see Proposition 2.9.1 in \cite{Nekrashevych:Self-similar}):
-$$
-K(\phi) = \bigcap_{n=1}^{\infty} A^n \mathbb{Z}^n
-$$
-We will call such $A^{-1}$ \textit{simple}. As a result, the statement of Theorem \ref{th:simpe_virt} can be rewritten:
-a surjective virtual endomorphism $\phi(g) = a^{-1}ga$ for $a = (A, t)$ of a crystallographic group
-$G = (P, \mathbb{Z}^n, \alpha)$ is simple if and only if $A^{-1}$ is simple as a virtual endomorphism of $\mathbb{Z}^n$.
-
 \begin{proof}
-  Denote $L = T(H)$. We will prove that $\phi$ is simple if and only if its restriction on the tranlsation group
-  $\phi|_{L} : L \rightarrow G$ is simple as virtual endomorphism of $G$. The statement of the theorem follows from this
-  combined with Proposition 2.9.2 in \cite{Nekrashevych:Self-similar}.
+We may assume that the translation lattice of $G$ is $\mathbb{Z}^n$.
+Since $aGa^{-1}\le G$, we have $A\mathbb{Z}^n\leq\mathbb{Z}^n$, and hence $A$ has integer entries. Consider the virtual endomorphism $\psi:A\mathbb{Z}^n\rightarrow\mathbb{Z}^n$, $\psi(v)=A^{-1}v$, of the group $\mathbb{Z}^n$, which is the restriction of $\phi$ to the translation lattice. By Proposition~2.9.1 of \cite{Nekrashevych:Self-similar}, the maximal $\psi$-invariant subgroup of $\mathbb{Z}^n$ is given by
+\[
+K(\psi) = \bigcap_{m=1}^{\infty} A^m \mathbb{Z}^n.
+\]
+By Proposition~2.9.2 of \cite{Nekrashevych:Self-similar}, $K(\psi)=\{0\}$ if and only if
+$A^{-1}$ has no eigenvalues that are algebraic integers. It remains to show that $\phi$ is simple if and only if $K(\psi)=\{0\}$.
 
-  The $\phi|_{L}$-core is a subgroup of the $\phi$-core. Therefore, $\phi$ being simple implies $\phi|_{L}$ is simple.
+Assume that $K(\psi)\neq\{0\}$. Since $aGa^{-1}\leq G$, the linear part $A$ commutes with the point group $P$ of $G$, that is, $AP=PA$. Hence each subgroup $A^m\mathbb{Z}^n$ is $P$-invariant, and therefore so is $K(\psi)$. Since $P$-invariant subgroups of the translation lattice give rise to normal subgroups of $G$, the subgroup $E\times K(\psi)$ is a nontrivial  normal subgroups of $G$. Moreover, $E\times K(\psi)$ is $\phi$-invariant by construction. Therefore, $\phi$ is not simple.
 
-  Conversely, assume that the $\phi$-core $K$ is nontrivial. Since crystallographic groups do not contain finite normal subgroups,
-  $K$ is infinite and contains translations. For every $m\in\mathbb{N}$, the subgroup $K_m=\langle a^{m}, a\in K\rangle$
-  is nontrivial, normal in $G$, and $\phi$-invariant. Taking $m = lcm(order(B) \, | \, B \in P)$ we have $a^{m}\in L$
-  for every $a\in G$. Hence, $K_m\leq L$ and belongs to the $\phi|_{L}$-core. And it is not empty since $K$ contains translations.
-
+Conversely, let $K$ be a nontrivial normal $\phi$-invariant subgroup of $G$. By Lemma~\ref{lemma:fisubgroup_cryst}, $K$ is infinite and therefore contains a nontrivial translation. Let $m=\operatorname{lcm}\{\operatorname{ord}(B) : B\in P\}$. Then $g^{m}\in T(G)$ for every $g\in G$. Consider the subgroup $K_m=\langle g^{m}, g\in K\rangle\le T(G)$. Since $K$ is nontrivial, normal in $G$, and $\phi$-invariant, it follows that $K_m$ is also nontrivial, normal in $G$, and $\phi$-invariant. Identifying $K_m$ with the corresponding subgroup of the translation lattice, we obtain a nontrivial $\psi$-invariant subgroup of $\mathbb{Z}^n$. Hence
+$K_m\le K(\psi)$, and therefore $K(\psi)\neq{0}$, which completes the proof.
 \end{proof}
 
 \begin{corollary}
-  % TODO: додати що таке self-covering -- це самонакриття, вони не завжди є self-replicating.
-  A positive integer $d \ge 2$ is a self-replicating degree of crystallographic group $G$ if and only if
-  there exists $a=(A, t)$ with $|\det(A)| = d$ such that $aGa^{-1} \le G$ and
-  the characteristic polynomial of $A^{-1}$ is not divisible by a monic polynomial with integral coefficients.
+An integer $d \ge 2$ is a self-replicating degree of a crystallographic group $G\le \mathbf{A}(n)$ if and only if
+there exists $a=(A,t)\in\mathbf{A}(n)$ with $|\det(A)| = d$ such that $aGa^{-1} \le G$ and
+no eigenvalue of $A^{-1}$ is an algebraic integer.
 \end{corollary}
 
 
-We can now make an upper bound for self-replicating degrees of crystallographic groups:
+We now obtain an upper bound for self-replicating degrees of crystallographic groups.
 
-\begin{theorem}\label{th:upper_bound}
-  Every crystallographic group $G = (P, \mathbb{Z}^n, \alpha)$ possesses a self-replicating degree
-  $\le (|P|+1)^n$.
-\end{theorem}
-
+\begin{corollary}\label{cor:upper_bound}
+Let $G$ be a crystallographic group of dimension $n$ with point group $P$. Then $G$ has a self-replicating degree at most $(|P|+1)^n$.
+\end{corollary}
 \begin{proof}
-	Consider a scalar matrix $A = (m+1)E_n$ for $m = |P|$ that always commutes and therefore
-  lies in the normalizer of $P$. $A^{-1}$ has one eigenvalue $\lambda = \frac{1}{m+1}$ and hence is simple for $m>1$.
-  We only have to show the cocycle compatibility, i.e. whether $(A, 0)G (A, 0)^{-1} \subset G$.
-  By a fundamental theorem in the cohomology of finite groups $[m\alpha] = 0$ for
-  every $[\alpha] \in H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$ (see \cite{Brown:Cohomology}).
-  This leads to the following:
-	$$
-	\phi^{-1}((B, t)) = (A, 0) (B, t) (A, 0)^{-1} = (B, At) = (B, (m+1)t) = (B, t) + (E, mt)
-	$$
-  where $mt = m\alpha(B) + mz = mz \in \mathbb{Z}^n$ and hence $(E, mt)$ belongs to $G$.
+We may assume that the translation lattice of $G$ is $\mathbb{Z}^n$.
+Let $m$ be any positive integer that annihilates the defining 1-cocycle $[\alpha] \in H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$ of $G$, meaning $mv \in \mathbb{Z}^n$ for all $(B,v) \in G$. Note that $m = |P|$ always satisfies this property by standard group cohomology (see \cite{Brown:Cohomology}).
+
+Define the scalar matrix $A = (m+1)E$ and the affine transformation $a = (A, 0)$. Conjugating an arbitrary element $(B, v) \in G$ by $a$ gives:
+$$ a (B, v) a^{-1} = (B, Av) = (B, (m+1)v) = (B, v)(E, mv) $$.
+Since $mv \in \mathbb{Z}^n$, the term $(E, mv)$ is a lattice translation, implying $aGa^{-1} \le G$. The unique eigenvalue of $A^{-1}$ is $\frac{1}{m+1}$, which is not an algebraic integer, making $\det(A) = (m+1)^n$ a valid self-replicating degree.
 \end{proof}
 
-\begin{corollary} Upper bounds for self-replicating degrees of crystallographic groups:
-  \begin{itemize}
-    \item every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree $\le 2^n$.
-    \item every planar group possesses a self-replicating degree $\le 9$;
-    \item every space group possesses a self-replicating degree $\le 343$;
-  \end{itemize}
+%Put $m=|P|$ and define the scalar matrix $A=(m+1)E$. The unique eigenvalue $\frac{1}{m+1}$ of $A^{-1}$ is not an algebraic integer. Put $a=(A,0)$ and let us show that $aGa^{-1}\le G$.
+%By a fundamental theorem in the cohomology of finite groups (see \cite{Brown:Cohomology}), multiplication by $m$ annihilates the cohomology group $H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$. Thus, $m[\alpha]=0$ for the defining $1$-cocycle $\alpha$ of $G$. Consequently, $mv\in\mathbb{Z}^n$ for every $(B,v)\in G$. We have:
+%\[
+%(A, 0) (B, v) (A, 0)^{-1} = (B, Av) = (B, (m+1)v) = (B, v)\cdot (E, mv),
+%\]
+%which belongs to $G$. Therefore, $aGa^{-1}\le G$ and $\det(A)=(m+1)^n$ is a self-replicating degree of $G$.
+
+\begin{corollary} 
+  \begin{enumerate}
+    \item Every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree at most $2^n$.
+    \item Every planar group possesses a self-replicating degree at most $9$.
+    \item Every space group possesses a self-replicating degree at most $343$.
+  \end{enumerate}
 \end{corollary}
-
 \begin{proof}
-  The similar approach as in Theorem \ref{th:upper_bound} works if we choose $m$
-  as the multiple of denominators appearing in $\alpha$. In other words, every crystallographic group of dimension $n$
-  possesses a self-replicating degree $\le (m+1)^n$ for $m = l(\alpha) := lcm(m_i : \alpha(B) = \frac{p}{m_i}, B \in P)$,
-  which is less than and divides $|P|$. For symmorphic groups $l(\alpha) = 1$ by definition.
+For a symmorphic crystallographic group, the defining cocycle is trivial. Hence the proof of Corollary~\ref{cor:upper_bound} applies with $m=1$, yielding a self-replicating degree at most $2^n$.
 
-  Every planar group $G = (P, \mathbb{Z}^2, \alpha)$ has $\alpha : P \rightarrow \{0, \frac{1}{2}\}^2$,
-  therefore $l(\alpha) \le 2$ and $G$ possesses a self-replicating less than $(2 + 1)^2 = 9$.
-
-  Every space group $G = (P, \mathbb{Z}^3, \alpha)$ can only have $l(\alpha)$ equal to
-  $1, 2, 3, 4$ or $6$ due to the crystallographic restriction theorem, resulting in $l(\alpha) \le 6$ which proves the statement.
-  \end{proof}
+For planar groups, the defining cocycle is annihilated by $m=2$, yielding a degree at most $(2+1)^2 = 9$. For space groups, the cocycle is annihilated by $m=6$, yielding a degree at most $(6+1)^3 = 343$.
+\end{proof}
 
 % =====================================================================================================================
 
@@ -945,3 +865,78 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 \input{space_polynoms.tex}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% TODO: переписать
+%We consider crystallographic groups from the group theoretical perspective, more can be found in \cite{Szcz:CrystBook}.
+
+
+%Let $\mathbf{A}(n)$ be the group of affine transformations and $\mathbf{E}(n)$ a group of isometries of
+%$\mathbb{R}^n$ respectively. It's easy to show that $\mathbf{E}(n) < \mathbf{A}(n) = GL_n(\mathbb{R}) \ltimes \mathbb{R}^n$.
+%We will use the semi-direct product as the standard representation: for every two elements $(A, a), (B, b) \in \mathbf{A}(n)$
+%where $A, B \in GL_n(\mathbb{R})$ and $a, b \in \mathbb{R}^n$ the product is defined by the rule $(A, a)(B, b) = (AB, Ab + a)$.
+%
+%\begin{definition}
+%  A \textit{crystallographic group} is a discrete cocompact subgroup of $\mathbf{E}(n)$.
+%\end{definition}
+
+%The definition on its own gives little information of the internal structure of a crystallographic group. To work with it we require three fundamental theorems:
+
+% TODO: визначити спершу явно Point group i translation group.
+%By the Bieberbach theorems, any crystallographic group $G$ fits into a short exact sequence
+%\[
+%0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
+%\]
+%where $L\simeq\mathbb{Z}^n$ is the translation subgroup (or lattice) of $G$, and $P$ is a finite subgroup of $GL_n(\mathbb{R})$, called the \emph{point group} of $G$.
+%
+%
+%where $P\le GL_n(\mathbb{R})$ is a \textit{crystallographic point group}, and $L \simeq \mathbb{Z}^n$ is a
+%$P$-invariant \textit{lattice} or \textit{translation group}. Conversely, there is a bunch of crystallographic groups
+%that satisfy the given short exact sequence and are completely defined by elements of the cohomology group
+%$H^1(P, \mathbb{R}^n / L) \simeq H^2(P, L)$. As a result, an arbitrary crystallographic group can be represented as a triple
+%$G = (P, L, \alpha)$ where $\alpha : P \rightarrow \mathbb{R}^n / L$ is a 1-cocycle $\alpha \in H^1(P, \mathbb{R}^n / L)$.
+%To put simply, $\alpha$ is a map with property $\alpha(AB) = \alpha(A) + A\alpha(B)$ and two maps $\alpha$ and
+%$\alpha'$ represent the same element if they differ by a coboundary $\alpha'(A) = \alpha(A) + Am - m$
+%for some $m \in \mathbb{R}^n / L$. More details about cohomology of
+%groups and its application in crystallography one can find in \cite{Szcz:CrystBook} and \cite{Brown:Cohomology}.
+
+%This allows us to explicitly write the structure of a group:
+%$$
+%G = \{ (A, \alpha(A) + t) \,|\, A \in P, \, t \in L \}.
+%$$
+%When $\alpha$ is trivial, i.e.
+%$\alpha(A) = 0$ for every $A \in P$, the group $G$ is isomorphic to a semi-direct product $P \ltimes L$ and is
+%called \textit{symmorphic}. Given a crystallographic group $G = (P, L, \alpha)$, denote $\Pi(G) := P$ and $T(G) := L$.
+
+%\begin{lemma}\label{lemma:equal_index}
+%  Let $G$ be a crystallographic group and $H\le G$ be a subgroup isomorphic to $G$.
+%  Then $T(H)=T(G)\cap H$ and $[G:H] = [T(G):T(H)]$.
+%\end{lemma}
+%\begin{proof}
+%  The equality $T(H)=H\cap T(G)$ holds by the definition of the translation subgroup. Since $G$ and $H$ are isomorphic,
+%  they have the same point groups. Then the subgroup $HT(G)$ contains all translations and linear parts of $G$, and
+%  therefore $HT(G)=G$. We can apply the second isomorphism theorem to the subgroups $H$ and $T(G)$, and get $[H:T(H)]=[G:T(G)]$.
+%  The index of $T(H)$ in $G$ can be expressed in two ways as
+%  \[
+%  [G:T(H)]=[G:H][H:T(H)]=[G:T(G)][T(G):T(H)].
+%  \]
+%  The equality $[G:H] = [T(G):T(H)]$ follows.
+%\end{proof}
