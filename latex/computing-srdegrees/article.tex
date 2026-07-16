@@ -198,8 +198,8 @@ due to \cite{Sidki}.
 In this paper we will investigate the way virtual endomorphisms appear on crystallographic groups and how they connect to
 linear maps on the integral lattices. We will prove in the section \ref{sec:cryst} that every crystallographic group
 is self-replicating and provide the criterion when the surjective virtual endomorphisms are simple.
-We will use it to describe self-covering and self-replicating degrees of the plane groups in section \ref{subsec:planar}.
-For the space groups we will provide an algorithm to compute sets $SCD$ and $SRD$ in section \ref{subsec:space}.
+We will use it to describe self-covering and self-replicating degrees of the plane groups in section \ref{sec:planar}.
+For the space groups we will provide an algorithm to compute sets $SCD$ and $SRD$ in section \ref{sec:space}.
 
 
 
@@ -374,14 +374,13 @@ From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as de
 
 \vspace{0.2cm}
 
-\subsection{Computing self-covering degrees.}
 Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$.
 A positive integer $d$ belongs to $SCD(G)$ if and only if there exists an affine transformation
 $a=(A,t)\in Aff(\mathbb{Q})$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This condition splits into three parts:
 \begin{enumerate}
-  \item[1)] Point group compatibility: $APA^{-1}=P$.
-  \item[2)] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
-  \item[3)] Cocycle compatibility: for every $B\in P$,
+  \item[(PC)] Point group compatibility: $APA^{-1}=P$.
+  \item[(LC)] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
+  \item[(CC)] Cocycle compatibility: for every $B\in P$,
 \begin{equation}\label{eqn:cocycle_compatibility}
 \alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B)  \mod \mathbb{Z}^n.
 \end{equation}
@@ -402,7 +401,7 @@ matrices $X_1, \dots, X_m \in \mathcal{X}_\sigma$ such that every $X \in \mathca
 \begin{equation}\label{eqn:X_sum_Xi}
 X = \sum_{i=1}^{m} x_i X_i, \quad x_i \in \mathbb{Z}.
 \end{equation}
-The total set $\mathcal{X}$ of matrices $A$ satisfying 1) is the union of $\mathcal{X}_\sigma$
+The total set $\mathcal{X}$ of matrices $A$ satisfying (PC) is the union of $\mathcal{X}_\sigma$
 over all $\sigma \in \mathrm{Aut}(P)$.
 
 Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle
@@ -461,7 +460,7 @@ $b_B(x_1, \dots x_m) = \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B))$:
 \]
 Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set of
 integral matrices $Y_0, Y_1, \dots, Y_r$. The subset
-$\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions 1)--3) is then given by
+$\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions (PC)--(CC) is then given by
 \begin{equation}\label{eqn:Y_sum_Yi}
   Y = Y_0+\sum_{i=1}^{r} y_i Y_i, \quad y_i \in \mathbb{Z}.
 \end{equation}
@@ -493,11 +492,15 @@ undecidable for arbitrary polynomials. We do not know whether the problem is dec
   does $G$ admit a self-replicating action over the alphabet of size $d$?
 \end{problem}
 
-\subsection{Planar groups}\label{subsec:planar}
+
+
+\section{Planar groups}\label{sec:planar}
+
+\subsection{Self-replicating degrees criterion}
 In this section we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in the dimension two.
 A determinant of the unknown $2\times2$ matrix $f_\sigma$ is a quadratic form of $4$ or less variables and, in general
 case, is a complex object to determine values over integrals. The explicit computation of matrices $\mathcal{X}$
-satisfying condition 1) reveals that for the most planar groups the determinant $f_\sigma$ is a quadratic polynomial
+satisfying condition (PC) reveals that for the most planar groups the determinant $f_\sigma$ is a quadratic polynomial
 of 1 or 2 variables (Appendix \ref{app:all_norm_dim2}). The exception, however, are groups p1 (No.1) and p2 (No.2),
 whose point groups commute with every possible $2\times2$ matrix and have trivial cocycle condition. For these groups
 $SCD$ and $SRD$ contain every positive integer greater than 1, which will be shown later.
@@ -539,7 +542,7 @@ For the case p1 and p2, the condition is the widest:
 It is easy to show that it represents every positive integer setting $y_1=y_4=0,\  y_2=n>1, \ y_3=1$, i.e. for
 the matrices of a kind $\begin{pmatrix}0 & n \\ 1 & 0\end{pmatrix}$.
 
-For the remaining 15 planar groups the calculated matrices $\mathcal{Y}$ satisfying conditions 1)-3) 
+For the remaining 15 planar groups the calculated matrices $\mathcal{Y}$ satisfying conditions (PC)-(CC) 
 are given in the Appendix \ref{app:all_norm_dim2}. The generators and naming conventions are taken from the
 International Tables for Crystallography \cite{CrystTables}. As it was already mentioned, the polynomials $f_\sigma$
 and $g_\sigma$ contain at most 2 variables, so the condition $f_\sigma \pm g_\sigma \neq -1$ can be solved automatically
@@ -548,40 +551,100 @@ $f_\sigma$ for every planar group --- effectively the description of $SCD$ --- a
 $f_\sigma \pm g_\sigma \neq -1$, which combined with $f_\sigma$ is the description of $SRD$. Additionaly,
 the $MinSCD$ and $MinSRD$ are computed and are provided in the Table \ref{tab:min_srdegrees}.
 
-\input{table_srdegrees.tex}
+\subsection{Example: Planar Group 7 p2mg}
 
-\begin{table}[H]
-\begin{footnotesize}
-\centering
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-\textbf{group} & \textbf{minimal scdegree} & \textbf{minimal srdegree} & \textbf{symmorphic} & $f_\sigma$  \\
-\hline
-        Group 1 p1     &         2   &         2    &    +    & $y_0y_2 - y_1 y_3$ \\
-        Group 2 p2     &         2   &         2    &    +    & $y_0y_2 - y_1 y_3$ \\
-\textbf{Group 3 p1m1}  & \textbf{2}  & \textbf{4}   &    +    & $y_0y_1$ \\
-\textbf{Group 4 p1g1}  & \textbf{2}  & \textbf{6}   &         & $y_0(2y_1 - 1)$ \\
-\textbf{Group 5 c1m1}  & \textbf{3}  & \textbf{4}   &    +    & $\left(y_{0} + 2y_{1}\right)y_{0}$ \\
-        Group 6 p2mm   &         2   &         2    &    +    & $y_0y_1$ \\
-\textbf{Group 7 p2mg}  & \textbf{2}  & \textbf{6}   &         & $(2y_0 - 1)y_1$ \\
-        Group 8 p2gg   &         3   &         3    &         & $(2y_0 - 1)(2y_1 + 1)$ \\
-        Group 9 c2mm   &         3   &         3    &    +    & $y_{1}(2y_{0} - y_{1})$ \\
-        Group 10 p4    &         2   &         2    &    +    & $y_0^2 + y_1^2$ \\
-        Group 11 p4mm  &         2   &         2    &    +    & $-2y_0^2$ \\
-        Group 12 p4gm  &         9   &         9    &         & $(2y_0 + 1)^2$ \\
-        Group 13 p3    &         3   &         3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
-        Group 14 p3m1  &         4   &         4    &    +    & $y_0^2$ \\
-        Group 15 p31m  &         4   &         4    &    +    & $y_0^2$ \\
-        Group 16 p6    &         3   &         3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
-        Group 17 p6mm  &         3   &         3    &    +    & $3 y_0^2$ \\
-\hline
-\end{tabular}
-\caption{Minimal self-covering and self-replicating degrees of planar groups}
-\label{tab:min_srdegrees}
-\end{footnotesize}
-\end{table}
+The Group 7 ($p2mg$) from ITA is generated by the following elements:
+$$G_7 = \left\langle\left(\begin{array}{rr|r}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{array}\right),\left(\begin{array}{rr|r}
+-1 & 0 & 1/2 \\
+0 & 1 & 0 \\
+\end{array}\right)\left(\begin{array}{rr|r}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+\end{array}\right)  \right\rangle = \langle a,b,c \rangle$$
+The basis of the matrices $\mathcal{X}$ satisfying the condition (PC) consists of:
+$$A_1, A_2 = \left(\begin{array}{rr}
+0 & x_{1} \\
+x_{0} & 0
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} & 0 \\
+0 & x_{1}
+\end{array} \right) \quad   \,  x_0,x_1 \in \mathbb{Q}^*$$
 
-\subsection{Space Groups}\label{subsec:space}
+Solving the system of congruences from the cocycle compatibility condition (CC) we obtain that for $A_1$ system
+does not have solutions. For the $A_2$ we get that $x_0 = 2y_0 + 1, x_1 = y_1, \, y_0,y_1 \in \mathbb{Z}$.
+Therefore, $$SCD = \{ |\det(A_2)| = |(2y_0 + 1) y_1|, \, |\,  y_0, y_1 \in \mathbb{Z}\} = \mathbb{N}$$
+The inverse $A_2^{-1}$ fits the condition (CC) if and only if $|2y_0+1| > 0, |y_1| > 1$. Therefore,
+$$SRD = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
+or not primes and not powers of 2. In particular, the minimal self-replicating degree is 6 when $y_0 = 1, y_1 = 2$.
+
+\subsection{Example: Planar Group 13 p3}
+
+The Group 13 (p3) from ITA is generated by the following elements:
+$$G_{13} = \left\langle\left(\begin{array}{rrr}
+0 & -1 & 0 \\
+1 & -1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{array}\right), \left(\begin{array}{rrr}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+0 & 0 & 1
+\end{array}\right)\right\rangle$$
+The matrices $\mathcal{X}$ satisfying the condition (PC) have one of two forms:
+$$
+A_1, A_2 = \left(\begin{array}{rr}
+-x_{0} & x_{0} + x_{1} \\
+x_{1} & x_{0}
+\end{array}\right), \left(\begin{array}{rr}
+x_{0} + x_{1} & -x_{0} \\
+x_{0} & x_{1}
+\end{array}\right), \quad x_0,x_1 \in \mathbb{Z}
+$$
+The group $G_{13}$ is symmorphic, i.e. $G_{13} = P \ltimes \mathbb{Z}^2$, from which follows that congruences from (CC)
+are trivial.
+$$
+SCD = \{ |\det(A_1)|, |\det(A_2)|\} = \{ |x_{0}^{2} + {\left(x_{0} + x_{1}\right)x_1}| > 1 \, : \, x_0, x_1 \in \mathbb{Z}\}
+$$
+
+The SRD condition on eigenvalues of $A_1$ by Proposition \ref{propos:planar-srdegrees}
+depends on the following diophantine equations:
+\begin{align*}
+x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} & \neq \pm 1 \\
+x_{0}^{2} + {\left(x_{0} + 2\right)} x_{1} + x_{1}^{2} + x_{0} & \neq -1 \\
+x_{0}^{2} + {\left(x_{0} - 2\right)} x_{1} + x_{1}^{2} - x_{0} & \neq -1.
+\end{align*}
+The solution is a finite set of pairs
+$$
+(x_0, x_1) \notin
+\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
+$$
+
+Likewise, the condition on eigenvalues of $A_2$ depends on the following equations:
+\begin{align*}
+-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} & \neq \pm 1 \\
+-x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1 \\
+-x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1
+\end{align*}
+and the solution is again a finite set of pairs
+$$
+(x_0, x_1) \notin
+\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
+$$
+
+As a result, we get the description of self-replicating degrees as follows:
+\begin{align*}
+SRD =  \big\{  |x_0^2 + \left(x_0 + x_1\right)x_1| > 1 \, :  \, x_0, x_1 & \in \mathbb{Z}, \\
+ (x_0, x_1) & \notin [(0, 1), (-1, 1), (1, -1), (-1, 0), (1, 0), (0, -1)] \big\}
+\end{align*}
+
+
+\section{Space Groups}\label{sec:space}
 A similar approach for describing the sets $SCD$ and $SRD$ is possible for dimension 3. Although every polynomial
 $f_\sigma$ has degree 3 and can not be solved in general case, the explicit computation of matrices $\mathcal{X}$
 similarly restricts the amount of free variables. Moreover, we can reduce the condition on the eigenvalues
@@ -605,14 +668,14 @@ $$
 where $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
 
 Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
-a family of matrices satisfying conditions 1)-3), written in the form (\ref{eqn:Y_sum_Yi})
+a family of matrices satisfying conditions (PC)-(CC), written in the form (\ref{eqn:Y_sum_Yi})
 for a fixed automorphism $\sigma \in Aut(P)$. Writing down explicit forms of $Y$ for every $\sigma$ for every
 crystallographic group $G$ we get that either
 \begin{itemize}
   \item (case 1) $Y$ is a block-triangular matrix;
   \item (case 2) $\tr(Y) = \tau(Y) = 0$.
 \end{itemize}
-The full list of possible matrices $X \in \mathcal{X}_\sigma$ satisfying conditions 1)-2) for every point group
+The full list of possible matrices $X \in \mathcal{X}_\sigma$ satisfying conditions (PC)--(LC) for every point group
 one can find in the Appendix \ref{app:all_norm_dim3}. The full list of $Y \in \mathcal{Y}_\sigma$ is omitted due to the
 large variety\footnotemark[1]{}.
 
@@ -700,98 +763,6 @@ the $q_\sigma$ that is a quadratic polynomial of three variables.
 % ==============================================================================================
 
 % TODO: розписати один приклад повністю, а інші навести з використанням таблиці
-\section{Examples}
-\subsection{Planar Group 7 p2mg}
-
-The Group 7 ($p2mg$) from ITA is generated by the following elements:
-$$G_7 = \left\langle\left(\begin{array}{rr|r}
-1 & 0 & 1 \\
-0 & 1 & 0 \\
-\end{array}\right),\left(\begin{array}{rr|r}
--1 & 0 & 1/2 \\
-0 & 1 & 0 \\
-\end{array}\right)\left(\begin{array}{rr|r}
--1 & 0 & 0 \\
-0 & -1 & 0 \\
-\end{array}\right)  \right\rangle = \langle a,b,c \rangle$$
-The basis of the matrices $\mathcal{X}$ satisfying the condition 1) consists of:
-$$A_1, A_2 = \left(\begin{array}{rr}
-0 & x_{1} \\
-x_{0} & 0
-\end{array}\right), \left(\begin{array}{rr}
-x_{0} & 0 \\
-0 & x_{1}
-\end{array} \right) \quad   \,  x_0,x_1 \in \mathbb{Q}^*$$
-
-Solving the system of congruences from the cocycle compatibility condition 3) we obtain that for $A_1$ system
-does not have solutions. For the $A_2$ we get that $x_0 = 2y_0 + 1, x_1 = y_1, \, y_0,y_1 \in \mathbb{Z}$.
-Therefore, $$SCD = \{ |\det(A_2)| = |(2y_0 + 1) y_1|, \, |\,  y_0, y_1 \in \mathbb{Z}\} = \mathbb{N}$$
-The inverse $A_2^{-1}$ fits the condition 3) if and only if $|2y_0+1| > 0, |y_1| > 1$. Therefore,
-$$SRD = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
-or not primes and not powers of 2. In particular, the minimal self-replicating degree is 6 when $y_0 = 1, y_1 = 2$.
-
-\subsection{Planar Group 13 p3}
-
-The Group 13 (p3) from ITA is generated by the following elements:
-$$G_{13} = \left\langle\left(\begin{array}{rrr}
-0 & -1 & 0 \\
-1 & -1 & 0 \\
-0 & 0 & 1
-\end{array}\right), \left(\begin{array}{rrr}
-1 & 0 & 1 \\
-0 & 1 & 0 \\
-0 & 0 & 1
-\end{array}\right), \left(\begin{array}{rrr}
-1 & 0 & 0 \\
-0 & 1 & 1 \\
-0 & 0 & 1
-\end{array}\right)\right\rangle$$
-The basis of the matrices $\mathcal{X}$ satisfying the condition 1) consists of:
-$$
-A_1, A_2 = \left(\begin{array}{rr}
--x_{0} & x_{0} + x_{1} \\
-x_{1} & x_{0}
-\end{array}\right), \left(\begin{array}{rr}
-x_{0} + x_{1} & -x_{0} \\
-x_{0} & x_{1}
-\end{array}\right), \quad x_0,x_1 \in \mathbb{Z}
-$$
-The group $G_{13}$ is symmorphic, i.e. $G_{13} = P \ltimes \mathbb{Z}^2$, from which follows that congruences from 3)
-are trivial.
-$$
-SCD = \{ |\det(A_1)|, |\det(A_2)|\} = \{ |x_{0}^{2} + {\left(x_{0} + x_{1}\right)x_1}| > 1 \, : \, x_0, x_1 \in \mathbb{Z}\}
-$$
-
-The simplicity of the virtual endomorphism corresponding to $A_1$ by Proposition \ref{propos:planar-srdegrees}
-depends on the following diophantine equations:
-\begin{align*}
-x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} & \neq \pm 1 \\
-x_{0}^{2} + {\left(x_{0} + 2\right)} x_{1} + x_{1}^{2} + x_{0} & \neq -1 \\
-x_{0}^{2} + {\left(x_{0} - 2\right)} x_{1} + x_{1}^{2} - x_{0} & \neq -1.
-\end{align*}
-The solution is a finite set of pairs
-$$
-(x_0, x_1) \notin
-\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
-$$
-
-Likewise, the simplicity of $A_2$ depends on the following equations:
-\begin{align*}
--{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} & \neq \pm 1 \\
--x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1 \\
--x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1
-\end{align*}
-and the solution is again a finite set of pairs
-$$
-(x_0, x_1) \notin
-\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
-$$
-
-As a result, we get the description of self-replicating degrees as follows:
-\begin{align*}
-SRD =  \big\{  |x_0^2 + \left(x_0 + x_1\right)x_1| > 1 \, :  \, x_0, x_1 & \in \mathbb{Z}, \\
- (x_0, x_1) & \notin [(0, 1), (-1, 1), (1, -1), (-1, 0), (1, 0), (0, -1)] \big\}
-\end{align*}
 
 \subsection{Space Group 11 $P\, 1\, 2_1 \,/\, m\, 1$}
 
@@ -835,6 +806,42 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 \section{List of all matrices satisfying point group compatibility in dimension 2}\label{app:all_norm_dim2}
 
 \input{table_normalizers_dim2.tex}
+
+\section{SCD and SRD for plane groups}
+
+\input{table_srdegrees.tex}
+
+\begin{table}[H]
+\begin{footnotesize}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{group} & \textbf{minimal scdegree} & \textbf{minimal srdegree} & \textbf{symmorphic} & $f_\sigma$  \\
+\hline
+        Group 1 p1     &         2   &         2    &    +    & $y_0y_2 - y_1 y_3$ \\
+        Group 2 p2     &         2   &         2    &    +    & $y_0y_2 - y_1 y_3$ \\
+\textbf{Group 3 p1m1}  & \textbf{2}  & \textbf{4}   &    +    & $y_0y_1$ \\
+\textbf{Group 4 p1g1}  & \textbf{2}  & \textbf{6}   &         & $y_0(2y_1 - 1)$ \\
+\textbf{Group 5 c1m1}  & \textbf{3}  & \textbf{4}   &    +    & $\left(y_{0} + 2y_{1}\right)y_{0}$ \\
+        Group 6 p2mm   &         2   &         2    &    +    & $y_0y_1$ \\
+\textbf{Group 7 p2mg}  & \textbf{2}  & \textbf{6}   &         & $(2y_0 - 1)y_1$ \\
+        Group 8 p2gg   &         3   &         3    &         & $(2y_0 - 1)(2y_1 + 1)$ \\
+        Group 9 c2mm   &         3   &         3    &    +    & $y_{1}(2y_{0} - y_{1})$ \\
+        Group 10 p4    &         2   &         2    &    +    & $y_0^2 + y_1^2$ \\
+        Group 11 p4mm  &         2   &         2    &    +    & $-2y_0^2$ \\
+        Group 12 p4gm  &         9   &         9    &         & $(2y_0 + 1)^2$ \\
+        Group 13 p3    &         3   &         3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
+        Group 14 p3m1  &         4   &         4    &    +    & $y_0^2$ \\
+        Group 15 p31m  &         4   &         4    &    +    & $y_0^2$ \\
+        Group 16 p6    &         3   &         3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
+        Group 17 p6mm  &         3   &         3    &    +    & $3 y_0^2$ \\
+\hline
+\end{tabular}
+\caption{Minimal self-covering and self-replicating degrees of planar groups}
+\label{tab:min_srdegrees}
+\end{footnotesize}
+\end{table}
+
 
 \newpage
 \section{List of all unique matrices satisfying point group compatibility in dimension 3}\label{app:all_norm_dim3}
