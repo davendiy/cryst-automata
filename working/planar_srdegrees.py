@@ -96,6 +96,7 @@ print(r'\begin{scriptsize}')
 print(latex(table(general_table, header_row=True, frame=True)))
 print(r'\end{scriptsize}')
 print(r'\caption{Self-replicating degrees for planar groups.}')
+print(r'\label{tab:planar_srdegrees}')
 print(r'\end{table}')
 
 print(r'\footnotetext[1]{A positional number of the group in ITA}')

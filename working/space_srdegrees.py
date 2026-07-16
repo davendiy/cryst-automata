@@ -229,6 +229,7 @@ with open(filename, 'w') as file:
         print(r'\end{scriptsize}', file=file)
 
         print(r'\caption{' + f'Case 2 unique polynomials {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\label{tab:case2_srdegrees' + f'{i//M}' + '}')
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
         print('', file=file)
