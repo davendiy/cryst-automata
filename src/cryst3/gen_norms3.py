@@ -94,7 +94,7 @@ all_unique_lattice_matrices = list({str(el): el for el in all_lattice_matrices}.
 def load_cached_normalizers(group_num, latt=False):
     point_group = [el[0] for el in by_point_groups if group_num in el]
     if len(point_group) != 1:
-        raise ValueError(f'found {len(point_group)} point group representatives for {group_num}..')
+        raise ValueError(f'found {len(point_group)} point group representatives for {group_num}...')
     point_group = point_group[0]
     if latt:
         matrices = __cached_matrices_lat[point_group]
@@ -103,10 +103,25 @@ def load_cached_normalizers(group_num, latt=False):
     return matrices
 
 
-def find_groups(A, latt=False):
+def find_groups(A, latt=False, all=False):
+    """Find groups where the given matrix A appears as the point group normalizer.
+
+    Args
+    ----
+    A: symbolic matrix from the group normalizer
+    latt: if True, then the given matrix is lattice compatible (i.e. entities are integral)
+    all: if True, then returns all the groups, not just the point group representatives
+    """
     res = []
     cache = __cached_lat if latt else __cached
     for i, val in cache.items():
         if str(A) in val:
             res.append(i)
-    return res
+
+    if all:
+        full_res = []
+        for el in res:
+            full_res.extend([groups for groups in by_point_groups if el in groups][0])
+        return full_res
+    else:
+        return res

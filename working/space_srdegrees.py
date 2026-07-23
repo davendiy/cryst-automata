@@ -110,8 +110,8 @@ def printv(*args, **kwargs):
         print(*args, **kwargs)
 
 
-headers = ['group num', r'$p_\sigma$', r'$q_\sigma$', r'$g_\sigma$']
-headers_simple = ['num', r'$f_\sigma$', 'groups']
+headers = ['Groups No.', r'$p_\sigma$', r'$q_\sigma$', r'$g_\sigma$']
+headers_simple = ['No.', r'$f_\sigma$', 'Groups No.']
 res_table_simple = []
 res_table = []
 
@@ -211,7 +211,8 @@ with open(filename, 'w') as file:
         print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
         print(r'\end{scriptsize}', file=file)
 
-        print(r'\caption{' + f'Case 1 unique triplets {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\caption{' + f'SRD unique triplets (case 1) {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\label{tab:case1_srdegrees' + f'{i}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
         print('', file=file)
@@ -228,45 +229,45 @@ with open(filename, 'w') as file:
         print(latex(table([headers_simple] + chunk, frame=True, header_row=True)), file=file)
         print(r'\end{scriptsize}', file=file)
 
-        print(r'\caption{' + f'Case 2 unique polynomials {i+1}..{i + len(chunk)}' + r'}', file=file)
-        print(r'\label{tab:case2_srdegrees' + f'{i//M}' + '}')
+        print(r'\caption{' + f'SRD unique polynomials (case 2) {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\label{tab:case2_srdegrees' + f'{i//M}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
         print('', file=file)
         print(r'\newpage', file=file)
         print('', file=file)
 
-    headers = ['num', 'polynomial', r'$p_\sigma$ groups', r'$q_\sigma$ groups', r'$g_\sigma$ groups']
+    # headers = ['num', 'polynomial', r'$p_\sigma$ groups', r'$q_\sigma$ groups', r'$g_\sigma$ groups']
 
-    while i < len(table_polys):
-        chunk_size = 0
-        j = i
-        while chunk_size < M and j < len(table_polys):
-            max_gsize = 0
-            for p in [2, 3, 4]:
-                grlist = table_polys[j][p]
-                gsize = 1 if isinstance(grlist, str) else len(latex(grlist).splitlines()) - 2
-                if gsize > M+1:
-                    raise ValueError
-                max_gsize = max(max_gsize, gsize)
+    # while i < len(table_polys):
+    #     chunk_size = 0
+    #     j = i
+    #     while chunk_size < M and j < len(table_polys):
+    #         max_gsize = 0
+    #         for p in [2, 3, 4]:
+    #             grlist = table_polys[j][p]
+    #             gsize = 1 if isinstance(grlist, str) else len(latex(grlist).splitlines()) - 2
+    #             if gsize > M+1:
+    #                 raise ValueError
+    #             max_gsize = max(max_gsize, gsize)
 
-            if chunk_size + max_gsize > M + 1:
-                break
-            chunk_size += gsize
-            j += 1
-        chunk = table_polys[i: j]
+    #         if chunk_size + max_gsize > M + 1:
+    #             break
+    #         chunk_size += gsize
+    #         j += 1
+    #     chunk = table_polys[i: j]
 
-        print(r'\begin{table}[H]', file=file)
-        print(r'\begin{center}', file=file)
-        print(r'\begin{scriptsize}', file=file)
-        print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
-        print(r'\end{scriptsize}', file=file)
+    #     print(r'\begin{table}[H]', file=file)
+    #     print(r'\begin{center}', file=file)
+    #     print(r'\begin{scriptsize}', file=file)
+    #     print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
+    #     print(r'\end{scriptsize}', file=file)
 
-        print(r'\caption{' + 'Unique polynomials ' + f'{i+1}..{i + len(chunk)}' + r'}', file=file)
-        print(r'\end{center}', file=file)
-        print(r'\end{table}', file=file)
-        print('', file=file)
-        print(r'\newpage', file=file)
-        print('', file=file)
+    #     print(r'\caption{' + 'Unique polynomials ' + f'{i+1}..{i + len(chunk)}' + r'}', file=file)
+    #     print(r'\end{center}', file=file)
+    #     print(r'\end{table}', file=file)
+    #     print('', file=file)
+    #     print(r'\newpage', file=file)
+    #     print('', file=file)
 
-        i = j
+    #     i = j

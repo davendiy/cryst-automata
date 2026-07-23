@@ -40,10 +40,11 @@ M = 17
 
 header = []
 for i in range(N):
-    header.append('Groups')
+    header.append('No.')
     header.append('Matrix')
+    header.append('Groups No.')
 
-matrices = [(find_groups(A, latt=True), A) for A in all_unique_lattice_matrices]
+matrices = [(find_groups(A, latt=True, all=False), A) for A in all_unique_lattice_matrices]
 matrices = sorted(matrices)
 
 
@@ -56,7 +57,7 @@ def normalize_grouplist(groups):
         return f'{groups[0]},{groups[1]}...{groups[-2]},{groups[-3]}'
 
 
-matrices = [(normalize_grouplist(groups), A) for groups, A in matrices]
+matrices = [(i, A, normalize_grouplist(groups)) for i, (groups, A) in enumerate(matrices)]
 
 
 def unwrap(row):
@@ -76,12 +77,19 @@ for i in range(0, len(byNrow), M):
     print(r'\begin{table}[H]')
     print(r'\begin{center}')
     print(r'\begin{scriptsize}')
+    if i == 0:
+        header[2] = r'Groups No.\footnotemark[1]{}'
+    else:
+        header[2] = r'Groups No.'
     print(latex(table([header] + byNrow[i: i+M], frame=True, header_row=True)))
     print(r'\end{scriptsize}')
 
-    print(r'\caption{' + f'Unique matrices {i*N}..{(i+M)*N} satisfying point group compatibility for space groups' + r'}')
+    print(r'\caption{' + f'Unique matrices {i*N}..{(i+M)*N} satisfying PC condition for space groups' + r'}')
+    print(r'\label{' + f'tab:norm_dim3_{i*N}' + r'}')
     print(r'\end{center}')
     print(r'\end{table}')
     print()
+    if i == 0:
+        print(r'\footnotetext[1]{Only symmorphic groups are provided as point group representatives.}')
     print(r'\newpage')
     print()

@@ -1,10 +1,30 @@
 
 import sys
 
+from sage.all import latex
+
 from src.space_groups import prepare_gap_env
 from src.srdegrees import SR_Degrees
+from src.srdegrees import solve_simple_mat, factorize, tau, standardize_sol_matrix
+from src.cryst3.gen_norms3 import load_cached_normalizers
 
 prepare_gap_env()
+
+VER = True
+
+
+def get_polys(M):
+    if tau(M) == 0 and M.trace() == 0:
+        return M.det().simplify_rational()
+
+    t = factorize(M)
+    if t is None:
+        raise ValueError('something went wrong')
+
+    subM, p = t
+    q = subM.det().simplify_rational()
+    g = subM.trace().simplify_rational()
+    return p.simplify_rational(), q, g
 
 
 num = int(sys.argv[1])
@@ -36,9 +56,36 @@ for i in range(0, len(norm), 3):
 
 print()
 
-for A in sr.G.point_group_normalizer():
+for A in load_cached_normalizers(num):
     if needed_mtx and str(A) not in needed_mtx:
         continue
     print('Consider matrix A=$', (sr.display(A, use_pref=False)), '$.')
     print()
     compat = sr.cocycle_compat(A)
+
+    print('\nlattice compat A:')
+    B = sr.lattice_compat(A)
+    assert not B.failed
+    B = B.result
+    print(sr.display(B))
+
+    if sr.G.is_symmorphic():
+        print(solve_simple_mat(B).result)
+        B = standardize_sol_matrix(B, 'y')
+        print(sr.display(get_polys(B)))
+
+    m = sr.cocycle_compat_v2(B)
+    if m.failed:
+        print('no solutions')
+        continue
+    print('cocycle compat A:')
+    print(sr.display(m.result))
+    print()
+    print('$$ det(A) =', latex(m.result.det().simplify_rational()), '$$')
+    print('$$ tr(A) = ', latex(m.result.trace().simplify_rational()), '$$')
+    print('automatic solver:')
+    print(r'\begin{verbatim}')
+    print(solve_simple_mat(m.result).result)
+    print(r'\end{verbatim}')
+
+    print('result polynomials: $$', latex(get_polys(m.result)), '$$')
