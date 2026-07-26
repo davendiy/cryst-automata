@@ -239,7 +239,7 @@ By the Bieberbach theorems, there is a short exact sequence
 \[
 0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
 \]
-where $L=L(G)\cong\mathbb{Z}^n$ and $P=P(G)$ is a finite subgroup of $GL_n(\mathbb{R})$. 
+where $L=L(G)\cong\mathbb{Z}^n$ and $P=P(G)$ is a finite subgroup of $GL_n(\mathbb{R})$.
 
 Conversely, given a finite subgroup $P\le GL_n(\mathbb{R})$ and a $P$-invariant lattice $L\le\mathbb{R}^n$, the crystallographic groups fitting this sequence are classified by the cohomology group
 $H^1(P, \mathbb{R}^n / L) \cong H^2(P, L)$. Thus, an arbitrary crystallographic group can be represented as a triple
@@ -287,7 +287,7 @@ By the Bieberbach theorem and Lemma~\ref{th:surjection-is-bijection},
 every surjective virtual endomorphism $\phi: H \rightarrow G$ of a crystallographic group $G$ is induced by conjugation with an affine element $(A, t) \in \mathbf{A}(n)$:
 \[
 \phi(g) = (A, t)^{-1}g(A, t)  \ \mbox{ for } \ h\in H = (A, t)G(A, t)^{-1}.
-\] 
+\]
 The action of $\phi$ on the translation subgroup $T(H)$ is determined by the linear part $A$:
 \[
 \phi(E,v)=(A, t)^{-1}(E,v)(A, t)=(E,A^{-1}v) \ \mbox{ for } \ (E,v)\in H.
@@ -298,7 +298,7 @@ It follows that $L(H) = AL(G)\le L(G)$, and by Lemma~\ref{lemma:equal_index},
 \]
 Therefore, the set of self-covering degrees coincides with the set of absolute values of determinants of matrices occurring as linear parts of surjective virtual endomorphisms. To determine the self-replicating degrees, it remains to analyze the simplicity condition.
 
-%We next characterize simple virtual endomorphisms for crystallographic groups with translation lattice $\mathbb{Z}^n$. 
+%We next characterize simple virtual endomorphisms for crystallographic groups with translation lattice $\mathbb{Z}^n$.
 \begin{theorem}\label{th:simpe_virt}
 Let $G\le\mathbf{A}(n)$ be a crystallographic group, and let $a = (A,t)\in \mathbf{A}(n)$ be such that $aGa^{-1}\le G$. Consider the virtual endomorphism $\phi: H=aGa^{-1}\rightarrow G$ defined by $\phi(g) = a^{-1}ga$. Then $\phi$ is simple if and only if no eigenvalue of $A^{-1}$ is an algebraic integer (equivalently, the characteristic polynomial of $A^{-1}$ is not divisible by a non-constant monic polynomial with integral coefficients).
 \end{theorem}
@@ -345,7 +345,7 @@ Since $mv \in \mathbb{Z}^n$, the term $(E, mv)$ is a lattice translation, implyi
 %\]
 %which belongs to $G$. Therefore, $aGa^{-1}\le G$ and $\det(A)=(m+1)^n$ is a self-replicating degree of $G$.
 
-\begin{corollary} 
+\begin{corollary}
   \begin{enumerate}
     \item Every symmorphic crystallographic group of dimension $n$ possesses a self-replicating degree at most $2^n$.
     \item Every plane group possesses a self-replicating degree at most $9$.
@@ -362,143 +362,174 @@ For plane groups, the defining cocycle is annihilated by $m=2$, yielding a degre
 
 \section{Computing self-replicating degrees of crystallographic groups}\label{sec:computations}
 
-Let $G$ be a crystallographic group. We consider two sets of positive integers associated with $G$:
-\begin{align*}
-SCD(G) &= \{d \in \mathbb{N} \, | \, \text{ $G$ has a subgroup $H$ of index $d$ isomorphic to $G$ } \},\\
-SRD(G) &= \{d \in \mathbb{N}\, | \, \text{ $G$ admits a simple surjective virtual
-                                               endomorphism from subgroup of index $d$ } \}.
-\end{align*}
-It is clear that $SRD\subset SCD$.
-We denote by $MinSCD(G)$ and $MinSRD(G)$ as the minimal self-covering and self-replicating degrees.
-From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as decision problems for the group $G$.
+In the previous section we characterized the self-covering and self-replicating degrees of a crystallographic group. We now develop a computational method to determining these values for a given group.
 
-\vspace{0.2cm}
+%Let $G$ be a crystallographic group. We consider two sets of positive integers associated with $G$:
+%\begin{align*}
+%SCD(G) &= \{d \in \mathbb{N} \, | \, \text{ $G$ has a subgroup $H$ of index $d$ isomorphic to $G$ } \},\\
+%SRD(G) &= \{d \in \mathbb{N}\, | \, \text{ $G$ admits a simple surjective virtual
+%                                               endomorphism from subgroup of index $d$ } \}.
+%\end{align*}
+%It is clear that $SRD\subseteq SCD$.
+%From a computational perspective, both $SCD(G)$ and $SRD(G)$ can be viewed as decision problems for the group $G$.
 
-Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$.
-A positive integer $d$ belongs to $SCD(G)$ if and only if there exists an affine transformation
-$a=(A,t)\in \mathbf{A}(n)$ such that $d=|\det A|$ and $a G a^{-1}\leq G$. This condition splits into three parts:
+%We denote by $MinSCD(G)$ and $MinSRD(G)$ as the minimal self-covering and self-replicating degrees.
+%\vspace{0.2cm}
+
+%Let us describe a method for computing the set of self-covering degrees of $G$.
+%Let us describe a method for computing the set $SCD(G)$ for a given crystallographic group $G=(P,\mathbb{Z}^n,\alpha)$.
+
+Let $G$ be a crystallographic group given by the tuple $(P,\mathbb{Z}^n,\alpha)$.
+An integer $d\geq 1$ is a self-covering degree of $G$ if and only if there exists an affine transformation
+$a=(A,t)\in \mathbf{A}(n)$ such that $d=|\det A|$ and $aGa^{-1}\leq G$. This condition splits into three parts:
 \begin{enumerate}
-  \item[(PC)] Point group compatibility: $APA^{-1}=P$.
-  \item[(LC)] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
-  \item[(CC)] Cocycle compatibility: for every $B\in P$,
-\begin{equation}\label{eqn:cocycle_compatibility}
+  \item[(\textit{PC})] Point group compatibility: $APA^{-1}=P$.
+  \item[(\textit{LC})] Lattice compatibility: $A\mathbb{Z}^n\leq \mathbb{Z}^n$, which means $A$ must have integer entries.
+  \item[(\textit{CC})] Cocycle compatibility: for every $B\in P$,
+\[ %begin{equation}%\label{eqn:cocycle_compatibility}
 \alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B)  \mod \mathbb{Z}^n.
-\end{equation}
+\] 
 \end{enumerate}
-To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the condition PC 
-and then identify those for which there exists a translation $t$ satisfying the condition CC. It is clear that
-for symmorphic groups the condition CC is trivial.
+To determine the possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying (\textit{PC}) and then determine which of them admit a translation $t$ satisfying (\textit{CC}). Note that for symmorphic groups, the condition (\textit{CC}) is vacuous.
 
-The integer matrices $A$ satisfying the condition PC can be described as follows.
-Let $\sigma \in \mathrm{Aut}(P)$ be an automorphism of the point group.
-Consider the system of linear equations over the integers
+%To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the condition PC
+%and then identify those for which there exists a translation $t$ satisfying the condition CC. It is clear that
+%for symmorphic groups the condition CC is trivial.
+
+
+The integer matrices $A$ satisfying (\textit{PC}) can be described as follows.
+Let $\sigma \in \mathrm{Aut}(P)$.
+Consider the system of linear equations over $\mathbb{Z}$:
 \[
 X B = \sigma(B) X \quad \mbox{ for all $B \in P$},
 \]
-where $X \in M_{n}(\mathbb{Z})$ is the unknown matrix. The set $\mathcal{X}_\sigma$ of all
-solutions is a finitely generated $\mathbb{Z}$-module, and there exists a finite, computable set of integral
+where $X \in M_{n}(\mathbb{Z})$ is the unknown matrix. The solution set $\mathcal{X}_\sigma$ is a finitely generated $\mathbb{Z}$-module. Hence, one can compute integral
 matrices $X_1, \dots, X_m \in \mathcal{X}_\sigma$ such that every $X \in \mathcal{X}_\sigma$ can be written as
 \begin{equation}\label{eqn:X_sum_Xi}
 X = \sum_{i=1}^{m} x_i X_i, \quad x_i \in \mathbb{Z}.
 \end{equation}
-The total set $\mathcal{X}$ of matrices $A$ satisfying PC is the union of $\mathcal{X}_\sigma$
-over all $\sigma \in \mathrm{Aut}(P)$.
+The set $\mathcal{X}$ of all matrices $A\in M_{n}(\mathbb{Z})$ satisfying (\textit{PC}) is the union of $\mathcal{X}_\sigma$ over all $\sigma \in \mathrm{Aut}(P)$.
 
-Next, we determine those matrices $X\in \mathcal{X}$ for which a translation $t$ exists satisfying the cocycle
-compatibility condition. Let $\sigma \in \mathrm{Aut}(P)$ and $X\in \mathcal{X}_\sigma$ be written as the linear
-combination (\ref{eqn:X_sum_Xi}) with unknown $x_i\in\mathbb{Z}$. The equation (\ref{eqn:cocycle_compatibility})
-for the matrix $X$ can be written as a system of congruence: given fixed unknown coefficients
-$x_i\in\mathbb{Z}$ and the translation vector $t\in\mathbb{Q}^n$ for all $B\in P$ the following is true
+Next, we determine which matrices $X\in \mathcal{X}$ admit a translation $t$ satisfying (\textit{CC}). Let $\sigma \in \mathrm{Aut}(P)$ and write $X\in \mathcal{X}_\sigma$ as the linear
+combination (\ref{eqn:X_sum_Xi}). Then (\textit{CC}) is equivalent to the following system of congruences in the unknowns $x_1,\dots,x_m\in\mathbb{Z}$ and $t\in\mathbb{Q}^n$:
 \begin{equation}\label{eqn:cocycle_condition}
-  \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)) \equiv (\sigma(B) - E)t  \mod \mathbb{Z}^n.
+\sum_{i=1}^{m}x_iX_i\alpha(B)-\alpha(\sigma(B))
+\equiv
+(\sigma(B)-E)t
+\pmod{\mathbb{Z}^n},
+\quad B\in P.
 \end{equation}
-Denote the left part of the (\ref{eqn:cocycle_condition}) as an unknown rational vector $b_B(x_1, \dots x_n) \in \mathbb{Q}^n$ and
-the right part $(\sigma(B) - E)$ as an integer matrix $M_B$. Combining for every $B \in P$ we get an auxiliary
-linear system:
+For each $B\in P$, denote the left-hand side of (\ref{eqn:cocycle_condition}) by
+$b_B(x_1,\dots,x_m)\in\mathbb{Q}^n$, and let $M_B=\sigma(B)-E\in M_n(\mathbb{Z})$.
+Collecting these congruences for all $B\in P$ yields the system
 \begin{equation}\label{eqn:rational_t}
-  Mt \equiv b \mod \mathbb{Z}^n
+Mt\equiv b \pmod{\mathbb{Z}^N},
 \end{equation}
-where $M = \begin{pmatrix} \dots \\ M_{B} \\ \dots \end{pmatrix}$ and
-$b = \begin{pmatrix} \dots \\ b_{B} \\ \dots \end{pmatrix}$ are the large matrix and vector consisting
-of stacked $M_B$ and $b_B$ respectively for every $B$ from the point group.
+where the matrix $M=(M_B)_{B\in P}$ and the vector $b=(b_B)_{B\in P}$ are obtained by stacking the matrices $M_B$ and the vectors $b_B$, respectively, over all $B\in P$, and $N=n|P|$.
+
 
 \begin{proposition}
-  The congruence system (\ref{eqn:rational_t}) is solvable in $t \in \mathbb{Q}^n$ if and only if
-  for every integral $v \in \mathbb{Z}^n$ from $v^\top M = 0$ follows that $v^\top b \in \mathbb{Z}$.
+The congruence system (\ref{eqn:rational_t}) is solvable for $t \in \mathbb{Q}^n$ if and only if
+$v^\top b \in \mathbb{Z}$ for every vector $v \in \mathbb{Z}^N$ satisfying $v^\top M = 0$.
 \end{proposition}
 \begin{proof}
-  $(\Rightarrow)$ If $Mt = b + z$ for some rational $t$ and integral $z$, then for every integral vector
-  $v$ we can write $v^\top Mt= v^\top b+v^\top z$, which proves the statement.
+Suppose first that \eqref{eqn:rational_t} is solvable. Then
+$Mt=b+z$ for some $t\in\mathbb Q^n$ and $z\in\mathbb Z^N$. Hence, for every
+$v\in\mathbb Z^N$ satisfying $v^\top M=0$, we have
+\[
+0=v^\top Mt=v^\top b+v^\top z,
+\]
+which implies $v^\top b=-v^\top z\in\mathbb Z$.
 
-  $(\Leftarrow)$
-  Let us write the Smith Normal Form for $M$ as a matrix over the principal ideal domain $\mathbb{Z}$:
-  $UMV=D$, where $D$ is a diagonal matrix of rank $r$ and $U,V$ are invertible square integral matrices.
-  Then $Mt-b \in Z^n$ if and only if
-  $U(Mt-b) \in Z^n$. Rewrite it as $U(Mt-b) = UMV t'-b'$, where $t'=V^{-1} t$ and $b'= Ub$.
+Conversely, consider the Smith normal form of $M$:
+\[
+UMV=D=\operatorname{diag}(d_1,\dots,d_r,0,\dots,0),\quad d_i>0,
+\]
+where $U \in \mathrm{GL}_N(\mathbb{Z})$ and $V \in \mathrm{GL}_n(\mathbb{Z})$. 
+The condition $Mt-b\in\mathbb Z^N$ is equivalent to
+$Dt'-b'\in\mathbb Z^N$, where $t'=V^{-1}t$ and $b'=Ub$.
+For $1\le i\le r$, the congruence $d_it'_i\equiv b'_i\pmod{\mathbb Z}$
+always has a rational solution $t'_i=b'_i/d_i$. Thus, the system is solvable if and only if
+$b'_i\in\mathbb Z$ for every $i>r$. 
 
-  Now $Dt'-b' \in Z^n$ for some rational $t'$ if and only if for every zero diagonal element of $D$ with index
-  $i>r$ the respective vector's entity $b'_i \in Z^n$. Returning to the original notation $b'_i= u_ib$, where $u_i$ is
-  an integral row vector of $U$ we observe that $u_i M = 0$ for $i>r$. This, combined with the assumed
-  statement, leads to $b'_i = u_i b \in Z$.
+Let $u_i$ denote the $i$-th row of $U$. For $i>r$, the corresponding $i$-th row of $D$ is identically zero, implying $u_i M = 0$. By assumption, this gives $b'_i = u_i b \in \mathbb{Z}$ for every $i > r$. Therefore, the transformed system is solvable, and equivalently, so is the original system.
 \end{proof}
 
-Denote $u_i(M)$ as the i-th row of the matrix $U$ in the Smith decomposition $UMV = D$ over the ring $\mathbb{Z}$.
-The proof allows us to rewrite the proposition and focus on the $u_i$, instead of checking the statement
-for every integral vector.
+
+
+
+
+
+
+
+%$(\Rightarrow)$ If $Mt = b + z$ for some rational $t$ and integral $z$, then for every integral vector
+%$v$ we can write $v^\top Mt= v^\top b+v^\top z$, which proves the statement.
+%
+%$(\Leftarrow)$
+%Let us write the Smith Normal Form for $M$ as a matrix over the principal ideal domain $\mathbb{Z}$:
+%$UMV=D$, where $D$ is a diagonal matrix of rank $r$ and $U,V$ are invertible square integral matrices.
+%Then $Mt-b \in Z^n$ if and only if
+%$U(Mt-b) \in Z^n$. Rewrite it as $U(Mt-b) = UMV t'-b'$, where $t'=V^{-1} t$ and $b'= Ub$.
+%
+%Now $Dt'-b' \in Z^n$ for some rational $t'$ if and only if for every zero diagonal element of $D$ with index
+%$i>r$ the respective vector's entity $b'_i \in Z^n$. Returning to the original notation $b'_i= u_ib$, where $u_i$ is
+%an integral row vector of $U$ we observe that $u_i M = 0$ for $i>r$. This, combined with the assumed
+%statement, leads to $b'_i = u_i b \in Z$.
+
+The preceding proof reduces the solvability of the system (\ref{eqn:rational_t}) to a finite check using the Smith normal form $UMV = D$ of $M$.
 
 \begin{corollary}
-  The system $Mt \equiv b \mod \mathbb{Z}^n$ has a rational solution $t$ if and only if
-  for every $i > r$ $u_i(M)b\in \mathbb{Z}$, where $r$ is the rank of $M$.
+Let $u_i(M)$ denote the $i$-th row of $U$. The system $Mt \equiv b \pmod{\mathbb{Z}^N}$ has a rational solution if and only if $u_i(M)b \in \mathbb{Z}$ for all $i > \operatorname{rank}(M)$.
 \end{corollary}
+%
+%Denote $u_i(M)$ as the i-th row of the matrix $U$ in the Smith decomposition $UMV = D$ over the ring $\mathbb{Z}$.
+%The proof allows us to rewrite the proposition and focus on the $u_i$, instead of checking the statement
+%for every integral vector.
+%
+%\begin{corollary}
+%  The system $Mt \equiv b \mod \mathbb{Z}^n$ has a rational solution $t$ if and only if
+%  for every $i > r$ $u_i(M)b\in \mathbb{Z}$, where $r$ is the rank of $M$.
+%\end{corollary}
 
-This gives us a constructive way to eliminate the rational $t$ from the system (\ref{eqn:cocycle_condition})
-and instead consider a finite system of linear congruences in the integral indeterminates $x_i$:
-for $j > \text{rank}(M)$ and $b(x_1, \dots, x_m)$ be a stacked column vector of
-$b_B(x_1, \dots x_m) = \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B))$:
-\begin{equation}\label{eqn:small_cong_system}
-  u_j(M)b(x_1, \dots, x_m) \equiv 0 \mod \ 1
-\end{equation}
-Solving this system in general form and substituting the solution into $X$, we obtain a finite, computable set of
-integral matrices $Y_0, Y_1, \dots, Y_r$. The subset
-$\mathcal{Y}_\sigma\subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions PC--CC is then given by
+This gives us a constructive way to eliminate the rational vector $t$ from the system (\ref{eqn:cocycle_condition}), reducing it to a finite system of linear congruences in the integer variables $x_i$. Let $b(x_1, \dots, x_m)$ be the stacked column vector 
+\[
+b_B(x_1, \dots, x_m) = \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)).
+\]
+By the corollary, \eqref{eqn:cocycle_condition} is solvable for $t$ if and only if
+\[
+u_j(M)b(x_1, \dots, x_m) \equiv 0 \pmod{\mathbb{Z}} \quad \text{for all } j > \operatorname{rank}(M).
+\]
+Solving this system and substituting the general integer solution back into $X = \sum_{i=1}^m x_i X_i$ yields a finite, computable set of integral base matrices $Y_0, Y_1, \dots, Y_k$. The subset $\mathcal{Y}_\sigma \subseteq \mathcal{X}_\sigma$ consisting of all matrices satisfying conditions (\textit{PC})--(\textit{CC}) is then parameterized by
 \begin{equation}\label{eqn:Y_sum_Yi}
-  Y = Y_0+\sum_{i=1}^{r} y_i Y_i, \quad y_i \in \mathbb{Z}.
+Y = Y_0 + \sum_{i=1}^{k} y_i Y_i, \quad y_i \in \mathbb{Z}.
 \end{equation}
-The determinant of $Y$ can be expressed as an integer polynomial $f_\sigma(y_1,\ldots,y_r)$.
-Denote $\mathcal{Y}$ as the union of $\mathcal{Y}_\sigma$ over $\sigma \in \mathrm{Aut}(P)$.
+The determinant of $Y$ can be expressed as an integer polynomial $f_\sigma(y_1, \dots, y_k)$. Ranging over all $\sigma \in \mathrm{Aut}(P)$, this gives a finite collection of computable polynomials associated to the group $G$. Finally, let $\mathcal{Y} = \bigcup_{\sigma \in \mathrm{Aut}(P)} \mathcal{Y}_\sigma$ denote the union of these solution spaces.
 
-It is worth noting that solving a rational system of the linear congruences over the integers requires careful approach.
-We use the similar technique as the authors of the CARAT interface
-It also appears as an auxiliary problem on a way to classify crystallographic groups up to isometry, particularly
-during calculation $H^1(P, \mathbb{R}^n/L)$. One might find more details on this topic in \cite{Algo:Cocycle}.
 
-Finally, we get the following description of the set of self-covering and self-replicating degrees, assuming that
-self-covering or self-replicating degree 1 has little meaningful sense:
+We obtain the following description for the sets of self-covering and self-replicating degrees:
 \begin{align*}
-  SCD(G)&=\{ |\det A| > 1 : A\in \mathcal{Y}\}=\{ |f_\sigma(y_1,\ldots, y_r)| > 1 : y_i\in\mathbb{Z} \mbox{ and }
+SCD(G)&=\{ |\det A| : A\in \mathcal{Y}\}=\{ |f_\sigma(y_1,\ldots, y_k)| : y_i\in\mathbb{Z} \mbox{ and }
   \sigma\in Aut(P) \},\\
-  SRD(G)&=\{ |\det A| > 1 : A\in \mathcal{Y} \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
+SRD(G)&=\{ |\det A| : A\in \mathcal{Y} \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
 \end{align*}
-The set of integer values of an integer polynomial generally admits no simple or computable arithmetic description.
-Determining whether a given integer $d>1$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine
-equation $|f_\sigma(y_1,\ldots, y_r)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem, such problems are
-undecidable for arbitrary polynomials. We do not know whether the problem is decidable in our settings:
+The set of integer values of a multivariate integer polynomial generally admits no simple or computable arithmetic description. Determining whether a given integer $d$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine equation $|f_\sigma(y_1,\ldots, y_k)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem on Hilbert's Tenth Problem, such questions are undecidable for arbitrary polynomials. It remains open whether this problem is decidable in our specific geometric setting:
 
 \begin{problem}
-  Let $G$ be a crystallographic group.
+Let $G$ be a crystallographic group.
 
-  (1) Is it decidable, for a given integer $d$, whether there exists a subgroup $H<G$ of index $d$ with $H\cong G$?
-   Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
+(1) Given an integer $d\geq 1$, is it decidable whether there exists a subgroup $H < G$ of index $d$ such that $H \cong G$? Equivalently, does the orbifold $\mathbb{R}^n/G$ admit a self-covering of degree $d$?
 
-  (2) Is it decidable, for a given integer $d$, whether the group $G$ has a self-replicating degree $d$? Equivalently,
-  does $G$ admit a self-replicating action over the alphabet of size $d$?
+(2) Given an integer $d\geq 1$, is it decidable whether $G$ admits a self-replicating action over an alphabet of size $d$?
 \end{problem}
 
+Despite the potential undecidability of this problem in arbitrary dimensions, the algebraic complexity of the polynomials $f_\sigma$ is strictly bounded in low dimensions. In the final sections, we restrict our attention to the two- and three-dimensional cases, where explicit computation of these parameterizations completely resolves the
+problem.
+
+\textbf{Find a good place for:} Solving systems of linear congruences with rational coefficients requires a careful approach. We employ a technique similar to that used in the CARAT package, where a similar problem arises as an auxiliary step in classifying crystallographic groups up to isometry, specifically during the computation of the cohomology group $H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$. For further details, we refer the reader to \cite{Algo:Cocycle}.
 
 
 \section{Plane groups}\label{sec:planar}
 
-\subsection{Self-replicating degrees criterion}
 In this section we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in the dimension two.
 A determinant of the unknown $2\times2$ matrix $f_\sigma$ is a quadratic form of $4$ or less variables and, in general
 case, is a complex object to determine values over integrals. The explicit computation of matrices $\mathcal{X}$
@@ -544,7 +575,7 @@ For the case p1 and p2, the condition is the widest:
 It is easy to show that it represents every positive integer setting $y_1=y_4=0,\  y_2=n>1, \ y_3=1$, i.e. for
 the matrices of a kind $\begin{pmatrix}0 & n \\ 1 & 0\end{pmatrix}$.
 
-For the remaining 15 plane groups the calculated matrices $\mathcal{Y}$ satisfying conditions PC-CC 
+For the remaining 15 plane groups the calculated matrices $\mathcal{Y}$ satisfying conditions PC-CC
 are given in the Appendix \ref{app:all_norm_dim2}. The generators and naming conventions are taken from the
 International Tables for Crystallography, Volume A \cite{CrystTables}, that hereafter will be reffered to as ITA.
 As it was already mentioned, the polynomials $f_\sigma$
@@ -554,8 +585,8 @@ $f_\sigma$ for every plane group --- effectively the description of $SCD$ --- an
 $f_\sigma \pm g_\sigma \neq -1$, which combined with $f_\sigma$ is the description of $SRD$. Additionaly,
 the $MinSCD$ and $MinSRD$ are computed and are provided in the Table \ref{tab:min_srdegrees}.
 
-\subsection{Example: Plane Group 7 p2mg}
-
+%\subsection{Example: Plane Group 7 p2mg}
+\begin{example}
 The Group 7 $p2mg$ according to ITA is generated by the following elements:
 $$G_7 = \left\langle\left(\begin{array}{rr|r}
 1 & 0 & 1 \\
@@ -591,9 +622,11 @@ if and only if $|2y_0+1| > 0$ and $|y_1| > 1$. As a result,
 $$SRD = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
 or, in other words, $n \in SRD$ if $n$ is not prime and not a power of 2.
 In particular, the minimal self-replicating degree is 6 which is attained for $y_0 = 1, y_1 = 2$.
+\end{example}
 
-\subsection{Example: Plane Group 13 p3}
 
+%\subsection{Example: Plane Group 13 p3}
+\begin{example}
 The Group 13 p3 according to ITA is generated by the following elements:
 $$G_{13} = \left\langle\left(\begin{array}{rrr}
 0 & -1 & 0 \\
@@ -654,6 +687,8 @@ As a result, we get the description of self-replicating degrees as follows:
 SRD =  \big\{  |x_0^2 + \left(x_0 + x_1\right)x_1| > 1 \, :  \, x_0, x_1 & \in \mathbb{Z}, \\
  (x_0, x_1) & \notin [(0, 1), (-1, 1), (1, -1), (-1, 0), (1, 0), (0, -1)] \big\}
 \end{align*}
+\end{example}
+
 
 \section{Space Groups}\label{sec:space}
 
@@ -691,7 +726,7 @@ crystallographic group $G$ we get that either
 \end{itemize}
 The full list of possible matrices $X \in \mathcal{X}_\sigma$ satisfying conditions PC--LC for every point group
 one can find in the Appendix \ref{app:all_norm_dim3}. The full list of $Y \in \mathcal{Y}_\sigma$ is omitted due to the
-large variety\footnotemark[1]{}. 
+large variety\footnotemark[1]{}.
 
 \footnotetext[1]{All the source code is provided on the author's Github: \href{https://github.com/davendiy/cryst-automata/}{https://github.com/davendiy/cryst-automata/}}
 
@@ -773,7 +808,7 @@ The $X_3$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z
 appears in the symmorphic groups No. 22, 69 and with some variations in the group No. 70.
 The $X_4$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)}$,
 it appears in the symmorphic groups No. 23, 71, and with some variations in the groups No. 24, 72, 73, 74. Both have
-the $q_\sigma$ that is a quadratic polynomial of three variables. 
+the $q_\sigma$ that is a quadratic polynomial of three variables.
 
 
 % ==============================================================================================
