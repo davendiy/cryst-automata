@@ -55,9 +55,9 @@ for i in range(1, 18):
             double_cur.append(unwrap([cur_t[j], cur_t[half + j]]))
         cur_t = table(double_cur, header_row=True, frame=True)
         if first_i == i:
-            caption = r'\caption{' + f'PC-CC solutions for plane group {i}' + r'}'
+            caption = r'\caption{(\textit{PC})--(\textit{CC})' + f' solutions for plane group {i}' + r'}'
         else:
-            caption = r'\caption{' + f'PC-CC solutions for plane groups {first_i}-{i}' + r'}'
+            caption = r'\caption{(\textit{PC})--(\textit{CC})' + f' solutions for plane groups {first_i}-{i}' + r'}'
         print(r'\begin{table}[H]')
         print(r'\begin{scriptsize}')
         print(r'\begin{center}')
