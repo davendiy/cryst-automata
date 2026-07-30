@@ -1,91 +1,108 @@
 \begin{table}[H]
 \begin{scriptsize}
-\begin{tabular}{|l|l|l|} \hline
-Group No. \footnotemark[1]{} & SCD & SRD restriction \\ \hline \hline
+\begin{tabular}{|l|l|l|l|l|} \hline
+No. \footnotemark[1]{} & $SCD$ & $MinSCD$ & $MinSRD$ & $SRD$ restriction \\ \hline \hline
+1 & $|y_0y_3 - y_1y_2|$ & $2$ & $2$ & $\dots$ \\ \hline
+2 & $|y_0y_3 - y_1y_2|$ & $2$ & $2$ & $\dots$ \\ \hline
 $3$ & $\begin{tabular}{l}
 $ {\left| y_{0} y_{1} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$(y_{0},y_{1})\notin\left\{\left(-1, -1\right),\left(n_{1}, 1\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(1, -1\right)\right\}$ \\
+\end{tabular}$ & $2$ & $4$ & $\begin{tabular}{l}
+$(y_{0},y_{1})\notin\left\{\begin{array}{rrrr}
+\left(-1, -1\right) , & \left(-1, 1\right) , & \left(-1, n_{1}\right) , & \left(1, -1\right)  \\
+\left(1, 1\right) , & \left(1, n_{1}\right) , & \left(n_{1}, -1\right) , & \left(n_{1}, 1\right)  \\
+\end{array}\right\}$ \\
 \end{tabular}$ \\ \hline
 $4$ & $\begin{tabular}{l}
 $ {\left| y_{0} {\left(2 \, y_{1} - 1\right)} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$(y_{0},y_{1})\notin\left\{\left(n_{1}, 1\right),\left(-1, 0\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(1, 1\right),\left(n_{1}, 0\right),\left(1, 0\right)\right\}$ \\
+\end{tabular}$ & $2$ & $6$ & $\begin{tabular}{l}
+$(y_{0},y_{1})\notin\left\{\begin{array}{rrrr}
+\left(n_{1}, 0\right) , & \left(-1, 1\right) , & \left(-1, n_{1}\right) , & \left(-1, 0\right)  \\
+\left(1, 1\right) , & \left(1, n_{1}\right) , & \left(1, 0\right) , & \left(n_{1}, 1\right)  \\
+\end{array}\right\}$ \\
 \end{tabular}$ \\ \hline
 $5$ & $\begin{tabular}{l}
 $ {\left| {\left(y_{0} + 2 \, y_{1}\right)} y_{0} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$(y_{0},y_{1})\notin\left\{\left(-2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(1, -1\right),\left(1, 0\right),\left(-2 \, t_{0} - 1, t_{0}\right)\right\}$ \\
+\end{tabular}$ & $3$ & $4$ & $\begin{tabular}{l}
+$(y_{0},y_{1})\notin\left\{\begin{array}{rrrr}
+\left(-1, 1\right) , & \left(-1, n_{1}\right) , & \left(-1, 0\right) , & \left(1, -1\right)  \\
+\left(-2 \, t_{0} + 1, t_{0}\right) , & \left(1, n_{1}\right) , & \left(1, 0\right) , & \left(-2 \, t_{0} - 1, t_{0}\right)  \\
+\end{array}\right\}$ \\
 \end{tabular}$ \\ \hline
 $6$ & $\begin{tabular}{l}
 $ {\left| y_{0} y_{1} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+\end{tabular}$ & $2$ & $2$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(-1, -1\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 1\right)\right\}$ \\
 \end{tabular}$ \\ \hline
 $7$ & $\begin{tabular}{l}
 $ {\left| {\left(2 \, y_{0} - 1\right)} y_{1} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$(y_{0},y_{1})\notin\left\{\left(0, 1\right),\left(0, n_{1}\right),\left(1, n_{1}\right),\left(n_{1}, 1\right),\left(1, 1\right),\left(n_{1}, -1\right),\left(0, -1\right),\left(1, -1\right)\right\}$ \\
+\end{tabular}$ & $2$ & $6$ & $\begin{tabular}{l}
+$(y_{0},y_{1})\notin\left\{\begin{array}{rrrr}
+\left(0, 1\right) , & \left(0, n_{1}\right) , & \left(0, -1\right) , & \left(1, -1\right)  \\
+\left(1, 1\right) , & \left(1, n_{1}\right) , & \left(n_{1}, -1\right) , & \left(n_{1}, 1\right)  \\
+\end{array}\right\}$ \\
 \end{tabular}$ \\ \hline
 $8$ & $\begin{tabular}{l}
 $ {\left| {\left(2 \, y_{0} - 1\right)} {\left(2 \, y_{1} + 1\right)} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+\end{tabular}$ & $3$ & $3$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(0, -1\right),\left(0, 0\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
 \end{tabular}$ \\ \hline
 $9$ & $\begin{tabular}{l}
 $ {\left| -y_{0}^{2} - 2 \, y_{0} y_{1} \right|} $ \\
 $ {\left| {\left(y_{0} + 2 \, y_{1}\right)} y_{0} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+\end{tabular}$ & $3$ & $3$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(-1, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
-$(y_{0},y_{1})\notin\left\{\left(-2 \, t_{0} + 1, t_{0}\right),\left(-1, 0\right),\left(-1, 1\right),\left(-1, n_{1}\right),\left(1, n_{1}\right),\left(1, -1\right),\left(1, 0\right),\left(-2 \, t_{0} - 1, t_{0}\right)\right\}$ \\
+$(y_{0},y_{1})\notin\left\{\begin{array}{rrrr}
+\left(-1, 1\right) , & \left(-1, n_{1}\right) , & \left(-1, 0\right) , & \left(1, -1\right)  \\
+\left(-2 \, t_{0} + 1, t_{0}\right) , & \left(1, n_{1}\right) , & \left(1, 0\right) , & \left(-2 \, t_{0} - 1, t_{0}\right)  \\
+\end{array}\right\}$ \\
 \end{tabular}$ \\ \hline
 $10$ & $\begin{tabular}{l}
-$ {\left| y_{0}^{2} + y_{1}^{2} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+$ {\left| -y_{0}^{2} - y_{1}^{2} \right|} $ \\
+\end{tabular}$ & $2$ & $2$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(0, -1\right),\left(0, 1\right),\left(1, 0\right)\right\}$ \\
 \end{tabular}$ \\ \hline
 $11$ & $\begin{tabular}{l}
-$ {\left| y_{0}^{2} \right|} $ \\
 $ 2 \, {\left| y_{0}^{2} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$ y_{0} \notin \left\{ -1,1 \right\} $ \\
+$ {\left| y_{0}^{2} \right|} $ \\
+\end{tabular}$ & $2$ & $2$ & $\begin{tabular}{l}
  \\
+$ y_{0} \notin \left\{-1,1\right\} $ \\
 \end{tabular}$ \\ \hline
 $12$ & $\begin{tabular}{l}
 $ {\left| {\left(2 \, y_{0} + 1\right)}^{2} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$ y_{0} \notin \left\{ -1,0 \right\} $ \\
+\end{tabular}$ & $9$ & $9$ & $\begin{tabular}{l}
+$ y_{0} \notin \left\{-1,0\right\} $ \\
 \end{tabular}$ \\ \hline
 $13$ & $\begin{tabular}{l}
 $ {\left| {\left(y_{0} + y_{1}\right)} y_{0} + y_{1}^{2} \right|} $ \\
 $ {\left| -y_{0}^{2} - {\left(y_{0} + y_{1}\right)} y_{1} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+\end{tabular}$ & $3$ & $3$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
 \end{tabular}$ \\ \hline
 $14$ & $\begin{tabular}{l}
-$ {\left| y_{0} \right|}^{2} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$ y_{0} \notin \left\{ -1,1 \right\} $ \\
+$ {\left| y_{0}^{2} \right|} $ \\
+\end{tabular}$ & $4$ & $4$ & $\begin{tabular}{l}
+$ y_{0} \notin \left\{-1,1\right\} $ \\
 \end{tabular}$ \\ \hline
 $15$ & $\begin{tabular}{l}
-$ {\left| y_{0} \right|}^{2} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$ y_{0} \notin \left\{ -1,1 \right\} $ \\
+$ {\left| y_{0}^{2} \right|} $ \\
+\end{tabular}$ & $4$ & $4$ & $\begin{tabular}{l}
+$ y_{0} \notin \left\{-1,1\right\} $ \\
 \end{tabular}$ \\ \hline
 $16$ & $\begin{tabular}{l}
 $ {\left| {\left(y_{0} + y_{1}\right)} y_{0} + y_{1}^{2} \right|} $ \\
 $ {\left| -y_{0}^{2} - {\left(y_{0} + y_{1}\right)} y_{1} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
+\end{tabular}$ & $3$ & $3$ & $\begin{tabular}{l}
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
 $(y_{0},y_{1})\notin\left\{\left(-1, 0\right),\left(-1, 1\right),\left(0, -1\right),\left(0, 1\right),\left(1, -1\right),\left(1, 0\right)\right\}$ \\
 \end{tabular}$ \\ \hline
 $17$ & $\begin{tabular}{l}
-$ {\left| y_{0}^{2} \right|} $ \\
 $ 3 \, {\left| y_{0}^{2} \right|} $ \\
-\end{tabular}$ & $\begin{tabular}{l}
-$ y_{0} \notin \left\{ -1,1 \right\} $ \\
+$ {\left| y_{0} \right|}^{2} $ \\
+\end{tabular}$ & $3$ & $3$ & $\begin{tabular}{l}
  \\
+$ y_{0} \notin \left\{-1,1\right\} $ \\
 \end{tabular}$ \\ \hline
 \end{tabular}
 \end{scriptsize}

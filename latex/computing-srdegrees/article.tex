@@ -362,7 +362,7 @@ For plane groups, the defining cocycle is annihilated by $m=2$, yielding a degre
 
 \section{Computing self-replicating degrees of crystallographic groups}\label{sec:computations}
 
-In the previous section we characterized the self-covering and self-replicating degrees of a crystallographic group. We now develop a computational method to determining these values for a given group.
+In the previous section we characterized the self-covering and self-replicating degrees of crystallographic groups. We now develop a computational method to determining these values for a given group.
 
 %Let $G$ be a crystallographic group. We consider two sets of positive integers associated with $G$:
 %\begin{align*}
@@ -388,7 +388,7 @@ $a=(A,t)\in \mathbf{A}(n)$ such that $d=|\det A|$ and $aGa^{-1}\leq G$. This con
   \item[(\textit{CC})] Cocycle compatibility: for every $B\in P$,
 \[ %begin{equation}%\label{eqn:cocycle_compatibility}
 \alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B)  \mod \mathbb{Z}^n.
-\] 
+\]
 \end{enumerate}
 To determine the possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying (\textit{PC}) and then determine which of them admit a translation $t$ satisfying (\textit{CC}). Note that for symmorphic groups, the condition (\textit{CC}) is vacuous.
 
@@ -445,12 +445,12 @@ Conversely, consider the Smith normal form of $M$:
 \[
 UMV=D=\operatorname{diag}(d_1,\dots,d_r,0,\dots,0),\quad d_i>0,
 \]
-where $U \in \mathrm{GL}_N(\mathbb{Z})$ and $V \in \mathrm{GL}_n(\mathbb{Z})$. 
+where $U \in \mathrm{GL}_N(\mathbb{Z})$ and $V \in \mathrm{GL}_n(\mathbb{Z})$.
 The condition $Mt-b\in\mathbb Z^N$ is equivalent to
 $Dt'-b'\in\mathbb Z^N$, where $t'=V^{-1}t$ and $b'=Ub$.
 For $1\le i\le r$, the congruence $d_it'_i\equiv b'_i\pmod{\mathbb Z}$
 always has a rational solution $t'_i=b'_i/d_i$. Thus, the system is solvable if and only if
-$b'_i\in\mathbb Z$ for every $i>r$. 
+$b'_i\in\mathbb Z$ for every $i>r$.
 
 Let $u_i$ denote the $i$-th row of $U$. For $i>r$, the corresponding $i$-th row of $D$ is identically zero, implying $u_i M = 0$. By assumption, this gives $b'_i = u_i b \in \mathbb{Z}$ for every $i > r$. Therefore, the transformed system is solvable, and equivalently, so is the original system.
 \end{proof}
@@ -491,7 +491,7 @@ Let $u_i(M)$ denote the $i$-th row of $U$. The system $Mt \equiv b \pmod{\mathbb
 %  for every $i > r$ $u_i(M)b\in \mathbb{Z}$, where $r$ is the rank of $M$.
 %\end{corollary}
 
-This gives us a constructive way to eliminate the rational vector $t$ from the system (\ref{eqn:cocycle_condition}), reducing it to a finite system of linear congruences in the integer variables $x_i$. Let $b(x_1, \dots, x_m)$ be the stacked column vector 
+This gives us a constructive way to eliminate the rational vector $t$ from the system (\ref{eqn:cocycle_condition}), reducing it to a finite system of linear congruences in the integer variables $x_i$. Let $b(x_1, \dots, x_m)$ be the stacked column vector
 \[
 b_B(x_1, \dots, x_m) = \sum_{i=1}^{m} x_i X_i \alpha(B) - \alpha(\sigma(B)).
 \]
@@ -508,9 +508,10 @@ The determinant of $Y$ can be expressed as an integer polynomial $f_\sigma(y_1, 
 
 We obtain the following description for the sets of self-covering and self-replicating degrees:
 \begin{align*}
-SCD(G)&=\{ |\det A| : A\in \mathcal{Y}\}=\{ |f_\sigma(y_1,\ldots, y_k)| : y_i\in\mathbb{Z} \mbox{ and }
-  \sigma\in Aut(P) \},\\
-SRD(G)&=\{ |\det A| : A\in \mathcal{Y} \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
+SCD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}\, \text{ and } \det A\neq 0 \}=\\
+&=\{ |f_\sigma(y_1,\ldots, y_k)| : y_i\in\mathbb{Z}, \sigma\in Aut(P), \text{ and } 
+f_\sigma(y_1,\ldots, y_k) \neq 0 \},\\
+SRD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}, \det A \neq 0, \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
 \end{align*}
 The set of integer values of a multivariate integer polynomial generally admits no simple or computable arithmetic description. Determining whether a given integer $d$ belongs to $SCD(G)$ amounts to deciding the solvability of the Diophantine equation $|f_\sigma(y_1,\ldots, y_k)|=d$ for some $\sigma\in Aut(P)$. By Matiyasevich's theorem on Hilbert's Tenth Problem, such questions are undecidable for arbitrary polynomials. It remains open whether this problem is decidable in our specific geometric setting:
 
@@ -530,15 +531,22 @@ problem.
 
 \section{Plane groups}\label{sec:planar}
 
-In this section we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in the dimension two.
-A determinant of the unknown $2\times2$ matrix $f_\sigma$ is a quadratic form of $4$ or less variables and, in general
-case, is a complex object to determine values over integrals. The explicit computation of matrices $\mathcal{X}$
-satisfying condition (\textit{PC}) reveals that for the most plane groups the determinant $f_\sigma$ is a quadratic polynomial
-of 1 or 2 variables (Appendix \ref{app:all_norm_dim2}). The exception, however, are groups p1 (No.1) and p2 (No.2),
-whose point groups commute with every possible $2\times2$ matrix and have trivial cocycle condition. For these groups
-$SCD$ and $SRD$ contain every positive integer greater than 1, which will be shown later.
+There are 17 plane groups (also known as wallpaper groups). We calculated the set of matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})--(\textit{CC}) for each group, the full list of which is provided in Appendix~\ref{app:all_norm_dim2}. For the groups $p1$ and $p2$, we have $\mathcal{Y}=M_2(\mathbb{Z})$, and thus every positive integer occurs as a self-covering degree.
+For all the other plane groups, the polynomials $f_\sigma$ depend on at most $2$ variables and can be solved explicitly. Table~\ref{tab:planar_srdegrees} presents the computed polynomials
+$f_\sigma$ together with an explicit description of $SCD(G)$ for every plane group.
 
-We reduce the condition on the eigenvalues in general case to a simpler arithmetic condition:
+%The naming conventions are taken from the
+%International Tables for Crystallography, Volume A \cite{CrystTables}, short ITA.
+
+%In this section we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in the dimension two.
+%A determinant of the unknown $2\times2$ matrix $f_\sigma$ is a quadratic form of $4$ or less variables and, in general
+%case, is a complex object to determine values over integrals. The explicit computation of matrices $\mathcal{X}$
+%satisfying condition (\textit{PC}) reveals that for the most plane groups the determinant $f_\sigma$ is a quadratic polynomial
+%of 1 or 2 variables (Appendix \ref{app:all_norm_dim2}). The exception, however, are groups p1 (No.1) and p2 (No.2),
+%whose point groups commute with every possible $2\times2$ matrix and have trivial cocycle condition. For these groups
+%$SCD$ and $SRD$ contain every positive integer greater than 1, which will be shown later.
+
+To describe the set of self-replicating degrees, we reduce the eigenvalue condition to a simpler arithmetic criterion.
 
 \begin{proposition}\label{propos:planar-srdegrees}
   Let $A\in M_2(\mathbb{Z})$ and $\det(A)\neq 0$. No eigenvalue of $A^{-1}$ is an algebraic integer if and only if
@@ -562,73 +570,76 @@ We reduce the condition on the eigenvalues in general case to a simpler arithmet
   \]
 \end{proof}
 
-The trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}) can be expressed by the
-linear combination $g_\sigma(y_1,\ldots,y_r)$. This leads us to the following characterization of $SRD(G)$:
+We define the linear form $g_\sigma(y_1,\ldots,y_k)$ as the trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}). Then $SRD(G)$ admits the following characterization:
 \begin{align*}
-  SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_r)|>1 \ : & \ \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
-  & \quad ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_r)\neq -1 \big\}.
+  SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_k)| : & \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
+  &  f_\sigma(y_1,\ldots, y_k)\notin\{0, 1, -1\} \text{ and } ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_k)\neq -1 \big\}.
 \end{align*}
-For the case p1 and p2, the condition is the widest:
-\[
-  SRD(G_{1,2}) = \big\{ | y_1y_4 - y_2y_3 |>1 \ :  \  y_i\in\mathbb{Z} \text{ and } y_1y_4 - y_2y_3 \pm (y_1 + y_4) \neq -1 \big\}.
-\]
-It is easy to show that it represents every positive integer setting $y_1=y_4=0,\  y_2=n>1, \ y_3=1$, i.e. for
-the matrices of a kind $\begin{pmatrix}0 & n \\ 1 & 0\end{pmatrix}$.
-
-For the remaining 15 plane groups the calculated matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})-(\textit{CC})
-are given in the Appendix \ref{app:all_norm_dim2}. The generators and naming conventions are taken from the
-International Tables for Crystallography, Volume A \cite{CrystTables}, that hereafter will be reffered to as ITA.
-As it was already mentioned, the polynomials $f_\sigma$
-and $g_\sigma$ contain at most 2 variables, hence the equation $f_\sigma \pm g_\sigma \neq -1$ can be solved automatically
-\cite{quadratic_polys}. Consequently, the Table \ref{tab:planar_srdegrees} presents the computed polynomials
-$f_\sigma$ for every plane group --- effectively the description of $SCD$ --- and the computed solutions for
-$f_\sigma \pm g_\sigma \neq -1$, which combined with $f_\sigma$ is the description of $SRD$. Additionaly,
-the $MinSCD$ and $MinSRD$ are computed and are provided in the Table \ref{tab:min_srdegrees}.
+For the groups $p1$ and $p2$, every integer $d\geq 2$ occurs as a self-replicating degrees.
+For all other plane groups, the polynomials $f_\sigma$ and $g_\sigma$ depend on at most $2$ variables; thus the inequalities $f_\sigma\not\in \{0,1,-1\}$ and $f_\sigma \pm g_\sigma \neq -1$ can be solved explicitly.
+Table \ref{tab:planar_srdegrees} presents the computed polynomials
+$f_\sigma$ and $g_\sigma$, the excluded set of integer solutions that violate these inequalities, and the smallest self-replicating degree for each group.
 
 %\subsection{Example: Plane Group 7 p2mg}
 \begin{example}
-The Group 7 $p2mg$ according to ITA is generated by three elements:
-$$G_7 = \left\langle\left(\begin{array}{rr|r}
+The plane group $p2mg$ (ITA No.~7) is generated by
+\[
+G_7 = \left\langle\left(\begin{array}{rr|r}
 1 & 0 & 1 \\
 0 & 1 & 0 \\
 \end{array}\right),\left(\begin{array}{rr|r}
 -1 & 0 & 1/2 \\
 0 & 1 & 0 \\
-\end{array}\right)\left(\begin{array}{rr|r}
+\end{array}\right),\left(\begin{array}{rr|r}
 -1 & 0 & 0 \\
 0 & -1 & 0 \\
-\end{array}\right)  \right\rangle = \langle a,b,c \rangle$$
-The matrices $\mathcal{X}$ satisfying the condition (\textit{PC}) have one of two possible forms:
-$$A_1 = \left(\begin{array}{rr}
+\end{array}\right)  \right\rangle.
+\]
+The matrices $\mathcal{X}$ satisfying condition (\textit{PC}) have one of two forms:
+\[
+A_1 = \left(\begin{array}{rr}
 0 & x_{1} \\
 x_{0} & 0
-\end{array}\right), \, A_2 = \left(\begin{array}{rr}
+\end{array}\right), \quad A_2 = \left(\begin{array}{rr}
 x_{0} & 0 \\
 0 & x_{1}
-\end{array} \right) \quad   \,  x_0,x_1 \in \mathbb{Q}^*$$
-
-Solving the system of congruences from the cocycle compatibility condition (\textit{CC}) we obtain that for $A_1$ system
-does not have solutions. Conversely, solving the (\textit{CC}) for the $A_2$ we get that $x_0 = 2y_0 + 1, x_1 = y_1, \, y_0,y_1 \in \mathbb{Z}$.
-Therefore, the total set of matrices satisfying the (\textit{PC})-(\textit{CC}) conditions is
-$$\mathcal{Y} = \left\{\left(\begin{array}{rr}
+\end{array} \right), \quad  x_0,x_1 \in \mathbb{Z}.
+\]
+Solving the system of congruences arising from {\textit(CC)}, we find that there are no solutions for matrices of the form $A_1$. For matrices of the form $A_2$, we obtain $x_0 = 2y_0 + 1$ and $x_1 = y_1$ for $y_0,y_1 \in \mathbb{Z}$.
+Therefore, the set of matrices satisfying both (\textit{PC}) and (\textit{CC}) is given by:
+\[
+\mathcal{Y} = \left\{\left(\begin{array}{rr}
 2y_0 + 1 & 0 \\
 0 & y_1
-\end{array} \right) \, : \,  y_0, y_1 \in \mathbb{Z} \right\}$$
-and the self-covering degrees can be expressed as the determinants:
-$$SCD = \{ |\det(A_2)| = |(2y_0 + 1) y_1| > 1, \, |\,  y_0, y_1 \in \mathbb{Z}\} = \mathbb{N}^+$$
-where $\mathbb{N}^+ = \mathbb{N} / \{1\}$.
-The inverse $A_2^{-1}$ fits the condition on eigenvalues by Proposition \ref{propos:planar-srdegrees}
-if and only if $|2y_0+1| > 0$ and $|y_1| > 1$. As a result,
-$$SRD = \{ (2k + 1)(m+1) \, | \, k,m \in \mathbb{N}\}$$
-or, in other words, $n \in SRD$ if $n$ is not prime and not a power of 2.
-In particular, the minimal self-replicating degree is 6 which is attained for $y_0 = 1, y_1 = 2$.
+\end{array} \right) \, : \,  y_0, y_1 \in \mathbb{Z} \right\},
+\]
+and the set of self-covering degrees is 
+\[
+SCD(G_7) = \{ |(2y_0 + 1) y_1| :  y_0, y_1 \in \mathbb{Z} \text{ and } (2y_0 + 1)y_1\neq 0 \} = \mathbb{N}.
+\]
+
+By Proposition~\ref{propos:planar-srdegrees}, the condition that $A_2$ has no eigenvalue whose inverse is an algebraic integer is equivalent to the system
+\begin{align*}
+(2y_0 + 1) y_1 & \neq 0, \pm 1, \\
+(2y_0 + 1) y_1 \pm (2y_0+1+y_1) & \neq -1.
+\end{align*}
+The solution set is given by:
+\[
+y_0\not\in\{-1,0\} \ \text{ and } \ y_1\not\in\{-1,0,1\}.
+\]
+Consequently, the set of self-replicating degrees is given by:
+\[
+SRD(G_7) = \{ (2y_0 + 1)(y_1+1) \, | \, y_0,y_1 \in \mathbb{N}\}=\{6, 9, 10, 12, 14, 15, 18, \dots\},
+\]
+which consists of all composite positive integers that are not powers of $2$. In particular, the smallest self-replicating degree of $G_7$ is equal to $6$.
 \end{example}
 
 
 %\subsection{Example: Plane Group 13 p3}
 \begin{example}
-The Group 13 p3 according to ITA is generated by three elements as well:
-$$G_{13} = \left\langle\left(\begin{array}{rr|r}
+The plane group $p3$ (ITA No.~13) is generated by
+\[
+G_{13} = \left\langle\left(\begin{array}{rr|r}
 0 & -1 & 0 \\
 1 & -1 & 0 \\
 \end{array}\right), \left(\begin{array}{rr|r}
@@ -637,52 +648,63 @@ $$G_{13} = \left\langle\left(\begin{array}{rr|r}
 \end{array}\right), \left(\begin{array}{rr|r}
 1 & 0 & 0 \\
 0 & 1 & 1 \\
-\end{array}\right)\right\rangle$$
-The matrices $\mathcal{X}$ satisfying the condition (\textit{PC}) again have one of two possible forms:
-$$
+\end{array}\right)\right\rangle.
+\]
+The matrices $\mathcal{X}$ satisfying (\textit{PC}) have one of the following two forms:
+\[
 A_1 = \left(\begin{array}{rr}
 -x_{0} & x_{0} + x_{1} \\
 x_{1} & x_{0}
 \end{array}\right), \, A_2 = \left(\begin{array}{rr}
 x_{0} + x_{1} & -x_{0} \\
 x_{0} & x_{1}
-\end{array}\right), \quad x_0,x_1 \in \mathbb{Z}
-$$
-The group $G_{13}$ is symmorphic, i.e. $G_{13} = P \ltimes \mathbb{Z}^2$, from which follows that congruences from (\textit{CC})
-are trivial. Both $A_1$ and $A_2$ have the same determinant up to the negation sign, so the set of self-covering degrees is
-$$
-SCD = \{ |\det(A_1)|, |\det(A_2)|\} = \{ |x_{0}^{2} + {\left(x_{0} + x_{1}\right)x_1}| > 1 \, : \, x_0, x_1 \in \mathbb{Z}\}.
-$$
+\end{array}\right), \quad x_0,x_1 \in \mathbb{Z}.
+\]
+The group $G_{13}$ is symmorphic, i.e. $G_{13} = P \ltimes \mathbb{Z}^2$, and the condition (\textit{CC})
+is vacuous. Observe that $|\det(A_1)|=|\det(A_2)|=|x_0^2 + x_0x_1 + x_1^2|$. Therefore, the set of self-covering degrees is given by:
+\begin{align*}
+SCD(G_{13}) &= \{ \vert{}x_0^2 + x_0x_1 + x_1^2\vert{} : x_0, x_1 \in \mathbb{Z} \text{ and } x_0^2 + x_0x_1 + x_1^2 \neq 0 \}=\\
+&= \{ 1, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16, 18, 19, 21, \dots \}.
+\end{align*}
+These are precisely the positive L\"oschian numbers (OEIS A003136): the integers $d$ such that, in the prime factorization of $d$, every prime factor $p \equiv 2 \pmod 3$ has an even exponent.
 
-The SRD condition on eigenvalues of $A_1$ by Proposition \ref{propos:planar-srdegrees}
-depends on the following diophantine equations:
+By Proposition~\ref{propos:planar-srdegrees}, the condition that $A_1$ have no eigenvalue whose inverse is an algebraic integer is equivalent to the system
 \begin{align*}
-x_{0}^{2} + {\left(x_{0} + x_{1}\right)} x_{1} & \neq \pm 1 \\
-x_{0}^{2} + {\left(x_{0} + 2\right)} x_{1} + x_{1}^{2} + x_{0} & \neq -1 \\
-x_{0}^{2} + {\left(x_{0} - 2\right)} x_{1} + x_{1}^{2} - x_{0} & \neq -1.
+x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
+-(x_{0}^{2} + x_{0}x_1 + x_{1}^2)  & \neq -1.
 \end{align*}
-The solution is a finite set of pairs
-$$
+\[
 (x_0, x_1) \notin
-\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
-$$
-Likewise, the condition on eigenvalues of $A_2$ depends on the following equations:
+\left\{(0, 0), \left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
+\]
+The analogous conditions for $A_2$ gives the system
 \begin{align*}
--{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} & \neq \pm 1 \\
--x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1 \\
--x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1
+x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
+x_{0}^{2} + x_{0}x_1 + x_{1}^2 \pm (x_0+2x_1) & \neq -1,
 \end{align*}
-and the solution is again a finite set of pairs
-$$
-(x_0, x_1) \notin
-\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
-$$
+having the same exceptional solution set. The values of $\vert{}x_0^2 + x_0x_1 + x_1^2\vert{}$ evaluated at all integer pairs $(x_0, x_1) \in \mathbb{Z}^2$ outside of the $7$ excluded pairs are all L\"oschian numbers greater than $1$. Consequently, the set of self-replicating degrees is given by:
+\begin{align*}
+SRD(G_{13}) =  \big\{  |x_{0}^{2} + x_{0}x_1 + x_{1}^2| \, :  \, x_0, x_1 & \in \mathbb{Z} \text{ and } |x_0^2 + x_0x_1 + x_1^2| \neq 0,1 \big\}.
+\end{align*}
+In particular, the smallest self-replicating degree of $G_{13}$ is equal to $3$.
 
-As a result, we get the description of self-replicating degrees as follows:
-\begin{align*}
-SRD =  \big\{  |x_0^2 + \left(x_0 + x_1\right)x_1| > 1 \, :  \, x_0, x_1 & \in \mathbb{Z}, \\
- (x_0, x_1) & \notin [(0, 1), (-1, 1), (1, -1), (-1, 0), (1, 0), (0, -1)] \big\}
-\end{align*}
+%Likewise, the condition on eigenvalues of $A_2$ depends on the following equations:
+%\begin{align*}
+%-{\left(x_{0} + x_{1}\right)} x_{0} - x_{1}^{2} & \neq \pm 1 \\
+%-x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1 \\
+%-x_{0}^{2} - x_{0} x_{1} - x_{1}^{2} & \neq -1
+%\end{align*}
+%and the solution is again a finite set of pairs
+%$$
+%(x_0, x_1) \notin
+%\left\{\left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
+%$$
+%
+%As a result, we get the description of self-replicating degrees as follows:
+%\begin{align*}
+%SRD =  \big\{  |x_0^2 + \left(x_0 + x_1\right)x_1| > 1 \, :  \, x_0, x_1 & \in \mathbb{Z}, \\
+% (x_0, x_1) & \notin [(0, 1), (-1, 1), (1, -1), (-1, 0), (1, 0), (0, -1)] \big\}
+%\end{align*}
 \end{example}
 
 

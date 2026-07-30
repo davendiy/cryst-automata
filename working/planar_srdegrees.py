@@ -4,20 +4,47 @@ from src.space_groups import prepare_gap_env
 from src.srdegrees import SR_Degrees
 
 
+def stack_solutions(pairs):
+    if len(pairs) <= 6:
+        return r'\left\{' + ','.join(latex(par) for par in pairs) + r'\right\}'
+    else:
+        n = 4
+        res = r'\left\{\begin{array}{' + 'r'*n + r'}' + '\n'
+
+        for i in range(0, len(pairs), n):
+            row = [latex(el) + ',' for el in pairs[i: i + n]]
+            if len(row) != n:
+                row = row + ['' for _ in range(n - len(row))]
+            else:
+                row[-1] = row[-1].strip(',')
+
+            assert len(row) == n
+            res += ' & '.join(row)
+            res += r' \\' + '\n'
+
+        return res + r'\end{array}\right\}'
+
+
 def uncover(el):
     if isinstance(el, list) or isinstance(el, tuple):
         if len(el) == 1:
             return el[0]
-
     return el
 
 
 prepare_gap_env()
 
+min_scd = [2, 2, 2, 2, 3, 2, 2, 3, 3, 2, 2, 9, 3, 4, 4, 3, 3]
+min_srd = [2, 2, 4, 6, 4, 2, 6, 3, 3, 2, 2, 9, 3, 4, 4, 3, 3]
+
 FULL = False
 verbose = 2 if FULL else 0
 
-general_table = [[r"Group No. \footnotemark[1]{}", r"SCD", r"SRD restriction"]]
+general_table = [
+    [r"No. \footnotemark[1]{}", r"$SCD$", "$MinSCD$", "$MinSRD$", r"$SRD$ restriction"],
+    ["1", r"$|y_0y_3 - y_1y_2|$", min_scd[0], min_srd[0], r"$\dots$",],
+    ["2", r"$|y_0y_3 - y_1y_2|$", min_scd[1], min_srd[1], r"$\dots$",],
+]
 
 sr = SR_Degrees(1, method='latex', verbose=verbose)
 
@@ -64,8 +91,7 @@ for n in range(2, 18):
 
         # / {(-1, 1), (1, 1), (0, 0)}
         new_arr = var + r'\notin' + r"\left\{"
-        new_arr += ','.join(latex(uncover(tuple(sol))) for sol in el[2])
-        new_arr += r'\right\}'
+        new_arr = var + r'\notin' + stack_solutions([uncover(tuple(sol)) for sol in el[2]])
         el[2] = "$" + new_arr + "$"
 
         smaller_table.add(
@@ -75,7 +101,13 @@ for n in range(2, 18):
 
     if smaller_table:
         # general_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
-        general_table.append([n, table([[el[0]] for el in smaller_table]), table([[el[1]] for el in smaller_table])])
+        general_table.append([
+            n,
+            table([[el[0]] for el in smaller_table]),
+            min_scd[n-1],
+            min_srd[n-1],
+            table([[el[1]] for el in smaller_table]),
+        ])
 
     res_table = table(res_table, header_row=True, frame=True)
 
