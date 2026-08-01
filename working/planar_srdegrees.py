@@ -1,4 +1,4 @@
-from sage.all import latex, table
+from sage.all import latex, table, var, matrix
 
 from src.space_groups import prepare_gap_env
 from src.srdegrees import SR_Degrees
@@ -40,10 +40,13 @@ min_srd = [2, 2, 4, 6, 4, 2, 6, 3, 3, 2, 2, 9, 3, 4, 4, 3, 3]
 FULL = False
 verbose = 2 if FULL else 0
 
+y0, y1, y2, y3 = var('y0 y1 y2 y3')
+gen_mat = matrix([[y0, y1], [y2, y3]])
+
 general_table = [
-    [r"No. \footnotemark[1]{}", r"$SCD$", "$MinSCD$", "$MinSRD$", r"$SRD$ restriction"],
-    ["1", r"$|y_0y_3 - y_1y_2|$", min_scd[0], min_srd[0], r"$\dots$",],
-    ["2", r"$|y_0y_3 - y_1y_2|$", min_scd[1], min_srd[1], r"$\dots$",],
+    [r"No. \footnotemark[1]{}", r"$A \in \mathcal{Y}$", r"$f_\sigma$", "$MinSRD$", r"$SRD$ restriction"],
+    ["1", gen_mat, r"$|y_0y_3 - y_1y_2|$", min_srd[0], r"$\dots$",],
+    ["2", gen_mat, r"$|y_0y_3 - y_1y_2|$", min_srd[1], r"$\dots$",],
 ]
 
 sr = SR_Degrees(1, method='latex', verbose=verbose)
@@ -57,7 +60,7 @@ for n in range(2, 18):
     eig_table, res_table = sr.sr_degrees()
     eig_table = table(eig_table, header_row=True, frame=True)
 
-    smaller_table = set()
+    smaller_table = dict()
     used_polys = set()
     for el in res_table[1:]:
 
@@ -86,7 +89,7 @@ for n in range(2, 18):
         used_polys.add(latex(-el[1]))
 
         if not el[2]:
-            smaller_table.add(("$" + inz + "$", ""))
+            smaller_table[("$" + inz + "$", "")] = el[0]
             continue
 
         # / {(-1, 1), (1, 1), (0, 0)}
@@ -94,17 +97,17 @@ for n in range(2, 18):
         new_arr = var + r'\notin' + stack_solutions([uncover(tuple(sol)) for sol in el[2]])
         el[2] = "$" + new_arr + "$"
 
-        smaller_table.add(
+        smaller_table[
                 ('$' + inz + '$', '$' + new_arr + '$')
                 # r"$" + inz.rstrip(r'\right\}') + r"\, / \," + new_arr + r'\right\}' + "$",
-        )
+        ] = el[0]
 
     if smaller_table:
         # general_table.append([n, table([[el] for el in smaller_table])])  # type: ignore
         general_table.append([
             n,
+            table([[v] for v in smaller_table.values()]),
             table([[el[0]] for el in smaller_table]),
-            min_scd[n-1],
             min_srd[n-1],
             table([[el[1]] for el in smaller_table]),
         ])
@@ -124,9 +127,9 @@ for n in range(2, 18):
 
 # print(r'\newpage')
 print(r'\begin{table}[H]')
-print(r'\begin{scriptsize}')
+print(r'\begin{tiny}')
 print(latex(table(general_table, header_row=True, frame=True)))
-print(r'\end{scriptsize}')
+print(r'\end{tiny}')
 print(r'\caption{Self-covering and self-replicating degrees for plane groups.}')
 print(r'\label{tab:planar_srdegrees}')
 print(r'\end{table}')

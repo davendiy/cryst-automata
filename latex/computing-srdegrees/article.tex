@@ -509,7 +509,7 @@ The determinant of $Y$ can be expressed as an integer polynomial $f_\sigma(y_1, 
 We obtain the following description for the sets of self-covering and self-replicating degrees:
 \begin{align*}
 SCD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}\, \text{ and } \det A\neq 0 \}=\\
-&=\{ |f_\sigma(y_1,\ldots, y_k)| : y_i\in\mathbb{Z}, \sigma\in Aut(P), \text{ and } 
+&=\{ |f_\sigma(y_1,\ldots, y_k)| : y_i\in\mathbb{Z}, \sigma\in Aut(P), \text{ and }
 f_\sigma(y_1,\ldots, y_k) \neq 0 \},\\
 SRD(G)&=\{ |\det A|\neq 0 : A\in \mathcal{Y}, \det A \neq 0, \mbox{ and no eigenvalue of $A^{-1}$ is an algebraic integer}\}.
 \end{align*}
@@ -531,7 +531,7 @@ problem.
 
 \section{Plane groups}\label{sec:planar}
 
-There are 17 plane groups (also known as wallpaper groups). We calculated the set of matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})--(\textit{CC}) for each group, the full list of which is provided in Appendix~\ref{app:all_norm_dim2}. For the groups $p1$ and $p2$, we have $\mathcal{Y}=M_2(\mathbb{Z})$, and thus every positive integer occurs as a self-covering degree.
+There are 17 plane groups (also known as wallpaper groups). We computed the set of matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})--(\textit{CC}) for each group, the full list of which is provided in Appendix~\ref{app:all_norm_dim2}. For the groups $p1$ and $p2$, we have $\mathcal{Y}=M_2(\mathbb{Z})$, and thus every positive integer occurs as a self-covering degree.
 For all the other plane groups, the polynomials $f_\sigma$ depend on at most $2$ variables and can be solved explicitly. Table~\ref{tab:planar_srdegrees} presents the computed polynomials
 $f_\sigma$ together with an explicit description of $SCD(G)$ for every plane group.
 
@@ -572,7 +572,7 @@ To describe the set of self-replicating degrees, we reduce the eigenvalue condit
 
 We define the linear form $g_\sigma(y_1,\ldots,y_k)$ as the trace of a matrix $Y\in \mathcal{Y}_\sigma$ written in the form (\ref{eqn:Y_sum_Yi}). Then $SRD(G)$ admits the following characterization:
 \begin{align*}
-  SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_k)| : & \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
+  SRD(G) = \big\{ | f_\sigma(y_1,\ldots, y_k)| \, : \, & \sigma\in Aut(P) \text{ and } y_i\in\mathbb{Z} \text{ such that } \\
   &  f_\sigma(y_1,\ldots, y_k)\notin\{0, 1, -1\} \text{ and } ( f_\sigma \pm g_\sigma)(y_1,\ldots,y_k)\neq -1 \big\}.
 \end{align*}
 For the groups $p1$ and $p2$, every integer $d\geq 2$ occurs as a self-replicating degrees.
@@ -613,7 +613,7 @@ Therefore, the set of matrices satisfying both (\textit{PC}) and (\textit{CC}) i
 0 & y_1
 \end{array} \right) \, : \,  y_0, y_1 \in \mathbb{Z} \right\},
 \]
-and the set of self-covering degrees is 
+and the set of self-covering degrees is
 \[
 SCD(G_7) = \{ |(2y_0 + 1) y_1| :  y_0, y_1 \in \mathbb{Z} \text{ and } (2y_0 + 1)y_1\neq 0 \} = \mathbb{N}.
 \]
@@ -673,6 +673,7 @@ By Proposition~\ref{propos:planar-srdegrees}, the condition that $A_1$ have no e
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
 -(x_{0}^{2} + x_{0}x_1 + x_{1}^2)  & \neq -1.
 \end{align*}
+The excluded set of solutions is:
 \[
 (x_0, x_1) \notin
 \left\{(0, 0), \left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
@@ -682,7 +683,7 @@ The analogous conditions for $A_2$ gives the system
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 \pm (x_0+2x_1) & \neq -1,
 \end{align*}
-having the same exceptional solution set. The values of $\vert{}x_0^2 + x_0x_1 + x_1^2\vert{}$ evaluated at all integer pairs $(x_0, x_1) \in \mathbb{Z}^2$ outside of the $7$ excluded pairs are all L\"oschian numbers greater than $1$. Consequently, the set of self-replicating degrees is given by:
+having the same solution set. The values of $\vert{}x_0^2 + x_0x_1 + x_1^2\vert{}$ evaluated at all integer pairs $(x_0, x_1) \in \mathbb{Z}^2$ outside of the $7$ excluded pairs are all L\"oschian numbers greater than $1$. Consequently, the set of self-replicating degrees is given by:
 \begin{align*}
 SRD(G_{13}) =  \big\{  |x_{0}^{2} + x_{0}x_1 + x_{1}^2| \, :  \, x_0, x_1 & \in \mathbb{Z} \text{ and } |x_0^2 + x_0x_1 + x_1^2| \neq 0,1 \big\}.
 \end{align*}
@@ -710,58 +711,55 @@ In particular, the smallest self-replicating degree of $G_{13}$ is equal to $3$.
 
 \section{Space Groups}\label{sec:space}
 
-A similar approach for describing the sets $SCD$ and $SRD$ is possible for dimension 3. Although every polynomial
-$f_\sigma$ has degree 3 and can not be solved in general case, the explicit computation of matrices $\mathcal{X}$
-similarly restricts the amount of free variables. Moreover, we can reduce the condition on the eigenvalues
-to the two-dimensional case and the Proposition \ref{propos:planar-srdegrees}.
+There are 230 space groups. We computed the set of matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})--(\textit{CC}) together with the corresponding multivariable polynomials $f_{\sigma}$ for each group. Although every polynomial $f_\sigma$ is cubic and cannot be solved explicitly in general, we show how to reduce the problem to the two-dimensional case and apply Proposition \ref{propos:planar-srdegrees}.
 
-% \subsection{Reducing to the plane case}
+%
+%A similar approach for describing the sets $SCD$ and $SRD$ is possible for dimension 3. Although every polynomial
+%$f_\sigma$ has degree 3 and can not be solved in general case, the explicit computation of matrices $\mathcal{X}$
+%similarly restricts the amount of free variables. Moreover, we can reduce the condition on the eigenvalues
+%to the two-dimensional case and the Proposition \ref{propos:planar-srdegrees}.
 
-Let $A$ be an arbitrary $3\times 3$ integral matrix.
-$$
-  A = \left(\begin{array}{rrr}
-  x_{0} & x_{1} & x_{2} \\
-  x_{3} & x_{4} & x_{5} \\
-  x_{6} & x_{7} & x_{8}
-  \end{array}\right)
-$$
-Its characteristic polynomial is written as:
-$$
-  \chi_A(x) = x^3 -\tr(A)x^2 + \tau(A)x + \det(A).
-$$
-$$
-  \chi_{A^{-1}}(x)= x^3 - \frac{\tau(A)}{\det(A)}x^2 + \frac{\tr(A)}{\det(A)}x + \frac{1}{\det(A)}.
-$$
-where $\tau(A) := (-x_1x_3 + x_0x_4 - x_2x_6 - x_5x_7 + x_0x_8 + x_4x_8)$.
+Consider an arbitrary integral $3\times3$ matrix
+\[
+A=
+\begin{pmatrix}
+x_0 & x_1 & x_2\\
+x_3 & x_4 & x_5\\
+x_6 & x_7 & x_8
+\end{pmatrix}.
+\]
+Its characteristic polynomial is
+\begin{align*}
+\chi_A(x) &= x^3-\tr(A)x^2+\tau(A)x-\det(A), \ \text{ where}\\
+\tau(A) &= x_0x_4-x_1x_3 +x_0x_8-x_2x_6 +x_4x_8-x_5x_7.
+\end{align*}
+Consequently,
+\[
+\chi_{A^{-1}}(x) = x^3 -\frac{\tau(A)}{\det(A)}x^2 +\frac{\tr(A)}{\det(A)}x -\frac{1}{\det(A)}.
+\]
 
-Let $G$ be a space group with a point group $P < GL_3(\mathbb{Z})$ and $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
+
+Let $G$ be a space group with translation lattice $\mathbb{Z}^3$ and point group $P < GL_3(\mathbb{Z})$. Let $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
 a family of matrices satisfying conditions (\textit{PC})-(\textit{CC}), written in the form (\ref{eqn:Y_sum_Yi})
-for a fixed automorphism $\sigma \in Aut(P)$. Writing down explicit forms of $Y$ for every $\sigma$ for every
-crystallographic group $G$ we get that either
+for a fixed automorphism $\sigma \in Aut(P)$. Our computations show that, for every
+space group $G$ and every $\sigma\in\operatorname{Aut}(P)$, one of the following holds:
 \begin{itemize}
-  \item (case 1) $Y$ is a block-triangular matrix;
-  \item (case 2) $\tr(Y) = \tau(Y) = 0$.
+\item[(1)] $\tr(Y)=\tau(Y)=0$;
+\item[(2)] $Y$ is block triangular.
 \end{itemize}
-The full list of possible matrices $X \in \mathcal{X}_\sigma$ satisfying conditions (\textit{PC})--(\textit{LC}) for every point group
-one can find in the Appendix \ref{app:all_norm_dim3}. The full list of $Y \in \mathcal{Y}_\sigma$ is omitted due to the
-large variety\footnotemark[1]{}.
+The complete list of the families $Y \in \mathcal{Y}_\sigma$ is omitted due to their large variety\footnotemark[1]{}.
 
 \footnotetext[1]{All the source code is provided on the author's Github: \href{https://github.com/davendiy/cryst-automata/}{https://github.com/davendiy/cryst-automata/}}
 
-The second case is simplier. Since $\tau(Y)=\tr(Y)=0$, the characteristic polynomial of $Y^{-1}$ becomes depressed:
+Consider the first case. Since $\tau(Y)=\tr(Y)=0$, the characteristic polynomial of $Y^{-1}$ reduces to
 \[
-  \chi_{Y^{-1}}(x) = x^3 + 1 / \det(Y)
+\chi_{Y^{-1}}(x) = x^3 - \frac{1}{\det(Y)}.
 \]
-and it is not divisible by a monic polynomial with integral coefficients for $|\det(Y)| > 1$. As a result, the set
-of self-covering degrees equals to the set of self-replicating degrees:
-\begin{equation}\label{eqn:space_case2}
-   SCD = SRD =\{ |f_\sigma(y_1,\ldots, y_r)| > 1 : y_i\in\mathbb{Z} \}
-\end{equation}
-where $f_\sigma = \det(Y)$. The full list of $f_\sigma$ falling into this case are provided in the Appendix \ref{app:space_srdegrees},
-Table \ref{tab:case2_srdegrees0}.
+Hence, if $|\det(Y)|>1$, then $\chi_{Y^{-1}}(x)$ is not divisible by any nonconstant monic polynomial with integral coefficients. It follows that every value of $f_\sigma = \det(Y)$ with $|f_\sigma|>1$ is a self-replicating degree.
+The complete list of $f_\sigma$ falling into this case are provided in Table \ref{tab:case2_srdegrees0} in the appendix.
 
-Now consider closer the first case. Without loss of generality, the matrix $Y$ has the following form:
-$$
+Consider the second case. Without loss of generality, assume that $Y$ has the following form:
+\[
 Y = \begin{pmatrix}
   C & c \\
   0 & p
@@ -770,33 +768,38 @@ Y = \begin{pmatrix}
 Y^{-1} = \begin{pmatrix}
   C^{-1} & d \\
   0      & \frac{1}{p}
-\end{pmatrix}
-$$
-so the determinant is the product of a linear combination $p(y_1, \dots y_r)$
-and a quadratic polynomial $q(y_1, \dots y_r) = \det(C)$. We can also explicitly write the characteristic polynomial
-of the $Y^{-1}$:
-$$
-  \chi_{Y^{-1}}(x) = \chi_{C^{-1}}(x)\left(x - \frac{1}{p}\right) =
-  \left(x^2 - \frac{\tr(C)}{\det(C)}x + \frac{1}{\det(C)}\right)\left(x - \frac{1}{p}\right)
-$$
-Note that this expression also depends on the variables $y_1, \dots y_r$.
-Now we can exploit the Proposition \ref{propos:planar-srdegrees} and write the implicit form of $SRD$
-denoting $g_\sigma(y_1, \dots y_r) := \tr(C)$:
-\begin{equation}\label{eqn:space_case1}
+\end{pmatrix},
+\]
+where $C\in M_2(\mathbb{Z})$. Then 
+$f_\sigma=\det(Y)=p_\sigma\,q_\sigma$, where 
+$p_\sigma(y_1,\ldots,y_k)$ is a linear form and
+$q_\sigma(y_1,\ldots,y_k)=\det(C)$ is a quadratic polynomial. Moreover,
+\[
+\chi_{Y^{-1}}(x) = \chi_{C^{-1}}(x)\left(x - \frac{1}{p}\right) =
+\left(x^2 - \frac{\tr(C)}{\det(C)}x + \frac{1}{\det(C)}\right)\left(x - \frac{1}{p}\right).
+\]
+We now apply Proposition~\ref{propos:planar-srdegrees}. Put 
+$g_\sigma(y_1,\ldots,y_k)=\operatorname{tr}(C)$. Then
+the subset of $SRD(G)$ corresponding to the fixed automorphism $\sigma$ is  
+\begin{equation}\label{eqn:space_case2}
 \begin{aligned}
-  SRD = \big\{ \, |(p_\sigma*q_\sigma)(y_1, \dots y_r)|  > 1 \ :  \ p_\sigma(y_1, \dots y_r) &\neq  \pm 1 \\
-        (q_\sigma \pm g_\sigma)(y_1, \dots y_r) &\neq -1, \,  y_i \in \mathbb{Z} \, \big\}
+\big\{ \, |(p_\sigma q_\sigma)(y_1, \dots y_k)| \ :  \ y_i \in \mathbb{Z} &\text{ such that } \\
+  p_\sigma(y_1, \dots y_k), q_\sigma(y_1, \dots y_k)\not\in\{0,1,-1\} \ &\text{ and } \ (q_\sigma \pm g_\sigma)(y_1, \dots y_k) \neq -1 \, \big\}
 \end{aligned}
 \end{equation}
+Therefore, the contribution of $\sigma$ to $SRD(G)$ is completely determined by the triple
+$(p_\sigma,q_\sigma,g_\sigma)$, whereas the product
+$f_\sigma=p_\sigma q_\sigma$ determines the corresponding self-covering degrees. The complete list of triples $(p_\sigma,q_\sigma,g_\sigma)$ for all space groups is given in Table~?? in the appendix.
 
-Similarly to the plane case, $(q_\sigma \pm g_\sigma) \neq -1$ mostly is a quadratic diophantine equation
-of two variables and can be solved automatically. However, there are 4 unique special matrices that should be assessed
-separately. The first two are variations of the corresponding plane groups p1 and p2:
+In summary, to determine the self-covering and self-replicating degrees of a given crystallographic group $G$, locate the corresponding group number in Tables~\ref{} and~\ref{}. Since a group may appear in several rows, corresponding to different automorphisms $\sigma\in\operatorname{Aut}(P)$, each row contributes a subset of both $SCD(G)$ and $SRD(G)$. For each row of Table~\ref{}, the polynomial $f_\sigma$ determines the corresponding contributions to both $SCD(G)$ and $SRD(G)$. For each row of Table~\ref{}, the product $f_\sigma=p_\sigma q_\sigma$ determines the contribution to $SCD(G)$, whereas the corresponding triple $(p_\sigma,q_\sigma,g_\sigma)$ determines the contribution to $SRD(G)$ via \eqref{eqn:space_case2}. Finally, $SCD(G)$ and $SRD(G)$ are obtained by taking the union of the contributions over all rows corresponding to $G$.
+
+Finally, the Diophantine equations arising in the conditions of (\ref{eqn:space_case2}) admit explicit solutions. 
+In most case, they reduce to quadratic Diophantine equations in two variables, which already appear in Table~\ref{} together with their solution sets. However, there are four exceptional matrices that require a separate analysis. The first two are variations of
 $$X_1 = \left(\begin{array}{rrr}
 z_{0} & 0 & z_{1} \\
 0 & z_{2} & 0 \\
 z_{3} & 0 & z_{4}
-\end{array}\right)
+\end{array}\right),
 \quad
 X_2 = \left(\begin{array}{rrr}
 z_{0} & 0 & 2 \, z_{1} \\
@@ -804,29 +807,25 @@ z_{2} & z_{0} + 2 \, z_{2} & -z_{1} \\
 z_{3} & 0 & z_{4}
 \end{array}\right).
 $$
-The $X_1$ appears as is in the symmorphic groups No. 3, 6, 10, and with some variations in No. 4, 7, 11, 13, 14 after
-substituting solutions for the cocycle compatibility.
-Likewise, the $X_2$ appears as is in the symmorphic groups No. 5, 8, 12, and with some variations in No. 9, 15.
+The matrix $X_1$ occurs in the symmorphic groups Nos.~3, 6, and 10, and in modified form in Nos. 4, 7, 11, 13, and 14, after substituting the solutions for the cocycle compatibility condition.
+Likewise, $X_2$ occurs in the symmorphic groups Nos. 5, 8, and 12, while the modified versions occur in Nos. 9 and 15.
 
-The remaining two contain minors that did not appear in the plane case.
-$$
+The remaining two matrices contain minors that do not appear in the plane case:
+\[
 X_3 = \left(\begin{array}{rrr}
 z_{0} & 0 & 0 \\
 z_{0} + 2 \, z_{1} & z_{0} + 2 \, z_{1} & 2 \, z_{0} + 4 \, z_{1} \\
 -z_{0} - z_{1} & z_{2} & -z_{0} - 2 \, z_{1}
-\end{array}\right)
-\quad
+\end{array}\right),\quad
 X_4 = \left(\begin{array}{rrr}
 z_{0} & 0 & 0 \\
 z_{1} & 0 & z_{0} + 2 \, z_{1} \\
 z_{2} & z_{0} + 2 \, z_{2} & 0
-\end{array}\right)
-$$
-The $X_3$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $, it
-appears in the symmorphic groups No. 22, 69 and with some variations in the group No. 70.
-The $X_4$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)}$,
-it appears in the symmorphic groups No. 23, 71, and with some variations in the groups No. 24, 72, 73, 74. Both have
-the $q_\sigma$ that is a quadratic polynomial of three variables.
+\end{array}\right).
+\]
+The matrix $X_3$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $. It occurs in the symmorphic groups Nos. 22 and 69, and, with some variations, in the group No. 70.
+The matrix $X_4$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)}$.
+It occurs in the symmorphic groups Nos. 23 and 71, and, with some variations, in the groups Nos. 24, 72, 73, and 74. In both cases, $q_\sigma$ is a quadratic polynomial in three variables.
 
 
 % ==============================================================================================
@@ -878,36 +877,7 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 
 \input{table_srdegrees.tex}
 
-\begin{table}[H]
-\begin{footnotesize}
-\centering
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-  $G$            & $MinSCD(G)$ & $MinSRD(G)$ & symmorphic & $f_\sigma$  \\
-\hline
-  Group 1 p1     &    2   &     2    &    +    & $y_0y_2 - y_1 y_3$ \\
-  Group 2 p2     &    2   &     2    &    +    & $y_0y_2 - y_1 y_3$ \\
-  Group 3 p1m1   &    2   &     4    &    +    & $y_0y_1$ \\
-  Group 4 p1g1   &    2   &     6    &         & $y_0(2y_1 - 1)$ \\
-  Group 5 c1m1   &    3   &     4    &    +    & $\left(y_{0} + 2y_{1}\right)y_{0}$ \\
-  Group 6 p2mm   &    2   &     2    &    +    & $y_0y_1$ \\
-  Group 7 p2mg   &    2   &     6    &         & $(2y_0 - 1)y_1$ \\
-  Group 8 p2gg   &    3   &     3    &         & $(2y_0 - 1)(2y_1 + 1)$ \\
-  Group 9 c2mm   &    3   &     3    &    +    & $y_{1}(2y_{0} - y_{1})$ \\
-  Group 10 p4    &    2   &     2    &    +    & $y_0^2 + y_1^2$ \\
-  Group 11 p4mm  &    2   &     2    &    +    & $-2y_0^2$ \\
-  Group 12 p4gm  &    9   &     9    &         & $(2y_0 + 1)^2$ \\
-  Group 13 p3    &    3   &     3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
-  Group 14 p3m1  &    4   &     4    &    +    & $y_0^2$ \\
-  Group 15 p31m  &    4   &     4    &    +    & $y_0^2$ \\
-  Group 16 p6    &    3   &     3    &    +    & $y_0^2 + y_0y_1 + y_1^2$ \\
-  Group 17 p6mm  &    3   &     3    &    +    & $3 y_0^2$ \\
-\hline
-\end{tabular}
-\caption{Minimal self-covering and self-replicating degrees for plane groups}
-\label{tab:min_srdegrees}
-\end{footnotesize}
-\end{table}
+% \input{table_minsrdegrees.tex}
 
 \section{List of all matrices satisfying point group compatibility in dimension 2}\label{app:all_norm_dim2}
 
@@ -918,10 +888,10 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 \section{SCD and SRD for space groups}\label{app:space_srdegrees}
 \input{space_polynoms.tex}
 
-\newpage
-\section{List of all unique matrices satisfying point group compatibility in dimension 3}\label{app:all_norm_dim3}
+% \newpage
+% \section{List of all unique matrices satisfying point group compatibility in dimension 3}\label{app:all_norm_dim3}
 
-\input{table_normalizers_dim3.tex}
+% \input{table_normalizers_dim3.tex}
 
 \end{document}
 
