@@ -903,5 +903,5 @@ _PLANAR_GROUPS_MIN_SR = {
     ]
 }
 
-for k, el in _PLANAR_GROUPS_MIN_SR.items(): 
+for k, el in _PLANAR_GROUPS_MIN_SR.items():
     _PLANAR_GROUPS_MIN_SR[k] = matrix(QQ, el)

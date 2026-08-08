@@ -8,7 +8,7 @@ def stack_solutions(pairs):
     if len(pairs) <= 6:
         return r'\left\{' + ','.join(latex(par) for par in pairs) + r'\right\}'
     else:
-        n = 4
+        n = 3
         res = r'\left\{\begin{array}{' + 'r'*n + r'}' + '\n'
 
         for i in range(0, len(pairs), n):
