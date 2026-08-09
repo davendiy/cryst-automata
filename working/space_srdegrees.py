@@ -211,7 +211,7 @@ with open(filename, 'w') as file:
         print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
         print(r'\end{scriptsize}', file=file)
 
-        print(r'\caption{\textit{SRD}' + f' unique triplets (case 1) {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\caption{\textit{SRD}' + f' unique triplets for the block-triangular case {i+1}..{i + len(chunk)}' + r'}', file=file)
         print(r'\label{tab:case1_srdegrees' + f'{i}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
@@ -229,7 +229,7 @@ with open(filename, 'w') as file:
         print(latex(table([headers_simple] + chunk, frame=True, header_row=True)), file=file)
         print(r'\end{scriptsize}', file=file)
 
-        print(r'\caption{\textit{SRD}' + f' unique polynomials (case 2) {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\caption{\textit{SRD}' + f' unique polynomials for the reduced matrix case {i+1}..{i + len(chunk)}' + r'}', file=file)
         print(r'\label{tab:case2_srdegrees' + f'{i//M}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)

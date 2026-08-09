@@ -35,7 +35,6 @@
 \newtheorem{problem}{Problem}
 \newtheorem{question}{Question}
 \newtheorem{remark}{Remark}
-\newtheorem{algorithm}{Scheme}
 
 % \graphicspath{ {./assets} }
 
@@ -47,27 +46,17 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  A group $G$ admits self-replicating action of degree $d$ if it acts on a space of words over alphabet of size $d$.
-  A group $G$ admits .... if and only if it has a subgroup $H$ of index $d$ and a homomorphism
-  $\phi : H \rightarrow G$ with trivial core. Every crystallographic group admits a self-replicating action.
-  We determine self-replicating degrees for crystallographic groups of dimension $n=2,3$.
+  We study self-similar and self-replicating actions of crystallographic groups through the lens of virtual
+  endomorphisms. We prove that every crystallographic group is self-replicating, and we give an effective criterion
+  for a surjective virtual endomorphism to be simple. Building on this, we describe the sets
+  $SCD(G)$ and $SRD(G)$ of self-covering and self-replicating degrees of a
+  crystallographic group $G$ and provide an algorithmic approach to calculate them explicitly.
+  We compute the sets $SCD(G)$ and $SRD(G)$ for all $17$ plane groups and all $219$
+  space groups, as well as the minimal possible values of self-replicating degrees for plane groups. The algorithms are
+  implemented in SageMath using the GAP package Cryst as a source of generators of crystallographic groups,
+  and the full source code is publicly available.
 \end{abstract}
 
-% \begin{abstract}
-% We study self-similar and self-replicating actions of crystallographic groups
-% through the lens of virtual endomorphisms. We prove that every crystallographic
-% group is self-replicating, and we give an effective criterion for a surjective
-% virtual endomorphism to be simple. Building on this, we describe the sets
-% $SCD(G)$ and $SRD(G)$ of self-covering and self-replicating degrees of a
-% crystallographic group $G$ in terms of the normalizer of its point group and of
-% systems of linear congruences over $\mathbb{Q}/\mathbb{Z}$. This reduces the
-% computation of these sets to solving quadratic Diophantine equations, which can
-% be carried out algorithmically. As an application, we compute the sets $SCD(G)$
-% and $SRD(G)$, together with the minimal degrees $MinSCD(G)$ and $MinSRD(G)$,
-% for all $17$ plane groups and all $219$ space groups. The algorithms are
-% implemented in SageMath using the GAP package Cryst, and the full source code
-% is publicly available.
-% \end{abstract}
 
 \tableofcontents
 \newpage
@@ -174,28 +163,29 @@
 Crystallographic groups describe the symmetries of repeated patterns in $n$-dimensional Euclidean space. They have
 been known for several centuries in the case $n=2$, although the complete list was only given in 1891 by Fedorov.
 In general, they appeared as part of Hilbert's 18th problem and were later characterized by Bieberbach and Zassenhaus.
-There are $17$ distinct groups for $n=2$ up to affine equivalence, known as wallpaper or plane groups. Likewise,
-for $n=3$ there are $219$ crystallographic groups, known as space groups. If,
+There are $17$ distinct groups for $n=2$, known as wallpaper or plane groups. Likewise,
+for $n=3$ there are $219$ crystallographic groups up to isomorphism, known as space groups. If,
 however, space groups are considered up to conjugacy by orientation-preserving
-affine transformations, the number increases to $230$.
+affine transformations, the number increases to $230$, and is usually a standard number in applied sources, e.g. in \cite{CARAT}.
+Space groups are thoroughly studied due to their high practical value, with \cite{CrystTables} being the central
+source of particular properties of each group. The further classification of crystallographic groups has been completed up to
+dimension 6, resulting from the work of \cite{Algo:HighCrystDim} and \cite{Algo:Cocycle}, among others.  
 
 Self-similar and self-replicating actions describe the recursive patterns of groups acting on words over a given
 finite alphabet. They can also be viewed as actions on a rooted regular tree, or as the result of the work of a finite
 transducer (automaton). Such actions were studied by Grigorchuk, Nekrashevych, Sidki and others, and have had a
 significant impact on group theory, dynamical systems and complex analysis; in particular, self-similar groups arise as
-iterated monodromy groups of self-coverings of topological spaces
-\cite{Nekrashevych:Self-similar}.
+iterated monodromy groups of self-coverings of topological spaces \cite{Nekrashevych:Self-similar}.
 
-In this paper we focus mainly on self-replicating actions of crystallographic groups, and in particular on the sizes
-of the alphabets that occur in them. A group has a \emph{self-replicating degree} $d$ if it admits a faithful
+In this paper we focus mainly on self-replicating actions of plane and space groups, and particularly on the sizes
+of the alphabets appearing there. A group has a \emph{self-replicating degree} $d$ if it admits a faithful
 self-replicating action over an alphabet of size $d$. We will, however, use an equivalent definition that does not
 refer to actions and instead uses the toolkit of virtual endomorphisms developed by Nekrashevych
 \cite{Nekrashevych:Self-similar}.
 
 \begin{definition}
- A \emph{virtual endomorphism} $\phi : H \rightarrow G$ of a group $G$ is a
- homomorphism from a subgroup $H\le G$ of finite index. A virtual endomorphism
- $\phi$ is called \emph{simple} if there is no nontrivial $\phi$-invariant
+ A \emph{virtual endomorphism} $\phi : H \rightarrow G$ of a group $G$ is a homomorphism from a subgroup $H\le G$
+ of finite index. A virtual endomorphism $\phi$ is called \emph{simple} if there is no nontrivial $\phi$-invariant
  normal subgroup of $G$.
 \end{definition}
 
@@ -228,7 +218,8 @@ the appendices, and the source code of the computations is available at
 We briefly recall the necessary background on crystallographic groups; a detailed exposition can be found in \cite{Szcz:CrystBook}.
 
 Let $\mathbf{A}(n)$ denote the group of affine transformations of $\mathbb{R}^n$, and let $\mathbf{E}(n)\le \mathbf{A}(n)$ denote the group of Euclidean isometries. The group $\mathbf{A}(n)$ admits the decomposition
-$\mathbf{A}(n)=GL_n(\mathbb{R})\ltimes \mathbb{R}^n$, and every element can be written in the form $(A,a)$, where $A\in GL_n(\mathbb{R})$ and $a\in\mathbb{R}^n$. The group operation is given by
+$\mathbf{A}(n)=\mathrm{GL}_n(\mathbb{R})\ltimes \mathbb{R}^n$, and every element can be written in the form $(A,a)$,
+where $A\in \mathrm{GL}_n(\mathbb{R})$ and $a\in\mathbb{R}^n$. The group operation is given by
 \[
 (A,a)(B,b)=(AB,Ab+a).
 \]
@@ -252,14 +243,14 @@ The algebraic structure of crystallographic groups is described by the following
 \end{enumerate}
 \end{theorem}
 
-For a crystallographic group $G$, its \emph{translation subgroup} is $T(G)=G \cap (E \times \mathbb{R}^n)$, and the corresponding subgroup $L(G)=\{v\in\mathbb{R}^n : (E,v)\in T(G)\}\cong T(G)$ is called the \emph{translation lattice} of $G$. The \emph{point group} $P(G)$ is the image of $G$ under the natural projection onto $GL_n(\mathbb{R})$.
+For a crystallographic group $G$, its \emph{translation subgroup} is $T(G)=G \cap (E \times \mathbb{R}^n)$, and the corresponding subgroup $L(G)=\{v\in\mathbb{R}^n : (E,v)\in T(G)\}\cong T(G)$ is called the \emph{translation lattice} of $G$. The \emph{point group} $P(G)$ is the image of $G$ under the natural projection onto $\mathrm{GL}_n(\mathbb{R})$.
 By the Bieberbach theorems, there is a short exact sequence
 \[
 0 \rightarrow L \rightarrow G \rightarrow P \rightarrow 0,
 \]
-where $L=L(G)\cong\mathbb{Z}^n$ and $P=P(G)$ is a finite subgroup of $GL_n(\mathbb{R})$.
+where $L=L(G)\cong\mathbb{Z}^n$ and $P=P(G)$ is a finite subgroup of $\mathrm{GL}_n(\mathbb{R})$.
 
-Conversely, given a finite subgroup $P\le GL_n(\mathbb{R})$ and a $P$-invariant lattice $L\le\mathbb{R}^n$, the crystallographic groups fitting this sequence are classified by the cohomology group
+Conversely, given a finite subgroup $P\le \mathrm{GL}_n(\mathbb{R})$ and a $P$-invariant lattice $L\le\mathbb{R}^n$, the crystallographic groups fitting this sequence are classified by the cohomology group
 $H^1(P, \mathbb{R}^n / L) \cong H^2(P, L)$. Thus, an arbitrary crystallographic group can be represented as a triple
 $G = (P, L, \alpha)$, where $\alpha \in H^1(P, \mathbb{R}^n / L)$, that is, $\alpha : P \rightarrow \mathbb{R}^n / L$ satisfies $\alpha(AB) = \alpha(A) + A\alpha(B)$. Two cocycles $\alpha$ and
 $\alpha'$ represent the same cohomology class if they differ by a $1$-coboundary, meaning $\alpha'(A) = \alpha(A) + Am - m$ for some $m \in \mathbb{R}^n / L$. Choosing representatives of $\alpha(A)$ in $\mathbb{R}^n$ for $A\in P$, the elements of $G$ admit explicit representation:
@@ -408,12 +399,9 @@ $a=(A,t)\in \mathbf{A}(n)$ such that $d=|\det A|$ and $aGa^{-1}\leq G$. This con
 \alpha(ABA^{-1})\equiv(E-ABA^{-1})t+A\alpha(B)  \mod \mathbb{Z}^n.
 \]
 \end{enumerate}
-To determine the possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying (\textit{PC}) and then determine which of them admit a translation $t$ satisfying (\textit{CC}). Note that for symmorphic groups, the condition (\textit{CC}) is vacuous.
-
-%To determine possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying the condition PC
-%and then identify those for which there exists a translation $t$ satisfying the condition CC. It is clear that
-%for symmorphic groups the condition CC is trivial.
-
+To determine the possible values of $|\det A|$, we first describe the integer matrices $A$ satisfying (\textit{PC})
+and then determine which of them admit a translation $t$ satisfying (\textit{CC}). Note that for symmorphic groups
+the condition (\textit{CC}) is trivial.
 
 The integer matrices $A$ satisfying (\textit{PC}) can be described as follows.
 Let $\sigma \in \mathrm{Aut}(P)$.
@@ -549,9 +537,13 @@ problem.
 
 \section{Plane groups}\label{sec:planar}
 
-There are 17 plane groups (also known as wallpaper groups). We computed the set of matrices $\mathcal{Y}$ satisfying conditions (\textit{PC})--(\textit{CC}) for each group, the full list of which is provided in Appendix~\ref{app:all_norm_dim2}. For the groups $p1$ and $p2$, we have $\mathcal{Y}=M_2(\mathbb{Z})$, and thus every positive integer occurs as a self-covering degree.
-For all the other plane groups, the polynomials $f_\sigma$ depend on at most $2$ variables and can be solved explicitly. Table~\ref{tab:planar_srdegrees} presents the computed polynomials
-$f_\sigma$ together with an explicit description of $SCD(G)$ for every plane group.
+There are 17 plane groups (also known as wallpaper groups). We computed the set of matrices $\mathcal{Y}$ satisfying
+conditions (\textit{PC})--(\textit{CC}) for each group.. For the groups $p1$ and $p2$, we have
+$\mathcal{Y}=M_2(\mathbb{Z})$, and thus every positive integer occurs as a self-covering degree.
+For all the other plane groups, the polynomials $f_\sigma$ depend on at most $2$ variables and can be solved explicitly.
+Table~\ref{tab:planar_srdegrees} presents the computed matrices $\mathcal{Y}$, the polynomials $f_\sigma$ together
+with an explicit description of $SCD(G)$ for every plane group, and the minimal possible self-replicating
+degree appearing there.
 The naming conventions are taken from the International Tables for Crystallography, Volume A \cite{CrystTables}, short ITA.
 
 %In this section we show how to describe the sets $SCD(G)$ and $SRD(G)$ for crystallographic groups in the dimension two.
@@ -621,7 +613,7 @@ x_{0} & 0 \\
 0 & x_{1}
 \end{array} \right), \quad  x_0,x_1 \in \mathbb{Z}.
 \]
-Solving the system of congruences arising from {\textit(CC)}, we find that there are no solutions for matrices of the form $A_1$. For matrices of the form $A_2$, we obtain $x_0 = 2y_0 + 1$ and $x_1 = y_1$ for $y_0,y_1 \in \mathbb{Z}$.
+Solving the system of congruences arising from (\textit{CC}), we find that there are no solutions for matrices of the form $A_1$. For matrices of the form $A_2$, we obtain $x_0 = 2y_0 + 1$ and $x_1 = y_1$ for $y_0,y_1 \in \mathbb{Z}$.
 Therefore, the set of matrices satisfying both (\textit{PC}) and (\textit{CC}) is given by:
 \[
 \mathcal{Y} = \left\{\left(\begin{array}{rr}
@@ -747,15 +739,16 @@ x_6 & x_7 & x_8
 Its characteristic polynomial is
 \begin{align*}
 \chi_A(x) &= x^3-\tr(A)x^2+\tau(A)x-\det(A), \ \text{ where}\\
-\tau(A) &= x_0x_4-x_1x_3 +x_0x_8-x_2x_6 +x_4x_8-x_5x_7.
+\tau(A) &= x_0x_4-x_1x_3 +x_0x_8-x_2x_6 +x_4x_8-x_5x_7
 \end{align*}
+is a sum of determinants of the three main minors of $A$.
 Consequently,
 \[
 \chi_{A^{-1}}(x) = x^3 -\frac{\tau(A)}{\det(A)}x^2 +\frac{\tr(A)}{\det(A)}x -\frac{1}{\det(A)}.
 \]
 
 
-Let $G$ be a space group with translation lattice $\mathbb{Z}^3$ and point group $P < GL_3(\mathbb{Z})$. Let $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
+Let $G$ be a space group with translation lattice $\mathbb{Z}^3$ and point group $P < \mathrm{GL}_3(\mathbb{Z})$. Let $Y(y_1, \dots y_r) \in \mathcal{Y}_\sigma$ be
 a family of matrices satisfying conditions (\textit{PC})-(\textit{CC}), written in the form (\ref{eqn:Y_sum_Yi})
 for a fixed automorphism $\sigma \in Aut(P)$. Our computations show that, for every
 space group $G$ and every $\sigma\in\operatorname{Aut}(P)$, one of the following holds:
@@ -765,7 +758,8 @@ space group $G$ and every $\sigma\in\operatorname{Aut}(P)$, one of the following
 \end{itemize}
 The complete list of the families $Y \in \mathcal{Y}_\sigma$ is omitted due to their large variety\footnotemark[1]{}.
 
-\footnotetext[1]{All the source code is provided on the author's Github: \href{https://github.com/davendiy/cryst-automata/}{https://github.com/davendiy/cryst-automata/}}
+\footnotetext[1]{All the source code used for generation, as well as the complete list of $\mathcal{Y}_\sigma$,
+are provided on the author's Github: \href{https://github.com/davendiy/cryst-automata/}{https://github.com/davendiy/cryst-automata/}}
 
 Consider the first case. Since $\tau(Y)=\tr(Y)=0$, the characteristic polynomial of $Y^{-1}$ reduces to
 \[
@@ -805,12 +799,22 @@ the subset of $SRD(G)$ corresponding to the fixed automorphism $\sigma$ is
 \end{equation}
 Therefore, the contribution of $\sigma$ to $SRD(G)$ is completely determined by the triple
 $(p_\sigma,q_\sigma,g_\sigma)$, whereas the product
-$f_\sigma=p_\sigma q_\sigma$ determines the corresponding self-covering degrees. The complete list of triples $(p_\sigma,q_\sigma,g_\sigma)$ for all space groups is given in Table~?? in the appendix.
+$f_\sigma=p_\sigma q_\sigma$ determines the corresponding self-covering degrees. The complete list of triples $(p_\sigma,q_\sigma,g_\sigma)$ for all space groups is given in Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286} in the appendix.
 
-In summary, to determine the self-covering and self-replicating degrees of a given crystallographic group $G$, locate the corresponding group number in Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case2_srdegrees0}. Since a group may appear in several rows, corresponding to different automorphisms $\sigma\in\operatorname{Aut}(P)$, each row contributes a subset of both $SCD(G)$ and $SRD(G)$. For each row of Table~\ref{tab:case2_srdegrees0}, the polynomial $f_\sigma$ determines the corresponding contributions to both $SCD(G)$ and $SRD(G)$. For each row of Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286}, the product $f_\sigma=p_\sigma q_\sigma$ determines the contribution to $SCD(G)$, whereas the corresponding triple $(p_\sigma,q_\sigma,g_\sigma)$ determines the contribution to $SRD(G)$ via \eqref{eqn:space_case2}. Finally, $SCD(G)$ and $SRD(G)$ are obtained by taking the union of the contributions over all rows corresponding to $G$.
+In summary, to determine the self-covering and self-replicating degrees of a given crystallographic group $G$, locate
+the corresponding group number in Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case2_srdegrees0}. Since a group may appear
+in several rows, corresponding to different automorphisms $\sigma\in\operatorname{Aut}(P)$, each row contributes a
+subset of both $SCD(G)$ and $SRD(G)$. For each row of Table~\ref{tab:case2_srdegrees0}, the polynomial $f_\sigma$
+determines the corresponding contributions to both $SCD(G)$ and $SRD(G)$. For each row of
+Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286}, the product $f_\sigma=p_\sigma q_\sigma$ determines
+the contribution to $SCD(G)$, whereas the corresponding triple $(p_\sigma,q_\sigma,g_\sigma)$ determines the
+contribution to $SRD(G)$ via \eqref{eqn:space_case2}. The resulting $SCD(G)$ and $SRD(G)$ are obtained by taking the union
+of the contributions over all rows corresponding to $G$.
 
 Finally, the Diophantine equations arising in the conditions of (\ref{eqn:space_case2}) admit explicit solutions. 
-In most case, they reduce to quadratic Diophantine equations in two variables, which already appear in Table~\ref{tab:planar_srdegrees} together with their solution sets. However, there are four exceptional matrices that require a separate analysis. The first two are variations of
+In most case, they reduce to quadratic Diophantine equations in two variables, which already appear
+in Table~\ref{tab:planar_srdegrees} together with their solution sets. However, there are four exceptional kinds of
+matrices that require a separate analysis. The first two are variations of
 $$X_1 = \left(\begin{array}{rrr}
 z_{0} & 0 & z_{1} \\
 0 & z_{2} & 0 \\
@@ -823,7 +827,8 @@ z_{2} & z_{0} + 2 \, z_{2} & -z_{1} \\
 z_{3} & 0 & z_{4}
 \end{array}\right).
 $$
-The matrix $X_1$ occurs in the symmorphic groups Nos.~3, 6, and 10, and in modified form in Nos. 4, 7, 11, 13, and 14, after substituting the solutions for the cocycle compatibility condition.
+The matrix $X_1$ occurs in the symmorphic groups Nos.~3, 6, and 10, and in modified form in Nos. 4, 7, 11, 13, and 14,
+after substituting the solutions for the cocycle compatibility condition.
 Likewise, $X_2$ occurs in the symmorphic groups Nos. 5, 8, and 12, while the modified versions occur in Nos. 9 and 15.
 
 The remaining two matrices contain minors that do not appear in the plane case:
@@ -839,9 +844,11 @@ z_{1} & 0 & z_{0} + 2 \, z_{1} \\
 z_{2} & z_{0} + 2 \, z_{2} & 0
 \end{array}\right).
 \]
-The matrix $X_3$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z_{0} + 2 \, z_{1}\right)} z_{2} $. It occurs in the symmorphic groups Nos. 22 and 69, and, with some variations, in the group No. 70.
+The matrix $X_3$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)}^{2} - 2 \, {\left(z_{0} + 2 \, z_{1}\right)} z_{2}$.
+It occurs in the symmorphic groups Nos. 22 and 69, and, with some variations, in the group No. 70.
 The matrix $X_4$ has $q_\sigma = -{\left(z_{0} + 2 \, z_{1}\right)} {\left(z_{0} + 2 \, z_{2}\right)}$.
-It occurs in the symmorphic groups Nos. 23 and 71, and, with some variations, in the groups Nos. 24, 72, 73, and 74. In both cases, $q_\sigma$ is a quadratic polynomial in three variables.
+It occurs in the symmorphic groups Nos. 23 and 71, and, with some variations, in the groups Nos. 24, 72, 73, and 74.
+In both cases, $q_\sigma$ is a quadratic polynomial in three variables.
 
 
 % ==============================================================================================
@@ -880,22 +887,20 @@ available at
 For a given ITA number $n$ and dimension $\dim \in \{2,3\}$, the group
 $G = \texttt{SpaceGroupOnLeftIT}(\dim, n)$ is constructed via the GAP Cryst
 package. Since the translation lattice $L(G)$ is in general not the standard
-lattice, we conjugate the generators by the affine transformation $(B,0)$,
-where $B$ is the translation basis matrix returned by \texttt{TranslationBasis}:
-$g \mapsto (B,0)^{-1} g (B,0)$. After this change of basis we may assume
-$L(G) = \mathbb{Z}^n$, so that the group is represented as a triple
+lattice, we conjugate the generators by the the translation basis matrix returned by \texttt{TranslationBasis}.
+After this change of basis we may assume $L(G) = \mathbb{Z}^n$, so that the group is represented as a triple
 $G = (P, \mathbb{Z}^n, \alpha)$.
 
 The point group $P$ is finite, and its elements are enumerated by a
-breadth-first search over the generating set (with inverses), storing for every
+breadth-first search over the generating set with inverses, storing for every
 element a word in the generators that produces it. The cocycle is stored as a lookup
 table $\alpha : P \to \mathbb{Q}^n$, and membership of an element $(B,v)$ in $G$
 is decided by the two conditions $B \in P$ and $v - \alpha(B) \in \mathbb{Z}^n$.
 
 \subsubsection*{Finding normalizer (\textit{PC})}
 
-The first stage computes all matrices $A \in GL_n(\mathbb{Q})$ satisfying
-$APA^{-1} = P$, i.e.\ the normalizer of the point group in $GL_n(\mathbb{Q})$,
+The first stage computes all matrices $A \in \mathrm{GL}_n(\mathbb{Q})$ satisfying
+$APA^{-1} = P$, i.e.\ the normalizer of the point group in $\mathrm{GL}_n(\mathbb{Q})$,
 in the form of parametric symbolic matrices.
 
 Let $P = \langle g_1, \dots, g_k \rangle$. Enumeration of every permutation of $P$ quickly becomes computationally
@@ -949,8 +954,8 @@ with free integral parameters $z_j$ (renamed canonically as $z_0, z_1, \dots$).
 
 For symmorphic groups the cocycle is trivial and (\textit{CC}) imposes no restrictions. Otherwise, for a lattice-compatible
 parametric matrix $A(z)$ we determine the restrictions on the parameters $z_j$
-imposed by the cocycle compatibility (\ref{eqn:cocycle_condition}).
-The implementation computes the Smith form of the (stacked, integral) matrix $M$, takes the rows $u_j$ for $j > r$, and forms the
+given by the cocycle compatibility (\ref{eqn:cocycle_condition}).
+The implementation forms the
 finite system of linear congruences (\ref{eqn:small_cong_system}):
 \[
   u_j(M)\, b(z_0, \dots, z_{s-1}) \equiv 0 \pmod 1, \qquad j > r,
@@ -984,19 +989,15 @@ SageMath's \texttt{solve\_right} over $\mathbb{Z}$.
 \subsubsection*{Simplicity test and quadratic Diophantine equations}
 
 Some notes also should be added regarding solvers of the Diophantine equations that appear in the simplicity test. 
-By Proposition~\ref{propos:planar-srdegrees}, for $A \in M_2(\mathbb{Z})$ with
-$\det A \neq 0$ the condition is equivalent to $\det A \neq \pm 1$ and $\det A \pm \operatorname{tr} A \neq -1$. For the
-computed families $Y(y)$ these are quadratic Diophantine equations in at most two variables (the only exceptions being
-the groups p1 and p2, for which $f_\sigma$ is a quadratic form in four variables). Such equations are decidable
-and can be solved automatically; we use the algorithm of Grunewald and Segal \cite{quadratic_polys}
+For the computed families $Y(y)$ for plane groups these are quadratic Diophantine equations in at most two variables
+(the only exceptions being the groups p1 and p2, for which $f_\sigma$ is a quadratic form in four variables).
+Such equations are decidable and can be solved automatically; we use the algorithm of Grunewald and Segal \cite{quadratic_polys}
 (see also its algorithmic implementation by Alpern \cite{AlpernDiophantine}), as provided by SageMath's
 \texttt{solve\_diophantine}. The implementation solves $f_\sigma(y) = \pm 1$ and
 $(f_\sigma \pm g_\sigma)(y) = -1$ over $\mathbb{Z}$ and collects the (finite) sets of excluded parameter values.
-The set $SRD(G)$ is then the set of values $|f_\sigma(y)| > 1$ over all admissible parameter
-values, with the excluded tuples removed.
 
 \subsubsection*{Recovering the virtual endomorphism: the translation part $t$}
-The stages in Section~\ref{sec:computations} produce only the \emph{linear part} $A$ of the
+The stages in Section~\ref{sec:computations} produce only the linear part $A$ of the
 conjugating affine element, which is all that is needed to determine the degree sets $SCD(G)$ and $SRD(G)$.
 To actually recover the self-replicating action one must also produce a translation part $t \in \mathbb{Q}^n$
 and build the virtual endomorphism by conjugating on an element $(A,t)$. For a fixed integral matrix
@@ -1010,11 +1011,11 @@ in the unknown rational $t$ only.
 
 The method follows the \texttt{cong\_solve} function of aforementioned CARAT \cite{CARAT,Algo:Cocycle}, which solves a
 homogeneous system of linear congruences $A x \equiv 0 \pmod{\mathbb{Z}^n}$ for $x \in \mathbb{Q}^n$.
-The system is similarly lifted to the $\mod m$ for the least common multiplier of denominators. It is then simplified
-using Smith Form decomposition $(UMV) V^{-1}t \equiv Ub$. For a one-dimentional equation $d_i x_i \equiv b_i \mod m$
-the answer is $x_i \equiv \frac{b_i}{d_i} + \frac{nm}{d_i}$, where $n$ is an arbitrary integer.
-Transforming back by $V$ yields $t = t_0 + V R + V N)$, where $R$ is the basis of the elementary solutions and
-$N$ is the nullbasis of free variables. 
+The system is similarly lifted to the (mod $m$) congruences for the least common multiplier of denominators.
+It is then simplified using Smith Form decomposition $(UMV) V^{-1}t \equiv Ub$. For a one-dimentional
+equation $d_i x_i \equiv b_i \mod m$ the answer is $x_i \equiv \frac{b_i}{d_i} + \frac{nm}{d_i}$, where $n$ is an arbitrary integer.
+Transforming back by $V$ yields $t = t_0 + V R + V N)$, where $R$ is the basis of the lattice of solutions and
+$N$ is the nullbasis of free variables, which can be arbitrary rational numbers.
 
 \begin{thebibliography}{20}
   \bibitem{Nekrashevych:Self-similar} V. Nekrashevych. {\it Self-similar groups},
@@ -1025,7 +1026,8 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 
   \bibitem{CrystTables} International Tables for Crystallography (2016). Volume A, Space-group symmetry.
 
-  \bibitem{Algo:HighCrystDim} C. Cid, T. Schulz: Computation of Five and Six Dimensional Bieberbach Groups Exp. Math. Issue 1 (2001), 109-115
+  \bibitem{Algo:HighCrystDim} C. Cid, T. Schulz: Computation of Five and Six Dimensional Bieberbach Groups
+  Exp. Math. Issue 1 (2001), 109-115
 
   \bibitem{Brown:Cohomology} K.S. Brown Cohomology Of Groups
 
@@ -1087,9 +1089,9 @@ of Algebra and Discrete Mathematics. World Scientific, 2012.
 
 % \input{table_minsrdegrees.tex}
 
-\section{List of all matrices satisfying point group compatibility in dimension 2}\label{app:all_norm_dim2}
+% \section{List of all matrices satisfying point group compatibility in dimension 2}\label{app:all_norm_dim2}
 
-\input{table_normalizers_dim2.tex}
+% \input{table_normalizers_dim2.tex}
 
 \newpage
 
