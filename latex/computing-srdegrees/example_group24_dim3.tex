@@ -70,21 +70,6 @@ $$
 % The $A_1'$ has a reduced characteristic polynomial since $\tau(A_1') = \tr(A_1') = 0$, and SRD has the form (\ref{eqn:space_case2}).
 % The determinant $\det(A_1')$ is a qubic polynomial of three variables No. 7 from the Table \ref{tab:case2_srdegrees0}:
 
-For the sake of succinctness, we consider only two subsets of $SRD$ for $G_{24}$. The first is characterised by a
-qubic polynomial of three variables No.~7 from the Table~\ref{tab:case2_srdegrees0}:
-\begin{align*}
-f_\sigma(y_0, y_1, y_2) &= 4 \, {\left(2 \, y_{0} - 1\right)} y_{2}^{2} + 4 \, y_{0}^{2} + 2 \, {\left(2 \, y_{0} - 1\right)} y_{1} \\
-& + 4 \, {\left(2 \, y_{0}^{2} + {\left(2 \, y_{0} - 1\right)} y_{1} + y_{0} - 1\right)} y_{2} - 1.
-\end{align*}
-We can factorize it:
-$$
-f_\sigma(y_0, y_1, y_2) = (2y_0 - 1)(2y_2 + 1)(2y_0 + 2y_1 + 2y_2 + 1).
-$$
-Now it is clear that $f_\sigma$ can attain any odd integer $n$ taking $y_0 = \frac{n+1}{2}, \, y_1 = -y_0, \, y_2 = 0$.
-As a result, the one of subsets of $SRD$, that coincides with a subset of $SCD$:
-$$
-SCD_1 = SRD_1 = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
-$$
 
 % Now consider the matrix $A_2 = \left(\begin{array}{rrr}
 % \frac{1}{2} \, x_{0} & 0 & x_{0} \\
@@ -122,30 +107,65 @@ $$
 % (check Table~\ref{tab:planar_srdegrees}), the respective minor $C''$ for $A_2''$ suddenly has three variables. The $SRD$
 % is described by the following polynomials:
 
-The second subset is characterised by a triple of polynomials that can be found in the Table~\ref{tab:case1_srdegrees0}:
+
+
+For the sake of succinctness, we consider only two families of matrices from $\mathcal{Y}$ for $G_{24}$.
+
+The first family falls into the case $\tr(Y) = \tau(Y) = 0$; its determinant is the cubic polynomial
+No.~7 in Table~\ref{tab:case2_srdegrees0}:
+\begin{align*}
+f_\sigma(y_0, y_1, y_2) &= 4 \, {\left(2 \, y_{0} - 1\right)} y_{2}^{2} + 4 \, y_{0}^{2} + 2 \, {\left(2 \, y_{0} - 1\right)} y_{1} \\
+& + 4 \, {\left(2 \, y_{0}^{2} + {\left(2 \, y_{0} - 1\right)} y_{1} + y_{0} - 1\right)} y_{2} - 1.
+\end{align*}
+It factorizes as
 $$
-p_\sigma(y_0, y_1, y_2) = -2 y_1 - 1,
+f_\sigma(y_0, y_1, y_2) = (2y_0 - 1)(2y_2 + 1)(2y_0 + 2y_1 + 2y_2 + 1),
 $$
+so all its values are odd. Conversely, every odd integer $n$ is attained: taking
+$y_0 = \frac{n+1}{2}$, $y_1 = -\frac{n+1}{2}$, $y_2 = 0$ gives $f_\sigma = n \cdot 1 \cdot 1 = n$.
+Since $\tr(Y) = \tau(Y) = 0$, every value with $|f_\sigma| > 1$ is a self-replicating degree, and hence
 $$
-q_\sigma(y_0, y_1, y_2) = 4 y_0^2 - 2(2 y_0 + 1) y_1 - 2 (2 y_0 + 1) y_2 - 1,
-\quad g_\sigma = 0.
-$$
-% This triple can be found in the Table \ref{tab:case1_srdegrees0}.
-Since $g_\sigma = 0$, the condition on eigenvalues by the Proposition \ref{propos:planar-srdegrees} reduces
-to $q_\sigma \neq -1$. We can also factorize $q_\sigma$ to inspect what values $(p_\sigma*q_\sigma)$ can attain in
-(\ref{eqn:space_case2}):
-$$
-q_\sigma = (2y_0 + 1)(2y_0 - 2y_1 - 2y_2 - 1)
-$$
-Similarly to the first case, $\det(A) = p_\sigma*q_\sigma$ attains every odd integer $n > 1$ via
-$y_1 = -\frac{n+1}{2}, y_2 = \frac{n-1}{2}, y_0 = 0$. It does not violate the condition on eigenvalues, since 
-$q = 1 \neq -1$.
-Moreover, we can now observe that the substitution $y_0 \mapsto -y_1, \, y_1 \mapsto -y_2 - 1, \, y_2 \mapsto y_0$ into the
-polynomial $f_\sigma$ yields exactly the $p_\sigma*q_\sigma$. As a result:
-$$
-SCD_2 = SRD_2 = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
+SCD_1 = \{1, 3, 5, \dots\}, \qquad SRD_1 = \{3, 5, 7, \dots\}.
 $$
 
-Note that these two subset do not represent the entire sets $SCD$ and $SRD$. To compute them completely, one must
-repeat the provided procedure for every triple in the Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286}
-and every qubic polynomial in the Table~\ref{tab:case2_srdegrees0}.
+The second family is block-triangular, with the triple $(p_\sigma, q_\sigma, g_\sigma)$ from
+Table~\ref{tab:case1_srdegrees0}:
+$$
+p_\sigma(y_0, y_1, y_2) = -2 y_1 - 1
+$$
+$$
+q_\sigma(y_0, y_1, y_2) = 4 y_0^2 - 2(2 y_0 + 1) y_1 - 2 (2 y_0 + 1) y_2 - 1, \qquad
+g_\sigma = 0.
+$$
+The polynomial $q_\sigma$ factorizes as
+$$
+q_\sigma = (2y_0 + 1)(2y_0 - 2y_1 - 2y_2 - 1),
+$$
+so both $p_\sigma$ and $q_\sigma$ take only odd values. Since $g_\sigma = 0$, the eigenvalue condition
+\eqref{eqn:space_case2} reduces to $p_\sigma, q_\sigma \notin \{0, 1, -1\}$, that is,
+$|p_\sigma|, |q_\sigma| \ge 3$.
+
+For the self-covering degrees no such restriction exists: taking $y_0 = 0$, $y_1 = -\frac{n+1}{2}$,
+$y_2 = \frac{n-1}{2}$ gives $q_\sigma = 1$ and $p_\sigma q_\sigma = n$, so every odd integer occurs, and
+$$
+SCD_2 = \{1, 3, 5, \dots\}.
+$$
+For the self-replicating degrees, write an odd composite number as $d = ab$ with $a, b \ge 3$ odd, and take
+$y_0 = 0$, $y_1 = -\frac{a+1}{2}$, $y_2 = \frac{a-b}{2}$; then $p_\sigma = a$ and $q_\sigma = b$, so $d$ is
+attained. Hence
+$$
+SRD_2 = \{9, 15, 21, 25, 27, \dots\}
+$$
+is the set of odd composite numbers.
+
+Observe that the substitution $y_0 \mapsto -y_1$, $y_1 \mapsto -y_2 - 1$, $y_2 \mapsto y_0$ is a bijection of
+$\mathbb{Z}^3$ that transforms $f_\sigma$ into $p_\sigma \cdot q_\sigma$; in particular, the two determinant
+polynomials have the same set of values, and $SCD_1 = SCD_2$. Nevertheless, the two families contribute
+differently to $SRD$: $SRD_2 \subsetneq SRD_1$, since, for example, $5 \in SRD_1$ but $5 \notin SRD_2$.
+This shows that the eigenvalue condition has to be verified for each family separately and cannot be read off
+from the determinant polynomial alone.
+
+Note that these two families do not exhaust the sets $SCD(G_{24})$ and $SRD(G_{24})$. To compute them
+completely, one must repeat the procedure for every row of
+Tables~\ref{tab:case1_srdegrees0}--\ref{tab:case1_srdegrees286} and~\ref{tab:case2_srdegrees0} corresponding
+to the group No.~24.

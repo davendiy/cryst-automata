@@ -55,10 +55,11 @@ $$
 -\frac{1}{2} \\
 \end{array}\right) \mod \mathbb{Z}^3.
 $$
-It is a rare case when we can not simply fix a trivial translation $a = 0 \in \mathbb{Z}^3$, as it leads to a
-contradiction $\frac{1}{2}x_0 \equiv -\frac{1}{2}$ while simultaneously $x_0 \equiv -\frac{1}{2}$.
+It is a rare case when we cannot simply fix a trivial translation $a = 0 \in \mathbb{Z}^3$, as it leads to a
+contradiction: the row $\frac{1}{2}x_0 \equiv -\frac{1}{2}$ forces $x_0$ to be odd integer,
+while simultaneously $x_0 \equiv -\frac{1}{2}$ forces $x_0$ to be fractional.
 
-The result matrix $A'$ that satisfies (\textit{CC}) condition has the following form:
+The resulting matrix $A'$ that satisfies (\textit{CC}) condition has the following form:
 $$A' = \left(\begin{array}{rrr}
 -2 \, y_{0} + 3 & 0 & -4 \, y_{0} + 6 \\
 0 & -2 \, y_{0} + 3 & 2 \, y_{0} - 3 \\
@@ -67,10 +68,10 @@ $$A' = \left(\begin{array}{rrr}
 $A'$ is a block-triangular matrix and the respective triple of polynomials are (can be found in Table \ref{tab:case1_srdegrees286}):
 $$ p = 2y_0 - 3, \quad q = 4y_0^2 - 12y_{0} + 9, \quad g = -4y_0 + 6 $$
 The solution to the condition on eigenvalues $(q\pm g) \neq -1$ is a finite set of roots $y_0 \notin \{1, 2\}$, which
-combining with $|p| \neq \pm 1$ gives us set of perfect cubes:
+combining with $|p| \neq \pm 1$ gives us set of cubes of odd integers:
 \begin{align*}
   SRD &= \left\{ (2y_0 - 3)(4y_0^2 - 12y_{0} + 9) \, : \, y_0 \notin \{1, 2\} \right\} \\
-  &= \left\{ (2y_0 - 3)^3 \, : \, y_0 \notin \{1, 2\} \right\}.
+  &= \left\{ (2k - 3)^3 \, : \, k \in \mathbb{N}, k \notin \{1, 2\} \right\}.
 \end{align*}
 Again, to compute the full sets $SCD$ and $SRD$, one must repeat this process
 for every entry of the Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case2_srdegrees0} that contains the group No.~220.
