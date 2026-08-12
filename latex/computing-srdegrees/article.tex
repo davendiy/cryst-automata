@@ -91,7 +91,7 @@ Self-similar actions have been investigated for a wide variety of group classes,
 \cite{NekrashevychSidki2004,BrunnerSidki2010Abelian,DantasAtAll2023abelian}, nilpotent groups
 \cite{BerlattoSidki2007nilpotent,BondarenkoKravchenko2014nilpotent,Mathieu2021Nilpotent}, polycyclic groups
 \cite{DantasAtAll2027polycyclic}, metabelian and solvable groups
-\cite{BartholdiSunic,KochloukovaSidki2020metabilian,BerlattoAtAll2023soluble,Kochloukova2026soluble}, affine group
+\cite{BartholdiSunic,KochloukovaSidki2020metabilian,BerlattoAtAll2023soluble,Kochloukova2026soluble}, affine groups
 \cite{BrunnerSidki1998}, arithmetic groups \cite{Kapovich2012}, and many others. Recently, it was shown
 \cite{Bondarenko2026} that a finitely generated virtually abelian group $G$ admits a self-replicating action if and only
 if $G$ is crystallographic. In this paper we address a natural follow-up question: which degrees can occur for the
@@ -232,7 +232,7 @@ Lemma~\ref{lemma:norm_cryst} implies $K$ is trivial. Hence $\phi$ is injective, 
 By the second Bieberbach theorem and Lemma~\ref{lemma:surjection-is-bijection}, every surjective virtual endomorphism $\phi:
 H \rightarrow G$ of a crystallographic group $G$ is induced by conjugation with an affine element $(A, t) \in \operatorname{Aff}(n)$:
 \[
-\phi(g) = (A, t)^{-1}g(A, t)  \ \mbox{ for } \ h\in H = (A, t)G(A, t)^{-1}.
+\phi(g) = (A, t)^{-1}g(A, t)  \ \mbox{ for } \ g\in H = (A, t)G(A, t)^{-1}.
 \]
 The action of $\phi$ on the translation subgroup $T(H)$ is determined by the linear part $A$:
 \[
@@ -265,7 +265,7 @@ K(\psi) = \bigcap_{m=1}^{\infty} A^m \mathbb{Z}^n.
 By Proposition~2.9.2 of \cite{Nekrashevych:Self-similar}, $K(\psi)=\{0\}$ if and only if
 $A^{-1}$ has no eigenvalues that are algebraic integers. It remains to show that $\phi$ is simple if and only if $K(\psi)=\{0\}$.
 
-Assume that $K(\psi)\neq\{0\}$. Since $aGa^{-1}\leq G$, the linear part $A$ commutes with the point group $P$ of $G$,
+Assume that $K(\psi)\neq\{0\}$. Since $aGa^{-1}\leq G$, the linear part $A$ normalizes the point group $P$ of $G$,
 that is, $AP=PA$. Hence each subgroup $A^m\mathbb{Z}^n$ is $P$-invariant, and therefore so is $K(\psi)$. Since
 $P$-invariant subgroups of the translation lattice give rise to normal subgroups of $G$, the subgroup $E\times
 K(\psi)$ is a nontrivial  normal subgroup of $G$. Moreover, $E\times K(\psi)$ is $\phi$-invariant by construction.
@@ -296,11 +296,11 @@ Let $G$ be a crystallographic group of dimension $n$ with point group $P$. Then 
 We may assume that the translation lattice of $G$ is $\mathbb{Z}^n$. Let $m$ be any positive integer that annihilates
 the defining 1-cocycle $[\alpha] \in H^1(P, \mathbb{R}^n/\mathbb{Z}^n)$ of $G$, meaning $mv \in \mathbb{Z}^n$ for all
 $(B,v) \in G$. Note that $m = |P|$ always satisfies this property by standard group cohomology
-(see \cite[Ch.~III,Cor.~10.2]{Brown:Cohomology}).
+(see \cite[Ch.~III, Cor.~10.2]{Brown:Cohomology}).
 
 Define the scalar matrix $A = (m+1)E$ and the affine transformation $a = (A, 0)$. Conjugating an arbitrary element
 $(B, v) \in G$ by $a$ gives:
-$$ a (B, v) a^{-1} = (B, Av) = (B, (m+1)v) = (E, mv)(B, v) $$.
+$$ a (B, v) a^{-1} = (B, Av) = (B, (m+1)v) = (E, mv)(B, v).$$
 Since $mv \in \mathbb{Z}^n$, the term $(E, mv)$ is a lattice translation, implying $aGa^{-1} \le G$. The unique
 eigenvalue of $A^{-1}$ is $\frac{1}{m+1}$, which is not an algebraic integer, making $\det(A) = (m+1)^n$ a valid
 self-replicating degree.
@@ -330,7 +330,7 @@ Corollary~\ref{cor:upper_bound} applies with $m=1$, yielding a self-replicating 
 For plane groups, the defining cocycle is annihilated by $m=2$, yielding a degree at most $(2+1)^2 = 9$. For space
 groups, the cocycle is annihilated by a universal scalar $m=\operatorname{lcm}(2, 3, 4, 6)$, yielding a degree at most $(12+1)^3 =
 2197$. We can improve the bound by observing that no group contains cocycle denominators divisible by both 4 and 3.
-As a result, the maximum annihilation scalar, although not universal, is $6$, which gives a degree at most $(6 + 1)^3 = 343$.
+As a result, every space group admits annihilation factor $m \le 6$, which gives a degree at most $(6 + 1)^3 = 343$.
 \end{proof}
 
 
@@ -618,7 +618,8 @@ and the set of self-covering degrees is
 SCD(G_7) = \{ |(2y_0 + 1) y_1| :  y_0, y_1 \in \mathbb{Z} \text{ and } (2y_0 + 1)y_1\neq 0 \} = \mathbb{N}.
 \]
 
-By Proposition~\ref{propos:planar-srdegrees}, the condition that $A_2$ has no eigenvalue whose inverse is an algebraic integer is equivalent to the system
+By Proposition~\ref{propos:planar-srdegrees}, the condition that no eigenvalue of $A_2^{-1}$ which is an algebraic
+integer is equivalent to the system
 \begin{align*}
 (2y_0 + 1) y_1 & \neq 0, \pm 1, \\
 (2y_0 + 1) y_1 \pm (2y_0+1+y_1) & \neq -1.
@@ -668,7 +669,8 @@ SCD(G_{13}) &= \{ \vert{}x_0^2 + x_0x_1 + x_1^2\vert{} : x_0, x_1 \in \mathbb{Z}
 \end{align*}
 These are precisely the positive L\"oschian numbers (OEIS A003136): the integers $d$ such that, in the prime factorization of $d$, every prime factor $p \equiv 2 \pmod 3$ has an even exponent.
 
-By Proposition~\ref{propos:planar-srdegrees}, the condition that $A_1$ have no eigenvalue whose inverse is an algebraic integer is equivalent to the system
+By Proposition~\ref{propos:planar-srdegrees}, the condition that no eigen value of $A_1^{-1}$ is an algebraic integer
+is equivalent to the system
 \begin{align*}
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
 -(x_{0}^{2} + x_{0}x_1 + x_{1}^2)  & \neq -1.
@@ -678,7 +680,7 @@ The excluded set of solutions is:
 (x_0, x_1) \notin
 \left\{(0, 0), \left(0, 1\right), \left(-1, 1\right), \left(1, -1\right), \left(-1, 0\right), \left(1, 0\right), \left(0, -1\right)\right\}.
 \]
-The analogous conditions for $A_2$ gives the system
+The analogous conditions for $A_2$ give the system
 \begin{align*}
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 & \neq 0, \pm 1, \\
 x_{0}^{2} + x_{0}x_1 + x_{1}^2 \pm (x_0+2x_1) & \neq -1,
@@ -756,10 +758,12 @@ every space group $G$ and every $\sigma\in\operatorname{Aut}(P)$, one of the fol
 \item[(1)] $\tr(Y)=\tau(Y)=0$;
 \item[(2)] $Y$ is block triangular.
 \end{itemize}
+The only exceptions are, similarly to the two-dimensional case, the groups $P1$ and $P-1$ (Nos.~1 and 2 in ITA) that
+have point groups consisting of scalar matrices. Likewise plane groups $p1$ and $p2$, these space groups admit every
+positive integer $\ge 1$ as a self-covering degree and every positive integer $\ge 2$ as a self-replicating degree.  
 The complete list of the families $Y \in \mathcal{Y}_\sigma$ is omitted due to their large variety\footnotemark[1]{}.
 
-\footnotetext[1]{The source code used to generate the complete list of $\mathcal{Y}_\sigma$
-is provided in \cite{crystcode2026}}
+\footnotetext[1]{The source code used to generate the complete list of $\mathcal{Y}_\sigma$ is provided in \cite{crystcode2026}.}
 
 Consider the first case. Since $\tau(Y)=\tr(Y)=0$, the characteristic polynomial of $Y^{-1}$ reduces to
 \[
@@ -800,14 +804,14 @@ the subset of $SRD(G)$ corresponding to the fixed automorphism $\sigma$ is
 \end{equation}
 Therefore, the contribution of $\sigma$ to $SRD(G)$ is completely determined by the triple
 $(p_\sigma,q_\sigma,g_\sigma)$, whereas the product
-$f_\sigma=p_\sigma q_\sigma$ determines the corresponding self-covering degrees. The complete list of triples $(p_\sigma,q_\sigma,g_\sigma)$ for all space groups is given in Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286} in the appendix.
+$f_\sigma=p_\sigma q_\sigma$ determines the corresponding self-covering degrees. The complete list of triples $(p_\sigma,q_\sigma,g_\sigma)$ for all space groups is given in Tables~\ref{tab:case1_srdegrees0}--\ref{tab:case1_srdegrees286} in the appendix.
 
 In summary, to determine the self-covering and self-replicating degrees of a given crystallographic group $G$, locate
-the corresponding group number in Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case2_srdegrees0}. Since a group may appear
+the corresponding group number in Tables~\ref{tab:case1_srdegrees0}--\ref{tab:case2_srdegrees0}. Since a group may appear
 in several rows, corresponding to different automorphisms $\sigma\in\operatorname{Aut}(P)$, each row contributes a
 subset of both $SCD(G)$ and $SRD(G)$. For each row of Table~\ref{tab:case2_srdegrees0}, the polynomial $f_\sigma$
 determines the corresponding contributions to both $SCD(G)$ and $SRD(G)$. For each row of
-Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286}, the product $f_\sigma=p_\sigma q_\sigma$ determines
+Tables~\ref{tab:case1_srdegrees0}--\ref{tab:case1_srdegrees286}, the product $f_\sigma=p_\sigma q_\sigma$ determines
 the contribution to $SCD(G)$, whereas the corresponding triple $(p_\sigma,q_\sigma,g_\sigma)$ determines the
 contribution to $SRD(G)$ via \eqref{eqn:space_case2}. The resulting $SCD(G)$ and $SRD(G)$ are obtained by taking the union
 of the contributions over all rows corresponding to $G$.
@@ -929,7 +933,7 @@ matrices
 \]
 To match the description (\ref{eqn:X_sum_Xi}) of the set $\mathcal{X}_\sigma$ we also need to address the restriction
 $X_i \in M_n(\mathbb{Z})$, which will be done later. In dimension $3$ this computation is carried out only once for
-each of the $73$ arithmetic crystal classes: the space groups are partitioned according to their point group, the
+each of the $73$ point group classes: the space groups are partitioned according to their point group, the
 normalizers are computed for one representative of each class, and the results are cached on disk and reused for all
 groups in the class.
 
@@ -983,7 +987,7 @@ The general solution of the homogeneous system (i.e. $b = 0$) is the right kerne
 $M_{aug} = \left(-mE | mM \right)$. The kernel basis is returned in echelon form and the auxiliary variables $y$
 are placed first. As a result, the free variables of the solution are exactly the auxiliary variables together with the
 genuinely free parameters, and each dependent parameter is an integral linear
-combination of them. The inhomogeneous system also requires a particular solution, which we compute using the
+combination of them. The inhomogeneous system also requires a particular solution, which we compute using 
 SageMath's \texttt{solve\_right} over $\mathbb{Z}$.
 
 \subsubsection*{Simplicity test and quadratic Diophantine equations}
@@ -1016,141 +1020,9 @@ It is then simplified using Smith normal form decomposition $(UMV) V^{-1}t \equi
 equation $d_i x_i \equiv b_i \mod m$ the general solution is $x_i \equiv \frac{b_i}{d_i} + \frac{nm}{d_i}$, where $n$
 is an arbitrary integer. Transforming back by $V$ yields $t = t_0 + V R + V N$, where $R$ is the basis of the lattice
 of solutions and $N$ is the basis of the nullspace. Note that the lattice is isomorphic to $\mathbb{Z}^r$,
-while the nullspace is isomorphic to $\mathbb{Q}^{n-r}$ where $r$ being the rank of $M$.
-
+while the nullspace is isomorphic to $\mathbb{Q}^{n-r}$ where $r$ is the rank of $M$.
 
 \begin{thebibliography}{99}
-
-  \bibitem{Algo:Cocycle}
-  W.~Plesken and T.~Schulz,
-  Counting crystallographic groups in low dimensions,
-  \emph{Experiment. Math.} \textbf{9} (2000), no.~3, 407--411.
-  \url{https://doi.org/10.1080/10586458.2000.10504417}
-
-  % \bibitem{Algo:HighCrystDim}
-  % C.~Cid and T.~Schulz,
-  % Computation of five and six dimensional Bieberbach groups,
-  % \emph{Experiment. Math.} \textbf{10} (2001), no.~1, 109--115.
-  % \url{https://doi.org/10.1080/10586458.2001.10504636}
-
-  \bibitem{AlpernDiophantine}
-  D.~Alpern,
-  \emph{Generic two integer variable equation solver},
-  \url{https://www.alpertron.com.ar/QUAD.HTM}
-
-  \bibitem{BartholdiSunic}
-  L.~Bartholdi and Z.~\v{S}uni\'c,
-  Some solvable automaton groups,
-  in \emph{Topological and asymptotic aspects of group theory},
-  Contemp. Math., vol.~394, Amer. Math. Soc., Providence, RI, 2006, 11--29.
-  \url{https://doi.org/10.1090/conm/394}
-
-  \bibitem{BerlattoSidki2007nilpotent}
-  A.~Berlatto and S.~Sidki,
-  Virtual endomorphisms of nilpotent groups,
-  \emph{Groups Geom. Dyn.} \textbf{1} (2007), no.~1, 21--46.
-  \url{https://doi.org/10.4171/GGD/3}
-
-  \bibitem{BerlattoAtAll2023soluble}
-  A.~A. Berlatto, A.~C. Dantas, and T.~M.~G. Santos,
-  Self-similarity of some soluble relatively free groups,
-  \emph{Arch. Math. (Basel)} \textbf{120} (2023), no.~4, 361--371.
-  \url{https://doi.org/10.1007/s00013-023-01856-3}
-
-  \bibitem{Bondarenko2026}
-  I.~Bondarenko,
-  Self-similar actions of crystallographic groups,
-  in preparation, 2026.
-
-  \bibitem{BondZash2024pg}
-  I.~Bondarenko and D.~Zashkolnyi,
-  Virtual endomorphisms of the group $pg$,
-  \emph{Res. Math.} \textbf{32} (2024), no.~1, 3--15.
-  \url{https://doi.org/10.15421/242401}
-
-  \bibitem{BondarenkoKravchenko2014nilpotent}
-  I.~Bondarenko and R.~Kravchenko,
-  Finite-state self-similar actions of nilpotent groups,
-  \emph{Geom. Dedicata} \textbf{173} (2014), 339--348.
-  \url{https://doi.org/10.1007/s10711-013-9944-6}
-
-  \bibitem{Brown:Cohomology}
-  K.~S. Brown,
-  \emph{Cohomology of groups},
-  Graduate Texts in Mathematics, vol.~87, Springer-Verlag, New York, 1982.
-
-  \bibitem{BrunnerSidki1998}
-  A.~M. Brunner and S.~N. Sidki,
-  The generation of $\mathrm{GL}(n,\mathbb{Z})$ by finite state automata,
-  \emph{Internat. J. Algebra Comput.} \textbf{8} (1998), no.~1, 127--139.
-  \url{https://doi.org/10.1142/S0218196798000077}
-
-  \bibitem{BrunnerSidki2010Abelian}
-  A.~M. Brunner and S.~N. Sidki,
-  Abelian state-closed subgroups of automorphisms of $m$-ary trees,
-  \emph{Groups Geom. Dyn.} \textbf{4} (2010), no.~3, 455--471.
-  \url{https://doi.org/10.4171/GGD/91}
-
-  \bibitem{CARAT}
-  J.~Opgenorth, W.~Plesken, and T.~Schulz,
-  Crystallographic algorithms and tables,
-  \emph{Acta Crystallogr. Sect. A} \textbf{54} (1998), 517--531.
-  \url{https://doi.org/10.1107/S010876739701547X}
-
-  \bibitem{crystcode2026}
-  D.~Zashkolnyi,
-  \emph{Source code for computations of self-covering degrees of crystallographic groups},
-  2026.
-  \url{https://github.com/davendiy/cryst-automata/}
-
-  \bibitem{CrystTables}
-  \emph{International tables for crystallography, Vol.~A: Space-group symmetry},
-  6th ed., edited by M.~I. Aroyo, Wiley, 2016.
-
-  \bibitem{DantasAtAll2023abelian}
-  A.~C. Dantas, T.~M.~G. Santos, and S.~N. Sidki,
-  Self-similar abelian groups and their centralizers,
-  \emph{Groups Geom. Dyn.} \textbf{17} (2023), no.~2, 577--599.
-  \url{https://doi.org/10.4171/GGD/712}
-
-  \bibitem{DantasAtAll2027polycyclic}
-  A.~C. Dantas, T.~M.~G. Santos, and S.~N. Sidki,
-  On a class of self-similar polycyclic groups,
-  \emph{J. Algebra} \textbf{709} (2027), 372--400.
-
-  \bibitem{GAP:Cryst}
-  B.~Eick, F.~G\"ahler, and W.~Nickel,
-  \emph{Cryst --- Computing with crystallographic groups},
-  GAP package, \url{https://gap-packages.github.io/cryst/}
-
-  \bibitem{Kapovich2012}
-  I.~Kapovich,
-  Arithmetic properties of self-similar groups,
-  \emph{Groups Geom. Dyn.} \textbf{6} (2012), no.~4, 737--754.
-  \url{https://doi.org/10.4171/GGD/172}
-
-  \bibitem{Kochloukova2026soluble}
-  D.~H. Kochloukova,
-  Self-similarity of the generalized Baumslag--Solitar groups,
-  \emph{Bull. Lond. Math. Soc.} \textbf{58} (2026), no.~5, Paper No. e70365.
-  \url{https://doi.org/10.1112/blms.70365}
-
-  \bibitem{KochloukovaSidki2020metabilian}
-  D.~H. Kochloukova and S.~N. Sidki,
-  Self-similar groups of type $FP_n$,
-  \emph{Geom. Dedicata} \textbf{204} (2020), 241--264.
-  \url{https://doi.org/10.1007/s10711-019-00454-y}
-
-  \bibitem{Mathieu2021Nilpotent}
-  O.~Mathieu,
-  Which nilpotent groups are self-similar?,
-  preprint, \texttt{arXiv:2101.11291} (2021).
-
-  \bibitem{Nekrashevych:Self-similar}
-  V.~Nekrashevych,
-  \emph{Self-similar groups},
-  Mathematical Surveys and Monographs, vol.~117,
-  American Mathematical Society, Providence, RI, 2005.
 
   \bibitem{NekrashevychSidki2004}
   V.~Nekrashevych and S.~N. Sidki,
@@ -1159,11 +1031,115 @@ while the nullspace is isomorphic to $\mathbb{Q}^{n-r}$ where $r$ being the rank
   London Math. Soc. Lecture Note Ser., vol.~311, Cambridge Univ. Press, Cambridge, 2004, 375--404.
   \url{https://doi.org/10.1017/CBO9780511550706.014}
 
-  \bibitem{quadratic_polys}
-  F.~J. Grunewald and D.~Segal,
-  On the integer solutions of quadratic equations,
-  \emph{J. Reine Angew. Math.} \textbf{569} (2004), 13--45.
-  \url{https://doi.org/10.1515/crll.2004.023}
+  \bibitem{BrunnerSidki2010Abelian}
+  A.~M. Brunner and S.~N. Sidki,
+  Abelian state-closed subgroups of automorphisms of $m$-ary trees,
+  \emph{Groups Geom. Dyn.} \textbf{4} (2010), no.~3, 455--471.
+  \url{https://doi.org/10.4171/GGD/91}
+
+  \bibitem{DantasAtAll2023abelian}
+  A.~C. Dantas, T.~M.~G. Santos, and S.~N. Sidki,
+  Self-similar abelian groups and their centralizers,
+  \emph{Groups Geom. Dyn.} \textbf{17} (2023), no.~2, 577--599.
+  \url{https://doi.org/10.4171/GGD/712}
+
+  \bibitem{BerlattoSidki2007nilpotent}
+  A.~Berlatto and S.~Sidki,
+  Virtual endomorphisms of nilpotent groups,
+  \emph{Groups Geom. Dyn.} \textbf{1} (2007), no.~1, 21--46.
+  \url{https://doi.org/10.4171/GGD/3}
+
+  \bibitem{BondarenkoKravchenko2014nilpotent}
+  I.~Bondarenko and R.~Kravchenko,
+  Finite-state self-similar actions of nilpotent groups,
+  \emph{Geom. Dedicata} \textbf{173} (2014), 339--348.
+  \url{https://doi.org/10.1007/s10711-013-9944-6}
+
+  \bibitem{Mathieu2021Nilpotent}
+  O.~Mathieu,
+  Which nilpotent groups are self-similar?,
+  preprint, \texttt{arXiv:2101.11291} (2021).
+
+  \bibitem{DantasAtAll2027polycyclic}
+  A.~C. Dantas, E.~de Melo, R.~N. de Oliveira, and S.~N. Sidki,
+  On a class of self-similar polycyclic groups,
+  \emph{J. Algebra} (2027), in press.
+  \url{https://doi.org/10.1016/j.jalgebra.2026.05.033}
+
+  \bibitem{BartholdiSunic}
+  L.~Bartholdi and Z.~\v{S}uni\'c,
+  Some solvable automaton groups,
+  in \emph{Topological and asymptotic aspects of group theory},
+  Contemp. Math., vol.~394, Amer. Math. Soc., Providence, RI, 2006, 11--29.
+  \url{https://doi.org/10.1090/conm/394}
+
+  \bibitem{KochloukovaSidki2020metabilian}
+  D.~H. Kochloukova and S.~N. Sidki,
+  Self-similar groups of type $FP_n$,
+  \emph{Geom. Dedicata} \textbf{204} (2020), 241--264.
+  \url{https://doi.org/10.1007/s10711-019-00454-y}
+
+  \bibitem{BerlattoAtAll2023soluble}
+  A.~A. Berlatto, A.~C. Dantas, and T.~M.~G. Santos,
+  Self-similarity of some soluble relatively free groups,
+  \emph{Arch. Math. (Basel)} \textbf{120} (2023), no.~4, 361--371.
+  \url{https://doi.org/10.1007/s00013-023-01856-3}
+
+  \bibitem{Kochloukova2026soluble}
+  D.~H. Kochloukova,
+  Self-similarity of the generalized Baumslag--Solitar groups,
+  \emph{Bull. Lond. Math. Soc.} \textbf{58} (2026), no.~5, Paper No. e70365.
+  \url{https://doi.org/10.1112/blms.70365}
+
+  \bibitem{BrunnerSidki1998}
+  A.~M. Brunner and S.~N. Sidki,
+  The generation of $\mathrm{GL}(n,\mathbb{Z})$ by finite state automata,
+  \emph{Internat. J. Algebra Comput.} \textbf{8} (1998), no.~1, 127--139.
+  \url{https://doi.org/10.1142/S0218196798000077}
+
+  \bibitem{Kapovich2012}
+  I.~Kapovich,
+  Arithmetic properties of self-similar groups,
+  \emph{Groups Geom. Dyn.} \textbf{6} (2012), no.~4, 737--754.
+  \url{https://doi.org/10.4171/GGD/172}
+
+  \bibitem{Bondarenko2026}
+  I.~Bondarenko,
+  Self-similar actions of crystallographic groups,
+  in preparation, 2026.
+
+  \bibitem{Nekrashevych:Self-similar}
+  V.~Nekrashevych,
+  \emph{Self-similar groups},
+  Mathematical Surveys and Monographs, vol.~117,
+  American Mathematical Society, Providence, RI, 2005.
+
+  \bibitem{BondZash2024pg}
+  I.~Bondarenko and D.~Zashkolnyi,
+  Virtual endomorphisms of the group $pg$,
+  \emph{Res. Math.} \textbf{32} (2024), no.~1, 3--15.
+  \url{https://doi.org/10.15421/242401}
+
+  \bibitem{CrystTables}
+  \emph{International tables for crystallography, Vol.~A: Space-group symmetry},
+  6th ed., edited by M.~I. Aroyo, Wiley, 2016.
+
+  \bibitem{crystcode2026}
+  D.~Zashkolnyi,
+  \emph{Source code for computations of self-covering degrees of crystallographic groups},
+  2026.
+  \url{https://github.com/davendiy/cryst-automata/}
+
+  \bibitem{Szcz:CrystBook}
+  A.~Szczepa\'nski,
+  \emph{Geometry of crystallographic groups},
+  Algebra and Discrete Mathematics, vol.~4, World Scientific, Hackensack, NJ, 2012.
+  \url{https://doi.org/10.1142/8519}
+
+  \bibitem{Brown:Cohomology}
+  K.~S. Brown,
+  \emph{Cohomology of groups},
+  Graduate Texts in Mathematics, vol.~87, Springer-Verlag, New York, 1982.
 
   \bibitem{RatcliffeTschantz2010}
   J.~G. Ratcliffe and S.~T. Tschantz,
@@ -1176,14 +1152,35 @@ while the nullspace is isomorphic to $\mathbb{Q}^{n-r}$ where $r$ being the rank
   \emph{SageMath, the Sage Mathematics Software System},
   \url{https://www.sagemath.org}
 
-  \bibitem{Szcz:CrystBook}
-  A.~Szczepa\'nski,
-  \emph{Geometry of crystallographic groups},
-  Algebra and Discrete Mathematics, vol.~4, World Scientific, Hackensack, NJ, 2012.
-  \url{https://doi.org/10.1142/8519}
+  \bibitem{GAP:Cryst}
+  B.~Eick, F.~G\"ahler, and W.~Nickel,
+  \emph{Cryst --- Computing with crystallographic groups},
+  GAP package, \url{https://gap-packages.github.io/cryst/}
+
+  \bibitem{CARAT}
+  J.~Opgenorth, W.~Plesken, and T.~Schulz,
+  Crystallographic algorithms and tables,
+  \emph{Acta Crystallogr. Sect. A} \textbf{54} (1998), 517--531.
+  \url{https://doi.org/10.1107/S010876739701547X}
+
+  \bibitem{Algo:Cocycle}
+  W.~Plesken and T.~Schulz,
+  Counting crystallographic groups in low dimensions,
+  \emph{Experiment. Math.} \textbf{9} (2000), no.~3, 407--411.
+  \url{https://doi.org/10.1080/10586458.2000.10504417}
+
+  \bibitem{quadratic_polys}
+  F.~J. Grunewald and D.~Segal,
+  On the integer solutions of quadratic equations,
+  \emph{J. Reine Angew. Math.} \textbf{569} (2004), 13--45.
+  \url{https://doi.org/10.1515/crll.2004.023}
+
+  \bibitem{AlpernDiophantine}
+  D.~Alpern,
+  \emph{Generic two integer variable equation solver},
+  \url{https://www.alpertron.com.ar/QUAD.HTM}
 
 \end{thebibliography}
-
 
 
 \appendix
