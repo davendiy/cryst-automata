@@ -8,135 +8,141 @@ G_{24} = \left\langle\left(\begin{array}{rrr|r}
 -1 & 0 & 0 & 0 \\
 1 & 1 & 0 & \frac{1}{2} \\
 0 & 0 & -1 & \frac{1}{2} \\
-\end{array}\right) , e_1 , e_2 , e_3\right\rangle
+\end{array}\right) , e_1 , e_2 , e_3\right\rangle.
 $$
-In this case, the matrices $\mathcal{X}$ satisfying (\textit{PC}) have a wide range of possible forms:
-$$\left(\begin{array}{rrr}
-x_{0} & 2 \, x_{0} & 0 \\
-x_{1} & -x_{0} & x_{0} + 2 \, x_{1} \\
-x_{2} & -x_{0} & 0
-\end{array}\right) , \left(\begin{array}{rrr}
--2 \, x_{0} + x_{1} & 0 & 0 \\
-x_{2} & -2 \, x_{0} + x_{1} + 2 \, x_{2} & 0 \\
-x_{0} & 0 & x_{1}
-\end{array}\right) , \left(\begin{array}{rrr}
-x_{0} & 0 & 0 \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{1} & 0 & x_{1} \\
--\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & x_{2} & 0
-\end{array}\right)$$
-$$\left(\begin{array}{rrr}
--x_{0} & -2 \, x_{0} & 0 \\
-x_{1} & x_{0} & 0 \\
-\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & x_{0} & x_{2}
-\end{array}\right) , \left(\begin{array}{rrr}
-x_{0} & 0 & 2 \, x_{0} \\
-x_{1} & x_{0} + 2 \, x_{1} & -x_{0} \\
-x_{2} & 0 & -x_{0}
-\end{array}\right) , \left(\begin{array}{rrr}
-x_{0} - 2 \, x_{1} & 0 & 2 \, x_{0} - 4 \, x_{1} \\
-x_{2} & 0 & -x_{0} + 2 \, x_{1} \\
-x_{1} & x_{0} & -x_{0} + 2 \, x_{1}
-\end{array}\right)$$
+% In this case, the matrices $\mathcal{X}$ satisfying (\textit{PC}) have a wide range of possible forms:
+% $$\left(\begin{array}{rrr}
+% x_{0} & 2 \, x_{0} & 0 \\
+% x_{1} & -x_{0} & x_{0} + 2 \, x_{1} \\
+% x_{2} & -x_{0} & 0
+% \end{array}\right) , \left(\begin{array}{rrr}
+% -2 \, x_{0} + x_{1} & 0 & 0 \\
+% x_{2} & -2 \, x_{0} + x_{1} + 2 \, x_{2} & 0 \\
+% x_{0} & 0 & x_{1}
+% \end{array}\right) , \left(\begin{array}{rrr}
+% x_{0} & 0 & 0 \\
+% -\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{1} & 0 & x_{1} \\
+% -\frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & x_{2} & 0
+% \end{array}\right)$$
+% $$\left(\begin{array}{rrr}
+% -x_{0} & -2 \, x_{0} & 0 \\
+% x_{1} & x_{0} & 0 \\
+% \frac{1}{2} \, x_{0} + \frac{1}{2} \, x_{2} & x_{0} & x_{2}
+% \end{array}\right) , \left(\begin{array}{rrr}
+% x_{0} & 0 & 2 \, x_{0} \\
+% x_{1} & x_{0} + 2 \, x_{1} & -x_{0} \\
+% x_{2} & 0 & -x_{0}
+% \end{array}\right) , \left(\begin{array}{rrr}
+% x_{0} - 2 \, x_{1} & 0 & 2 \, x_{0} - 4 \, x_{1} \\
+% x_{2} & 0 & -x_{0} + 2 \, x_{1} \\
+% x_{1} & x_{0} & -x_{0} + 2 \, x_{1}
+% \end{array}\right)$$
 
-For the sake of succinctness, we consider only two of them. Firstly, take a closer look on the matrix
-$A_1 = \left(\begin{array}{rrr}
-x_{0} & 2 \, x_{0} & 0 \\
-x_{1} & -x_{0} & x_{0} + 2 \, x_{1} \\
-x_{2} & -x_{0} & 0
-\end{array}\right).$
-We omit the full system of congruences (\ref{eqn:cocycle_condition}) due to its complexity. Instead, here is the
-smaller system (\ref{eqn:small_cong_system}) over integral variables $x_i$:
-$$\left(\begin{array}{r}
-x_{0} + 2 \, x_{2} \\
--\frac{1}{2} \, x_{0} + x_{1} - x_{2} \\
--\frac{3}{2} \, x_{0} - x_{1} - x_{2} \\
-2 \, x_{0} + 2 \, x_{2} \\
--x_{0}
-\end{array}\right) \equiv \left(\begin{array}{r}
-0 \\
-\frac{1}{2} \\
-\frac{1}{2} \\
--2 \\
-1
-\end{array}\right) \quad \mod 1$$
-The solution is the set of matrices, satisfying the (\textit{PC})-(\textit{CC}) conditions:
+% For the sake of succinctness, we consider only two of them. Firstly, take a closer look on the matrix
+% $A_1 = \left(\begin{array}{rrr}
+% x_{0} & 2 \, x_{0} & 0 \\
+% x_{1} & -x_{0} & x_{0} + 2 \, x_{1} \\
+% x_{2} & -x_{0} & 0
+% \end{array}\right).$
+% We omit the full system of congruences (\ref{eqn:cocycle_condition}) due to its complexity. Instead, here is the
+% smaller system (\ref{eqn:small_cong_system}) over integral variables $x_i$:
+% $$\left(\begin{array}{r}
+% x_{0} + 2 \, x_{2} \\
+% -\frac{1}{2} \, x_{0} + x_{1} - x_{2} \\
+% -\frac{3}{2} \, x_{0} - x_{1} - x_{2} \\
+% 2 \, x_{0} + 2 \, x_{2} \\
+% -x_{0}
+% \end{array}\right) \equiv \left(\begin{array}{r}
+% 0 \\
+% \frac{1}{2} \\
+% \frac{1}{2} \\
+% -2 \\
+% 1
+% \end{array}\right) \quad \mod 1$$
+% The solution is the set of matrices, satisfying the (\textit{PC})-(\textit{CC}) conditions:
+% $$
+% A_1'=\left(\begin{array}{rrr}
+% -2 \, y_{0} - 2 \, y_{1} - 2 \, y_{2} - 1 & -4 \, y_{0} - 4 \, y_{1} - 4 \, y_{2} - 2 & 0 \\
+% y_{0} + y_{1} & 2 \, y_{0} + 2 \, y_{1} + 2 \, y_{2} + 1 & -2 \, y_{2} - 1 \\
+% 2 \, y_{0} + y_{1} + y_{2} & 2 \, y_{0} + 2 \, y_{1} + 2 \, y_{2} + 1 & 0
+% \end{array}\right)
+% $$
+% The $A_1'$ has a reduced characteristic polynomial since $\tau(A_1') = \tr(A_1') = 0$, and SRD has the form (\ref{eqn:space_case2}).
+% The determinant $\det(A_1')$ is a qubic polynomial of three variables No. 7 from the Table \ref{tab:case2_srdegrees0}:
+
+For the sake of succinctness, we consider only two subsets of $SRD$ for $G_{24}$. The first is characterised by a
+qubic polynomial of three variables No.~7 from the Table~\ref{tab:case2_srdegrees0}:
 $$
-A_1'=\left(\begin{array}{rrr}
--2 \, y_{0} - 2 \, y_{1} - 2 \, y_{2} - 1 & -4 \, y_{0} - 4 \, y_{1} - 4 \, y_{2} - 2 & 0 \\
-y_{0} + y_{1} & 2 \, y_{0} + 2 \, y_{1} + 2 \, y_{2} + 1 & -2 \, y_{2} - 1 \\
-2 \, y_{0} + y_{1} + y_{2} & 2 \, y_{0} + 2 \, y_{1} + 2 \, y_{2} + 1 & 0
-\end{array}\right)
+f_\sigma(y_0, y_1, y_2) = 4 \, {\left(2 \, y_{0} - 1\right)} y_{2}^{2} + 4 \, y_{0}^{2} + 2 \, {\left(2 \, y_{0} - 1\right)} y_{1} + 4 \, {\left(2 \, y_{0}^{2} + {\left(2 \, y_{0} - 1\right)} y_{1} + y_{0} - 1\right)} y_{2} - 1.
 $$
-The $A_1'$ has a reduced characteristic polynomial since $\tau(A_1') = \tr(A_1') = 0$, and SRD has the form (\ref{eqn:space_case2}).
-The determinant $\det(A_1')$ is a qubic polynomial of three variables No. 7 from the Table \ref{tab:case2_srdegrees0}:
+We can factorize it:
 $$
-\det(A_1') = 4 \, {\left(2 \, y_{0} - 1\right)} y_{2}^{2} + 4 \, y_{0}^{2} + 2 \, {\left(2 \, y_{0} - 1\right)} y_{1} + 4 \, {\left(2 \, y_{0}^{2} + {\left(2 \, y_{0} - 1\right)} y_{1} + y_{0} - 1\right)} y_{2} - 1.
+f_\sigma = (2y_0 - 1)(2y_2 + 1)(2y_0 + 2y_1 + 2y_2 + 1).
 $$
-We can factorize it and inspect the values it can attain:
+Now it is clear that $f_\sigma$ can attain any odd integer $n$ taking $y_0 = \frac{n+1}{2}, \, y_1 = -y_0, \, y_2 = 0$.
+As a result, the one of subsets of $SRD$, that coincides with a subset of $SCD$:
 $$
-\det(A_1') = (2y_0 - 1)(2y_2 + 1)(2y_0 + 2y_1 + 2y_2 + 1).
-$$
-Now it is clear that $\det(A_1')$ can be any odd integer $n$ taking $y_0 = \frac{n+1}{2}, \, y_1 = -y_0, \, y_2 = 0$.
-As a result:
-$$
-SCD = SRD = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
+SCD_1 = SRD_1 = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
 $$
 
+% Now consider the matrix $A_2 = \left(\begin{array}{rrr}
+% \frac{1}{2} \, x_{0} & 0 & x_{0} \\
+% x_{1} & \frac{1}{2} \, x_{0} + 2 \, x_{1} & -\frac{1}{2} \, x_{0} \\
+% x_{2} & 0 & -\frac{1}{2} \, x_{0}
+% \end{array}\right) $. It contains rational coefficients, so we have to rewrite it to satisfy (\textit{LC}):
+% $$A'_2 = \left(\begin{array}{rrr}
+% z_{0} & 0 & 2 \, z_{0} \\
+% z_{1} & z_{0} + 2 \, z_{1} & -z_{0} \\
+% z_{2} & 0 & -z_{0}
+% \end{array}\right).$$
+% Now the congruence system (\ref{eqn:small_cong_system}) over integral variables $z_i$ is similar to the previous one:
+% $$\left(\begin{array}{r}
+% 0 \\
+% -\frac{1}{2} \, z_{0} + z_{1} - z_{2} \\
+% -\frac{3}{2} \, z_{0} - z_{1} - z_{2} \\
+% -2 \, z_{0} - 2 \, z_{2} \\
+% -z_{0}
+% \end{array}\right) \equiv \left(\begin{array}{r}
+% 0 \\
+% \frac{1}{2} \\
+% \frac{1}{2} \\
+% 2 \\
+% 1 
+% \end{array}\right) \quad \mod 1,$$
+% which yields the matrix satisfying all the (\textit{PC})-(\textit{CC}) conditions:
+% $$A_2'' = \left(\begin{array}{rrr}
+% -2 \, y_{0} - 1 & 0 & -4 \, y_{0} - 2 \\
+% y_{0} - y_{1} & -2 \, y_{1} - 1 & 2 \, y_{0} + 1 \\
+% 2 \, y_{0} - y_{1} - y_{2} & 0 & 2 \, y_{0} + 1
+% \end{array}\right).$$
 
-Now consider the matrix $A_2 = \left(\begin{array}{rrr}
-\frac{1}{2} \, x_{0} & 0 & x_{0} \\
-x_{1} & \frac{1}{2} \, x_{0} + 2 \, x_{1} & -\frac{1}{2} \, x_{0} \\
-x_{2} & 0 & -\frac{1}{2} \, x_{0}
-\end{array}\right) $. It contains rational coefficients, so we have to rewrite it to satisfy (\textit{LC}):
-$$A'_2 = \left(\begin{array}{rrr}
-z_{0} & 0 & 2 \, z_{0} \\
-z_{1} & z_{0} + 2 \, z_{1} & -z_{0} \\
-z_{2} & 0 & -z_{0}
-\end{array}\right).$$
-Now the congruence system (\ref{eqn:small_cong_system}) over integral variables $z_i$ is similar to the previous one:
-$$\left(\begin{array}{r}
-0 \\
--\frac{1}{2} \, z_{0} + z_{1} - z_{2} \\
--\frac{3}{2} \, z_{0} - z_{1} - z_{2} \\
--2 \, z_{0} - 2 \, z_{2} \\
--z_{0}
-\end{array}\right) \equiv \left(\begin{array}{r}
-0 \\
-\frac{1}{2} \\
-\frac{1}{2} \\
-2 \\
-1 
-\end{array}\right) \quad \mod 1,$$
-which yields the matrix satisfying all the (\textit{PC})-(\textit{CC}) conditions:
-$$A_2'' = \left(\begin{array}{rrr}
--2 \, y_{0} - 1 & 0 & -4 \, y_{0} - 2 \\
-y_{0} - y_{1} & -2 \, y_{1} - 1 & 2 \, y_{0} + 1 \\
-2 \, y_{0} - y_{1} - y_{2} & 0 & 2 \, y_{0} + 1
-\end{array}\right).$$
+% In contrast to $A_1'$, $A_2''$ is block-triagonal up to the renaming of the basis vectors.
+% Although the minor $C'$ for $A_2'$ has only two variables and appears in the plane group No. 9
+% (check Table~\ref{tab:planar_srdegrees}), the respective minor $C''$ for $A_2''$ suddenly has three variables. The $SRD$
+% is described by the following polynomials:
 
-In contrast to $A_1'$, $A_2''$ is block-triagonal up to the renaming of the basis vectors.
-Although the minor $C'$ for $A_2'$ has only two variables and appears in the plane group No. 9
-(check Table~\ref{tab:planar_srdegrees}), the respective minor $C''$ for $A_2''$ suddenly has three variables. The $SRD$
-is described by the following polynomials:
+The second subset is characterised by a triple of polynomials that can be found in the Table~\ref{tab:case1_srdegrees0}:
 $$
-p = -2 y_1 - 1, \quad q = 4 y_0^2 - 2(2 y_0 + 1) y_1 - 2 (2 y_0 + 1) y_2 - 1, \quad g = 0.
+p_\sigma(y_0, y_1, y_2) = -2 y_1 - 1,
+\quad q_\sigma(y_0, y_1, y_2) = 4 y_0^2 - 2(2 y_0 + 1) y_1 - 2 (2 y_0 + 1) y_2 - 1,
+\quad g_\sigma = 0.
 $$
-This triple can be found in the Table \ref{tab:case1_srdegrees0}.
-
-Since $g = 0$, the condition on eigenvalues by the Proposition \ref{propos:planar-srdegrees} reduces to $q \neq -1$. We
-can factorize $q$ in the similar way to inspect what values $(p*q)$ can attain:
+% This triple can be found in the Table \ref{tab:case1_srdegrees0}.
+Since $g_\sigma = 0$, the condition on eigenvalues by the Proposition \ref{propos:planar-srdegrees} reduces
+to $q_\sigma \neq -1$. We can also factorize $q_\sigma$ to inspect what values $(p_\sigma*q_\sigma)$ can attain in
+(\ref{eqn:space_case2}):
 $$
-q = (2y_0 + 1)(2y_0 - 2y_1 - 2y_2 - 1)
+q_\sigma = (2y_0 + 1)(2y_0 - 2y_1 - 2y_2 - 1)
 $$
-Likewise $A_1'$, the $\det(A_2'') = p*q$ attains every odd integer $n > 1$ via
+Similarly to the first case, $\det(A) = p_\sigma*q_\sigma$ attains every odd integer $n > 1$ via
 $y_1 = -\frac{n+1}{2}, y_2 = \frac{n-1}{2}, y_0 = 0$. It does not violate the condition on eigenvalues, since 
 $q = 1 \neq -1$.
 Moreover, we can now observe that the substitution $y_0 \mapsto -y_1, \, y_1 \mapsto -y_2 - 1, \, y_2 \mapsto y_0$ into the
-polynomial $\det(A_1')$ yields exactly the $\det(A_2'') = p*q$. As a result:
+polynomial $f_\sigma$ yields exactly the $p_\sigma*q_\sigma$. As a result:
 $$
-SCD = SRD = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
+SCD_2 = SRD_2 = \{ 2k + 1 \, : \, k \in \mathbb{N}\}.
 $$
 
-Note that these two matrices do not represent the entire sets $SCD$ and $SRD$. To compute them completely, one must
-repeat the provided procedure for every matrix from the $\mathcal{X}$ or use already computed polynomials in the
-Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case2_srdegrees0}.
+Note that these two subset do not represent the entire sets $SCD$ and $SRD$. To compute them completely, one must
+repeat the provided procedure for every triple in the Tables~\ref{tab:case1_srdegrees0}-\ref{tab:case1_srdegrees286}
+and every qubic polynomial in the Table~\ref{tab:case2_srdegrees0}.
