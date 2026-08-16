@@ -8,6 +8,8 @@ from src.srdegrees import SR_Degrees, solve_simple_mat, factorize, tau, standard
 from src.cryst3.gen_norms3 import load_cached_normalizers
 
 
+
+
 prepare_gap_env()
 
 VER = False
@@ -119,7 +121,6 @@ res_table = []
 # for i in [9]:
 # for i in [148]:
 for i in tqdm(range(2, 231)):
-# for i in tqdm(range(2, 40)):
     printv('\n\n')
     printv(f'==================== group #{i} ======================')
     t = SR_Degrees(group_index=i, dim=3, verbose=(2 if VER else 0))
@@ -165,7 +166,19 @@ for i in tqdm(range(2, 231)):
 
 # print(res_table)
 
-M = 50
+__counter_M = 0
+
+
+def get_M():
+
+    global __counter_M
+
+    __counter_M += 1
+    if __counter_M > 3:
+        return 70
+
+    return [55, 47, 70, 70][__counter_M - 1]
+
 
 table_polys = collect_by_polys(res_table)
 res_table = collect_groups_case1(res_table)
@@ -194,6 +207,7 @@ with open(filename, 'w') as file:
     while i < len(res_table):
         chunk_size = 0
         j = i
+        M = get_M()
         while chunk_size < M and j < len(res_table):
             grlist = res_table[j][0]
             gsize = 1 if isinstance(grlist, str) else len(latex(grlist).splitlines()) - 2
@@ -205,16 +219,40 @@ with open(filename, 'w') as file:
             j += 1
         chunk = res_table[i: j]
 
+        first_group = chunk[0][0]
+        first_group = first_group if isinstance(first_group, str) else latex(first_group).splitlines()[1].split(',')[0].strip(r'\\')
+
+        last_group = chunk[-1][0]
+        last_group = last_group if isinstance(last_group, str) else latex(last_group).splitlines()[-2].split(',')[-1].strip(r'\\')
+
         print(r'\begin{table}[H]', file=file)
         print(r'\begin{center}', file=file)
-        print(r'\begin{scriptsize}', file=file)
-        print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
-        print(r'\end{scriptsize}', file=file)
+        print(r'\scalebox{0.54}{', file=file)
+        if i == 0:
+            tp_headers = headers.copy()
+            tp_headers[0] = r"Groups No.\footnotemark[1]{} \footnotemark[2]{}"
+            print(latex(table([tp_headers] + chunk, frame=True, header_row=True)), file=file)
+        else:
+            print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
+        print(r'}', file=file)
 
-        print(r'\caption{\textit{SRD}' + f' unique triplets for the block-triangular case {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\captionsetup{justification=centering}', file=file)
+        print(r'\caption{\textit{SRD} defining triplets for the block-triangular case. \\ Space groups '
+              + f'${first_group}' + r'\dots' + f'{last_group}$' + r'}', file=file)
         print(r'\label{tab:case1_srdegrees' + f'{i}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
+        if i == 0:
+            print(r"\footnotetext[1]{", file=file)
+            print(r"  Groups Nos.~1 and 2 are not included since they fall into a separate reduced case: every matrix"
+                  + " belongs to the point group normalizer.", file=file)
+            print(r"  ", file=file)
+            print(r"}", file=file)
+            print(r"\footnotetext[2]{", file=file)
+            print(r"  Groups numbering is according to ITA, that uses geometric classification of space groups, i.e."
+                  + " up to orientation-preserving affine transformations.", file=file)
+            print(r"}", file=file)
+
         print('', file=file)
         print(r'\newpage', file=file)
         print('', file=file)
@@ -224,12 +262,12 @@ with open(filename, 'w') as file:
     for i in range(0, len(res_table_simple), M):
         print(r'\begin{table}[H]', file=file)
         print(r'\begin{center}', file=file)
-        print(r'\begin{scriptsize}', file=file)
+        print(r'\scalebox{0.54}{', file=file)
         chunk = res_table_simple[i: i+M]
         print(latex(table([headers_simple] + chunk, frame=True, header_row=True)), file=file)
-        print(r'\end{scriptsize}', file=file)
+        print(r'}', file=file)
 
-        print(r'\caption{\textit{SRD}' + f' unique polynomials for the reduced matrix case {i+1}..{i + len(chunk)}' + r'}', file=file)
+        print(r'\caption{\textit{SRD}' + ' defining polynomials for the reduced matrix case.' + r'}', file=file)
         print(r'\label{tab:case2_srdegrees' + f'{i//M}' + '}', file=file)
         print(r'\end{center}', file=file)
         print(r'\end{table}', file=file)
@@ -259,9 +297,9 @@ with open(filename, 'w') as file:
 
     #     print(r'\begin{table}[H]', file=file)
     #     print(r'\begin{center}', file=file)
-    #     print(r'\begin{scriptsize}', file=file)
+    #     print(r'\scalebox{0.54}{', file=file)
     #     print(latex(table([headers] + chunk, frame=True, header_row=True)), file=file)
-    #     print(r'\end{scriptsize}', file=file)
+    #     print(r'}', file=file)
 
     #     print(r'\caption{' + 'Unique polynomials ' + f'{i+1}..{i + len(chunk)}' + r'}', file=file)
     #     print(r'\end{center}', file=file)
