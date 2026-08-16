@@ -41,10 +41,10 @@
 % \graphicspath{ {./assets} }
 
 
-\title{Self-replicating degrees of plane and space groups}
-\author{ Davyd Zashkolnyi }
+\title{Self-replicating degrees of crystallographic groups}
+\author{Davyd Zashkolnyi}
 
-\shortauthor{D.Zashkolnyi}
+\shortauthor{D. Zashkolnyi}
 \address[D.~Zashkolnyi]{Taras Shevchenko National University of Kyiv}{davendiy@knu.ua}{}
 
 \research
@@ -70,15 +70,17 @@
 %\newpage
 %\listoftables
 
-\subjclass{2020}{}
-\keywords{}
+\subjclass{2020}{20F65, 20H15}
+\keywords{crystallographic group, virtual endomorphism, self-similar action, self-replicating degree, self-covering degree}
 
+% 20H15 Other geometric groups, including crystallographic groups
+% 20F65 Geometric group theory
 
 \section*{Introduction}
 
 Crystallographic groups are discrete, cocompact groups of isometries of Euclidean spaces. They arise naturally in the
 study of crystals and periodic structures and play an important role in crystallography as well as in several areas
-of mathematics. The fundamental properties of crystallographic groups were described by Bieberbach (1910--1911). 
+of mathematics. The fundamental properties of crystallographic groups were described by Bieberbach (1910--1911).
 Specifically, every $n$-dimensional crystallographic group contains a maximal, finite-index, free abelian normal
 subgroup of translations isomorphic to $\mathbb{Z}^n$. Furthermore, in each dimension, there are only finitely many
 crystallographic groups up to isomorphism, thereby answering the first part of Hilbert's 18th problem.
@@ -108,11 +110,10 @@ of a group $G$ if and only if there exist a subgroup $H\leq G$ of index $d$ and 
 $\phi:H\rightarrow G$ with trivial core.
 
 The present paper continues the investigation begun in \cite{BondZash2024pg}, where we described all virtual
-endomorphisms of the plane group $pg$ --- the fundamental group of the Klein bottle --- determined which of them are
-simple, and computed the possible degrees of its self-similar and self-replicating actions. Here we develop a 
+endomorphisms of the plane group $pg$ --- the fundamental group of the Klein bottle --- determined which of them have trivial core, and computed the possible degrees of its self-similar and self-replicating actions. Here we develop a
 method, based on the point group, the translation lattice, and the defining cocycle, that applies to \emph{every}
 crystallographic group, and we carry it out explicitly for all plane and space groups.
- 
+
 We study virtual endomorphisms of crystallographic groups in Section~\ref{sec:cryst}. In particular, we show that every
 surjective virtual endomorphism of a crystallographic group is an isomorphism, and establish a criterion for its core
 to be trivial. Consequently, if $d$ is a self-replicating degree of a group $G$, then $G$ contains a subgroup of
@@ -760,7 +761,7 @@ every space group $G$ and every $\sigma\in\operatorname{Aut}(P)$, one of the fol
 \end{itemize}
 The only exceptions are, similarly to the two-dimensional case, the groups $P1$ and $P-1$ (Nos.~1 and 2 in ITA) that
 have point groups consisting of scalar matrices. Likewise plane groups $p1$ and $p2$, these space groups admit every
-positive integer $\ge 1$ as a self-covering degree and every positive integer $\ge 2$ as a self-replicating degree.  
+positive integer $\ge 1$ as a self-covering degree and every positive integer $\ge 2$ as a self-replicating degree.
 The complete list of the families $Y \in \mathcal{Y}_\sigma$ is omitted due to their large variety\footnotemark[1]{}.
 
 \footnotetext[1]{The source code used to generate the complete list of $\mathcal{Y}_\sigma$ is provided in \cite{crystcode2026}.}
@@ -932,7 +933,7 @@ matrices
   \qquad X_i \in M_n(\mathbb{Q}).
 \]
 To match the description (\ref{eqn:X_sum_Xi}) of the set $\mathcal{X}_\sigma$ we also need to address the restriction
-$X_i \in M_n(\mathbb{Z})$, which will be done later. 
+$X_i \in M_n(\mathbb{Z})$, which will be done later.
 
 \subsubsection*{(\textit{LC}), (\textit{CC}) and solving over $\mathbb{Q}/\mathbb{Z}$}
 
@@ -984,7 +985,7 @@ The general solution of the homogeneous system (i.e. $b = 0$) is the right kerne
 $M_{aug} = \left(-mE | mM \right)$. The kernel basis is returned in echelon form and the auxiliary variables $y$
 are placed first. As a result, the free variables of the solution are exactly the auxiliary variables together with the
 genuinely free parameters, and each dependent parameter is an integral linear
-combination of them. The inhomogeneous system also requires a particular solution, which we compute using 
+combination of them. The inhomogeneous system also requires a particular solution, which we compute using
 SageMath's \texttt{solve\_right} over $\mathbb{Z}$.
 
 \subsubsection*{Simplicity test and quadratic Diophantine equations}
