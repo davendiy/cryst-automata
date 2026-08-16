@@ -1,0 +1,379 @@
+\documentclass[12pt]{article}
+% \documentclass[draft]{adm-paper}
+
+\usepackage{a4wide}
+% \usepackage{setspace}
+\usepackage{float}
+% \usepackage{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+
+\usepackage{hyperref}
+\hypersetup{
+ colorlinks=true,
+ linkcolor=blue,
+ filecolor=magenta,
+ urlcolor=cyan,
+ pdftitle={computing self-replicating degrees},
+ pdfpagemode=FullScreen,
+}
+
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Imag}{Im}
+\DeclareMathOperator{\Dom}{Dom}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{problem}{Problem}
+\newtheorem{question}{Question}
+\newtheorem{remark}{Remark}
+
+% \graphicspath{ {./assets} }
+
+
+\title{Self-similar degrees of plane groups}
+\author{ Davyd Zashkolnyi }
+
+% \shortauthor{D.Zashkolnyi}
+% \address[D.~Zashkolnyi]{Taras Shevchenko National University of Kyiv}{davendiy@knu.ua}{}
+
+% \research
+% \date{12.08.2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+   ...
+\end{abstract}
+
+%The algorithms are
+%  implemented in SageMath using the GAP package Cryst as a source of generators of crystallographic groups,
+%  and the full source code is publicly available.
+
+%\tableofcontents
+%\newpage
+%\listoftables
+
+% \subjclass{2020}{}
+% \keywords{}
+
+
+\section*{Introduction}
+
+
+% =====================================================================================================================
+
+\section{Crystallographic groups and their virtual \\ endomorphisms}\label{sec:cryst}
+
+
+
+% =====================================================================================================================
+
+\section{Computing self-replicating degrees of crystallographic groups}\label{sec:computations}
+
+
+\begin{lemma}[normal sublattices]\label{lemma:normal-sublattices}
+A subgroup $L'\le T(G)$ is normal in $G$ if and only if $BL'=L'$ for all
+$B\in P$.
+\end{lemma}
+\begin{proof}
+Conjugation of $(I,\ell)\in T(G)$ by $(B,b)\in G$ gives
+$(B,b)(I,\ell)(B,b)^{-1}=(I,B\ell)$. Since $P$ is the set of linear
+parts of elements of $G$, normality of $L'$ is equivalent to invariance
+under all $B\in P$.
+\end{proof}
+
+\begin{lemma}[the core lattice]\label{lemma:core-lattice}
+Let $A\in M_2(\mathbb{Q})$ and let $L_1\le\mathbb{Z}^2$ be a sublattice
+of finite index. Set
+\[
+K \;=\; \{\,\ell\in\mathbb{Z}^2 : A^n\ell\in L_1 \ \text{for all }
+n\ge 0\,\}.
+\]
+Then:
+\begin{enumerate}
+\item[(a)] $K$ is a sublattice of $\mathbb{Z}^2$ with $AK\le K$; it is
+the largest sublattice $L'\le L_1$ satisfying $AL'\le L'$.
+\item[(b)] The rank of $K$ does not depend on the choice of the
+finite-index sublattice $L_1$.
+\item[(c)] Exactly one of the following holds:
+\begin{enumerate}
+\item[(i)] $\chi_A(x)=x^2-(\operatorname{tr}A)x+\det A\in\mathbb{Z}[x]$,
+in which case $\operatorname{rk}K=2$;
+\item[(ii)] $\chi_A\notin\mathbb{Z}[x]$ and $A$ has an eigenvalue
+$\lambda\in\mathbb{Z}$, in which case $\operatorname{rk}K=1$ and
+$\mathbb{Q}K=\ker(A-\lambda I)$;
+\item[(iii)] otherwise $K=0$.
+\end{enumerate}
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(a) If $\ell\in K$ then $A^n(A\ell)=A^{n+1}\ell\in L_1$ for all
+$n\ge0$, and $A\ell\in L_1$ since $\ell\in\operatorname{Dom}(\phi_T^2)$;
+hence $A\ell\in K$. If $L'\le L_1$ satisfies $AL'\le L'$, then
+$A^nL'\le L'\le L_1$ for all $n$, so $L'\le K$.
+
+(b) Let $L_1'\le L_1$ be another finite-index sublattice and $K'$ the
+corresponding lattice. Then $K'\le K$, and for $m=[L_1:L_1']$ we have
+$A^n(m\ell)=mA^n\ell\in mL_1\le L_1'$ whenever $\ell\in K$, so
+$mK\le K'\le K$ and $\operatorname{rk}K'=\operatorname{rk}K$.
+
+(c) (i) If $\operatorname{rk}K=2$, then $A|_K$ is an endomorphism of a
+rank-$2$ lattice and $\mathbb{Q}K=\mathbb{Q}^2$, so
+$\chi_A=\chi_{A|_K}\in\mathbb{Z}[x]$ is monic with integral
+coefficients. Conversely, suppose
+$\operatorname{tr}A,\det A\in\mathbb{Z}$. By Cayley--Hamilton,
+$A^2=(\operatorname{tr}A)A-(\det A)I$, hence the rational lattice
+$\Lambda=\mathbb{Z}^2+A\mathbb{Z}^2$ satisfies $A\Lambda\le\Lambda$:
+indeed $A\Lambda=A\mathbb{Z}^2+A^2\mathbb{Z}^2\le
+A\mathbb{Z}^2+(\operatorname{tr}A)A\mathbb{Z}^2+(\det A)\mathbb{Z}^2
+\le\Lambda$. Since $\mathbb{Z}^2$ has finite index in $\Lambda$ and
+$L_1$ has finite index in $\mathbb{Z}^2$, there exists $m\ge1$ with
+$m\Lambda\le L_1$. Then $A^n(m\Lambda)\le m\Lambda\le L_1$ for all
+$n\ge0$, so $m\Lambda\le K$ and $\operatorname{rk}K=2$.
+
+(ii) Let $\lambda\in\mathbb{Z}$ be an eigenvalue with eigenline
+$W=\ker(A-\lambda I)$, and assume $\chi_A\notin\mathbb{Z}[x]$. The line
+$W$ is rational; write $W\cap\mathbb{Z}^2=\mathbb{Z}w_0$ with $w_0$
+primitive and $W\cap L_1=j\mathbb{Z}w_0$ for some $j\ge1$. Then
+$A^n(jw_0)=\lambda^njw_0\in j\mathbb{Z}w_0\le L_1$ for all $n\ge0$,
+since $\lambda\in\mathbb{Z}$; hence $jw_0\in K$ and
+$\operatorname{rk}K\ge1$. By (i), $\operatorname{rk}K\ne2$, so
+$\operatorname{rk}K=1$ and $\mathbb{Q}K=W$.
+
+(iii) Suppose $K\ne0$ and (i) does not hold. Then
+$\operatorname{rk}K=1$, and $W=\mathbb{Q}K$ is an $A$-invariant rational
+line by (a), hence an eigenline with some eigenvalue $\lambda$.
+Since $A|_K$ is an endomorphism of the rank-$1$ lattice $K$, $\lambda$
+is an integer. Thus whenever $K\ne0$ we are in case (i) or (ii).
+\end{proof}
+
+\begin{remark}
+Under condition (i), $A$ may have two integer eigenvalues; under the
+negation of (i), $A$ has \emph{at most one} integer eigenvalue: two
+integer eigenvalues $\lambda_1,\lambda_2$ (counted with multiplicity)
+give $\operatorname{tr}A=\lambda_1+\lambda_2\in\mathbb{Z}$ and
+$\det A=\lambda_1\lambda_2\in\mathbb{Z}$. Note also that a rational
+non-integer eigenvalue $\lambda=p/q$, $\gcd(p,q)=1$, $q\ge2$,
+contributes nothing: for a primitive eigenvector $w_0$ and
+$W\cap L_1=j\mathbb{Z}w_0$, the condition
+$A^n(cw_0)=c\,p^nq^{-n}w_0\in L_1$ for all $n$ forces $jq^n\mid c$ for
+all $n$, hence $c=0$.
+\end{remark}
+
+\begin{proposition}[effective form of the joint-invariance
+criterion]\label{prop:effective-core}
+Let $G$ be a plane crystallographic group, $\phi:H\rightarrow G$ a
+virtual endomorphism with intertwining element $\tau=(A,a)$, and $K$ the
+core lattice of Lemma~\ref{lemma:core-lattice}. Then
+\[
+\operatorname{core}_{\phi_T}(G)
+\;=\;
+K_G \;:=\; \bigcap_{B\in P} BK,
+\]
+and $\phi$ is simple if and only if $K_G=0$.
+\end{proposition}
+\begin{proof}
+Let $M_n=\operatorname{Dom}(\phi_T^n)\le\mathbb{Z}^2$, i.e.
+$M_n=\{\ell : A^j\ell\in L_1 \text{ for } 0\le j\le n-1\}$. The core
+formula for the virtual endomorphism $\phi_T$ of $G$ gives
+\[
+\operatorname{core}_{\phi_T}(G)
+=\bigcap_{n\ge1}\bigcap_{g\in G} g\,M_n\,g^{-1}
+=\bigcap_{n\ge1}\bigcap_{B\in P} B M_n
+=\bigcap_{B\in P} B\Big(\bigcap_{n\ge1}M_n\Big)
+=\bigcap_{B\in P} BK = K_G,
+\]
+where the second equality uses that conjugation by $(B,b)\in G$ acts on
+translations $(I,\ell)$ as $(I,B\ell)$, that $T(G)$ is abelian, and that
+$M_n\le T(G)$; the third uses that $P$ is finite and each $B$ is
+invertible.
+
+By construction $K_G$ is $P$-invariant, hence normal in $G$ by
+Lemma~\ref{lemma:normal-sublattices}, and it is $\phi_T$-invariant by
+the core property. If $K_G\ne0$, then $K_G$ is a nontrivial normal
+$\phi$-invariant subgroup of $G$ (note $K_G\le
+\operatorname{Dom}(\phi_T)\le H$ and $\phi|_{K_G}=\phi_T|_{K_G}$), so
+$\phi$ is not simple. Conversely, if $\phi$ is not simple, then by the
+restriction principle ($\phi$ is simple if and only if its restriction
+to a finite-index subgroup of the domain is simple, applied to
+$H_1=T(H)\cap\phi^{-1}(T(G))$), the virtual endomorphism $\phi_T$ of
+$G$ is not simple, i.e.\ $K_G=\operatorname{core}_{\phi_T}(G)\ne0$.
+\end{proof}
+
+\begin{theorem}[simplicity criterion in dimension
+2]\label{thm:simplicity-dim2}
+Let $G$ be a plane crystallographic group with point group
+$P\le GL_2(\mathbb{Z})$, and let $\phi:H\rightarrow G$ be a virtual
+endomorphism with intertwining element $\tau=(A,a)$, $A\in
+M_2(\mathbb{Q})$. Then $\phi$ is simple if and only if both of the
+following conditions hold:
+\begin{enumerate}
+\item[\emph{(S1)}] $\chi_A(x)=x^2-(\operatorname{tr}A)x+\det A
+\notin\mathbb{Z}[x]$, i.e.\ $\operatorname{tr}A\notin\mathbb{Z}$ or
+$\det A\notin\mathbb{Z}$;
+\item[\emph{(S2)}] if $A$ has an integer eigenvalue $\lambda\in\mathbb{Z}$
+(by \emph{(S1)} there is at most one), then its eigenline
+$W=\ker(A-\lambda I)$ is not $P$-invariant, i.e.\ there exists $B\in P$
+with $BW\ne W$.
+\end{enumerate}
+In particular, simplicity depends only on the pair $(A,P)$, and not on
+the translation part $a$ or the choice of domain lattice $L_1$.
+\end{theorem}
+\begin{proof}
+By Proposition~\ref{prop:effective-core}, $\phi$ is not simple if and
+only if $K_G=\bigcap_{B\in P}BK\ne0$. We use the trichotomy of
+Lemma~\ref{lemma:core-lattice}(c).
+
+\emph{Case (i): $\chi_A\in\mathbb{Z}[x]$.} Then $\operatorname{rk}K=2$,
+and $K_G$ is a finite intersection of full-rank sublattices
+$BK\le\mathbb{Z}^2$ (each $B\in GL_2(\mathbb{Z})$), hence has finite
+index in $\mathbb{Z}^2$; in particular $K_G\ne0$, and $\phi$ is not
+simple. Thus simplicity requires (S1).
+
+\emph{Case (iii): $K=0$.} Then $K_G=0$ and $\phi$ is simple.
+
+\emph{Case (ii): $\operatorname{rk}K=1$.} Then $\mathbb{Q}K=W$ is the
+eigenline of the unique integer eigenvalue $\lambda$. Each $BK$ is a
+rank-$1$ lattice spanning the line $BW$. If $BW=W$ for all $B\in P$,
+then $B\in GL_2(\mathbb{Z})$ sends the primitive vector $w_0$ spanning
+$W\cap\mathbb{Z}^2$ to $\pm w_0$, so $BK=K$ for all $B$ and
+$K_G=K\ne0$: $\phi$ is not simple. If $BW\ne W$ for some $B\in P$, then
+$K\cap BK\le W\cap BW=0$, so $K_G=0$: $\phi$ is simple. Hence in case
+(ii) simplicity is equivalent to (S2).
+
+Finally, by Lemma~\ref{lemma:core-lattice}(b) the rank of $K$, and hence
+the case distinction and the line $W$, do not depend on $L_1$; the
+matrix $A$ is uniquely determined by $\phi$.
+\end{proof}
+
+\begin{corollary}[crystal classes]\label{cor:crystal-classes}
+For the ten planar crystal classes, the criterion of
+Theorem~\ref{thm:simplicity-dim2} reads as follows.
+\begin{enumerate}
+\item $P=C_3,C_4,C_6,D_3,D_4,D_6$ \emph{(groups p3, p4, p6, p3m1, p31m,
+p4m, p4g, p6m)}: $P$ contains a rotation of order $\ge3$, which has no
+real eigenline; hence no rational line is $P$-invariant, and
+\[
+\phi \text{ simple } \iff \chi_A\notin\mathbb{Z}[x].
+\]
+\item $P=D_1=\langle R\rangle$ \emph{(pm, pg, cm)}: the $P$-invariant
+lines are exactly the two rational eigenlines
+$W_+=\ker(R-I)$ and $W_-=\ker(R+I)$ of the reflection; hence
+\[
+\phi \text{ simple } \iff \chi_A\notin\mathbb{Z}[x]
+\text{ and no integer eigenvalue has eigenline } W_+ \text{ or } W_-.
+\]
+\item $P=D_2=\langle R_1,R_2\rangle$ \emph{(pmm, pmg, pgg, cmm)}: here
+$R_2=-R_1$, so $R_1$ and $R_2$ have the same two (perpendicular,
+rational) eigenlines; the condition is the same as for $D_1$ with these
+two axes.
+\item $P=C_1,C_2$ \emph{(p1, p2)}: every sublattice is $P$-invariant, so
+$\phi$ is simple $\iff \chi_A\notin\mathbb{Z}[x]$
+ and  $A$  has no integer eigenvalue  $\iff A$ has no algebraic-integer eigenvalue,
+recovering the single-matrix criterion for $\mathbb{Z}^2$
+\emph{(}Nekrashevych, Prop.~2.9.2\emph{)}.
+\end{enumerate}
+\end{corollary}
+
+\begin{corollary}[singular intertwiners]\label{cor:singular}
+Suppose $\det A=0$. Then $\lambda=0$ is an integer eigenvalue with
+eigenline $\ker A$, and
+\[
+\phi \text{ simple } \iff
+\operatorname{tr}A\notin\mathbb{Z}
+\text{ and } \ker A \text{ is not } P\text{-invariant.}
+\]
+Moreover, $\ker A$ is automatically $P(H)$-invariant: the intertwining
+relation $AB=\sigma(B)A$ for $B\in P(H)$ gives $ABv=\sigma(B)Av=0$ for
+$v\in\ker A$. Hence a singular intertwiner can yield a simple $\phi$
+only if $P(H)\subsetneq P$ and $\ker A$ is not invariant under the
+remaining elements of $P$.
+\end{corollary}
+
+\begin{corollary}[decidability in dimension 2]\label{cor:decidable}
+For plane crystallographic groups it is algorithmically decidable
+whether a given virtual endomorphism is simple, and whether
+$\mathbb{Z}^2$ contains a nontrivial sublattice invariant under both
+$A$ and $P$; the check requires only $\operatorname{tr}A$, $\det A$,
+the integer roots of $\chi_A$, and a parallelism test $Bw\parallel w$
+for the generators $B$ of $P$.
+\end{corollary}
+
+\begin{remark}[the surjective case]
+If $\phi$ is surjective (the self-replicating case), then $\tau$ is
+invertible, $A^{-1}$ is integral and normalizes $P$. The domain lattice
+is $L_1=A^{-1}\mathbb{Z}^2$, so
+$K=\bigcap_{m\ge1}A^{-m}\mathbb{Z}^2$, and each $A^{-m}\mathbb{Z}^2$ is
+$P$-invariant (since $PA^{-m}=A^{-m}P$); hence $K$ is automatically
+$P$-invariant and $K_G=K$. Condition (S2) is then automatically
+violated whenever an integer eigenvalue exists, and the criterion
+reduces to: $\phi$ simple $\iff$ $A$ has no algebraic-integer
+eigenvalue --- the classical criterion for self-replicating actions of
+crystallographic groups.
+\end{remark}
+
+% \begin{algorithm}[simplicity test, dimension 2]\label{alg:simplicity}
+Input: $A\in M_2(\mathbb{Q})$ and generators of $P\le GL_2(\mathbb{Z})$.
+\begin{enumerate}
+\item Compute $t=\operatorname{tr}A$, $d=\det A$. If
+$t\in\mathbb{Z}$ and $d\in\mathbb{Z}$, return \textsc{not simple}
+(full-rank core).
+\item Find integer roots of $\chi_A(x)=x^2-tx+d$: clear denominators,
+$q=\operatorname{lcm}(\operatorname{denom}(t),\operatorname{denom}(d))$,
+and test the finitely many divisors $\lambda\mid qd$ provided by the
+rational root theorem (if $d=0$, then $\lambda=0$ always occurs). If
+there is no integer root, return \textsc{simple}.
+\item Compute a primitive integral vector $w$ spanning
+$W=\ker(A-\lambda I)$ (if $\lambda=0$, this is $\ker A$).
+\item If $\det[Bw\mid w]=0$ for every generator $B$ of $P$ (i.e.\ $Bw$
+is parallel to $w$), return \textsc{not simple}; otherwise return
+\textsc{simple}.
+\end{enumerate}
+The test is $O(1)$ per matrix and applies directly to the parametric
+families obtained from the equation $XB=\sigma(B)X$.
+% \end{algorithm}
+
+\begin{example}[the $pm$ matrices]
+For the wallpaper group $pm$, $P=\langle R\rangle$ with
+$R=\begin{pmatrix}0&1\\1&0\end{pmatrix}$, $W_+=\langle(1,1)\rangle$,
+$W_-=\langle(1,-1)\rangle$. Consider
+\[
+A_1=\begin{pmatrix}1/2&2\\0&0\end{pmatrix},\quad
+A_2=\begin{pmatrix}1/2&1\\0&0\end{pmatrix},\quad
+A_3=\begin{pmatrix}1/2&0\\0&0\end{pmatrix}.
+\]
+Each has $\det A_i=0$ and $\operatorname{tr}A_i=1/2\notin\mathbb{Z}$, so
+(S1) holds, and $\lambda=0$ is the unique integer eigenvalue. The
+kernels are spanned by $(4,-1)$, $(2,-1)$, $(0,1)$ respectively, and
+$R(4,-1)=(-1,4)$, $R(2,-1)=(-1,2)$, $R(0,1)=(1,0)$, none of which is
+parallel to the kernel vector. Hence (S2) holds and all three virtual
+endomorphisms are simple, in agreement with the direct computation that
+no nontrivial sublattice of $\mathbb{Z}^2$ is invariant under both $A_i$
+and $R$.
+\end{example}
+
+
+\begin{thebibliography}{99}
+
+
+
+\end{thebibliography}
+
+
+\appendix
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+
+\end{document}

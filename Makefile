@@ -13,6 +13,10 @@ planar-latex-compile:
 article2025:
 	pdflatex --output-directory=latex/computing-srdegrees latex/computing-srdegrees/article.tex
 
+article2026:
+	pdflatex --output-directory=latex/ssdegrees latex/ssdegrees/ssarticle.tex
+
 a: article2025
+a2: article2026
 
 planar-latex: planar-latex-generate planar-latex-compile
